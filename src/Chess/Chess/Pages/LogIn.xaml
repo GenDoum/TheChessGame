@@ -2,8 +2,31 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Chess.Pages.LogIn">
+             x:Class="Chess.Pages.LogIn"
+             BackgroundColor="White">
+    
     <ContentPage.Content>
+        
+        <!-- LogIn Page -->
+        <StackLayout>
+            
+            <Frame BackgroundColor="#524949" HorizontalOptions="Center" WidthRequest="600" HeightRequest="80" CornerRadius="10" Margin="0, 60, 0, 0">
+                <Label Text="Connexion " HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White"></Label>
+            </Frame>
+            
+            <Image
+                Source="logochess.png"
+                Aspect="AspectFit"
+                HorizontalOptions="Center"
+                Margin="0, 20, 0, 0"
+                HeightRequest="180"
+                />
+            
+            <Label Text="Log In" FontSize="Large" HorizontalOptions="Center" Margin="0, 20, 0, 0"/>
+            <Entry Placeholder="Username" x:Name="UsernameEntry" Margin="10" BackgroundColor="#9C9191" WidthRequest="600" HeightRequest="60" HorizontalTextAlignment="Center" TextColor="White" PlaceholderColor="White"/>
+            <Entry Placeholder="Password" x:Name="PasswordEntry" Margin="10" BackgroundColor="#9C9191" WidthRequest="600" HeightRequest="60" TextColor="White" PlaceholderColor="White" IsPassword="True" HorizontalTextAlignment="Center"/>
+            <Button Text="Log In" Margin="40" WidthRequest="400" HeightRequest="50" BackgroundColor="#C2A0A0"/>
+        </StackLayout>
         
     </ContentPage.Content>
 </ContentPage>

@@ -4,6 +4,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Chess.Pages.Register">
     <ContentPage.Content>
-        
+        <VerticalStackLayout>
+            <Button />
+
+
+
+            <Image 
+                Source="appicon.svg" 
+                HeightRequest="185"
+                SemanticProperties.Description="Icon APP"/>
+
+        </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>

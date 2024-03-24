@@ -34,8 +34,8 @@
 
             <Image 
                 Source="logochess.png" 
-                HeightRequest="185"
-                Margin="60 0 0 0"
+                HeightRequest="300"
+                Margin="0, 0, 0, 0"
                 />
             
             <Entry Placeholder="Entrez votre pseudo"/>

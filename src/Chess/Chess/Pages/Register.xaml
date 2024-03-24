@@ -6,14 +6,24 @@
     <ContentPage.Content>
         <VerticalStackLayout
             BackgroundColor="White">
+            
+            
             <VerticalStackLayout.Resources>
+                
                 <Style TargetType="Entry">
+                    
                     <Setter Property="WidthRequest" Value="600"/>
+                    
                     <Setter Property="HeightRequest" Value="60"/>
+                    
                     <Setter Property="BackgroundColor" Value="#9C9191" />
+                    
                     <Setter Property="HorizontalTextAlignment" Value="Center" />
-                    <Setter Property="Margin" Value="5"/>
+                    
+                    <Setter Property="Margin" Value="10"/>
+                    
                 </Style>
+                
             </VerticalStackLayout.Resources>
 
 
@@ -29,8 +39,8 @@
                 />
             
             <Entry Placeholder="Entrez votre pseudo"/>
-            <Entry Placeholder="Entrez votre mot de passe" IsPassword="True"/>
-            <Entry Placeholder="Entrez a nouveau votre mot de passe" IsPassword="True"/>
+            <Entry Placeholder="Entrez votre mot de passe" IsPassword="True" MaxLength="20"/>
+            <Entry Placeholder="Entrez a nouveau votre mot de passe" IsPassword="True" MaxLength="20"/>
 
             <Button 
                Text="Inscription" 

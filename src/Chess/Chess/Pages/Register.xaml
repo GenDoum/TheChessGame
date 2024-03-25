@@ -19,8 +19,8 @@
                 />
             
             <Entry Placeholder="Entrez votre pseudo" Style="{StaticResource entryStyleDefault}"/>
-            <Entry Placeholder="Entrez votre mot de passe" IsPassword="True" Style="{StaticResource entryStyleDefault}"/>
-            <Entry Placeholder="Entrez a nouveau votre mot de passe" IsPassword="True"  Style="{StaticResource entryStyleDefault}"/>
+            <Entry Placeholder="Entrez votre mot de passe" IsPassword="True" Style="{StaticResource entryStyleDefault}" MaxLength="20"/>
+            <Entry Placeholder="Entrez a nouveau votre mot de passe" IsPassword="True"  Style="{StaticResource entryStyleDefault}" MaxLength="20"/>
 
             <Button 
                Text="Inscription" Style="{StaticResource buttonSyle}"/>

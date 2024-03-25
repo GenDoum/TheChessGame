@@ -8,15 +8,12 @@
     Shell.FlyoutBehavior="Disabled"
     Title="Chess">
 
-    <TabBar>
         <ShellContent
-            ContentTemplate="{DataTemplate local:MainPage}"
+            ContentTemplate="{DataTemplate localpages:LogIn}"
             Route="MainPage" />
     
         <ShellContent
-            Title="LogIn"
             ContentTemplate="{DataTemplate localpages:LogIn}"
             Route="LogIn" />
-    </TabBar>
     
 </Shell>

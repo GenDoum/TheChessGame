@@ -4,6 +4,51 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Chess.Pages.Register">
     <ContentPage.Content>
-        
+        <VerticalStackLayout
+            BackgroundColor="White">
+            
+            
+            <VerticalStackLayout.Resources>
+                
+                <Style TargetType="Entry">
+                    
+                    <Setter Property="WidthRequest" Value="600"/>
+                    
+                    <Setter Property="HeightRequest" Value="60"/>
+                    
+                    <Setter Property="BackgroundColor" Value="#9C9191" />
+                    
+                    <Setter Property="HorizontalTextAlignment" Value="Center" />
+                    
+                    <Setter Property="Margin" Value="10"/>
+                    
+                </Style>
+                
+            </VerticalStackLayout.Resources>
+
+
+            <Frame BackgroundColor="#524949" HorizontalOptions="Center" WidthRequest="800"  HeightRequest="80" CornerRadius="10" Margin="0, 20, 0, 0">
+                <Label Text="Connexion " HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White"></Label>
+            </Frame>
+
+
+            <Image 
+                Source="logochess.png" 
+                HeightRequest="300"
+                Margin="0, 0, 0, 0"
+                />
+            
+            <Entry Placeholder="Entrez votre pseudo"/>
+            <Entry Placeholder="Entrez votre mot de passe" IsPassword="True" MaxLength="20"/>
+            <Entry Placeholder="Entrez a nouveau votre mot de passe" IsPassword="True" MaxLength="20"/>
+
+            <Button 
+               Text="Inscription" 
+                WidthRequest="400"
+                HeightRequest="50"
+                BackgroundColor="#c2a0a0"
+                Margin="40"
+                />
+        </VerticalStackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -5,7 +5,7 @@
              x:Class="Chess.MainPage"
              BackgroundImageSource="test.jpg"
              
-             >
+>
 
 
     <ScrollView>
@@ -13,26 +13,26 @@
             JustifyContent="Center"
             AlignItems="Center"
             Direction="Column"
-            >
+        >
 
             <Image Source="title.png" 
-                       HeightRequest="80"
-                       VerticalOptions="Center"
-                       HorizontalOptions="Center" 
-                       Margin="0, 0, 0, 40"
-                       />
+                   HeightRequest="80"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center" 
+                   Margin="0, 0, 0, 40"
+            />
             
-                <Button Text="Connexion" 
-                        Style="{StaticResource buttonSyle}"
-                        />
+            <Button Text="Connexion" 
+                    Style="{StaticResource buttonSyle}"
+            />
             
-                <Button Text="Inscription" 
-                        Style="{StaticResource buttonSyle}" 
-                        />
+            <Button Text="Inscription" 
+                    Style="{StaticResource buttonSyle}" 
+            />
             
-                <Label Text="Jouer en tant qu'invité" 
-                       Style="{StaticResource labelStyleBottom}"
-                       />
+            <Label Text="Jouer en tant qu'invité" 
+                   Style="{StaticResource labelStyleBottom}"
+            />
             
             <!-- <Label.GestureRecognizers> <TapGestureRecognizer Tapped="Fonction d'appel"/> </Label.GestureRecognizers> <Label/>  /!/ A faire après les vues /!/ --> 
         </FlexLayout>

@@ -20,7 +20,7 @@
                 HorizontalOptions="Center"
                 Margin="0, 20, 0, 0"
                 HeightRequest="180"
-                />
+            />
             
             <Label Text="Log In" FontSize="Large" HorizontalOptions="Center" Margin="0, 20, 0, 0"/>
             <Entry Placeholder="Username" x:Name="UsernameEntry" Margin="10" BackgroundColor="#9C9191" WidthRequest="600" HeightRequest="60" HorizontalTextAlignment="Center" TextColor="White" PlaceholderColor="White"/>

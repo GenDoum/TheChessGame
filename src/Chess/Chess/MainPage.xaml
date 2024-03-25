@@ -22,15 +22,23 @@
             <Button Text="Connexion" 
                     Style="{StaticResource buttonSyle}"
             />
-            
+
             <Button Text="Inscription" 
                     Style="{StaticResource buttonSyle}" 
             />
-            
+
+            <Button Text="Règles du jeu" 
+                    Style="{StaticResource buttonSyle}"
+            />
+
+            <Button Text="Scores des joueurs" 
+                    Style="{StaticResource buttonSyle}"
+            />
+
             <Label Text="Jouer en tant qu'invité" 
                    Style="{StaticResource labelStyleBottom}"
             />
-            
+
             <!-- <Label.GestureRecognizers> <TapGestureRecognizer Tapped="Fonction d'appel"/> </Label.GestureRecognizers> <Label/>  /!/ A faire après les vues /!/ --> 
         </FlexLayout>
     </ScrollView>

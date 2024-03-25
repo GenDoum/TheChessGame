@@ -15,8 +15,15 @@
             Route="MainPage" />
 
         <ShellContent
+
             Title="Register"
             ContentTemplate="{DataTemplate localpages:Register}"
             Route="Register" />
+        
+        <ShellContent
+            ContentTemplate="{DataTemplate localpages:LogIn}"
+            Route="LogIn" />
+        
     </TabBar>
+
 </Shell>

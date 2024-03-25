@@ -34,17 +34,17 @@
                     <VisualState x:Name="Normal">
                         <VisualState.Setters>
                             <Setter Property="TextDecorations"
-                        Value="None" />
+                                    Value="None" />
                             <Setter Property="Scale"
-                        Value="1"/>
+                                    Value="1"/>
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="PointerOver">
                         <VisualState.Setters>
                             <Setter Property="TextDecorations"
-                        Value="Underline" />
+                                    Value="Underline" />
                             <Setter Property="Scale"
-                        Value="1.05"/>
+                                    Value="1.05"/>
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
@@ -82,7 +82,23 @@
             </VisualStateGroupList>
         </Setter>
     </Style>
-    
+
+    <Style x:Key="entryStyleDefault" TargetType="Entry">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="BackgroundColor" Value="#DEBC95"/>
+        <Setter Property="WidthRequest" Value="400"/>
+        <Setter Property="HeightRequest" Value="50"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        <Setter Property="TextColor" Value="Black"/>
+        <Setter Property="PlaceholderColor" Value="DimGray"/>
+    </Style>
+
+    <Style x:Key="imgAppli" TargetType="Image">
+        <Setter Property="HeightRequest" Value="80"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="Margin" Value="0, 0, 0, 40"/>
+    </Style>
     <!-- Fin ajout perso -->
 
     <Style TargetType="Button">

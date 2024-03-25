@@ -10,13 +10,11 @@
     <TabBar>
         
         <ShellContent
-            Title="Home"
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
 
         <ShellContent
 
-            Title="Register"
             ContentTemplate="{DataTemplate localpages:Register}"
             Route="Register" />
         

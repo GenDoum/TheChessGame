@@ -15,11 +15,8 @@
             Direction="Column"
         >
 
-            <Image Source="title.png" 
-                   HeightRequest="80"
-                   VerticalOptions="Center"
-                   HorizontalOptions="Center" 
-                   Margin="0, 0, 0, 40"
+            <Image Source="title.png"
+                   Style="{StaticResource imgAppli}"
             />
             
             <Button Text="Connexion" 

@@ -22,6 +22,10 @@
             ContentTemplate="{DataTemplate localpages:LogIn}"
             Route="LogIn" />
         
+        <ShellContent
+            ContentTemplate="{DataTemplate localpages:pausePage}"
+            Route="LogIn" />
+        
     </TabBar>
 
 </Shell>

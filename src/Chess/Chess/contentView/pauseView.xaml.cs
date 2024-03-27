@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chess.Pages;
+namespace Chess.contentView;
 
-public partial class pausePage : ContentPage
+public partial class pauseView : ContentView
 {
-    public pausePage()
+    public pauseView()
     {
         InitializeComponent();
     }

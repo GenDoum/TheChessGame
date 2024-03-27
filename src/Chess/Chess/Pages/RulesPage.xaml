@@ -3,30 +3,30 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="Chess.Pages.RulesPage"
-    BackgroundImageSource="test.jpg" >
-    
-    <VerticalStackLayout>
+     >
 
-        
+    <Grid>
+        <Image Source="test.jpg" Aspect="AspectFit"/>
+
+
         <FlexLayout
              JustifyContent="Center"
              AlignItems="Center"
              Direction="Column"
              >
             <Label Text="Rules" FontSize="Large" 
-                   Background="DarkSalmon"/>
+                   TextColor="AntiqueWhite"/>
         </FlexLayout>
-        
+
         <Grid
             ColumnDefinitions="*,Auto" 
             RowDefinitions="Auto"
             >
 
             <Image Source="logochess.png" Grid.Column="1" />
-            <Label Text="Chess is a two-player strategy board game played on a checkered board with 64 squares arranged in an 8×8 grid. The game is played by millions of people worldwide. Chess is believed to be derived from the Indian game chaturanga sometime before the 7th century. Chaturanga is also the likely ancestor of the Eastern strategy games xiangqi, janggi, and shogi. Chess reached Europe by the 9th century, due to the Umayyad conquest of Hispania. The pieces assumed their current powers in Spain in the late 15th century; the rules were finally standardized in the 19th century." Grid.Column="0" />
+            <Label Text="Chess is a two-player strategy board game played on a checkered board with 64 squares arranged in an 8×8 grid. The game is played by millions of people worldwide. Chess is believed to be derived from the Indian game chaturanga sometime before the 7th century. Chaturanga is also the likely ancestor of the Eastern strategy games xiangqi, janggi, and shogi. Chess reached Europe by the 9th century, due to the Umayyad conquest of Hispania. The pieces assumed their current powers in Spain in the late 15th century; the rules were finally standardized in the 19th century." Grid.Column="0" 
+                   TextColor="AntiqueWhite"/>
         </Grid>
 
-
-    </VerticalStackLayout>
-    
+    </Grid>
 </ContentPage>

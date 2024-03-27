@@ -17,6 +17,16 @@
 
             <Entry Placeholder="Pseudo" x:Name="UsernameEntry" Style="{StaticResource entryStyleDefault}"/>
             <Entry Placeholder="Mot de passe" x:Name="PasswordEntry" IsPassword="True" Style="{StaticResource entryStyleDefault}" MaxLength="20"/>
+            <HorizontalStackLayout
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <CheckBox Color="#DEBC95"
+                          />
+                <Label Text="Jouer avec un invité" 
+                       TextColor="FloralWhite"
+                       Margin="12"/>
+
+            </HorizontalStackLayout>
             <Button Text="Connexion" Style="{StaticResource buttonSyle}"/>
         </FlexLayout>
         

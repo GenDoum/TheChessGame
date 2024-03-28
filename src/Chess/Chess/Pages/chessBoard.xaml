@@ -33,14 +33,14 @@
             
             
             <Image Grid.Column="1"
-                Source="board.png"/>
-            
+                Source="board.png"
+                Margin="0,20,0,20"/>
             
             <Image Grid.Column="2" 
                    Source="playbtn.png" 
                    Style="{StaticResource imgAppli}"
                    VerticalOptions="Start"
-                   Margin="-30,50,0,0"/>
+                   Margin="-30,50,20,0"/>
             
         </Grid>
         

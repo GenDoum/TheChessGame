@@ -7,12 +7,13 @@
     
     <ContentPage.Content>
         
-        <!-- LogIn Page -->
+        <!-- Login Page -->
+
         <FlexLayout JustifyContent="Center"
                     AlignItems="Center"
                     Direction="Column">
 
-            <Image  Source="connexion.png" 
+            <Image  Source="connexion.png"  
                     Style="{StaticResource imgAppli}"/>
 
             <Entry Placeholder="Pseudo" x:Name="UsernameEntry" Style="{StaticResource entryStyleDefault}"/>
@@ -28,6 +29,7 @@
 
             </HorizontalStackLayout>
             <Button Text="Connexion" Style="{StaticResource buttonSyle}"/>
+            <Button Text="Annuler" Style="{StaticResource buttonSyle}"/>
         </FlexLayout>
         
     </ContentPage.Content>

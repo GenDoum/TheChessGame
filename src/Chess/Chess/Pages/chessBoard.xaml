@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Chess.Pages.chessBoard"
+             BackgroundImageSource="test.jpg">
+    
+    <ContentPage.Content>
+        
+        <Grid RowDefinitions="*"
+              ColumnDefinitions="3*, 5*, 0.5*">
+            
+            
+            <VerticalStackLayout>
+                
+                <Image  Source="title.png" 
+                        Style="{StaticResource imgAppli}"
+                        Margin="100"/>
+                
+                <Image  Source="joueur1.png" 
+                        Style="{StaticResource imgAppli}"
+                        Margin="50"/>
+                
+                <Image  Source="vs.png" 
+                        Style="{StaticResource imgAppli}"
+                        Margin="50"/>
+                
+                <Image  Source="joueur2.png" 
+                        Style="{StaticResource imgAppli}"
+                        Margin="50"/>
+                
+            </VerticalStackLayout>
+            
+            
+            <Image Grid.Column="1"
+                Source="board.png"/>
+            
+            
+            <Image Grid.Column="2" 
+                   Source="playbtn.png" 
+                   Style="{StaticResource imgAppli}"
+                   VerticalOptions="Start"
+                   Margin="-30,50,0,0"/>
+            
+        </Grid>
+        
+    </ContentPage.Content>
+</ContentPage>

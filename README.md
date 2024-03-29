@@ -12,7 +12,7 @@
     The Chess est une application conçue pour les passionnés de jeux d'échecs. Si vous êtes un amateur de stratégie et de réflexion, The Chess est l'application parfaite pour vous aider à perfectionner votre jeu et à défier vos amis.
     <br/>
     <br/>
-    <a href="https://codefirst.iut.uca.fr/git/Chess/Chess/wiki"><strong>lien vers la documentation »</strong></a>
+    <a href="https://codefirst.iut.uca.fr/git/Chess/Chess/wiki"><strong>lien vers la documentation </strong></a>
   </p>
 </p>
 

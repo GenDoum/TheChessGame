@@ -1,76 +1,263 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="Chess.Pages.RulesPage"
-             >
+             x:Class="Chess.Pages.RulesPage">
 
     <Grid>
-        
-        <Image 
-            Source="test.jpg" 
-            Aspect="AspectFill"
-            />
+        <!-- Background de la page -->
+        <Image Source="test.jpg" 
+               Aspect="AspectFill" />
 
-        <Grid BackgroundColor="#80000000"
-              RowDefinitions="*,2.5*">
+        <ScrollView>
+            <!-- Création de la grille qui contient le titre et la grille des règles -->
+            <Grid BackgroundColor="#80000000"
+                  RowDefinitions="*,4*">
 
-            <Label Text="Rules" 
-                   FontSize="Large" 
-                   TextColor="AntiqueWhite"
-                   HorizontalTextAlignment="Center"
-                   Grid.Row="0"
-                   Margin="30"
-                   />
+                <Image Style="{StaticResource imgAppli}"
+                       Source="regletitle.png"
+                       HeightRequest="150" />
 
-            <toolkit:DockLayout
-                Grid.Row="1"
-                >
+                <toolkit:DockLayout Grid.Row="1">
+                    <Grid ColumnDefinitions="*,*"
+                          RowDefinitions="auto,auto,auto">
 
-                <ScrollView
-                    >
-                    
-                    <Grid 
-                        ColumnDefinitions="*,*"
-                        >
-                        <VerticalStackLayout
-                            Grid.Column="1">
-                        <Image 
-                            Source="logochess.png"
-                            Grid.Column="1"
-                            HeightRequest="400" WidthRequest="400"
-                            toolkit:DockLayout.DockPosition="Right"
-                            />
-                            <Image 
-     Source="logochess.png"
-     Grid.Column="1"
-     HeightRequest="400" WidthRequest="400"
-     toolkit:DockLayout.DockPosition="Right"
-     />
+                        
+                        
+                        <!-- Section des images d'exemple -->
+                        <VerticalStackLayout Grid.Column="1">
+                            <Image Source="exempleposition.png"
+                                   Margin="0"
+                                   HeightRequest="400"
+                                   WidthRequest="400"
+                                   MaximumHeightRequest="280" />
                         </VerticalStackLayout>
-                        <Frame >
-                            <VerticalStackLayout
-                            Grid.Column="0"
-                            BackgroundColor="#a58056"
-                            >
 
-                                <Label 
-                            Text="Chess is a two-player strategy board game played on a checkered board with 64 squares arranged in an 8×8 grid. The game is played by millions of people worldwide."
-                            Grid.Column="0" 
-                            TextColor="AntiqueWhite"
-                            Margin="10,10,10,0"
-                            toolkit:DockLayout.DockPosition="Left"
-                            />
-
+                        
+                        
+                        <!-- Première grille des règles -->
+                        <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="0"
+                               MaximumHeightRequest="250">
+                            <VerticalStackLayout BackgroundColor="#a58056">
+                                <Label Style="{StaticResource TitleRule}"
+                                       Text="Les règles du jeu - Le plateau :"/>
+                                <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales. Les colonnes sont repérées par les huit premières lettres de l’alphabet tandis que pour les rangées, on utilise les chiffres. Cela permet de donner les coordonnées des cases de l’échiquier. Par exemple, vous pouvez voir sur cette image que le rond rouge est sur la case C4 :"
+                                       Margin="10,10,10,0" />
                             </VerticalStackLayout>
                         </Frame>
+
+                        
+                        
+                        
+                        
+                        
+                        <!-- Image pour la deuxième section -->
+                        <Image Margin="90"
+                               BackgroundColor="AntiqueWhite"
+                               Source="pieceschess.png"
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               HeightRequest="150"
+                               WidthRequest="400" />
+
+                        <!-- Deuxième grille des règles -->
+                        <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="1"
+                               MaximumHeightRequest="200">
+                            <VerticalStackLayout>
+                                <Label Text="Les règles du jeu - Le nom des pièces :"
+                                       Style="{StaticResource TitleRule}" />
+                                <Label Text="Voici les différentes pièces et pions des échecs : Le Roi (noté R), la Dame (notée D), le Fou (notée F), le Cavalier (noté C), la Tour (noté T) et le pion. Les initiales des pièces permettent de donner le déplacement de la pièce sur le plateau. Par exemple, Re4 signifie que le Roi s’est déplacé sur la case e4."
+                                       Margin="10,10,10,0" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <!-- Troisième grille pour une section supplémentaire -->
+                        <Grid Grid.Row="2"
+                              Grid.ColumnSpan="2"
+                              RowDefinitions="*,*,*,*,*,*,*" 
+                              ColumnDefinitions="*,*"
+                              BackgroundColor="Transparent">
+
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="0"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Les règles du jeu - Le plateau :"
+                                       Style="{StaticResource TitleRule}" />
+                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
+                                       Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+                            <!-- Image pour la deuxième section -->
+                            <Image Margin="90"
+                               BackgroundColor="AntiqueWhite"
+                               Source="pieceschess.png"
+                               Grid.Column="1"
+                               Grid.Row="0"
+                               HeightRequest="150"
+                               WidthRequest="400" />
+
+                            
+                            
+                            
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="1"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Les règles du jeu - Le plateau :"
+                                       Style="{StaticResource TitleRule}"/>
+                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
+                                       Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+                            <Image Margin="90"
+                               BackgroundColor="AntiqueWhite"
+                               Source="pieceschess.png"
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               HeightRequest="150"
+                               WidthRequest="400" />
+
+
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="0"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Les règles du jeu - Le plateau :"
+                                       Style="{StaticResource TitleRule}" />
+                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
+                                       Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+                            <!-- Image pour la deuxième section -->
+                            <Image Margin="90"
+                               BackgroundColor="AntiqueWhite"
+                               Source="pieceschess.png"
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               HeightRequest="150"
+                               WidthRequest="400" />
+
+
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="0"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Les règles du jeu - Le plateau :"
+                                       Style="{StaticResource TitleRule}" />
+                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
+                                       Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+                            <!-- Image pour la deuxième section -->
+                            <Image Margin="90"
+                               BackgroundColor="AntiqueWhite"
+                               Source="pieceschess.png"
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               HeightRequest="150"
+                               WidthRequest="400" />
+
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="0"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Les règles du jeu - Le plateau :"
+                                       Style="{StaticResource TitleRule}" />
+                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
+                                       Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+                            <!-- Image pour la deuxième section -->
+                            <Image Margin="90"
+                               BackgroundColor="AntiqueWhite"
+                               Source="pieceschess.png"
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               HeightRequest="150"
+                               WidthRequest="400" />
+
+
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="0"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Les règles du jeu - Le plateau :"
+                                       Style="{StaticResource TitleRule}" />
+                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
+                                       Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+                            <!-- Image pour la deuxième section -->
+                            <Image Margin="90"
+                               BackgroundColor="AntiqueWhite"
+                               Source="pieceschess.png"
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               HeightRequest="150"
+                               WidthRequest="400" />
+
+
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="0"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Les règles du jeu - Le plateau :"
+                                       Style="{StaticResource TitleRule}" />
+                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
+                                       Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+                            <!-- Image pour la deuxième section -->
+                            <Image Margin="90"
+                               BackgroundColor="AntiqueWhite"
+                               Source="pieceschess.png"
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               HeightRequest="150"
+                               WidthRequest="400" />
+                            
+                            
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="0"
+                               MaximumHeightRequest="250">
+                            <VerticalStackLayout BackgroundColor="#a58056">
+                                <Label Text="Les règles du jeu - Le plateau :"
+                                       Style="{StaticResource TitleRule}" />
+                                <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
+                                       Margin="10,10,10,0" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Image Margin="90"
+                               BackgroundColor="AntiqueWhite"
+                               Source="pieceschess.png"
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               HeightRequest="150"
+                               WidthRequest="400" />
+                        </Grid>
+
                     </Grid>
-
-                </ScrollView>
-                
-            </toolkit:DockLayout>
-
-        </Grid>
-
+                </toolkit:DockLayout>
+            </Grid>
+        </ScrollView>
     </Grid>
 </ContentPage>

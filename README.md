@@ -64,7 +64,7 @@ $ git commit -m 'Ajouter une nouvelle fonctionnalité'
 ```
 $ git push origin feature/fonctionnaliteIncroyable
 ```
-5.  Ouvrir une demande de fusion
+5.  [Ouvrir une demande de fusion](https://codefirst.iut.uca.fr/git/Chess/Chess/pulls)
 
 
 ## Contributeurs

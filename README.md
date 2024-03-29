@@ -3,7 +3,7 @@
 <br/>
 <p align="center">
   <a href="https://github.com/ShaanCoding/ReadME-Generator">
-    <img src="src/Chess/Chess/Resources/Images" alt="Logo" width="80" height="80">
+    <img src="./src/Chess/Chess/Resources/Images/logochess.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">The chess</h3>
@@ -19,8 +19,8 @@
 ## Table des matières
 
 * [Le projet](#le-projet)
-* [Technologies utilisées](#oh)
-* [Contribuer au projet](#Contribuer)
+* [Technologies utilisées](#fait-avec)
+* [Contribuer au projet](#contribuer)
 * [Contributeurs](#contributeurs)
 
 
@@ -28,8 +28,44 @@
 
 [à compléter]
 
+## Fait avec
+- [Visual Studio 2022](https://visualstudio.microsoft.com/fr/vs/ "IDE") -IDE
+- [CodeFirst](https://codefirst.iut.uca.fr/) - Technologie
+- [.NET MAUI 8.0](https://learn.microsoft.com/en-us/dotnet/maui/what-is-maui?view=net-maui-8.0) - Framework
+    - [XAML](https://learn.microsoft.com/fr-fr/dotnet/desktop/wpf/xaml/?view=netdesktop-8.0) - langage de balisage extensible
+    - [C#](https://learn.microsoft.com/fr-fr/dotnet/csharp/) - Langage
+- [Doxygen](https://www.doxygen.nl/) - Documentation
 
-# Contribuer
+## Contribuer
+
+### Prérequis
+
+-   [Git](https://git-scm.com/) - Versionnage
+-   [Visual Studio 2022](https://visualstudio.microsoft.com/fr/vs/ "IDE") - Environnement de développement intégré (IDE)
+-   [.NET 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) - Framework
+
+Toutes les contributions que vous apportez sont **grandement appréciées**.
+
+-   Si vous avez des suggestions, n'hésitez pas à [ouvrir un ticket](https://codefirst.iut.uca.fr/git/Chess/Chess/issues) pour en discuter, ou à créer directement une demande de fusion.
+-   Créez une demande de fusion individuelle pour chaque suggestion.
+
+### Création d'une demande de fusion
+
+1.  Forker le projet
+2.  Créer votre branche de fonctionnalité :  
+```bash
+$ git checkout -b feature/fonctionnaliteIncroyable
+```
+3.  Effectuer vos modifications : 
+```bash
+$ git commit -m 'Ajouter une nouvelle fonctionnalité'
+```
+4.  Pousser vers la branche : 
+```
+$ git push origin feature/fonctionnaliteIncroyable
+```
+5.  Ouvrir une demande de fusion
+
 
 ## Contributeurs
 

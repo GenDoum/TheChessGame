@@ -5,10 +5,22 @@
              x:Class="Chess.Pages.LeaderBoard"
              BackgroundImageSource="test.jpg">
 
-    <VerticalStackLayout
-        Margin="0, 100, 0, 0">
-        <contentV:viewLeaderBoard/>
-    </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout
+            Margin="0, 100, 0, 0">
+            
+            <Image
+                Source="classement.png"
+                Style="{StaticResource imgAppli}"
+            />
+            
+            <contentV:viewLeaderBoard/>
+            <contentV:viewLeaderBoard/>
+            <contentV:viewLeaderBoard/>
+            <contentV:viewLeaderBoard/>
+            <contentV:viewLeaderBoard/>
+        </VerticalStackLayout>
+    </ScrollView>
 
     
 </ContentPage>

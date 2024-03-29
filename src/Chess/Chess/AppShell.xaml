@@ -21,7 +21,11 @@
         <ShellContent
             ContentTemplate="{DataTemplate localpages:LogIn}"
             Route="LogIn" />
-        
+
+        <ShellContent
+            ContentTemplate="{DataTemplate localpages:LeaderBoard}"
+            Route="LeaderBoard" />
+
     </TabBar>
 
 </Shell>

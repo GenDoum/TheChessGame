@@ -7,20 +7,25 @@
     xmlns:localpages="clr-namespace:Chess.Pages"
     Shell.FlyoutBehavior="Disabled"
     Title="Chess">
+    
     <TabBar>
         
+        <!-- Page principal -->
         <ShellContent
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
 
+        <!-- Page d'inscription -->
         <ShellContent
             ContentTemplate="{DataTemplate localpages:Register}"
             Route="Register" />
         
+        <!-- Page de connexion -->
         <ShellContent
             ContentTemplate="{DataTemplate localpages:LogIn}"
             Route="LogIn" />
 
+        <!-- Page de classement -->
         <ShellContent
             ContentTemplate="{DataTemplate localpages:LeaderBoard}"
             Route="LeaderBoard" />

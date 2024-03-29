@@ -4,6 +4,7 @@
              xmlns:contentV="clr-namespace:Chess.contentView"
              x:Class="Chess.contentView.viewLeaderBoard">
     
+    <!-- Création de la content view pour la page LeaderBoard -->
     
     <VerticalStackLayout
         HorizontalOptions="Center"

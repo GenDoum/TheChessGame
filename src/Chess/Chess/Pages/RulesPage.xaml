@@ -1,32 +1,59 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    x:Class="Chess.Pages.RulesPage"
-     >
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Chess.Pages.RulesPage"
+             >
 
     <Grid>
-        <Image Source="test.jpg" Aspect="AspectFit"/>
+        
+        <Image 
+            Source="test.jpg" 
+            Aspect="AspectFill"
+            />
 
+        <Grid BackgroundColor="#80000000"
+              RowDefinitions="*,2.5*">
 
-        <FlexLayout
-             JustifyContent="Center"
-             AlignItems="Center"
-             Direction="Column"
-             >
-            <Label Text="Rules" FontSize="Large" 
-                   TextColor="AntiqueWhite"/>
-        </FlexLayout>
+            <Label Text="Rules" 
+                   FontSize="Large" 
+                   TextColor="AntiqueWhite"
+                   HorizontalTextAlignment="Center"
+                   Grid.Row="0"
+                   Margin="30"
+                   />
 
-        <Grid
-            ColumnDefinitions="*,Auto" 
-            RowDefinitions="Auto"   
-            >
+            <toolkit:DockLayout
+                Grid.Row="1"
+                >
 
-            <Image Source="logochess.png" Grid.Column="1" />
-            <Label Text="Chess is a two-player strategy board game played on a checkered board with 64 squares arranged in an 8×8 grid. The game is played by millions of people worldwide. Chess is believed to be derived from the Indian game chaturanga sometime before the 7th century. Chaturanga is also the likely ancestor of the Eastern strategy games xiangqi, janggi, and shogi. Chess reached Europe by the 9th century, due to the Umayyad conquest of Hispania. The pieces assumed their current powers in Spain in the late 15th century; the rules were finally standardized in the 19th century." Grid.Column="0" 
-                   TextColor="AntiqueWhite"/>
+                <ScrollView
+                    >
+                    
+                    <toolkit:DockLayout>
+
+                        <Image 
+                            Source="logochess.png"
+                            Grid.Column="1"
+                            HeightRequest="400" WidthRequest="400"
+                            toolkit:DockLayout.DockPosition="Right"
+                            />
+
+                        <Label 
+                            Text="Chess is a two-player strategy board game played on a checkered board with 64 squares arranged in an 8×8 grid. The game is played by millions of people worldwide."
+                            Grid.Column="0" 
+                            TextColor="AntiqueWhite"
+                            Margin="10,10,10,0"
+                            toolkit:DockLayout.DockPosition="Left"
+                            />
+                        
+
+                    </toolkit:DockLayout>
+
+                </ScrollView>
+                
+            </toolkit:DockLayout>
+
         </Grid>
 
     </Grid>

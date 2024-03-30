@@ -5,31 +5,39 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Chess"
     xmlns:localpages="clr-namespace:Chess.Pages"
+    xmlns:contentViews="clr-namespace:Chess.contentView"
     Shell.FlyoutBehavior="Disabled"
-    Title="Chess">
-    
+    Title="Chess"
+>
     <TabBar>
         
-        <!-- Page principal -->
         <ShellContent
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
 
-        <!-- Page d'inscription -->
         <ShellContent
+
             ContentTemplate="{DataTemplate localpages:Register}"
             Route="Register" />
         
-        <!-- Page de connexion -->
         <ShellContent
             ContentTemplate="{DataTemplate localpages:LogIn}"
             Route="LogIn" />
+        
+        <ShellContent
+            ContentTemplate="{DataTemplate localpages:pausePage}"
+            Route="LogIn" />
+        
 
+        <ShellContent
+            ContentTemplate="{DataTemplate localpages:LoginSecondPlayer}"
+            Route="LoginSecondPlayer" />
+        
         <!-- Page de classement -->
         <ShellContent
             ContentTemplate="{DataTemplate localpages:LeaderBoard}"
             Route="LeaderBoard" />
-
+        
     </TabBar>
 
 </Shell>

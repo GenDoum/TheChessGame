@@ -6,7 +6,9 @@
              BackgroundImageSource="test.jpg">
 
     <!-- Page LeaderBoard -->
+    
     <ScrollView>
+        
         <VerticalStackLayout
             Margin="0, 100, 0, 0">
             

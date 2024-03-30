@@ -17,7 +17,7 @@
 
             <Entry Placeholder="Pseudo" x:Name="UsernameEntry" Style="{StaticResource entryStyleDefault}"/>
             <Entry Placeholder="Mot de passe" x:Name="PasswordEntry" IsPassword="True" Style="{StaticResource entryStyleDefault}" MaxLength="20"/>
-            <Button Text="Connexion" Style="{StaticResource buttonSyle}"/>
+            <Button Text="Connexion" Style="{StaticResource buttonSyle}" FontFamily="Pacifico" />
         </FlexLayout>
         
     </ContentPage.Content>

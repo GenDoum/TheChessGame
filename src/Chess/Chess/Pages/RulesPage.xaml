@@ -25,13 +25,11 @@
                         
                         
                         <!-- Section des images d'exemple -->
-                            <Image Source="exempleposition.png"
-                                   Margin="0"
-                                   Grid.Column="1"
-                                   Grid.Row="0"
-                                   HeightRequest="400"
-                                   WidthRequest="400"
-                                   MaximumHeightRequest="280" />
+                        <Image Style="{StaticResource ImageRule}"
+                               Source="exempleposition.png"
+                               Grid.Column="1"
+                               Grid.Row="0"
+                                    />
 
 
                             <!-- Première grille des règles -->
@@ -52,13 +50,12 @@
                         
                         
                         <!-- Image pour la deuxième section -->
-                        <Image Margin="90"
+                        <Image Style="{StaticResource ImageRule}"
                                BackgroundColor="AntiqueWhite"
                                Source="pieceschess.png"
                                Grid.Column="1"
                                Grid.Row="1"
-                               HeightRequest="150"
-                               WidthRequest="400" />
+                                />
 
                         <!-- Deuxième grille des règles -->
                         <Frame Style="{StaticResource FrameRules}"
@@ -77,19 +74,18 @@
 
 
 
-                        <HorizontalStackLayout Grid.Row="2"
-                                               Grid.ColumnSpan="2">
+                        <toolkit:DockLayout Grid.Row="2"
+                                            Grid.ColumnSpan="2">
                             <Label Style="{StaticResource labelRules}"
                                Text="Les règles du jeu - Le plateau :" 
-                               HorizontalTextAlignment="Center"
-                               VerticalTextAlignment="Center"
+                               toolkit:DockLayout.DockPosition="None"
                                />
-                        </HorizontalStackLayout>
+                        </toolkit:DockLayout>
                         
                         <!-- Troisième grille pour une section supplémentaire -->
                         <Grid Grid.Row="3"
                               Grid.ColumnSpan="2"
-                              RowDefinitions="*,*,*,*,*,*,*" 
+                              RowDefinitions="auto,auto,auto,auto,auto,auto,auto" 
                               ColumnDefinitions="*,*"
                               BackgroundColor="Transparent">
 
@@ -105,13 +101,12 @@
                             </Frame>
 
                             <!-- Image pour la deuxième section -->
-                            <Image Margin="90"
+                            <Image Style="{StaticResource ImageRule}"
                                BackgroundColor="AntiqueWhite"
                                Source="pieceschess.png"
                                Grid.Column="1"
                                Grid.Row="0"
-                               HeightRequest="150"
-                               WidthRequest="400" />
+                                />
 
                             
                             
@@ -127,13 +122,12 @@
                                 </VerticalStackLayout>
                             </Frame>
 
-                            <Image Margin="90"
+                            <Image Style="{StaticResource ImageRule}"
                                BackgroundColor="AntiqueWhite"
                                Source="pieceschess.png"
                                Grid.Column="1"
                                Grid.Row="1"
-                               HeightRequest="150"
-                               WidthRequest="400" />
+                               />
 
 
                             <Frame Style="{StaticResource FrameRules}"
@@ -148,13 +142,12 @@
                             </Frame>
 
                             <!-- Image pour la deuxième section -->
-                            <Image Margin="90"
+                            <Image Style="{StaticResource ImageRule}"
                                BackgroundColor="AntiqueWhite"
                                Source="pieceschess.png"
                                Grid.Column="1"
                                Grid.Row="2"
-                               HeightRequest="150"
-                               WidthRequest="400" />
+                               />
 
 
                             <Frame Style="{StaticResource FrameRules}"
@@ -169,13 +162,12 @@
                             </Frame>
 
                             <!-- Image pour la deuxième section -->
-                            <Image Margin="90"
+                            <Image Style="{StaticResource ImageRule}"
                                BackgroundColor="AntiqueWhite"
                                Source="pieceschess.png"
                                Grid.Column="1"
                                Grid.Row="3"
-                               HeightRequest="150"
-                               WidthRequest="400" />
+                                />
 
                             <Frame Style="{StaticResource FrameRules}"
                                Grid.Row="3"
@@ -189,13 +181,12 @@
                             </Frame>
 
                             <!-- Image pour la deuxième section -->
-                            <Image Margin="90"
+                            <Image Style="{StaticResource ImageRule}"
                                BackgroundColor="AntiqueWhite"
                                Source="pieceschess.png"
                                Grid.Column="1"
                                Grid.Row="3"
-                               HeightRequest="150"
-                               WidthRequest="400" />
+                                />
 
 
                             <Frame Style="{StaticResource FrameRules}"
@@ -210,13 +201,12 @@
                             </Frame>
 
                             <!-- Image pour la deuxième section -->
-                            <Image Margin="90"
+                            <Image Style="{StaticResource ImageRule}"
                                BackgroundColor="AntiqueWhite"
                                Source="pieceschess.png"
                                Grid.Column="1"
                                Grid.Row="4"
-                               HeightRequest="150"
-                               WidthRequest="400" />
+                                />
 
 
                             <Frame Style="{StaticResource FrameRules}"
@@ -231,13 +221,12 @@
                             </Frame>
 
                             <!-- Image pour la deuxième section -->
-                            <Image Margin="90"
+                            <Image Style="{StaticResource ImageRule}"
                                BackgroundColor="AntiqueWhite"
                                Source="pieceschess.png"
                                Grid.Column="1"
                                Grid.Row="5"
-                               HeightRequest="150"
-                               WidthRequest="400" />
+                                />
                             
                             
                             <Frame Style="{StaticResource FrameRules}"
@@ -249,15 +238,14 @@
                                 <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
                                        Margin="10,10,10,0" />
                             </VerticalStackLayout>
-                        </Frame>
+                            </Frame>
 
-                        <Image Margin="90"
+                            <Image Style="{StaticResource ImageRule}"
                                BackgroundColor="AntiqueWhite"
                                Source="pieceschess.png"
                                Grid.Column="1"
                                Grid.Row="6"
-                               HeightRequest="150"
-                               WidthRequest="400" />
+                                />
                         </Grid>
                         
                         <Frame Style="{StaticResource FrameRules}"
@@ -272,18 +260,18 @@
                         </Frame>
 
                         <!-- Image pour la deuxième section -->
-                        <Image Margin="90"
+                        <Image Style="{StaticResource ImageRule}"
                                Source="placementglobal.png"
                                Grid.Column="1"
                                Grid.Row="4"
-                               HeightRequest="280"
-                               WidthRequest="400" />
+                                />
 
                         <Grid 
                             Grid.Row="5"
                             Grid.ColumnSpan="2"
                             RowDefinitions="auto ,auto"
-                            ColumnDefinitions="3*,*,*">
+                            ColumnDefinitions="*,*"
+                            >
 
                             <Frame Style="{StaticResource FrameRules}"
                                Grid.Row="0"
@@ -297,46 +285,82 @@
                                 </VerticalStackLayout>
                             </Frame>
                             
-                            <Image Margin="90"
-                               Source="petitroque.png"
-                               Grid.Column="1"
-                               Grid.Row="0"
-                               HeightRequest="280"
-                               WidthRequest="400" />
-                            <Image Margin="90"
-                               Source="petitroque.png"
-                               Grid.Column="2"
-                               Grid.Row="0"
-                               HeightRequest="280"
-                               WidthRequest="400" />
-
                             
-                            <Frame Style="{StaticResource FrameRules}"
-                               Grid.Row="1"
-                               Grid.Column="0"
-                               MaximumHeightRequest="250">
-                                <VerticalStackLayout BackgroundColor="#a58056">
-                                    <Label Text="Les règles du jeu - Le déplacement des pièces :"
-                                       Style="{StaticResource TitleRule}" />
-                                    <Label Text="Chaque pièce a un déplacement spécifique. Voici les déplacements de chaque pièce :"
-                                       Margin="10,10,10,0" />
-                                </VerticalStackLayout>
-                            </Frame>
+                            <Grid ColumnDefinitions="*,*"
+                                  Grid.Column="1"
+                                  Grid.Row="0">
 
-                            <Image Margin="90"
-                               Source="roque.png"
-                               Grid.Column="1"
-                               Grid.Row="0"
-                               HeightRequest="280"
-                               WidthRequest="400" />
-                            <Image Margin="90"
-                               Source="roque.png"
-                               Grid.Column="2"
-                               Grid.Row="0"
-                               HeightRequest="280"
-                               WidthRequest="400" />
-                            
+                                <Grid RowDefinitions="*,4*"
+                                  Grid.Column="1">
 
+                                    <Label HorizontalOptions="CenterAndExpand"
+                                           Text="Position initiale et finale"
+                                           Style="{StaticResource TitleRule}" 
+                                           Grid.Row="0"
+                                           Margin="0,30,0,0"/>
+                                    
+                                    <Image 
+                                        Source="petitroque.png"
+                                        Grid.Row="1"
+                                        Style="{StaticResource ImageRule}"/>
+                                    
+                                </Grid>
+                                
+                                <Grid RowDefinitions="*,3*"
+                                      Grid.Column="0">
+                                    
+                                    <Label Text="Coup Précédent :"
+                                           Grid.Row="0"
+                                           HorizontalOptions="CenterAndExpand"
+                                           Style="{StaticResource TitleRule}" 
+                                           Margin="0,30,0,0"/>
+                                    <Image     
+                                        Source="petitroque.png"
+                                        Grid.Row="1"
+                                        Style="{StaticResource ImageRule}" />
+                                </Grid>
+
+
+                            </Grid>
+
+
+
+                            <Grid ColumnDefinitions="*,*"
+                                  Grid.Column="1"
+                                  Grid.Row="1">
+
+                                <Grid RowDefinitions="*,4*"
+                                  Grid.Column="1">
+
+                                    <Label HorizontalOptions="CenterAndExpand"
+                                           Text="Position initiale et finale"
+                                           Style="{StaticResource TitleRule}" 
+                                           Grid.Row="0"
+                                           Margin="0,30,0,0"/>
+
+                                    <Image 
+                                        Source="petitroque.png"
+                                        Grid.Row="1"
+                                        Style="{StaticResource ImageRule}"/>
+
+                                </Grid>
+
+                                <Grid RowDefinitions="*,3*"
+                                      Grid.Column="0">
+
+                                    <Label Text="Coup Précédent :"
+                                           Grid.Row="0"
+                                           HorizontalOptions="CenterAndExpand"
+                                           Style="{StaticResource TitleRule}" 
+                                           Margin="0,30,0,0"/>
+                                    <Image     
+                                        Source="petitroque.png"
+                                        Grid.Row="1"
+                                        Style="{StaticResource ImageRule}" />
+                                </Grid>
+
+
+                            </Grid>
                         </Grid>
                     </Grid>
                 </toolkit:DockLayout>

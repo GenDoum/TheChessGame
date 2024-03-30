@@ -5,8 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Chess"
     xmlns:localpages="clr-namespace:Chess.Pages"
+    xmlns:contentViews="clr-namespace:Chess.contentView"
     Shell.FlyoutBehavior="Disabled"
-    Title="Chess">
+    Title="Chess"
+    >
     <TabBar>
         
         <ShellContent
@@ -21,7 +23,11 @@
         <ShellContent
             ContentTemplate="{DataTemplate localpages:LogIn}"
             Route="LogIn" />
-        
+
+        <ShellContent
+        ContentTemplate="{DataTemplate localpages:LoginSecondPlayer}"
+        Route="LoginSecondPlayer" />
+
     </TabBar>
 
 </Shell>

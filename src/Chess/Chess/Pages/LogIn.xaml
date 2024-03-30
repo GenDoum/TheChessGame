@@ -22,7 +22,7 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Center">
                 <CheckBox Color="#DEBC95"
-                          />
+                />
                 <Label Text="Jouer avec un invité" 
                        TextColor="FloralWhite"
                        Margin="12"/>

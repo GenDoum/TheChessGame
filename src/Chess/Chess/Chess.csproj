@@ -57,22 +57,22 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <AndroidResource Remove="NewFolder1\**" />
-	  <AndroidResource Remove="NewFolder\**" />
-	  <Compile Remove="NewFolder1\**" />
-	  <Compile Remove="NewFolder\**" />
-	  <EmbeddedResource Remove="NewFolder1\**" />
-	  <EmbeddedResource Remove="NewFolder\**" />
-	  <MauiCss Remove="NewFolder1\**" />
-	  <MauiCss Remove="NewFolder\**" />
-	  <MauiXaml Remove="NewFolder1\**" />
-	  <MauiXaml Remove="NewFolder\**" />
-	  <None Remove="NewFolder1\**" />
-	  <None Remove="NewFolder\**" />
+		<AndroidResource Remove="NewFolder1\**" />
+		<AndroidResource Remove="NewFolder\**" />
+		<Compile Remove="NewFolder1\**" />
+		<Compile Remove="NewFolder\**" />
+		<EmbeddedResource Remove="NewFolder1\**" />
+		<EmbeddedResource Remove="NewFolder\**" />
+		<MauiCss Remove="NewFolder1\**" />
+		<MauiCss Remove="NewFolder\**" />
+		<MauiXaml Remove="NewFolder1\**" />
+		<MauiXaml Remove="NewFolder\**" />
+		<None Remove="NewFolder1\**" />
+		<None Remove="NewFolder\**" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\logochess.png" />
+		<None Remove="Resources\Images\logochess.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -82,31 +82,31 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="contentView\" />
+		<Folder Include="contentView\" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="contentView\viewLeaderBoard.xaml.cs">
-	    <DependentUpon>viewLeaderBoard.xaml</DependentUpon>
-	  </Compile>
+		<Compile Update="contentView\viewLeaderBoard.xaml.cs">
+			<DependentUpon>viewLeaderBoard.xaml</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="contentView\connexionModuleButtons.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="contentView\connexionModuleEntry.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="contentView\viewLeaderBoard.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\LeaderBoard.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Pages\LoginSecondPlayer.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+		<MauiXaml Update="contentView\connexionModuleButtons.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="contentView\connexionModuleEntry.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="contentView\viewLeaderBoard.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Pages\LeaderBoard.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Pages\LoginSecondPlayer.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 	</ItemGroup>
 
 </Project>

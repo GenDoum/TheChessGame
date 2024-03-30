@@ -10,7 +10,8 @@
             JustifyContent="Center"
             AlignItems="Center"
             Direction="Column"
-            >
+        >
+            
             <Image 
                 Source="inscription.png" 
                 Style="{StaticResource imgAppli}"/>

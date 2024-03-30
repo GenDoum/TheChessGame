@@ -22,8 +22,8 @@
                     <Grid ColumnDefinitions="*,*"
                           RowDefinitions="auto,auto,auto,auto,auto,auto">
 
-                        
-                        
+
+
                         <!-- Section des images d'exemple -->
                         <Image Style="{StaticResource ImageRule}"
                                Source="exempleposition.png"
@@ -32,23 +32,23 @@
                                     />
 
 
-                            <!-- Première grille des règles -->
+                        <!-- Première grille des règles -->
                         <Frame Style="{StaticResource FrameRules}"
                                Grid.Row="0"
                                MaximumHeightRequest="250">
                             <VerticalStackLayout BackgroundColor="#a58056">
                                 <Label Style="{StaticResource TitleRule}"
                                        Text="Les règles du jeu - Le plateau :"/>
-                                <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales. Les colonnes sont repérées par les huit premières lettres de l’alphabet tandis que pour les rangées, on utilise les chiffres. Cela permet de donner les coordonnées des cases de l’échiquier. Par exemple, vous pouvez voir sur cette image que le rond rouge est sur la case C4 :"
+                                <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales.&#x0a;Les colonnes sont repérées par les huit premières lettres de l’alphabet tandis que pour les rangées, on utilise les chiffres. Cela permet de donner les coordonnées des cases de l’échiquier.&#x0a;&#x0a;Par exemple, vous pouvez voir sur cette image que le rond rouge est sur la case C4 :"
                                        Margin="10,10,10,0" />
                             </VerticalStackLayout>
                         </Frame>
 
-                        
-                        
-                        
-                        
-                        
+
+
+
+
+
                         <!-- Image pour la deuxième section -->
                         <Image Style="{StaticResource ImageRule}"
                                BackgroundColor="AntiqueWhite"
@@ -56,15 +56,16 @@
                                Grid.Column="1"
                                Grid.Row="1"
                                 />
+                        
 
                         <!-- Deuxième grille des règles -->
                         <Frame Style="{StaticResource FrameRules}"
                                Grid.Row="1"
                                MaximumHeightRequest="200">
                             <VerticalStackLayout>
-                                <Label Text="Les règles du jeu - Le nom des pièces :"
+                                <Label Text="Les règles du jeu - Le nom des pièces"
                                        Style="{StaticResource TitleRule}" />
-                                <Label Text="Voici les différentes pièces et pions des échecs : Le Roi (noté R), la Dame (notée D), le Fou (notée F), le Cavalier (noté C), la Tour (noté T) et le pion. Les initiales des pièces permettent de donner le déplacement de la pièce sur le plateau. Par exemple, Re4 signifie que le Roi s’est déplacé sur la case e4."
+                                <Label Text="Voici les différentes pièces et pions des échecs :&#x0a;Le Roi (noté R), la Dame (notée D), le Fou (notée F), le Cavalier (noté C), la Tour (noté T) et le pion.&#x0a;&#x0a;Les initiales des pièces permettent de donner le déplacement de la pièce sur le plateau. Par exemple, Re4 signifie que le Roi s’est déplacé sur la case e4."
                                        Margin="10,10,10,0" />
                             </VerticalStackLayout>
                         </Frame>
@@ -77,11 +78,12 @@
                         <toolkit:DockLayout Grid.Row="2"
                                             Grid.ColumnSpan="2">
                             <Label Style="{StaticResource labelRules}"
-                               Text="Les règles du jeu - Le plateau :" 
-                               toolkit:DockLayout.DockPosition="None"
+                                   FontSize="24"
+                                   Text="Les règles du jeu – Le déplacement des pièces :" 
+                                   toolkit:DockLayout.DockPosition="None"
                                />
                         </toolkit:DockLayout>
-                        
+
                         <!-- Troisième grille pour une section supplémentaire -->
                         <Grid Grid.Row="3"
                               Grid.ColumnSpan="2"
@@ -108,9 +110,9 @@
                                Grid.Row="0"
                                 />
 
-                            
-                            
-                            
+
+
+
                             <Frame Style="{StaticResource FrameRules}"
                                Grid.Row="1"
                                MaximumHeightRequest="250">
@@ -227,17 +229,17 @@
                                Grid.Column="1"
                                Grid.Row="5"
                                 />
-                            
-                            
+
+
                             <Frame Style="{StaticResource FrameRules}"
                                Grid.Row="6"
                                MaximumHeightRequest="250">
-                            <VerticalStackLayout BackgroundColor="#a58056">
-                                <Label Text="Les règles du jeu - Le plateau :"
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Les règles du jeu - Le plateau :"
                                        Style="{StaticResource TitleRule}" />
-                                <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
+                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
                                        Margin="10,10,10,0" />
-                            </VerticalStackLayout>
+                                </VerticalStackLayout>
                             </Frame>
 
                             <Image Style="{StaticResource ImageRule}"
@@ -247,7 +249,7 @@
                                Grid.Row="6"
                                 />
                         </Grid>
-                        
+
                         <Frame Style="{StaticResource FrameRules}"
                                Grid.Row="4"
                                MaximumHeightRequest="250">
@@ -284,8 +286,8 @@
                                        Margin="10,10,10,0" />
                                 </VerticalStackLayout>
                             </Frame>
-                            
-                            
+
+
                             <Grid ColumnDefinitions="*,*"
                                   Grid.Column="1"
                                   Grid.Row="0">
@@ -298,17 +300,17 @@
                                            Style="{StaticResource TitleRule}" 
                                            Grid.Row="0"
                                            Margin="0,30,0,0"/>
-                                    
+
                                     <Image 
                                         Source="petitroque.png"
                                         Grid.Row="1"
                                         Style="{StaticResource ImageRule}"/>
-                                    
+
                                 </Grid>
-                                
+
                                 <Grid RowDefinitions="*,3*"
                                       Grid.Column="0">
-                                    
+
                                     <Label Text="Coup Précédent :"
                                            Grid.Row="0"
                                            HorizontalOptions="CenterAndExpand"
@@ -324,6 +326,20 @@
                             </Grid>
 
 
+                            <Frame Style="{StaticResource FrameRules}"
+                                   Grid.Row="4"
+                                   MaximumHeightRequest="250">
+
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Les règles du jeu – Le placement des pièces :"
+                                        Style="{StaticResource TitleRule}" />
+
+                                    <Label Text="Voici la position initiale des pièces sur l'échiquier :"
+                                        Margin="10,10,10,0" />
+
+                                </VerticalStackLayout>
+
+                            </Frame>
 
                             <Grid ColumnDefinitions="*,*"
                                   Grid.Column="1"

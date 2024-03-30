@@ -26,7 +26,6 @@
             ContentTemplate="{DataTemplate localpages:chessBoard}"
             Route="chessBoard" />
         
-        
     </TabBar>
 
 </Shell>

@@ -2,8 +2,8 @@
 
 <br/>
 <p align="center">
-  <a href="https://github.com/ShaanCoding/ReadME-Generator">
-    <img src="./src/Chess/Chess/Resources/Images/logochess.png" alt="Logo" width="80" height="80">
+  <a href="#">
+    <img src="./src/Chess/Chess/Resources/AppIcon/appicon.svg" alt="Logo" width="250" height="250">
   </a>
 
   <h3 align="center">The chess</h3>

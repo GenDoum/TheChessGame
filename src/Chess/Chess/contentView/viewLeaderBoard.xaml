@@ -3,35 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:contentV="clr-namespace:Chess.contentView"
              x:Class="Chess.contentView.viewLeaderBoard">
+    
+    <!-- Création de la content view pour la page LeaderBoard -->
+    
     <VerticalStackLayout
-     HorizontalOptions="Center"
-     VerticalOptions="Center"
-     >
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <Frame BackgroundColor="#A58056" BorderColor="White" CornerRadius="0">
+            <FlexLayout
+                VerticalOptions="Center"
+                WidthRequest="300"
+                JustifyContent="SpaceBetween">
 
-        <FlexLayout
-         VerticalOptions="Center"
-         BackgroundColor="AliceBlue"
-         WidthRequest="300"
-         JustifyContent="SpaceBetween"
-         >
+                    <Image Source="certif.png"
+                           HeightRequest="30"
+                           WidthRequest="30"
+                           Margin="8, 8, 0, 0"
+                           />
 
-            <Image Source="certif.png"
-                HeightRequest="30"
-                WidthRequest="30"
-                Margin="8, 8, 0, 0"
-                />
+                    <Label Text="Pseudo"
+                           FontSize="25"
+                           Margin="5"
+                           />
 
-            <Label Text="Pseudo"
-                FontSize="25"
-                Margin="5"
-                />
-
-            <Label Text="500 Alo"
-                FontSize="25"
-                TextColor="Gold"
-                Margin="5"
-                />
-        </FlexLayout>
-
+                    <Label Text="500 Alo"
+                           FontSize="25"
+                           TextColor="Gold"
+                           Margin="5"
+                           />
+            </FlexLayout>
+        </Frame>
     </VerticalStackLayout>
+    
 </ContentView>

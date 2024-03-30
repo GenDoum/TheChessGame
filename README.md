@@ -29,6 +29,7 @@
 [à compléter]
 
 ## Fait avec
+- [JetBrains Rider](https://www.jetbrains.com/fr-fr/rider/) - IDE
 - [Visual Studio 2022](https://visualstudio.microsoft.com/fr/vs/ "IDE") -IDE
 - [CodeFirst](https://codefirst.iut.uca.fr/) - Technologie
 - [.NET MAUI 8.0](https://learn.microsoft.com/en-us/dotnet/maui/what-is-maui?view=net-maui-8.0) - Framework

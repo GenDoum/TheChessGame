@@ -33,6 +33,11 @@
             ContentTemplate="{DataTemplate localpages:LoginSecondPlayer}"
             Route="LoginSecondPlayer" />
         
+        <!-- Page de classement -->
+        <ShellContent
+            ContentTemplate="{DataTemplate localpages:LeaderBoard}"
+            Route="LeaderBoard" />
+        
     </TabBar>
 
 </Shell>

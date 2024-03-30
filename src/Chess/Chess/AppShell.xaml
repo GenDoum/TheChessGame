@@ -23,11 +23,16 @@
         <ShellContent
             ContentTemplate="{DataTemplate localpages:LogIn}"
             Route="LogIn" />
+        
+        <ShellContent
+            ContentTemplate="{DataTemplate localpages:pausePage}"
+            Route="LogIn" />
+        
 
         <ShellContent
-        ContentTemplate="{DataTemplate localpages:LoginSecondPlayer}"
-        Route="LoginSecondPlayer" />
-
+            ContentTemplate="{DataTemplate localpages:LoginSecondPlayer}"
+            Route="LoginSecondPlayer" />
+        
     </TabBar>
 
 </Shell>

@@ -28,8 +28,7 @@
                        Margin="12"/>
             </HorizontalStackLayout>
             <contentView:connexionModuleButtons/>
-
-
+            
         </FlexLayout>
         
     </ContentPage.Content>

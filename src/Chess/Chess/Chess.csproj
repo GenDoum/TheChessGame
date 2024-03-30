@@ -69,6 +69,48 @@
 		<MauiXaml Remove="NewFolder\**" />
 		<None Remove="NewFolder1\**" />
 		<None Remove="NewFolder\**" />
+		<MauiXaml Update="contentView\bishop.xaml">
+		  <SubType>Designer</SubType>
+		</MauiXaml>
+		<Compile Update="contentView\bishop.xaml.cs">
+		  <DependentUpon>bishop.xaml</DependentUpon>
+		  <SubType>Code</SubType>
+		</Compile>
+		<MauiXaml Update="contentView\king.xaml">
+		  <SubType>Designer</SubType>
+		</MauiXaml>
+		<Compile Update="contentView\king.xaml.cs">
+		  <DependentUpon>king.xaml</DependentUpon>
+		  <SubType>Code</SubType>
+		</Compile>
+		<MauiXaml Update="contentView\knight.xaml">
+		  <SubType>Designer</SubType>
+		</MauiXaml>
+		<Compile Update="contentView\knight.xaml.cs">
+		  <DependentUpon>knight.xaml</DependentUpon>
+		  <SubType>Code</SubType>
+		</Compile>
+		<MauiXaml Update="contentView\pawn.xaml">
+		  <SubType>Designer</SubType>
+		</MauiXaml>
+		<Compile Update="contentView\pawn.xaml.cs">
+		  <DependentUpon>pawn.xaml</DependentUpon>
+		  <SubType>Code</SubType>
+		</Compile>
+		<MauiXaml Update="contentView\queen.xaml">
+		  <SubType>Designer</SubType>
+		</MauiXaml>
+		<Compile Update="contentView\queen.xaml.cs">
+		  <DependentUpon>queen.xaml</DependentUpon>
+		  <SubType>Code</SubType>
+		</Compile>
+		<MauiXaml Update="contentView\rook.xaml">
+		  <SubType>Designer</SubType>
+		</MauiXaml>
+		<Compile Update="contentView\rook.xaml.cs">
+		  <DependentUpon>rook.xaml</DependentUpon>
+		  <SubType>Code</SubType>
+		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -79,10 +121,6 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="contentView\" />
 	</ItemGroup>
 
 	<ItemGroup>

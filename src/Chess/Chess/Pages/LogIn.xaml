@@ -3,6 +3,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Chess.Pages.LogIn"
+             xmlns:views="clr-namespace:Chess.contentView"
              BackgroundImageSource="test.jpg">
     
     <ContentPage.Content>
@@ -12,12 +13,15 @@
                     AlignItems="Center"
                     Direction="Column">
 
+            <views:pauseView></views:pauseView>
+            
             <Image  Source="connexion.png" 
                     Style="{StaticResource imgAppli}"/>
 
             <Entry Placeholder="Pseudo" x:Name="UsernameEntry" Style="{StaticResource entryStyleDefault}"/>
             <Entry Placeholder="Mot de passe" x:Name="PasswordEntry" IsPassword="True" Style="{StaticResource entryStyleDefault}" MaxLength="20"/>
             <Button Text="Connexion" Style="{StaticResource buttonSyle}" FontFamily="Pacifico" />
+            
         </FlexLayout>
         
     </ContentPage.Content>

@@ -26,9 +26,6 @@
             ContentTemplate="{DataTemplate localpages:chessBoard}"
             Route="chessBoard" />
         
-        <ShellContent
-            ContentTemplate="{DataTemplate localpages:pausePage}"
-            Route="LogIn" />
         
     </TabBar>
 

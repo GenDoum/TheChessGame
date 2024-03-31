@@ -302,7 +302,7 @@
                                            Margin="0,30,0,0"/>
 
                                     <Image 
-                                        Source="petitroque.png"
+                                        Source="petitroqueex.png"
                                         Grid.Row="1"
                                         Style="{StaticResource ImageRule}"/>
 
@@ -355,7 +355,7 @@
                                            Margin="0,30,0,0"/>
 
                                     <Image 
-                                        Source="petitroque.png"
+                                        Source="grandroque.png"
                                         Grid.Row="1"
                                         Style="{StaticResource ImageRule}"/>
 
@@ -370,7 +370,7 @@
                                            Style="{StaticResource TitleRule}" 
                                            Margin="0,30,0,0"/>
                                     <Image     
-                                        Source="petitroque.png"
+                                        Source="roque.png"
                                         Grid.Row="1"
                                         Style="{StaticResource ImageRule}" />
                                 </Grid>

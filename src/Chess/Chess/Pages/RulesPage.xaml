@@ -95,9 +95,10 @@
                                Grid.Row="0"
                                MaximumHeightRequest="250">
                                 <VerticalStackLayout BackgroundColor="#a58056">
-                                    <Label Text=""
+                                    <Label Text="Le déplacement du pion"
                                        Style="{StaticResource TitleRule}" />
-                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
+                                    <Label Text="Le pion avance toujours tout droit d’une case. S’il n’a jamais bougé, il peut choisir d’avancer d’une ou de deux cases.
+Au début de la partie, les pions sont placés sur la deuxième rangée (la septième pour les Noirs). Voici un exemple en image ci-dessous :"
                                        Margin="10,10,10,0" />
                                 </VerticalStackLayout>
                             </Frame>
@@ -117,10 +118,9 @@
                                Grid.Row="1"
                                MaximumHeightRequest="250">
                                 <VerticalStackLayout BackgroundColor="#a58056">
-                                    <Label Text="Les règles du jeu - Le plateau :"
-                                       Style="{StaticResource TitleRule}"/>
-                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
-                                       Margin="10,10,10,0" />
+                                    <Label Text="Si une pièce se trouve devant un pion, celui-ci est bloqué et ne peut pas bouger.
+Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à côté. Voici un exemple :"
+                                     Margin="10,10,10,0" />
                                 </VerticalStackLayout>
                             </Frame>
 
@@ -136,9 +136,9 @@
                                Grid.Row="2"
                                MaximumHeightRequest="250">
                                 <VerticalStackLayout BackgroundColor="#a58056">
-                                    <Label Text="Les règles du jeu - Le plateau :"
+                                    <Label Text="Le déplacement des Tours"
                                        Style="{StaticResource TitleRule}" />
-                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
+                                    <Label Text="Les Tours se déplacent horizontalement et verticalement.La Tour ne saute pas au-dessus des pièces et pions. Elle vient juste remplacer la pièce ou le pion adverse sur sa case."
                                        Margin="10,10,10,0" />
                                 </VerticalStackLayout>
                             </Frame>
@@ -156,10 +156,10 @@
                                Grid.Row="3"
                                MaximumHeightRequest="250">
                                 <VerticalStackLayout BackgroundColor="#a58056">
-                                    <Label Text="Les règles du jeu - Le plateau :"
+                                    <Label Text="Le Déplacement du Fou"
                                        Style="{StaticResource TitleRule}" />
-                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
-                                       Margin="10,10,10,0" />
+                                    <Label Text="Le Fou se déplace en diagonale d'autant de cases qu'il souhaite.Il ne saute pas au-dessus des pièces ou des pions et prend les pièces et pions adverses en les remplaçant sur leurs cases."
+                                    Margin="10,10,10,0" />
                                 </VerticalStackLayout>
                             </Frame>
 
@@ -175,9 +175,9 @@
                                Grid.Row="3"
                                MaximumHeightRequest="250">
                                 <VerticalStackLayout BackgroundColor="#a58056">
-                                    <Label Text="Les règles du jeu - Le plateau :"
+                                    <Label Text="Le Déplacement de la Dame"
                                        Style="{StaticResource TitleRule}" />
-                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
+                                    <Label Text="La Dame se déplace horizontalement, verticalement, et en diagonales d'autant de cases qu'elle le souhaite, combinant les mouvements du Fou et de la Tour.La Dame ne saute pas au-dessus des pièces et pions adverses et remplace les pièces et pions adverses sur leurs cases."
                                        Margin="10,10,10,0" />
                                 </VerticalStackLayout>
                             </Frame>
@@ -195,9 +195,9 @@
                                Grid.Row="4"
                                MaximumHeightRequest="250">
                                 <VerticalStackLayout BackgroundColor="#a58056">
-                                    <Label Text="Les règles du jeu - Le plateau :"
+                                    <Label Text="Le déplacement du Roi"
                                        Style="{StaticResource TitleRule}" />
-                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
+                                    <Label Text="Le Roi se déplace horizontalement, verticalement, et en diagonale mais d'une seule case.Le Roi remplace également la pièce ou le pion adverse sur sa case.Si le Roi est capturé, la partie est perdue"
                                        Margin="10,10,10,0" />
                                 </VerticalStackLayout>
                             </Frame>
@@ -215,9 +215,9 @@
                                Grid.Row="5"
                                MaximumHeightRequest="250">
                                 <VerticalStackLayout BackgroundColor="#a58056">
-                                    <Label Text="Les règles du jeu - Le plateau :"
+                                    <Label Text="Le déplacement du Cavalier"
                                        Style="{StaticResource TitleRule}" />
-                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
+                                    <Label Text="Le Cavalier se déplace en formant des L majuscules : il avance de deux cases dans une direction (verticale ou horizontale) puis d’une case dans l’autre sens.Le Cavalier peut sauter au-dessus des pièces et des pions pour capturer une pièce adverse en remplaçant la pièce sur sa case."
                                        Margin="10,10,10,0" />
                                 </VerticalStackLayout>
                             </Frame>
@@ -235,7 +235,7 @@
                                Grid.Row="6"
                                MaximumHeightRequest="250">
                                 <VerticalStackLayout BackgroundColor="#a58056">
-                                    <Label Text="Les règles du jeu - Le plateau :"
+                                    <Label Text="Le déplacement du Cavalier:"
                                        Style="{StaticResource TitleRule}" />
                                     <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
                                        Margin="10,10,10,0" />
@@ -280,9 +280,9 @@
                                Grid.Column="0"
                                MaximumHeightRequest="250">
                                 <VerticalStackLayout BackgroundColor="#a58056">
-                                    <Label Text="Les règles du jeu - Le déplacement des pièces :"
+                                    <Label Text="Le petit roque"
                                        Style="{StaticResource TitleRule}" />
-                                    <Label Text="Chaque pièce a un déplacement spécifique. Voici les déplacements de chaque pièce :"
+                                    <Label Text="Le petit roque implique le déplacement du Roi de deux cases vers la Tour, et cette dernière se place à côté du Roi. Le roque est interdit si des pièces bloquent le chemin entre le Roi et la Tour."
                                        Margin="10,10,10,0" />
                                 </VerticalStackLayout>
                             </Frame>
@@ -331,10 +331,10 @@
                                    MaximumHeightRequest="250">
 
                                 <VerticalStackLayout BackgroundColor="#a58056">
-                                    <Label Text="Les règles du jeu – Le placement des pièces :"
+                                    <Label Text="Le grand roque"
                                         Style="{StaticResource TitleRule}" />
 
-                                    <Label Text="Voici la position initiale des pièces sur l'échiquier :"
+                                    <Label Text="Le grand roque s'effectue comme le petit roque mais avec la Tour de l'autre côté : le roi avance de deux cases vers la Tour, et cette dernière se place de l'autre côté du Roi"
                                         Margin="10,10,10,0" />
 
                                 </VerticalStackLayout>

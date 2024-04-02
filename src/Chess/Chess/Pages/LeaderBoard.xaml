@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:contentV="clr-namespace:Chess.contentView"
+             x:Class="Chess.Pages.LeaderBoard"
+             BackgroundImageSource="test.jpg">
+
+    <!-- Page LeaderBoard -->
+    
+    <ScrollView>
+        
+        <VerticalStackLayout
+            Margin="0, 100, 0, 0">
+            
+            <Image
+                Source="classement.png"
+                Style="{StaticResource imgAppli}"
+            />
+            
+            <!--utilise la content view-->
+            <contentV:viewLeaderBoard/>
+            <contentV:viewLeaderBoard/>
+            <contentV:viewLeaderBoard/>
+            <contentV:viewLeaderBoard/>
+            <contentV:viewLeaderBoard/>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -63,6 +63,7 @@
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="TextColor" Value="Black"/>
         <Setter Property="CornerRadius" Value="1"/>
+        <Setter Property="FontFamily" Value="Pacifico"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup>

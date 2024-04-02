@@ -6,22 +6,41 @@
              BackgroundImageSource="test.jpg">
              
     <ContentPage.Content>
+        
+        <!-- Page d'incription -->
+
         <FlexLayout
             JustifyContent="Center"
             AlignItems="Center"
-            Direction="Column"
-            >
-
-
-
+            Direction="Column">
+            
             <Image 
                 Source="inscription.png" 
                 Style="{StaticResource imgAppli}"/>
-            <Entry Placeholder="Entrez votre pseudo" Style="{StaticResource entryStyleDefault}"/>
-            <Entry Placeholder="Entrez votre mot de passe" IsPassword="True" Style="{StaticResource entryStyleDefault}"  MaxLength="20"/>
-            <Entry Placeholder="Entrez a nouveau votre mot de passe" IsPassword="True"  Style="{StaticResource entryStyleDefault}" MaxLength="20"/>
-            <Button Text="Inscription" Style="{StaticResource buttonSyle}"/>
-                <Button Text="Règles du jeu" Style="{StaticResource buttonSyle}"/>
+            
+            <Entry Placeholder="Entrez votre pseudo" 
+                   Style="{StaticResource entryStyleDefault}"
+            />
+            
+            <Entry Placeholder="Entrez votre mot de passe" 
+                   IsPassword="True" 
+                   Style="{StaticResource entryStyleDefault}"
+            />
+            
+            <Entry Placeholder="Entrez a nouveau votre mot de passe" 
+                   IsPassword="True"  
+                   Style="{StaticResource entryStyleDefault}"
+            />
+            
+            <Button Text="Inscription" 
+                    Style="{StaticResource buttonSyle}"
+            />
+            
+            <Button Text="Annuler" 
+                    Style="{StaticResource buttonSyle}"
+            />
+            
         </FlexLayout>
+        
     </ContentPage.Content>
 </ContentPage>

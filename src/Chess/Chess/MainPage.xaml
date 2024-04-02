@@ -21,10 +21,12 @@
             
             <Button Text="Connexion" 
                     Style="{StaticResource buttonSyle}"
+                    
             />
 
             <Button Text="Inscription" 
                     Style="{StaticResource buttonSyle}" 
+                    
             />
 
             <Button Text="Règles du jeu" 
@@ -33,6 +35,7 @@
 
             <Button Text="Scores des joueurs" 
                     Style="{StaticResource buttonSyle}"
+                    
             />
 
             <Label Text="Jouer en tant qu'invité" 

@@ -26,7 +26,7 @@
 
                         <!-- Section des images d'exemple -->
                         <Image Style="{StaticResource ImageRule}"
-                               Source="exempleposition.png"
+                               Source="crouge.png"
                                Grid.Column="1"
                                Grid.Row="0"
                                     />
@@ -51,7 +51,7 @@
 
                         <!-- Image pour la deuxième section -->
                         <Image Style="{StaticResource ImageRule}"
-                               BackgroundColor="AntiqueWhite"
+                               BackgroundColor="AliceBlue"
                                Source="pieceschess.png"
                                Grid.Column="1"
                                Grid.Row="1"
@@ -105,8 +105,7 @@ Au début de la partie, les pions sont placés sur la deuxième rangée (la sept
 
                             <!-- Image pour la deuxième section -->
                             <Image Style="{StaticResource ImageRule}"
-                               BackgroundColor="AntiqueWhite"
-                               Source="pieceschess.png"
+                               Source="pions.png"
                                Grid.Column="1"
                                Grid.Row="0"
                                 />
@@ -125,8 +124,7 @@ Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à
                             </Frame>
 
                             <Image Style="{StaticResource ImageRule}"
-                               BackgroundColor="AntiqueWhite"
-                               Source="pieceschess.png"
+                               Source="pion.png"
                                Grid.Column="1"
                                Grid.Row="1"
                                />
@@ -145,8 +143,7 @@ Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à
 
                             <!-- Image pour la deuxième section -->
                             <Image Style="{StaticResource ImageRule}"
-                               BackgroundColor="AntiqueWhite"
-                               Source="pieceschess.png"
+                               Source="tour.png"
                                Grid.Column="1"
                                Grid.Row="2"
                                />
@@ -165,14 +162,13 @@ Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à
 
                             <!-- Image pour la deuxième section -->
                             <Image Style="{StaticResource ImageRule}"
-                               BackgroundColor="AntiqueWhite"
-                               Source="pieceschess.png"
+                               Source="fou.png"
                                Grid.Column="1"
                                Grid.Row="3"
                                 />
 
                             <Frame Style="{StaticResource FrameRules}"
-                               Grid.Row="3"
+                               Grid.Row="4"
                                MaximumHeightRequest="250">
                                 <VerticalStackLayout BackgroundColor="#a58056">
                                     <Label Text="Le Déplacement de la Dame"
@@ -184,15 +180,14 @@ Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à
 
                             <!-- Image pour la deuxième section -->
                             <Image Style="{StaticResource ImageRule}"
-                               BackgroundColor="AntiqueWhite"
-                               Source="pieceschess.png"
+                               Source="dame.png"
                                Grid.Column="1"
-                               Grid.Row="3"
+                               Grid.Row="4"
                                 />
 
 
                             <Frame Style="{StaticResource FrameRules}"
-                               Grid.Row="4"
+                               Grid.Row="5"
                                MaximumHeightRequest="250">
                                 <VerticalStackLayout BackgroundColor="#a58056">
                                     <Label Text="Le déplacement du Roi"
@@ -204,15 +199,14 @@ Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à
 
                             <!-- Image pour la deuxième section -->
                             <Image Style="{StaticResource ImageRule}"
-                               BackgroundColor="AntiqueWhite"
-                               Source="pieceschess.png"
+                               Source="roi.png"
                                Grid.Column="1"
-                               Grid.Row="4"
+                               Grid.Row="5"
                                 />
 
 
                             <Frame Style="{StaticResource FrameRules}"
-                               Grid.Row="5"
+                               Grid.Row="6"
                                MaximumHeightRequest="250">
                                 <VerticalStackLayout BackgroundColor="#a58056">
                                     <Label Text="Le déplacement du Cavalier"
@@ -222,31 +216,22 @@ Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à
                                 </VerticalStackLayout>
                             </Frame>
 
-                            <!-- Image pour la deuxième section -->
-                            <Image Style="{StaticResource ImageRule}"
-                               BackgroundColor="AntiqueWhite"
-                               Source="pieceschess.png"
-                               Grid.Column="1"
-                               Grid.Row="5"
-                                />
-
 
                             <Frame Style="{StaticResource FrameRules}"
-                               Grid.Row="6"
+                               Grid.Row="7"
                                MaximumHeightRequest="250">
                                 <VerticalStackLayout BackgroundColor="#a58056">
                                     <Label Text="Le déplacement du Cavalier:"
                                        Style="{StaticResource TitleRule}" />
-                                    <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales..."
+                                    <Label Text="Le Cavalier se déplace en formant des L majuscules : il avance de deux cases dans une direction (verticale ou horizontale) puis d’une case dans l’autre sens."
                                        Margin="10,10,10,0" />
                                 </VerticalStackLayout>
                             </Frame>
 
                             <Image Style="{StaticResource ImageRule}"
-                               BackgroundColor="AntiqueWhite"
-                               Source="pieceschess.png"
+                               Source="chavalier.png"
                                Grid.Column="1"
-                               Grid.Row="6"
+                               Grid.Row="7"
                                 />
                         </Grid>
 
@@ -263,7 +248,7 @@ Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à
 
                         <!-- Image pour la deuxième section -->
                         <Image Style="{StaticResource ImageRule}"
-                               Source="placementglobal.png"
+                               Source="plateau.png"
                                Grid.Column="1"
                                Grid.Row="4"
                                 />

@@ -38,6 +38,11 @@
             ContentTemplate="{DataTemplate localpages:LeaderBoard}"
             Route="LeaderBoard" />
         
+        <ShellContent
+
+            ContentTemplate="{DataTemplate localpages:RulesPage}"
+            Route="Register" />
+        
     </TabBar>
 
 </Shell>

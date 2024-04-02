@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="Chess.Pages.RulesPage"
+             BackgroundImageSource="test.jpg">
+
+    <ContentPage.Content>
+        <!-- Background de la page -->
+
+
+        <ScrollView>
+            <!-- Création de la grille qui contient le titre et la grille des règles -->
+            <Grid BackgroundColor="#80000000"
+                  RowDefinitions="*,4*">
+
+                <Image Style="{StaticResource imgAppli}"
+                       Source="regletitle.png"
+                       HeightRequest="150" />
+
+                <toolkit:DockLayout Grid.Row="1">
+                    <Grid ColumnDefinitions="*,*"
+                          RowDefinitions="auto,auto,auto,auto,auto,auto">
+
+
+
+                        <!-- Section des images d'exemple -->
+                        <Image Style="{StaticResource ImageRule}"
+                               Source="crouge.png"
+                               Grid.Column="1"
+                               Grid.Row="0"
+                                    />
+
+
+                        <!-- Première grille des règles -->
+                        <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="0"
+                               MaximumHeightRequest="250">
+                            <VerticalStackLayout BackgroundColor="#a58056">
+                                <Label Style="{StaticResource TitleRule}"
+                                       Text="Les règles du jeu - Le plateau :"/>
+                                <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales.&#x0a;Les colonnes sont repérées par les huit premières lettres de l’alphabet tandis que pour les rangées, on utilise les chiffres. Cela permet de donner les coordonnées des cases de l’échiquier.&#x0a;&#x0a;Par exemple, vous pouvez voir sur cette image que le rond rouge est sur la case C4 :"
+                                       Margin="10,10,10,0" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+
+
+
+
+
+                        <!-- Image pour la deuxième section -->
+                        <Image Style="{StaticResource ImageRule}"
+                               BackgroundColor="AliceBlue"
+                               Source="pieceschess.png"
+                               Grid.Column="1"
+                               Grid.Row="1"
+                                />
+                        
+
+                        <!-- Deuxième grille des règles -->
+                        <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="1"
+                               MaximumHeightRequest="200">
+                            <VerticalStackLayout>
+                                <Label Text="Les règles du jeu - Le nom des pièces"
+                                       Style="{StaticResource TitleRule}" />
+                                <Label Text="Voici les différentes pièces et pions des échecs :&#x0a;Le Roi (noté R), la Dame (notée D), le Fou (notée F), le Cavalier (noté C), la Tour (noté T) et le pion.&#x0a;&#x0a;Les initiales des pièces permettent de donner le déplacement de la pièce sur le plateau. Par exemple, Re4 signifie que le Roi s’est déplacé sur la case e4."
+                                       Margin="10,10,10,0" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+
+
+
+
+
+                        <toolkit:DockLayout Grid.Row="2"
+                                            Grid.ColumnSpan="2">
+                            <Label Style="{StaticResource labelRules}"
+                                   FontSize="24"
+                                   Text="Les règles du jeu – Le déplacement des pièces :" 
+                                   toolkit:DockLayout.DockPosition="None"
+                               />
+                        </toolkit:DockLayout>
+
+                        <!-- Troisième grille pour une section supplémentaire -->
+                        <Grid Grid.Row="3"
+                              Grid.ColumnSpan="2"
+                              RowDefinitions="auto,auto,auto,auto,auto,auto,auto" 
+                              ColumnDefinitions="*,*"
+                              BackgroundColor="Transparent">
+
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="0"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Le déplacement du pion"
+                                       Style="{StaticResource TitleRule}" />
+                                    <Label Text="Le pion avance toujours tout droit d’une case. S’il n’a jamais bougé, il peut choisir d’avancer d’une ou de deux cases.
+Au début de la partie, les pions sont placés sur la deuxième rangée (la septième pour les Noirs). Voici un exemple en image ci-dessous :"
+                                       Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+                            <!-- Image pour la deuxième section -->
+                            <Image Style="{StaticResource ImageRule}"
+                               Source="pions.png"
+                               Grid.Column="1"
+                               Grid.Row="0"
+                                />
+
+
+
+
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="1"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Si une pièce se trouve devant un pion, celui-ci est bloqué et ne peut pas bouger.
+Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à côté. Voici un exemple :"
+                                     Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+                            <Image Style="{StaticResource ImageRule}"
+                               Source="pion.png"
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               />
+
+
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="2"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Le déplacement des Tours"
+                                       Style="{StaticResource TitleRule}" />
+                                    <Label Text="Les Tours se déplacent horizontalement et verticalement.La Tour ne saute pas au-dessus des pièces et pions. Elle vient juste remplacer la pièce ou le pion adverse sur sa case."
+                                       Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+                            <!-- Image pour la deuxième section -->
+                            <Image Style="{StaticResource ImageRule}"
+                               Source="tour.png"
+                               Grid.Column="1"
+                               Grid.Row="2"
+                               />
+
+
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="3"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Le Déplacement du Fou"
+                                       Style="{StaticResource TitleRule}" />
+                                    <Label Text="Le Fou se déplace en diagonale d'autant de cases qu'il souhaite.Il ne saute pas au-dessus des pièces ou des pions et prend les pièces et pions adverses en les remplaçant sur leurs cases."
+                                    Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+                            <!-- Image pour la deuxième section -->
+                            <Image Style="{StaticResource ImageRule}"
+                               Source="fou.png"
+                               Grid.Column="1"
+                               Grid.Row="3"
+                                />
+
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="4"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Le Déplacement de la Dame"
+                                       Style="{StaticResource TitleRule}" />
+                                    <Label Text="La Dame se déplace horizontalement, verticalement, et en diagonales d'autant de cases qu'elle le souhaite, combinant les mouvements du Fou et de la Tour.La Dame ne saute pas au-dessus des pièces et pions adverses et remplace les pièces et pions adverses sur leurs cases."
+                                       Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+                            <!-- Image pour la deuxième section -->
+                            <Image Style="{StaticResource ImageRule}"
+                               Source="dame.png"
+                               Grid.Column="1"
+                               Grid.Row="4"
+                                />
+
+
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="5"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Le déplacement du Roi"
+                                       Style="{StaticResource TitleRule}" />
+                                    <Label Text="Le Roi se déplace horizontalement, verticalement, et en diagonale mais d'une seule case.Le Roi remplace également la pièce ou le pion adverse sur sa case.Si le Roi est capturé, la partie est perdue"
+                                       Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+                            <!-- Image pour la deuxième section -->
+                            <Image Style="{StaticResource ImageRule}"
+                               Source="roi.png"
+                               Grid.Column="1"
+                               Grid.Row="5"
+                                />
+
+
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="6"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Le déplacement du Cavalier"
+                                       Style="{StaticResource TitleRule}" />
+                                    <Label Text="Le Cavalier se déplace en formant des L majuscules : il avance de deux cases dans une direction (verticale ou horizontale) puis d’une case dans l’autre sens.Le Cavalier peut sauter au-dessus des pièces et des pions pour capturer une pièce adverse en remplaçant la pièce sur sa case."
+                                       Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="7"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Le déplacement du Cavalier:"
+                                       Style="{StaticResource TitleRule}" />
+                                    <Label Text="Le Cavalier se déplace en formant des L majuscules : il avance de deux cases dans une direction (verticale ou horizontale) puis d’une case dans l’autre sens."
+                                       Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+                            <Image Style="{StaticResource ImageRule}"
+                               Source="chavalier.png"
+                               Grid.Column="1"
+                               Grid.Row="7"
+                                />
+                        </Grid>
+
+                        <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="4"
+                               MaximumHeightRequest="250">
+                            <VerticalStackLayout BackgroundColor="#a58056">
+                                <Label Text="Les règles du jeu – Le placement des pièces :"
+                                       Style="{StaticResource TitleRule}" />
+                                <Label Text="Voici la position initiale des pièces sur l'échiquier :"
+                                       Margin="10,10,10,0" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- Image pour la deuxième section -->
+                        <Image Style="{StaticResource ImageRule}"
+                               Source="plateau.png"
+                               Grid.Column="1"
+                               Grid.Row="4"
+                                />
+
+                        <Grid 
+                            Grid.Row="5"
+                            Grid.ColumnSpan="2"
+                            RowDefinitions="auto ,auto"
+                            ColumnDefinitions="*,*"
+                            >
+
+                            <Frame Style="{StaticResource FrameRules}"
+                               Grid.Row="0"
+                               Grid.Column="0"
+                               MaximumHeightRequest="250">
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Le petit roque"
+                                       Style="{StaticResource TitleRule}" />
+                                    <Label Text="Le petit roque implique le déplacement du Roi de deux cases vers la Tour, et cette dernière se place à côté du Roi. Le roque est interdit si des pièces bloquent le chemin entre le Roi et la Tour."
+                                       Margin="10,10,10,0" />
+                                </VerticalStackLayout>
+                            </Frame>
+
+
+                            <Grid ColumnDefinitions="*,*"
+                                  Grid.Column="1"
+                                  Grid.Row="0">
+
+                                <Grid RowDefinitions="*,4*"
+                                  Grid.Column="1">
+
+                                    <Label HorizontalOptions="CenterAndExpand"
+                                           Text="Position initiale et finale"
+                                           Style="{StaticResource TitleRule}" 
+                                           Grid.Row="0"
+                                           Margin="0,30,0,0"/>
+
+                                    <Image 
+                                        Source="petitroqueex.png"
+                                        Grid.Row="1"
+                                        Style="{StaticResource ImageRule}"/>
+
+                                </Grid>
+
+                                <Grid RowDefinitions="*,3*"
+                                      Grid.Column="0">
+
+                                    <Label Text="Coup Précédent :"
+                                           Grid.Row="0"
+                                           HorizontalOptions="CenterAndExpand"
+                                           Style="{StaticResource TitleRule}" 
+                                           Margin="0,30,0,0"/>
+                                    <Image     
+                                        Source="petitroque.png"
+                                        Grid.Row="1"
+                                        Style="{StaticResource ImageRule}" />
+                                </Grid>
+
+
+                            </Grid>
+
+
+                            <Frame Style="{StaticResource FrameRules}"
+                                   Grid.Row="4"
+                                   MaximumHeightRequest="250">
+
+                                <VerticalStackLayout BackgroundColor="#a58056">
+                                    <Label Text="Le grand roque"
+                                        Style="{StaticResource TitleRule}" />
+
+                                    <Label Text="Le grand roque s'effectue comme le petit roque mais avec la Tour de l'autre côté : le roi avance de deux cases vers la Tour, et cette dernière se place de l'autre côté du Roi"
+                                        Margin="10,10,10,0" />
+
+                                </VerticalStackLayout>
+
+                            </Frame>
+
+                            <Grid ColumnDefinitions="*,*"
+                                  Grid.Column="1"
+                                  Grid.Row="1">
+
+                                <Grid RowDefinitions="*,4*"
+                                  Grid.Column="1">
+
+                                    <Label HorizontalOptions="CenterAndExpand"
+                                           Text="Position initiale et finale"
+                                           Style="{StaticResource TitleRule}" 
+                                           Grid.Row="0"
+                                           Margin="0,30,0,0"/>
+
+                                    <Image 
+                                        Source="grandroque.png"
+                                        Grid.Row="1"
+                                        Style="{StaticResource ImageRule}"/>
+
+                                </Grid>
+
+                                <Grid RowDefinitions="*,3*"
+                                      Grid.Column="0">
+
+                                    <Label Text="Coup Précédent :"
+                                           Grid.Row="0"
+                                           HorizontalOptions="CenterAndExpand"
+                                           Style="{StaticResource TitleRule}" 
+                                           Margin="0,30,0,0"/>
+                                    <Image     
+                                        Source="roque.png"
+                                        Grid.Row="1"
+                                        Style="{StaticResource ImageRule}" />
+                                </Grid>
+
+
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </toolkit:DockLayout>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

@@ -18,14 +18,27 @@
                 Source="inscription.png" 
                 Style="{StaticResource imgAppli}"/>
             
-            <Entry Placeholder="Entrez votre pseudo" Style="{StaticResource entryStyleDefault}"/>
+            <Entry Placeholder="Entrez votre pseudo" 
+                   Style="{StaticResource entryStyleDefault}"
+                   />
             
-            <Entry Placeholder="Entrez votre mot de passe" IsPassword="True" Style="{StaticResource entryStyleDefault}"/>
+            <Entry Placeholder="Entrez votre mot de passe" 
+                   IsPassword="True" 
+                   Style="{StaticResource entryStyleDefault}"
+                   />
             
-            <Entry Placeholder="Entrez a nouveau votre mot de passe" IsPassword="True"  Style="{StaticResource entryStyleDefault}"/>
-            <Button Text="Inscription" Style="{StaticResource buttonSyle}"/>
+            <Entry Placeholder="Entrez a nouveau votre mot de passe" 
+                   IsPassword="True"  
+                   Style="{StaticResource entryStyleDefault}"
+                   />
             
-            <Button Text="Annuler" Style="{StaticResource buttonSyle}" />
+            <Button Text="Inscription" 
+                    Style="{StaticResource buttonSyle}"
+                    />
+            
+            <Button Text="Annuler" 
+                    Style="{StaticResource buttonSyle}"
+                    />
             
         </FlexLayout>
         

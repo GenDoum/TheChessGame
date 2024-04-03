@@ -23,6 +23,7 @@
         <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
+
     <!-- Début ajout perso -->
 
 
@@ -54,7 +55,7 @@
     </Style>
 
     <Style x:Key="buttonSyle" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="{StaticResource GoldUseful}"/>
+        <Setter Property="BackgroundColor" Value="#DEBC95"/>
         <Setter Property="WidthRequest" Value="230"/>
         <Setter Property="HeightRequest" Value="50"/>
         <Setter Property="Margin" Value="5"/>
@@ -86,7 +87,7 @@
 
     <Style x:Key="entryStyleDefault" TargetType="Entry">
         <Setter Property="Margin" Value="5"/>
-        <Setter Property="BackgroundColor" Value="{StaticResource GoldUseful}"/>
+        <Setter Property="BackgroundColor" Value="#DEBC95"/>
         <Setter Property="WidthRequest" Value="400"/>
         <Setter Property="HeightRequest" Value="50"/>
         <Setter Property="HorizontalTextAlignment" Value="Center"/>
@@ -99,32 +100,6 @@
         <Setter Property="VerticalOptions" Value="Center"/>
         <Setter Property="HorizontalOptions" Value="Center"/>
         <Setter Property="Margin" Value="0, 0, 0, 40"/>
-    </Style>
-
-    <Style x:Key="labelRules"    TargetType="Label">
-        <Setter Property="Margin" Value="10,10,10,0"/>
-        <Setter Property="HorizontalOptions" Value="Center"/>
-    </Style>
-
-    <Style x:Key="FrameRules" TargetType="Frame">
-        <Setter Property="Margin" Value="100,0,0,0"/>
-        <Setter Property="BackgroundColor" Value="#a58056"/>
-        <Setter Property="BorderColor" Value="Black"/>
-        <Setter Property="Padding" Value="10"/>
-        <Setter Property="HasShadow" Value="True"/>
-    </Style>
-
-    <Style x:Key="TitleRule" TargetType="Label">
-        <Setter Property="FontSize" Value="24"/>
-        <Setter Property="FontAttributes" Value="Bold"/>
-        <Setter Property="HorizontalOptions" Value="Start"/>
-        <Setter Property="Margin" Value="10"/>
-    </Style>
-
-    <Style x:Key="ImageRule" TargetType="Image">
-        <Setter Property="HeightRequest" Value="280"/>
-        <Setter Property="WidthRequest" Value="400"/>
-        <Setter Property="Margin" Value="90"/>
     </Style>
     <!-- Fin ajout perso -->
 

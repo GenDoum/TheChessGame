@@ -13,10 +13,24 @@
             <!-- Création de la grille qui contient le titre et la grille des règles -->
             <Grid BackgroundColor="#80000000"
                   RowDefinitions="*,4*">
-
-                <Image Style="{StaticResource imgAppli}"
+                <Grid Grid.Row="0"
+                      ColumnDefinitions=".2*,.6*,.2*">
+                    
+                    <Image Grid.Column="1"
+                       Style="{StaticResource imgAppli}"
+                       HeightRequest="200"
+                       
                        Source="regletitle.png"
-                       HeightRequest="150" />
+ />
+                           
+                     <Image Grid.Column="0"
+                            Style="{StaticResource imgAppli}"
+                            HorizontalOptions="StartAndExpand"
+                            Margin="100,-50,0,0"
+                         Source="returnarrow.png"
+                         HeightRequest="50" />
+                    
+                </Grid>
 
                 <toolkit:DockLayout Grid.Row="1">
                     <Grid ColumnDefinitions="*,*"

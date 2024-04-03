@@ -5,6 +5,11 @@ public partial class RulesPage : ContentPage
 {
 	public RulesPage()
 	{
-		InitializeComponent();
+        InitializeComponent();
 	}
+
+    private void Image_ParentChanged(object sender, EventArgs e)
+    {
+
+    }
 }

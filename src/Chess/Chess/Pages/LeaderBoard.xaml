@@ -17,7 +17,6 @@
                 Style="{StaticResource imgAppli}"
             />
             
-            <!--utilise la content view-->
             <contentV:viewLeaderBoard/>
             <contentV:viewLeaderBoard/>
             <contentV:viewLeaderBoard/>

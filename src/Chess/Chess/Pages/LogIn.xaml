@@ -21,7 +21,7 @@
             <HorizontalStackLayout
                 HorizontalOptions="Center"
                 VerticalOptions="Center">
-                <CheckBox Color="#DEBC95"
+                <CheckBox Color="{StaticResource GoldUseful}"
                 />
                 <Label Text="Jouer avec un invité" 
                        TextColor="FloralWhite"

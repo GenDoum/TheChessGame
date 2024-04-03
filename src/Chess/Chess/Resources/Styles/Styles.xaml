@@ -55,7 +55,7 @@
     </Style>
 
     <Style x:Key="buttonSyle" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="#DEBC95"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource GoldUseful}"/>
         <Setter Property="WidthRequest" Value="230"/>
         <Setter Property="HeightRequest" Value="50"/>
         <Setter Property="Margin" Value="5"/>
@@ -87,7 +87,7 @@
 
     <Style x:Key="entryStyleDefault" TargetType="Entry">
         <Setter Property="Margin" Value="5"/>
-        <Setter Property="BackgroundColor" Value="#DEBC95"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource GoldUseful}"/>
         <Setter Property="WidthRequest" Value="400"/>
         <Setter Property="HeightRequest" Value="50"/>
         <Setter Property="HorizontalTextAlignment" Value="Center"/>

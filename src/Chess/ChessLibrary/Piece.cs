@@ -52,5 +52,15 @@ namespace ChessLibrary
         {
             return false;
         }
+        
+        /// <summary>
+        /// Method that checks if the piece can kill another piece
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public bool canKill(Case c)
+        {
+            return true;
+        }
     }
 }

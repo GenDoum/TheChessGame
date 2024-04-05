@@ -9,7 +9,7 @@ namespace ChessLibrary
     /// <summary>
     /// Class that represents a Rook piece
     /// </summary>
-    internal class Rook : Piece
+    public class Rook : Piece
     {
         /// <summary>
         /// Constructor of the class

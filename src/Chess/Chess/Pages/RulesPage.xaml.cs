@@ -7,9 +7,4 @@ public partial class RulesPage : ContentPage
 	{
         InitializeComponent();
 	}
-
-    private void Image_ParentChanged(object sender, EventArgs e)
-    {
-
-    }
 }

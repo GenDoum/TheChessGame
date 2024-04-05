@@ -4,15 +4,29 @@
              xmlns:contentView="clr-namespace:Chess.contentView"
              x:Class="Chess.Pages.LoginSecondPlayer"
              BackgroundImageSource="test.jpg">
-    <FlexLayout JustifyContent="Center"
-                    AlignItems="Center"
-                    Direction="Column">
+    <VerticalStackLayout>
+        <FlexLayout>
+            <ImageButton
+                 Source="returnarrow.png"
+                 HeightRequest="60"
+                 WidthRequest="60"
+                 FlexLayout.AlignSelf="Start"
+                 Margin="10"
+                 />
+        </FlexLayout>
+    
+    
+        <FlexLayout JustifyContent="Center"
+                        AlignItems="Center"
+                        Direction="Column">
 
-        <Image  Source="connexionjdeux.png"  
-                    Style="{StaticResource imgAppli}"/>
-        <contentView:connexionModuleEntry/>
-        <contentView:connexionModuleButtons/>
+            <Image  Source="connexionjdeux.png"  
+                        Style="{StaticResource imgAppli}"/>
+            <contentView:connexionModuleEntry/>
+            <contentView:connexionModuleButtons/>
 
 
-    </FlexLayout>
+        </FlexLayout>
+
+    </VerticalStackLayout>
 </ContentPage>

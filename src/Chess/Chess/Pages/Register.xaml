@@ -8,39 +8,56 @@
     <ContentPage.Content>
         
         <!-- Page d'incription -->
+        <ScrollView>
 
-        <FlexLayout
-            JustifyContent="Center"
-            AlignItems="Center"
-            Direction="Column">
+
+            <VerticalStackLayout>
+                
             
-            <Image 
-                Source="inscription.png" 
-                Style="{StaticResource imgAppli}"/>
-            
-            <Entry Placeholder="Entrez votre pseudo" 
-                   Style="{StaticResource entryStyleDefault}"
-            />
-            
-            <Entry Placeholder="Entrez votre mot de passe" 
-                   IsPassword="True" 
-                   Style="{StaticResource entryStyleDefault}"
-            />
-            
-            <Entry Placeholder="Entrez a nouveau votre mot de passe" 
-                   IsPassword="True"  
-                   Style="{StaticResource entryStyleDefault}"
-            />
-            
-            <Button Text="Inscription" 
-                    Style="{StaticResource buttonSyle}"
-            />
-            
-            <Button Text="Annuler" 
-                    Style="{StaticResource buttonSyle}"
-            />
-            
-        </FlexLayout>
+                <FlexLayout>
+                    <ImageButton
+                        Source="returnarrow.png"
+                        HeightRequest="50"
+                        FlexLayout.AlignSelf="Start"
+                        Margin="10"
+                        />
+                </FlexLayout>
+                <FlexLayout
+                    JustifyContent="Center"
+                    AlignItems="Center"
+                    Direction="Column">
+
+
+
+                    <Image 
+                        Source="inscription.png" 
+                        Style="{StaticResource imgAppli}"/>
+                    
+                    <Entry Placeholder="Entrez votre pseudo" 
+                           Style="{StaticResource entryStyleDefault}"
+                    />
+                    
+                    <Entry Placeholder="Entrez votre mot de passe" 
+                           IsPassword="True" 
+                           Style="{StaticResource entryStyleDefault}"
+                    />
+                    
+                    <Entry Placeholder="Entrez a nouveau votre mot de passe" 
+                           IsPassword="True"  
+                           Style="{StaticResource entryStyleDefault}"
+                    />
+                    
+                    <Button Text="Inscription" 
+                            Style="{StaticResource buttonSyle}"
+                    />
+                    
+                    <Button Text="Annuler" 
+                            Style="{StaticResource buttonSyle}"
+                    />
+                    
+                </FlexLayout>
+            </VerticalStackLayout>
+        </ScrollView>
         
     </ContentPage.Content>
 </ContentPage>

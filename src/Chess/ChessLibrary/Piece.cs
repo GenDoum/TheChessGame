@@ -12,7 +12,6 @@ namespace ChessLibrary
     
     public class Piece
     {
-        
         /// <summary>
         /// Property that represents the color of the piece
         /// </summary>

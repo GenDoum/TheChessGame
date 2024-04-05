@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
-    internal class Bishop
+    public class Bishop : Piece
     {
+        public Bishop(Color color, Case c) : base(color, c)
+        {
+            
+        }
     }
 }

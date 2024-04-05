@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
-    internal class Piece
+    public class Piece
     {
     }
 }

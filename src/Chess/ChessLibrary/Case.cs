@@ -6,7 +6,22 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
-    internal class Case
+    public class Case
     {
+        /// <summary>
+        /// Créer un argument Colone
+        /// </summary>
+        private char Column { get; set; }
+        /// <summary>
+        /// Créer un argument Line
+        /// </summary>
+        private int Line { get; set; }
+
+        public Case(char column, int line) 
+        {
+            Column = column;
+            Line = line;    
+        }
+
     }
 }

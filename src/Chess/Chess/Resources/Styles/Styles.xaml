@@ -101,6 +101,32 @@
         <Setter Property="HorizontalOptions" Value="Center"/>
         <Setter Property="Margin" Value="0, 0, 0, 40"/>
     </Style>
+    
+    <Style x:Key="labelRules"    TargetType="Label">
+        <Setter Property="Margin" Value="10,10,10,0"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+    </Style>
+
+    <Style x:Key="FrameRules" TargetType="Frame">
+        <Setter Property="Margin" Value="100,0,0,0"/>
+        <Setter Property="BackgroundColor" Value="#a58056"/>
+        <Setter Property="BorderColor" Value="Black"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="HasShadow" Value="True"/>
+    </Style>
+
+    <Style x:Key="TitleRule" TargetType="Label">
+        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="HorizontalOptions" Value="Start"/>
+        <Setter Property="Margin" Value="10"/>
+    </Style>
+
+    <Style x:Key="ImageRule" TargetType="Image">
+        <Setter Property="HeightRequest" Value="280"/>
+        <Setter Property="WidthRequest" Value="400"/>
+        <Setter Property="Margin" Value="90"/>
+    </Style>
     <!-- Fin ajout perso -->
 
     <Style TargetType="Button">

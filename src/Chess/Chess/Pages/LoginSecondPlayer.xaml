@@ -5,11 +5,12 @@
              x:Class="Chess.Pages.LoginSecondPlayer"
              BackgroundImageSource="test.jpg">
     <VerticalStackLayout>
-        <FlexLayout>
+        <FlexLayout VerticalOptions="Start"
+                    Margin="0, 0, 0, 150"
+                    >
             <ImageButton
                  Source="returnarrow.png"
-                 HeightRequest="60"
-                 WidthRequest="60"
+                 HeightRequest="50"
                  FlexLayout.AlignSelf="Start"
                  Margin="10"
                  />
@@ -17,8 +18,9 @@
     
     
         <FlexLayout JustifyContent="Center"
-                        AlignItems="Center"
-                        Direction="Column">
+                    AlignItems="Center"
+                    Direction="Column"
+                    VerticalOptions="Center">
 
             <Image  Source="connexionjdeux.png"  
                         Style="{StaticResource imgAppli}"/>

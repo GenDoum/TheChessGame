@@ -4,15 +4,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Chess.Pages.LogIn"
              xmlns:contentView="clr-namespace:Chess.contentView"
-             BackgroundImageSource="test.jpg">
+             BackgroundImageSource="test.jpg"
+             >
     
     <ContentPage.Content>
         
         <!-- Login Page -->
 
+        <VerticalStackLayout>
+            
+        <FlexLayout JustifyContent="Start"
+                        AlignContent="Center"
+                        AlignItems="Center"
+                        >
+
+            <ImageButton Source="returnarrow.png"
+                        HeightRequest="50"
+                        Margin="10, 0, 0, -20"
+                        />
+        </FlexLayout>
+
         <FlexLayout JustifyContent="Center"
                     AlignItems="Center"
                     Direction="Column">
+
+
+
 
             <Image  Source="connexion.png"  
                     Style="{StaticResource imgAppli}"/>
@@ -21,7 +38,7 @@
             <HorizontalStackLayout
                 HorizontalOptions="Center"
                 VerticalOptions="Center">
-                <CheckBox Color="{StaticResource GoldUseful}"
+                <CheckBox Color="{StaticResource GoldUsefullColor}"
                 />
                 <Label Text="Jouer avec un invité" 
                        TextColor="FloralWhite"
@@ -30,6 +47,8 @@
             <contentView:connexionModuleButtons/>
             
         </FlexLayout>
-        
+        </VerticalStackLayout>
+
+
     </ContentPage.Content>
 </ContentPage>

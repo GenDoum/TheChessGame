@@ -8,20 +8,31 @@
     <!-- Page LeaderBoard -->
     
     <ScrollView>
+        <VerticalStackLayout>
+            
         
-        <VerticalStackLayout
-            Margin="0, 100, 0, 0">
-            
-            <Image
-                Source="classement.png"
-                Style="{StaticResource imgAppli}"
-            />
-            
-            <contentV:viewLeaderBoard/>
-            <contentV:viewLeaderBoard/>
-            <contentV:viewLeaderBoard/>
-            <contentV:viewLeaderBoard/>
-            <contentV:viewLeaderBoard/>
+            <FlexLayout>
+                <ImageButton
+                     Source="returnarrow.png"
+                     HeightRequest="50"
+                     FlexLayout.AlignSelf="Start"
+                     Margin="10"
+                     />
+            </FlexLayout>
+            <VerticalStackLayout
+                Margin="0, 100, 0, 0">
+
+                <Image
+                    Source="classement.png"
+                    Style="{StaticResource imgAppli}"
+                />
+                
+                <contentV:viewLeaderBoard/>
+                <contentV:viewLeaderBoard/>
+                <contentV:viewLeaderBoard/>
+                <contentV:viewLeaderBoard/>
+                <contentV:viewLeaderBoard/>
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 

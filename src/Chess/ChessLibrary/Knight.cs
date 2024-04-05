@@ -6,7 +6,18 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
-    internal class Knight
+    /// <summary>
+    /// Class that represents a knight piece
+    /// </summary>
+    public class Knight : Piece
     {
+        /// <summary>
+        /// Constructor of the class
+        /// </summary>
+        /// <param name="c"></param>
+        /// <param name="ca"></param>
+        public Knight(Color c, Case ca) : base(c, ca)
+        {
+        }
     }
 }

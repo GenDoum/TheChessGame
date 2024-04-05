@@ -14,23 +14,60 @@ namespace ChessLibrary
         /// <summary>
         /// Pseudo of the Player
         /// </summary>
-        public string Pseudo { get; private set; }
+        readonly string Pseudo;
 
         /// <summary>
-        /// Mot de passe du Player
+        /// Password of the Player
         /// </summary>
-        private string Mdp;
+        private string Password;
 
         /// <summary>
-        /// Contstructeur du Player
+        /// Boolean for know if the player is in the white side or not
+        /// </summary>
+        public Color IsWhite;
+
+        /// <summary>
+        /// Constructor of Player with parameters
         /// </summary>
         /// <param name="pseudo"></param>
-        /// <param name="mdp"></param>
-        public Player(string pseudo, string mdp) 
+        /// <param name="password"></param>
+        public Player(string pseudo, string password, Color color) 
         {
             Pseudo = pseudo;
-            Mdp = mdp;
+            Password = password;
+            Color IsWhite = color;
         }
 
+        /// <summary>
+        /// Constructor of Player without paramater.
+        /// This constructor will be used for the invited player.
+        /// </summary>
+        public Player()
+        {
+            Pseudo = "Invité";
+            Password = null;
+        }
+
+
+        /// <summary>
+        /// Player's method to check the password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public bool isPasswd(string password)
+        {
+            if (Password == null) 
+            {
+                Console.WriteLine("Invited player, no need to check password\n");
+                return true;
+            }
+
+            if (Password == password)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

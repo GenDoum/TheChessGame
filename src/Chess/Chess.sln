@@ -8,6 +8,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessLibrary", "ChessLibrary\ChessLibrary.csproj", "{22A29667-1169-4D71-914A-BD56AD06A228}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleChess", "ConsoleChess\ConsoleChess.csproj", "{6BC75F84-4F9F-4D86-BE69-3867924BDCA0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{22A29667-1169-4D71-914A-BD56AD06A228} = {22A29667-1169-4D71-914A-BD56AD06A228}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

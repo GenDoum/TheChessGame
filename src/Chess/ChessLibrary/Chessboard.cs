@@ -19,26 +19,29 @@ namespace ChessLibrary
         /// <param name="board"></param>
         public Chessboard(Case[,] board)
         {
-            string[] colon = ["A", "B", "C", "D", "E", "F", "G", "H"];
+            string [] colonne = ["A", "B", "C", "D", "E", "F", "G", "H"];
             int[] line = [1, 2, 3, 4, 5, 6, 7, 8];
-            for(int C=0; C < colon.Length; C++) 
+            for(int C=0; C < colonne.Length; C++) 
             {
                 for (int l = 0; l < line.Length; l++)
                 {
 
-                    board[C, l] = new Case(colon[C], line[l]);
+                    board[C, l] = new Case(colonne[C], line[l]);
+
                 }
             }
         }
+
 
         /// <summary>
         /// Creation d
         /// </summary>
         /// <param name="piece"></param>
         /// <param name="cases"></param>
-        public void PlacerPiece(Piece piece, Case cases)
-        {
 
+        public void DeplacerPiece(Piece piece, Case cases)
+        {
+            Piece.Case = cases;
         }
     }
 }

@@ -11,13 +11,13 @@ namespace ChessLibrary
         /// <summary>
         /// Créer un argument Colone
         /// </summary>
-        private char Column { get; set; }
+        private string Column { get; set; }
         /// <summary>
         /// Créer un argument Line
         /// </summary>
         private int Line { get; set; }
 
-        public Case(char column, int line) 
+        public Case(string column, int line) 
         {
             Column = column;
             Line = line;    

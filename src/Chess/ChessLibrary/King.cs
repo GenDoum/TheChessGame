@@ -15,26 +15,26 @@ namespace ChessLibrary
         /// Constructor of the class
         /// </summary>
         /// <param name="color"></param>
-        /// <param name="c"></param>
-        public King(Color color, Case c) : base(color, c)
+        /// <param name="initialCase"></param>
+        public King(Color color, Case initialCase) : base(color, initialCase)
         {
         }
         
         /// <summary>
         /// Method that checks if the king can move to a specific case
         /// </summary>
-        /// <param name="c"></param>
+        /// <param name="targetCase"></param>
         /// <returns></returns>
-        public bool canMove(Case c)
+        public bool CanMove(Case targetCase)
         {
             return true;
         }
         
         /// <summary>
-        /// Method that checks if the king is eaten
+        /// Method that checks if the king can perform castling
         /// </summary>
         /// <returns></returns>
-        public bool canCastle()
+        public bool CanCastle()
         {
             return true;
         }

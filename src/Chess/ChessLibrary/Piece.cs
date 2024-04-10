@@ -15,12 +15,20 @@ namespace ChessLibrary
         /// <summary>
         /// Property that represents the color of the piece
         /// </summary>
-        public Color Color { get; set; }
+        public Color Color
+        {
+            private set;
+            get;
+        }
         
         /// <summary>
         /// Property that represents the case of the piece
         /// </summary>
-        public Case Case { get; set; }
+        public Case CurrentCase 
+        { 
+            private set;
+            get; 
+        }
         
         /// <summary>
         /// Constructor of the class
@@ -30,7 +38,7 @@ namespace ChessLibrary
         public Piece(Color color, Case c)
         {
             Color = color;
-            Case = c;
+            CurrentCase = c;
         }
         
         /// <summary>
@@ -38,7 +46,17 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        public bool canMove(Case c)
+        public bool canMove(Case targetCase)
+        {
+            return true;
+        }
+        
+        /// <summary>
+        /// Method that checks if the piece can kill another piece
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public bool canKill(Case targetCase)
         {
             return true;
         }
@@ -52,14 +70,5 @@ namespace ChessLibrary
             return false;
         }
         
-        /// <summary>
-        /// Method that checks if the piece can kill another piece
-        /// </summary>
-        /// <param name="c"></param>
-        /// <returns></returns>
-        public bool canKill(Case c)
-        {
-            return true;
-        }
     }
 }

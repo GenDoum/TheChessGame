@@ -9,7 +9,8 @@ namespace ChessLibrary
     /// <summary>
     /// Class that represents a queen piece
     /// </summary>
-    public class Queen
+    public class Queen : Piece
+    {
     {
         /// <summary>
         /// Constructor of the class

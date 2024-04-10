@@ -17,11 +17,16 @@ namespace ChessLibrary
         /// </summary>
         private int Line { get; set; }
 
-        public Case(string column, int line) 
+        private Piece? piece { get; set; }
+
+        public Case(string column, int line , Piece piece1) 
         {
             Column = column;
             Line = line;    
+            piece = piece1;
         }
+
+        public bool CaseIsFree => piece == null;
 
     }
 }

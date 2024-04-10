@@ -21,6 +21,11 @@ namespace ChessLibrary
         /// Property that represents the case of the piece
         /// </summary>
         public Case CurrentCase { get; private set; }
+        
+        /// <summary>
+        /// Property that represents if the piece has moved
+        /// </summary>
+        public bool Moved { get; protected set; }
 
         
         /// <summary>
@@ -33,13 +38,19 @@ namespace ChessLibrary
             Color = color;
             CurrentCase = c;
         }
+
+        /// <summary>
+        /// Method that returns the possible moves of the piece
+        /// </summary>
+        /// <returns></returns>
+        public abstract List<Case> GetPossibleMoves();
         
         /// <summary>
         /// Method that checks if the piece can move to a specific case
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        public abstract bool CanMove(Case targetCase);
+        public abstract void CanMove(Case targetCase);
 
         
         /// <summary>

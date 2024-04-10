@@ -11,6 +11,9 @@ namespace ChessLibrary
     /// </summary>
     public class King : Piece
     {
+        private bool canCastleRight;
+        private bool canCastleLeft;
+        
         /// <summary>
         /// Constructor of the class
         /// </summary>
@@ -19,24 +22,25 @@ namespace ChessLibrary
         public King(Color color, Case initialCase) : base(color, initialCase)
         {
         }
+
+        public override List<Case> GetPossibleMoves()
+        {
+            List<Case> possibleMoves = new List<Case>();
+            return possibleMoves;
+        }
         
         /// <summary>
         /// Method that checks if the king can move to a specific case
         /// </summary>
         /// <param name="targetCase"></param>
         /// <returns></returns>
-        public override bool CanMove(Case targetCase)
+        public override void CanMove(Case targetCase)
         {
-            return true;
-        }
-        
-        /// <summary>
-        /// Method that checks if the king can perform castling
-        /// </summary>
-        /// <returns></returns>
-        public bool CanCastle()
-        {
-            return true;
+            if (!Moved)
+            {
+                canCastleRight = true;
+                
+            }
         }
         
         /// <summary>

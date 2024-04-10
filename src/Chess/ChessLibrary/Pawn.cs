@@ -25,9 +25,14 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="targetCase"></param>
         /// <returns></returns>
-        public override bool CanMove(Case targetCase)
+        public override void CanMove(Case targetCase)
         {
-            return true;
+        }
+        
+        public override List<Case> GetPossibleMoves()
+        {
+            List<Case> possibleMoves = new List<Case>();
+            return possibleMoves;
         }
         
         /// <summary>

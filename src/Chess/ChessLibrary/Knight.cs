@@ -20,14 +20,19 @@ namespace ChessLibrary
         {
         }
         
+        public override List<Case> GetPossibleMoves()
+        {
+            List<Case> possibleMoves = new List<Case>();
+            return possibleMoves;
+        }
+        
         /// <summary>
         /// Method that checks if the knight can move to a specific case
         /// </summary>
         /// <param name="targetCase"></param>
         /// <returns></returns>
-        public override bool CanMove(Case targetCase)
+        public override void CanMove(Case targetCase)
         {
-            return true;
         }
         
         /// <summary>

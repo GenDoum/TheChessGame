@@ -43,18 +43,25 @@ namespace ChessLibrary
         {
             piece.case = cases;
                 for ()
+                {
+                    for ()
+                    { 
+                    }
+                }
         }
 
             /// <summary>
             /// Creation d
-            /// </summary>
+            /// </summary>            
             /// <param name="piece"></param>
             /// <param name="cases"></param>
 
             public void DeplacerPiece(Piece piece, Case cases)
             {
                 piece.case = cases;
-
-                }
-            }
+                
+            
+            } 
         }
+    } 
+}

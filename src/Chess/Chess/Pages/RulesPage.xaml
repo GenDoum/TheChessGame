@@ -8,7 +8,7 @@
     <ContentPage.Content>
         <!-- Background de la page -->
 
-        
+
         <ScrollView>
             <!-- Création de la grille qui contient le titre et la grille des règles -->
             <Grid BackgroundColor="#80000000"
@@ -70,7 +70,7 @@
                                Grid.Column="1"
                                Grid.Row="1"
                                 />
-
+                        
 
                         <!-- Deuxième grille des règles -->
                         <Frame Style="{StaticResource FrameRules}"

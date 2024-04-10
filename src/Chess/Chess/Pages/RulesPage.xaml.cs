@@ -1,10 +1,9 @@
 namespace Chess.Pages;
 
-
 public partial class RulesPage : ContentPage
 {
-	public RulesPage()
-	{
+    public RulesPage()
+    {
         InitializeComponent();
-	}
+    }
 }

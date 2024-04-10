@@ -25,7 +25,7 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="targetCase"></param>
         /// <returns></returns>
-        public bool CanMove(Case targetCase)
+        public override bool CanMove(Case targetCase)
         {
             return true;
         }
@@ -35,6 +35,16 @@ namespace ChessLibrary
         /// </summary>
         /// <returns></returns>
         public bool CanCastle()
+        {
+            return true;
+        }
+        
+        /// <summary>
+        /// Method that checks if the king can kill another piece
+        /// </summary>
+        /// <param name="targetCase"></param>
+        /// <returns></returns>
+        public override bool CanKill(Case targetCase)
         {
             return true;
         }

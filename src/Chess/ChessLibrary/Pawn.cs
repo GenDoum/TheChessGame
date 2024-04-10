@@ -19,5 +19,25 @@ namespace ChessLibrary
         public Pawn(Color c, Case ca) : base(c, ca)
         {
         }
+        
+        /// <summary>
+        /// Method that checks if the king can move to a specific case
+        /// </summary>
+        /// <param name="targetCase"></param>
+        /// <returns></returns>
+        public override bool CanMove(Case targetCase)
+        {
+            return true;
+        }
+        
+        /// <summary>
+        /// Method that checks if the king can kill another piece
+        /// </summary>
+        /// <param name="targetCase"></param>
+        /// <returns></returns>
+        public override bool CanKill(Case targetCase)
+        {
+            return true;
+        }
     }
 }

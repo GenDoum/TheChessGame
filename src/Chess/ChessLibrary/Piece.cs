@@ -10,25 +10,18 @@ namespace ChessLibrary
     /// Class that represents a piece
     /// </summary>
     
-    public class Piece
+    public abstract class Piece
     {
         /// <summary>
         /// Property that represents the color of the piece
         /// </summary>
-        public Color Color
-        {
-            private set;
-            get;
-        }
+        public Color Color { get; private set; }
         
         /// <summary>
         /// Property that represents the case of the piece
         /// </summary>
-        public Case CurrentCase 
-        { 
-            private set;
-            get; 
-        }
+        public Case CurrentCase { get; private set; }
+
         
         /// <summary>
         /// Constructor of the class
@@ -46,20 +39,15 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        public bool canMove(Case targetCase)
-        {
-            return true;
-        }
+        public abstract bool CanMove(Case targetCase);
+
         
         /// <summary>
         /// Method that checks if the piece can kill another piece
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
-        public bool canKill(Case targetCase)
-        {
-            return true;
-        }
+        public abstract bool CanKill(Case targetCase);
         
         /// <summary>
         /// Method that checks if the piece is eaten

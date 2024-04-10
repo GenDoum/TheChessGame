@@ -8,7 +8,7 @@ trigger:
 
 steps:
   - name: build_net8
-    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet7-maui
+    image: mcr.microsoft.com/dotnet/sdk:8.0
     commands:
       - cd src/Chess/
       - dotnet restore Chess.sln

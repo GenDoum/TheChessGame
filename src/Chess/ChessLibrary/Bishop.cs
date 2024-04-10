@@ -10,7 +10,6 @@ namespace ChessLibrary
     {
         public Bishop(Color color, Case c) : base(color, c)
         {
-            
         }
     }
 }

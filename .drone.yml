@@ -10,7 +10,7 @@ steps:
   - name: build_net8
     image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet7-maui
     commands:
-      - cd Sources/
+      - cd src/Chess/
       - dotnet restore Chess_linuxOnly.sln
       - dotnet build Chess_linuxOnly.sln -c Release --no-restore /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2TooPath=$ANDROID_SDK_ROOT/build-tools/33.3.3
       - dotnet publish Chess_linuxOnly.sln - Release --no-restore -o $CI_PROJET_DIR/build/release

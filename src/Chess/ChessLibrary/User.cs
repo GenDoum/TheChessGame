@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessLibrary
+namespace ChessLibrarys
 {
     /// <summary>
     /// Classe Player
     /// </summary>
-    public class User
+    public class User 
     {
 
 

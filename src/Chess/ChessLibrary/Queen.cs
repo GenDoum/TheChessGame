@@ -11,13 +11,12 @@ namespace ChessLibrary
     /// </summary>
     public class Queen : Piece
     {
-    {
         /// <summary>
         /// Constructor of the class
         /// </summary>
         /// <param name="c"></param>
         /// <param name="ca"></param>
-        public Queen(Color c, Case ca)
+        public Queen(Color c, Case ca) : base(c, ca)
         {
         }
     }

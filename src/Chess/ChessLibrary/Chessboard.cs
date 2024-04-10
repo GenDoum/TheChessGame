@@ -12,7 +12,7 @@ namespace ChessLibrary
         /// Creation de la matrice pour stocké les cases 
         /// </summary>
 
-        private Case[,] Board = new Case[8, 8];
+        public Case[,] Board = new Case[8, 8];
 
         /// <summary>
         /// Implémente les cases dans le plateau.
@@ -98,7 +98,5 @@ namespace ChessLibrary
         {
             piece.Case = cases;
         }
-
-
     }
 }

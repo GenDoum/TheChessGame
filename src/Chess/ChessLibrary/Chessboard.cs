@@ -86,41 +86,6 @@ namespace ChessLibrary
 
                 }
             }
-
-            //King KingW = new King(Color.White, Board[4 , 0]);
-            //Board[4, 0].piece = KingW;
-            //Queen QueenW = new Queen(Color.White, new Case("D", 1));
-            //Rook RookLW = new Rook(Color.White, new Case("A", 1));
-            //Rook RookRW = new Rook(Color.White, new Case("H", 1));
-            //Knight KnightLW = new Knight(Color.White, new Case("B", 1));
-            //Knight KnightRW = new Knight(Color.White, new Case("G", 1));
-            //Bishop BishopLW = new Bishop(Color.White, new Case("C", 1));
-            //Bishop BishopRW = new Bishop(Color.White, new Case("F", 1));
-            //Pawn PawnAW = new Pawn(Color.White, new Case("A", 2));
-            //Pawn PawnBW = new Pawn(Color.White, new Case("B", 2));
-            //Pawn PawnCW = new Pawn(Color.White, new Case("C", 2));
-            //Pawn PawnDW = new Pawn(Color.White, new Case("D", 2));
-            //Pawn PawnEW = new Pawn(Color.White, new Case("E", 2));
-            //Pawn PawnFW = new Pawn(Color.White, new Case("F", 2));
-            //Pawn PawnGW = new Pawn(Color.White, new Case("G", 2));
-            //Pawn PawnHW = new Pawn(Color.White, new Case("H", 2));
-
-            //King KingB = new King(Color.Black, new Case("D", 8));
-            //Queen QueenB = new Queen(Color.Black, new Case("E", 8));
-            //Rook RookLB = new Rook(Color.Black, new Case("A", 8));
-            //Rook RookRB = new Rook(Color.Black, new Case("H", 8));
-            //Knight KnightLB = new Knight(Color.Black, new Case("B", 8));
-            //Knight KnightRB = new Knight(Color.Black, new Case("G", 8));
-            //Bishop BishopLB = new Bishop(Color.Black, new Case("C", 8));
-            //Bishop BishopRB = new Bishop(Color.Black, new Case("F", 8));
-            //Pawn PawnAB = new Pawn(Color.Black, new Case("A", 7));
-            //Pawn PawnBB = new Pawn(Color.Black, new Case("B", 7));
-            //Pawn PawnCB = new Pawn(Color.Black, new Case("C", 7));
-            //Pawn PawnDB = new Pawn(Color.Black, new Case("D", 7));
-            //Pawn PawnEB = new Pawn(Color.Black, new Case("E", 7));
-            //Pawn PawnFB = new Pawn(Color.Black, new Case("F", 7));
-            //Pawn PawnGB = new Pawn(Color.Black, new Case("G", 7));
-            //Pawn PawnHB = new Pawn(Color.Black, new Case("H", 7));
         }
 
         /// <summary>

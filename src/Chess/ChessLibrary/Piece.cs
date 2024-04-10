@@ -26,7 +26,6 @@ namespace ChessLibrary
         /// Property that represents if the piece has moved
         /// </summary>
         public bool Moved { get; protected set; }
-
         
         /// <summary>
         /// Constructor of the class

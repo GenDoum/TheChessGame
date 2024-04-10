@@ -39,7 +39,6 @@ namespace ChessLibrary
             if (!Moved)
             {
                 canCastleRight = true;
-                
             }
         }
         

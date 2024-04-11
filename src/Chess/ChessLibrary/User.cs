@@ -53,6 +53,14 @@ namespace ChessLibrarys
         /// </summary>
         public Color IsWhite;
 
+        public int Score
+        {
+            get => score;
+            private set;
+        }
+
+        private int score;
+
         /// <summary>
         /// Constructor of Player with parameters
         /// </summary>

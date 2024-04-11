@@ -94,9 +94,11 @@ namespace ChessLibrary
         /// <param name="piece"></param>
         /// <param name="cases"></param>
 
-        public void DeplacerPiece(Piece piece, Case cases)
+        public void DeplacerPiece(Piece piece, Case depart , Case arrive)
         {
-            piece.Case = cases;
+            arrive.Piece = piece;
+            depart.Piece = null;
+            piece.Case = arrive;
         }
     }
 }

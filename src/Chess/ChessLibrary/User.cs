@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChessLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace ChessLibrarys
     /// <summary>
     /// Classe Player
     /// </summary>
+    using ChessLibrary;
     public class User 
     {
 
@@ -56,7 +58,10 @@ namespace ChessLibrarys
         public int Score
         {
             get => score;
-            private set;
+            set
+            {
+                score = value;
+            }
         }
 
         private int score;

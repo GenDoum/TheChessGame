@@ -20,17 +20,17 @@ namespace ChessLibrary
         /// <summary>
         /// Property that represents the case of the piece
         /// </summary>
-        public Case Case { get; set; }
+        public int id { get; set; }
 
         /// <summary>
         /// Constructor of the class
         /// </summary>
         /// <param name="color"></param>
         /// <param name="c"></param>
-        public Piece(Color color, Case c)
+        public Piece(Color color,int indentifiant)
         {
             Color = color;
-            Case = c;
+            id = indentifiant;
         }
 
         /// <summary>

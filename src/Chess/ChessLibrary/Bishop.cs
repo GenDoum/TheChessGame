@@ -8,7 +8,7 @@ namespace ChessLibrary
 {
     public class Bishop : Piece
     {
-        public Bishop(Color color, Case c) : base(color, c)
+        public Bishop(Color color, int id) : base(color, id)
         {
         }
     }

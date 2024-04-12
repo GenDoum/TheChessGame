@@ -16,7 +16,7 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="c"></param>
         /// <param name="ca"></param>
-        public Pawn(Color c, Case ca) : base(c, ca)
+        public Pawn(Color c, int id) : base(c, id)
         {
         }
     }

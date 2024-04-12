@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="color"></param>
         /// <param name="c"></param>
-        public King(Color color, Case c) : base(color, c)
+        public King(Color color, int id) : base(color, id)
         {
         }
         

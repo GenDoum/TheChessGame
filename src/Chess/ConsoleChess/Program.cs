@@ -5,7 +5,7 @@ using ChessLibrary;
 
 Console.WriteLine("Hello, World!");
 
-User a = new User();
+ChessLibrary.User a = new User();
 User b = new User("Jorge", "ouho", Color.Black);
 
 

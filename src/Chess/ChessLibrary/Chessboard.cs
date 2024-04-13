@@ -112,13 +112,7 @@ namespace ChessLibrary
             depart.Piece = null;
         }
 
-        public bool IsCaseEmpty(Case @case)
-        {
-            if (@case.Piece == null) { 
-                return false; }
-
-           return true;
-        }
+        
 
         public bool IsMoveValid(List<Case> Lcase, Case Final)
         {

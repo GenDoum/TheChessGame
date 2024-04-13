@@ -28,5 +28,15 @@ namespace ChessLibrary
 
         public bool CaseIsFree => Piece == null;
 
+        public bool IsCaseEmpty()
+        {
+            if (this.Piece == null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

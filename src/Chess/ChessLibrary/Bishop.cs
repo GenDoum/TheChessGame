@@ -16,31 +16,15 @@ namespace ChessLibrary
         public Bishop(Color color, int id) : base(color, id)
         {
         }
-        
-        public override List<Case> GetPossibleMoves()
+
+        public override bool canMove(int x, int y, int x2, int y2)
         {
-            List<Case> possibleMoves = new List<Case>();
-            return possibleMoves;
-        }
-        
-        /// <summary>
-        /// Method that checks if the bishop can move to a specific case
-        /// </summary>
-        /// <param name="targetCase"></param>
-        /// <returns></returns>
-        public override void CanMove(Case targetCase)
-        {
-        }
-        
-        /// <summary>
-        /// Method that checks if the bishop can kill another piece
-        /// </summary>
-        /// <param name="targetCase"></param>
-        /// <returns></returns>
-        public override bool CanKill(Case targetCase)
-        {
+            if (Math.Abs(x - x2) != Math.Abs(y - y2))
+            {
+                throw new InvalidOperationException("Invalid move for Bishop");
+            }
+
             return true;
         }
-        
     }
 }

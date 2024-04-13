@@ -23,33 +23,14 @@ namespace ChessLibrary
         {
         }
 
-        public override List<Case> GetPossibleMoves()
+        public override bool canMove(int x, int y, int x2, int y2)
         {
-            List<Case> possibleMoves = new List<Case>();
-            return possibleMoves;
-        }
-        
-        /// <summary>
-        /// Method that checks if the king can move to a specific case
-        /// </summary>
-        /// <param name="targetCase"></param>
-        /// <returns></returns>
-        public override void CanMove(Case targetCase)
-        {
-            if (!Moved)
+            if (Math.Abs(x - x2) <= 1 && Math.Abs(y - y2) <= 1)
             {
-                canCastleRight = true;
+                return true;
             }
+            return false;
         }
         
-        /// <summary>
-        /// Method that checks if the king can kill another piece
-        /// </summary>
-        /// <param name="targetCase"></param>
-        /// <returns></returns>
-        public override bool CanKill(Case targetCase)
-        {
-            return true;
-        }
     }
 }

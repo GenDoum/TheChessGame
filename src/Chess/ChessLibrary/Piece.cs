@@ -9,40 +9,44 @@ namespace ChessLibrary
     /// <summary>
     /// Class that represents a piece
     /// </summary>
-
-    public class Piece
+    
+    public abstract class Piece
     {
         /// <summary>
         /// Property that represents the color of the piece
         /// </summary>
-        public Color Color { get; set; }
+        public Color Color { get; private set; }
 
+        public int id { get; private set; }
+        
         /// <summary>
-        /// Property that represents the case of the piece
+        /// Property that represents if the piece has moved
         /// </summary>
-        public int id { get; set; }
-
+        public bool Moved { get; protected set; }
+        
         /// <summary>
         /// Constructor of the class
         /// </summary>
         /// <param name="color"></param>
         /// <param name="c"></param>
-        public Piece(Color color,int indentifiant)
+        public Piece(Color color, int indentifiant)
         {
             Color = color;
             id = indentifiant;
         }
-
+        
         /// <summary>
-        /// Method that checks if the piece can move to a specific case
+        /// Method that checks if the piece can move
         /// </summary>
-        /// <param name="c"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="x2"></param>
+        /// <param name="y2"></param>
         /// <returns></returns>
-        public bool canMove(Case c)
-        {
-            return true;
-        }
+        public abstract bool canMove(int x, int y, int x2, int y2);
 
+        public abstract List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard);
+        
         /// <summary>
         /// Method that checks if the piece is eaten
         /// </summary>
@@ -51,15 +55,6 @@ namespace ChessLibrary
         {
             return false;
         }
-
-        /// <summary>
-        /// Method that checks if the piece can kill another piece
-        /// </summary>
-        /// <param name="c"></param>
-        /// <returns></returns>
-        public bool canKill(Case c)
-        {
-            return true;
-        }
+        
     }
 }

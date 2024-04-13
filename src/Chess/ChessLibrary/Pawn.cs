@@ -19,5 +19,15 @@ namespace ChessLibrary
         public Pawn(Color c, int id) : base(c, id)
         {
         }
+
+        public override bool canMove(int x, int y, int x2, int y2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

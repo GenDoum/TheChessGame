@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
-    public class User
+    internal interface IRegles
     {
+
     }
 }

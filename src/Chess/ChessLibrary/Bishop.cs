@@ -13,7 +13,7 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="color"></param>
         /// <param name="c"></param>
-        public Bishop(Color color, Case initialCase) : base(color, initialCase)
+        public Bishop(Color color, int id) : base(color, id)
         {
         }
         

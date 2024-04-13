@@ -19,7 +19,7 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="color"></param>
         /// <param name="initialCase"></param>
-        public King(Color color, Case initialCase) : base(color, initialCase)
+        public King(Color color, int id) : base(color, id)
         {
         }
 

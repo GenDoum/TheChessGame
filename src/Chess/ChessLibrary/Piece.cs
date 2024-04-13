@@ -16,11 +16,8 @@ namespace ChessLibrary
         /// Property that represents the color of the piece
         /// </summary>
         public Color Color { get; private set; }
-        
-        /// <summary>
-        /// Property that represents the case of the piece
-        /// </summary>
-        public Case CurrentCase { get; private set; }
+
+        public int id { get; private set; }
         
         /// <summary>
         /// Property that represents if the piece has moved
@@ -32,10 +29,10 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="color"></param>
         /// <param name="c"></param>
-        public Piece(Color color, Case c)
+        public Piece(Color color,int indentifiant)
         {
             Color = color;
-            CurrentCase = c;
+            id = indentifiant;
         }
 
         /// <summary>

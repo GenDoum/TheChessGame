@@ -16,7 +16,7 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="c"></param>
         /// <param name="ca"></param>
-        public Queen(Color color, Case initialCase) : base(color, initialCase)
+        public Queen(Color color, int id) : base(color, id)
         {
         }
         

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
-    public class Chessboard
+    public class Chessboard : IRegles
     {
         /// <summary>
         /// Creation de la matrice pour stocké les cases 
@@ -30,10 +30,10 @@ namespace ChessLibrary
                     if ((C == 0 && l == 0) || (C == 7 && l == 0))
                     {
                         //Rook rook = new Rook(Color.White, Board[C, l]);
-                        //Board[C, l] = new Case(colonne[C], line[l], rook);
+                        //Board[C, l] = new Case(C, l, rook);
                         //List<Piece> list = new List<Piece>();
                         //list.Add(rook);
-                        Board[C,l] = new Case(C, l, new Rook(Color.White, indentifiant));
+                        Board[C,l] = new Case(C, l,new Rook(Color.White, indentifiant));
                         indentifiant++;
                     }
                     else if ((C == 1 && l == 0) || (C == 6 && l == 0))
@@ -68,7 +68,7 @@ namespace ChessLibrary
                     }
                     else if ((C == 1 && l == 7) || (C == 6 && l == 7))
                     {
-                        Board[C, l] = new Case(C, l , new Knight(Color.Black, indentifiant));
+                        Board[C, l] = new Case(C, l, new Knight(Color.Black, indentifiant));
                         indentifiant++;
                     }
                     else if ((C == 2 && l == 7) || (C == 5 && l == 7))
@@ -83,7 +83,7 @@ namespace ChessLibrary
                     }
                     else if (C == 4 && l == 7)
                     {
-                        Board[C, l] = new Case(C, l , new King(Color.Black, indentifiant));
+                        Board[C, l] = new Case(C, l, new King(Color.Black, indentifiant));
                         indentifiant++;
                     }
                     else if (l == 6)
@@ -110,6 +110,41 @@ namespace ChessLibrary
         {
             arrive.Piece = piece;
             depart.Piece = null;
+        }
+
+        public bool IsCaseEmpty(Case @case)
+        {
+            if (@case.Piece == null) { 
+                return false; }
+
+           return true;
+        }
+
+        public bool IsMoveValid(List<Case> Lcase, Case Final)
+        {
+            foreach(var i in Lcase)
+            {
+                if (i == Final) { return true; }
+            }
+            return false;
+        }
+
+
+
+        public void MovePiece(Piece piece, Case Initial, Case Final)
+        {
+            List<Case> L = piece.PossibleMove(Initial, this);
+            if (IsMoveValid(L, Final))
+            {
+                Initial.Piece = null;
+                Final.Piece = piece;
+            }
+        }
+
+
+        public User Turn()
+        {
+            throw new NotImplementedException();
         }
     }
 }

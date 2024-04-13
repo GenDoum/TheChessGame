@@ -6,23 +6,20 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
-    /// <summary>
-    /// Class that represents a case
-    /// </summary>
     public class Case
     {
         /// <summary>
-        /// Create a column
+        /// Créer un argument Colone
         /// </summary>
         public int Column { get; private set; }
         /// <summary>
-        /// Create a line
+        /// Créer un argument Line
         /// </summary>
         public int Line { get; private set; }
 
         public Piece? Piece { get; set; }
 
-        public Case(int column, int line , Piece piece1)
+        public Case(int column, int line , Piece piece1) 
         {
             Column = column;
             Line = line;    

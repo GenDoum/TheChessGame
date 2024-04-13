@@ -10,12 +10,9 @@ namespace ChessLibrary
     {
         void MovePiece(Piece piece, Case Initial,Case Final);
 
-        bool IsMoveValid(Piece piece);
+        bool IsMoveValid(List<Case> Lcase, Case Final);
 
         User Turn();
-
-        List<Case> MoveAvaliable(Piece piece, Case @case);
-
 
         bool IsCaseEmpty(Case @case);
 

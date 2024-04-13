@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
-    public class Chessboard
+    public class Chessboard : IRegles
     {
         /// <summary>
         /// Creation de la matrice pour stocké les cases 
@@ -22,12 +22,10 @@ namespace ChessLibrary
         {
             Board = board;
 
-            string[] colonne = new string[] { "A", "B", "C", "D", "E", "F", "G", "H" };
-            int[] line = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
             int indentifiant = 1;
-            for (int C = 0; C < colonne.Length; C++)
+            for (int C = 0; C < 8; C++)
             {
-                for (int l = 0; l < line.Length; l++)
+                for (int l = 0; l < 8; l++)
                 {
                     if ((C == 0 && l == 0) || (C == 7 && l == 0))
                     {
@@ -35,7 +33,7 @@ namespace ChessLibrary
                         //Board[C, l] = new Case(colonne[C], line[l], rook);
                         //List<Piece> list = new List<Piece>();
                         //list.Add(rook);
-                        Board[C,l] = new Case(colonne[C], line[l],new Rook(Color.White, indentifiant));
+                        Board[C,l] = new Case(C, l,new Rook(Color.White, indentifiant));
                         indentifiant++;
                     }
                     else if ((C == 1 && l == 0) || (C == 6 && l == 0))
@@ -112,6 +110,41 @@ namespace ChessLibrary
         {
             arrive.Piece = piece;
             depart.Piece = null;
+        }
+
+        public bool IsCaseEmpty(Case @case)
+        {
+            if (@case.Piece == null) { 
+                return false; }
+
+           return true;
+        }
+
+        public bool IsMoveValid(List<Case> Lcase, Case Final)
+        {
+            foreach(var i in Lcase)
+            {
+                if (i == Final) { return true; }
+            }
+            return false;
+        }
+
+
+
+        public void MovePiece(Piece piece, Case Initial, Case Final)
+        {
+            List<Case> L = piece.PossibleMove(Initial, this);
+            if (IsMoveValid(L, Final))
+            {
+                Initial.Piece = null;
+                Final.Piece = piece;
+            }
+        }
+
+
+        public User Turn()
+        {
+            throw new NotImplementedException();
         }
     }
 }

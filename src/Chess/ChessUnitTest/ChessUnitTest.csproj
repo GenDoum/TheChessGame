@@ -20,4 +20,9 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChessLibrary\ChessLibrary.csproj" />
+    <ProjectReference Include="..\ConsoleChess\ConsoleChess.csproj" />
+  </ItemGroup>
+
 </Project>

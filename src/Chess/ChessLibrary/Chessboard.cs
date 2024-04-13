@@ -11,7 +11,7 @@ namespace ChessLibrary
         /// <summary>
         /// Creation de la matrice pour stocké les cases 
         /// </summary>
-
+        
         public Case[,] Board = new Case[8, 8];
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace ChessLibrary
 
         public void MovePiece(Piece piece, Case Initial, Case Final)
         {
-            List<Case> L = piece.PossibleMove(Initial, this);
+            List<Case> L = piece.PossibleMoves(Initial, this);
             if (IsMoveValid(L, Final))
             {
                 Initial.Piece = null;

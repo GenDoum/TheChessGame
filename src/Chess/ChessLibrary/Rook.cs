@@ -26,5 +26,9 @@ namespace ChessLibrary
             throw new NotImplementedException();
         }
 
+        public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

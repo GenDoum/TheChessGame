@@ -25,12 +25,17 @@ namespace ChessLibrary
 
         public override bool canMove(int x, int y, int x2, int y2)
         {
-            if (Math.Abs(x - x2) <= 1 && Math.Abs(y - y2) <= 1)
+            if (Math.Abs(x - x2) > 1 || Math.Abs(y - y2) > 1)
             {
-                return true;
+                throw new InvalidOperationException("Invalid move for King");
             }
-            return false;
+
+            return true;
         }
-        
+
+        public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

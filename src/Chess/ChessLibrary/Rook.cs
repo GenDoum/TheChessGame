@@ -30,7 +30,7 @@ namespace ChessLibrary
         {
             if (chessboard == null)
             {
-                throw new NotImplementedException();
+                throw new ArgumentNullException(nameof(chessboard));
             }
 
             List<Case> result = new List<Case>();

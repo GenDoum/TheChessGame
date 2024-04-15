@@ -93,7 +93,7 @@ namespace ChessLibrary
                     }
                     else
                     {
-                        Board[C, l] = new Case(C, l, null);
+                        Board[C, l] = new Case(C, l,null);
                     }
 
                 }

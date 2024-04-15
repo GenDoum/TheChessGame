@@ -100,19 +100,6 @@ namespace ChessLibrary
             }
         }
 
-        /// <summary>
-        /// Creation d
-        /// </summary>            
-        /// <param name="piece"></param>
-        /// <param name="cases"></param>
-
-        public void DeplacerPiece(Piece piece, Case depart , Case arrive)
-        {
-            arrive.Piece = piece;
-            depart.Piece = null;
-        }
-
-        
 
         public bool IsMoveValid(List<Case> Lcase, Case Final)
         {

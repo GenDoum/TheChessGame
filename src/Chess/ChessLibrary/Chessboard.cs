@@ -99,7 +99,22 @@ namespace ChessLibrary
                 }
             }
         }
-
+        public Chessboard(Case[,] board, int zero)
+        {
+            Board = board;
+            for (int C = 0; C < 8; C++)
+            {
+                for (int l = 0; l < 8; l++)
+                {
+                    if (C == 4 && l == 4) 
+                    {
+                        Board[C, l] = new Case(C, l, new Bishop(Color.Black, zero));
+                    }
+                    else
+                    Board[C, l] = new Case(C, l, null);
+                }
+            }
+        }
 
         public bool IsMoveValid(List<Case> Lcase, Case Final)
         {

@@ -61,14 +61,24 @@ class Program
 {
     static void Main(string[] args)
     {
+
+
+            Case[,] Board = new Case[8, 8];
+            var chessboard = new Chessboard(Board, 2);
+            List<Case> Test = Board[4, 4].Piece.PossibleMoves(Board[4, 4], chessboard);
+             foreach (var teste in Test)
+             {
+                teste.afficher();
+             }
+
         // Initialisation de l'échiquier
-        Chessboard chessboard = new Chessboard(new Case[8, 8]);
-        PrintChessboard(chessboard);
-        while (Console.ReadLine() != "exit")
-        {
-            Console.WriteLine("Déplacement de la piece");
-           // Chessboard.DeplacerPiece(Knight(Color.Black, Chessboard[1, 4]), Chessboard[1, 4], Chessboard[3, 5]);
-        }
+        /* Chessboard chessboard = new Chessboard(new Case[8, 8]);
+         PrintChessboard(chessboard);
+         while (Console.ReadLine() != "exit")
+         {
+             Console.WriteLine("Déplacement de la piece");
+            // Chessboard.DeplacerPiece(Knight(Color.Black, Chessboard[1, 4]), Chessboard[1, 4], Chessboard[3, 5]);
+         }*/
 
     }
 

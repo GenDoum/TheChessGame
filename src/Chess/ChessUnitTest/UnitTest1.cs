@@ -56,5 +56,7 @@ namespace ChessUnitTest
             var king = new King(Color.White, 1);
             Assert.Throws<InvalidOperationException>(() => king.canMove(1, 1, 3, 3));
         }
+
+
     }
 }

@@ -37,7 +37,7 @@ namespace ChessLibrary
             //Check if this is the first movement
 
 
-            if (this.FirstMove()) // Need to create fonction first Move Maybe we need to change the constructor of the Pawn.
+            if (true/*this.FirstMove()*/) // Need to create fonction first Move Maybe we need to change the constructor of the Pawn.
             {
                 for (int i = 1; i <= 2; i++)
                 {
@@ -55,7 +55,7 @@ namespace ChessLibrary
             //Check for the rest.
             else
             {
-                int newColumn = caseInitial.Column + i;
+                int newColumn = caseInitial.Column + 1;
                 int newLine = caseInitial.Line;
                 Case potentialCase = chessboard.Board[newColumn, newLine];
                 if (potentialCase.IsCaseEmpty())

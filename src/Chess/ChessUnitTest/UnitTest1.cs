@@ -1,0 +1,6 @@
+using ChessLibrary;
+
+namespace ChessUnitTest
+{
+        
+}

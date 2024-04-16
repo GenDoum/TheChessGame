@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ChessLibrary
-{   public class Chessboard
+{
+    public class Chessboard : IRegles
     {
         /// <summary>
         /// Creation de la matrice pour stocké les cases 
         /// </summary>
-        private Case[,] board = new Case[8,8];
+
+        public Case[,] Board = new Case[8, 8];
 
         /// <summary>
         /// Implémente les cases dans le plateau.
@@ -18,42 +20,127 @@ namespace ChessLibrary
         /// <param name="board"></param>
         public Chessboard(Case[,] board)
         {
-            string [] colonne = ["A", "B", "C", "D", "E", "F", "G", "H"];
-            int[] line = [1, 2, 3, 4, 5, 6, 7, 8];
-            for(int C=0; C < colonne.Length; C++) 
-            {
-                for (int l = 0; l < line.Length; l++)
-                {
+            Board = board;
 
-                    board[C, l] = new Case(colonne[C], line[l]);
+            int indentifiant = 1;
+            for (int C = 0; C < 8; C++)
+            {
+                for (int l = 0; l < 8; l++)
+                {
+                    if ((C == 0 && l == 0) || (C == 7 && l == 0))
+                    {
+                        //Rook rook = new Rook(Color.White, Board[C, l]);
+                        //Board[C, l] = new Case(C, l, rook);
+                        //List<Piece> list = new List<Piece>();
+                        //list.Add(rook);
+                        Board[C, l] = new Case(C, l, new Rook(Color.White, indentifiant));
+                        indentifiant++;
+                    }
+                    else if ((C == 1 && l == 0) || (C == 6 && l == 0))
+                    {
+                        Board[C, l] = new Case(C, l, new Knight(Color.White, indentifiant));
+                        indentifiant++;
+                    }
+                    else if ((C == 2 && l == 0) || (C == 5 && l == 0))
+                    {
+                        Board[C, l] = new Case(C, l, new Bishop(Color.White, indentifiant));
+                        indentifiant++;
+                    }
+                    else if (C == 3 && l == 0)
+                    {
+                        Board[C, l] = new Case(C, l, new Queen(Color.White, indentifiant));
+                        indentifiant++;
+                    }
+                    else if (C == 4 && l == 0)
+                    {
+                        Board[C, l] = new Case(C, l, new King(Color.White, indentifiant));
+                        indentifiant++;
+                    }
+                    else if (l == 1)
+                    {
+                        Board[C, l] = new Case(C, l, new Pawn(Color.White, indentifiant));
+                        indentifiant++;
+                    }
+                    else if ((C == 0 && l == 7) || (C == 7 && l == 7))
+                    {
+                        Board[C, l] = new Case(C, l, new Rook(Color.Black, indentifiant));
+                        indentifiant++;
+                    }
+                    else if ((C == 1 && l == 7) || (C == 6 && l == 7))
+                    {
+                        Board[C, l] = new Case(C, l, new Knight(Color.Black, indentifiant));
+                        indentifiant++;
+                    }
+                    else if ((C == 2 && l == 7) || (C == 5 && l == 7))
+                    {
+                        Board[C, l] = new Case(C, l, new Bishop(Color.Black, indentifiant));
+                        indentifiant++;
+                    }
+                    else if (C == 3 && l == 7)
+                    {
+                        Board[C, l] = new Case(C, l, new Queen(Color.Black, indentifiant));
+                        indentifiant++;
+                    }
+                    else if (C == 4 && l == 7)
+                    {
+                        Board[C, l] = new Case(C, l, new King(Color.Black, indentifiant));
+                        indentifiant++;
+                    }
+                    else if (l == 6)
+                    {
+                        Board[C, l] = new Case(C, l, new Pawn(Color.Black, indentifiant));
+                        indentifiant++;
+                    }
+                    else
+                    {
+                        Board[C, l] = new Case(C, l, null);
+                    }
 
                 }
             }
         }
-
-
-        /// <summary>
-        /// Creation d
-        /// </summary>
-        /// <param name="piece"></param>
-        /// <param name="cases"></param>
-
-        public void PlacerPiece(Piece piece, Case cases)
+        public Chessboard(Case[,] board, int zero)
         {
-            piece.case = cases;
-            for ()
+            Board = board;
+            for (int C = 0; C < 8; C++)
+            {
+                for (int l = 0; l < 8; l++)
+                {
+                    if (C == 4 && l == 4)
+                    {
+                        Board[C, l] = new Case(C, l, new Bishop(Color.Black, zero));
+                    }
+                    else
+                        Board[C, l] = new Case(C, l, null);
+                }
+            }
         }
 
-        /// <summary>
-        /// Creation d
-        /// </summary>
-        /// <param name="piece"></param>
-        /// <param name="cases"></param>
-
-        public void DeplacerPiece(Piece piece, Case cases)
+        public bool IsMoveValid(List<Case> Lcase, Case Final)
         {
-            piece.case = cases;
+            foreach (var i in Lcase)
+            {
+                if (i == Final) { return true; }
+            }
+            return false;
+        }
 
+
+
+        public void MovePiece(Piece piece, Case Initial, Case Final)
+        {
+            List<Case> L = piece.PossibleMoves(Initial, this);
+            if (IsMoveValid(L, Final))
+            {
+                Initial.Piece = null;
+                Final.Piece = piece;
+            }
+        }
+
+
+        public User Turn()
+        {
+            throw new NotImplementedException();
         }
     }
 }

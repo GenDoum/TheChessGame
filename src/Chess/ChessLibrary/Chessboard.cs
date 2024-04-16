@@ -124,9 +124,7 @@ namespace ChessLibrary
             }
             return false;
         }
-
-
-
+        
         public void MovePiece(Piece piece, Case Initial, Case Final)
         {
             List<Case> L = piece.PossibleMoves(Initial, this);
@@ -137,6 +135,10 @@ namespace ChessLibrary
             }
         }
 
+        public bool IsCaseEmpty(Case @case)
+        {
+            throw new NotImplementedException();
+        }
 
         public User Turn()
         {

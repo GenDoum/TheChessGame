@@ -33,6 +33,11 @@ namespace ChessLibrary
         {
             Color = color;
             id = indentifiant;
+
+            if (color != Color.Black && color != Color.White)
+            {
+                throw new ArgumentException("Invalid color");
+            }
         }
         
         /// <summary>

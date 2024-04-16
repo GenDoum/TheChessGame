@@ -22,7 +22,12 @@ namespace ChessLibrary
 
         public override bool canMove(int x, int y, int x2, int y2)
         {
-            throw new NotImplementedException();
+            if (x == x2 && y2 == y + 1)
+            {
+                return true;
+            }
+
+            throw new InvalidOperationException("Invalid move for Pawn");
         }
 
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)

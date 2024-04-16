@@ -138,9 +138,9 @@ namespace ChessLibrary
         }
 
 
-        public User Turn()
-        {
-            throw new NotImplementedException();
-        }
+        // public User Turn()
+        // {
+        //     throw new NotImplementedException();
+        // }
     }
 }

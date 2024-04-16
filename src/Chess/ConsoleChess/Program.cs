@@ -1,60 +1,6 @@
-//using System;
-//using ChessLibrary;
-
-//class Program
-//{
-//    static void Main(string[] args)
-//    {
-
-//            // Taille de l'échiquier
-//            int taille = 8;
-
-//            // Parcourir chaque ligne
-//            for (int i = 0; i < taille; i++)
-//            {
-//                // Parcourir chaque colonne
-//                for (int j = 0; j < taille; j++)
-//                {
-//                    // Alterner les cases blanches et noires
-//                    if ((i + j) % 2 == 0)
-//                    {
-//                        Console.Write("██"); // Case blanche
-//                    }
-//                    else
-//                    {
-//                        Console.Write("  "); // Case noire
-//                    }
-//                }
-//                // Passer à la ligne suivante
-//                Console.WriteLine();
-//            }
-
-
-
-//        Case[,] board = new Case[8, 8];
-//        for (int i = 0; i < 8; i++)
-//        {
-//            for (int j = 0; j < 8; j++)
-//            {
-//                board[i, j] = new Case("", 0, null);
-//            }
-//        }
-
-//        Chessboard chessboard = new Chessboard(board);
-
-//        // affiche échiquier
-//        for (int i = 7; i >= 0; i--)
-//        {
-//            for (int j = 0; j < 8; j++)
-//            {
-//                Console.Write("██",chessboard.Board[j, i].Piece?.GetType().Name ?? "Empty");
-//                Console.Write("  ");
-//            }
-//            Console.WriteLine();
-//        }
-//    }
-//}
+// See https://aka.ms/new-console-template for more information
 using System;
+using System.Reflection.Metadata;
 using ChessLibrary;
 
 class Program
@@ -63,13 +9,13 @@ class Program
     {
 
 
-            Case[,] Board = new Case[8, 8];
-            var chessboard = new Chessboard(Board, 2);
-            List<Case> Test = Board[4, 4].Piece.PossibleMoves(Board[4, 4], chessboard);
-             foreach (var teste in Test)
-             {
-                teste.afficher();
-             }
+        Case[,] Board = new Case[8, 8];
+        var chessboard = new Chessboard(Board, 2);
+        List<Case> Test = Board[4, 4].Piece.PossibleMoves(Board[4, 4], chessboard);
+        foreach (var teste in Test)
+        {
+            teste.afficher();
+        }
 
         // Initialisation de l'échiquier
         /* Chessboard chessboard = new Chessboard(new Case[8, 8]);
@@ -150,3 +96,4 @@ class Program
         }
     }
 }
+

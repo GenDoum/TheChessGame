@@ -8,6 +8,25 @@ trigger:
 
 steps:
   - name: build_net8
+<<<<<<< HEAD
+    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet7-maui
+    commands:
+      - cd Sources/
+      - dotnet restore Chess_linuxOnly.sln
+      - dotnet build Chess_linuxOnly.sln -c Release --no-restore /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2TooPath=$ANDROID_SDK_ROOT/build-tools/33.3.3
+      - dotnet publish Chess_linuxOnly.sln - Release --no-restore -o $CI_PROJET_DIR/build/release
+    depends_on: [clone]
+
+    # add tests
+
+    - name: code-inspection-linux-only
+      image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet7
+      secrets: [ CHESS_SECRET ]
+      environment:
+        sonart_host: https://codefirst.iut.uca.fr/sonar/
+        sonar_token:
+          from_secret: CHESS_SECRET
+=======
     image: mcr.microsoft.com/dotnet/sdk:8.0
     commands:
       - cd src/Chess/
@@ -23,4 +42,5 @@ steps:
     #     sonart_host: https://codefirst.iut.uca.fr/sonar/
     #     sonar_token:
     #       from_secret: CHESS_SECRET
+>>>>>>> origin/csharp
 

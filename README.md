@@ -72,6 +72,6 @@ $ git push origin feature/awesomeFeature
 
 * [Yannis Doumir-Fernandes](https://codefirst.iut.uca.fr/git/yannis.doumir_fernandes)
 * [Mathéo Balko](https://codefirst.iut.uca.fr/git/matheo.balko) 
-* [Mathéo Hersan](https://codefirst.iut.uca.fr/git/matheo.hersan) 
+* [Mathéo Hersan](https://codefirst.iut.uca.fr/git/matheo.hersan)  
 
 

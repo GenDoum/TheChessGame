@@ -14,7 +14,7 @@ namespace ChessLibrary
 
         User Turn();
 
-        bool IsCaseEmpty(Case @case);
+        //bool IsCaseEmpty(Case @case);
 
     }
 }

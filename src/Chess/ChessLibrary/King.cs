@@ -41,6 +41,7 @@ namespace ChessLibrary
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
             throw new NotImplementedException();
+            //We need to know how we gonna check "échec" because if a case put the King in "échec position he can go on this case!!"
         }
     }
 }

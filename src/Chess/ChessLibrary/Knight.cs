@@ -37,7 +37,40 @@ namespace ChessLibrary
 
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
-            throw new NotImplementedException();
+            if (chessboard == null)
+            {
+                throw new ArgumentNullException(nameof(chessboard));
+            }
+
+            List<Case> result = new List<Case>();
+
+            // Toutes les positions possibles que le cavalier peut prendre en forme de "L"
+            int[,] offsets = new int[,]
+            {
+        { 1, 2 }, { 1, -2 }, { -1, 2 }, { -1, -2 },
+        { 2, 1 }, { 2, -1 }, { -2, 1 }, { -2, -1 }
+            };
+
+            // Vérifiez chacun des déplacements possibles
+            for (int i = 0; i < 8; i++)
+            {
+                int newColumn = caseInitial.Column + offsets[i, 0];
+                int newLine = caseInitial.Line + offsets[i, 1];
+
+                // Vérifiez si la nouvelle position est sur l'échiquier
+                if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
+                {
+                    Case potentialCase = chessboard.Board[newColumn, newLine];
+                    // Ajouter la case si elle est vide ou contient une pièce adverse
+                    if (potentialCase.IsCaseEmpty() || potentialCase.Piece.Color != this.Color)
+                    {
+                        result.Add(potentialCase);
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }
+

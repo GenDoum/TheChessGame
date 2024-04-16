@@ -11,7 +11,7 @@ namespace ChessLibrary
         /// <summary>
         /// Creation de la matrice pour stocké les cases 
         /// </summary>
-
+        
         public Case[,] Board = new Case[8, 8];
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace ChessLibrary
                         //Board[C, l] = new Case(C, l, rook);
                         //List<Piece> list = new List<Piece>();
                         //list.Add(rook);
-                        Board[C, l] = new Case(C, l, new Rook(Color.White, indentifiant));
+                        Board[C,l] = new Case(C, l,new Rook(Color.White, indentifiant));
                         indentifiant++;
                     }
                     else if ((C == 1 && l == 0) || (C == 6 && l == 0))
@@ -93,7 +93,7 @@ namespace ChessLibrary
                     }
                     else
                     {
-                        Board[C, l] = new Case(C, l, null);
+                        Board[C, l] = new Case(C, l,null);
                     }
 
                 }
@@ -106,25 +106,27 @@ namespace ChessLibrary
             {
                 for (int l = 0; l < 8; l++)
                 {
-                    if (C == 4 && l == 4)
+                    if (C == 4 && l == 4) 
                     {
                         Board[C, l] = new Case(C, l, new Bishop(Color.Black, zero));
                     }
                     else
-                        Board[C, l] = new Case(C, l, null);
+                    Board[C, l] = new Case(C, l, null);
                 }
             }
         }
 
         public bool IsMoveValid(List<Case> Lcase, Case Final)
         {
-            foreach (var i in Lcase)
+            foreach(var i in Lcase)
             {
                 if (i == Final) { return true; }
             }
             return false;
         }
-        
+
+
+
         public void MovePiece(Piece piece, Case Initial, Case Final)
         {
             List<Case> L = piece.PossibleMoves(Initial, this);
@@ -135,10 +137,6 @@ namespace ChessLibrary
             }
         }
 
-        public bool IsCaseEmpty(Case @case)
-        {
-            throw new NotImplementedException();
-        }
 
         public User Turn()
         {

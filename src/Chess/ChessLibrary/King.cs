@@ -11,32 +11,37 @@ namespace ChessLibrary
     /// </summary>
     public class King : Piece
     {
+        private bool canCastleRight;
+        private bool canCastleLeft;
+        
         /// <summary>
         /// Constructor of the class
         /// </summary>
         /// <param name="color"></param>
-        /// <param name="c"></param>
-        public King(Color color, Case c) : base(color, c)
+        /// <param name="initialCase"></param>
+        public King(Color color, int id) : base(color, id)
         {
         }
-        
-        /// <summary>
-        /// Method that checks if the king can move to a specific case
-        /// </summary>
-        /// <param name="c"></param>
-        /// <returns></returns>
-        public bool canMove(Case c)
+
+        public override bool canMove(int x, int y, int x2, int y2)
         {
-            return true;
+            if (Math.Abs(x - x2) <= 1 && Math.Abs(y - y2) <= 1)
+            {
+                if (x2 < 1 || x2 > 8 || y2 < 1 || y2 > 8)
+                {
+                    throw new InvalidOperationException("Invalid move for King: destination out of bounds.");
+                }
+                return true;
+            }
+
+            throw new InvalidOperationException("Invalid move for King");
         }
-        
-        /// <summary>
-        /// Method that checks if the king is eaten
-        /// </summary>
-        /// <returns></returns>
-        public bool canCastle()
+
+
+        public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
-            return true;
+            throw new NotImplementedException();
+            //We need to know how we gonna check "échec" because if a case put the King in "échec position he can go on this case!!"
         }
     }
 }

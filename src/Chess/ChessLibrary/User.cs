@@ -1,4 +1,4 @@
-﻿using ChessLibrary;
+using ChessLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +10,9 @@ namespace ChessLibrarys
     /// <summary>
     /// Classe Player
     /// </summary>
-    using ChessLibrary;
     public class User 
     {
-
-
+        
         /// <summary>
         /// Pseudo of the Player
         /// </summary>

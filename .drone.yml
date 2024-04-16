@@ -1,0 +1,26 @@
+kind: pipeline
+type: docker
+name: chess_CI_Pipeline
+
+trigger:
+  event:
+    - push
+
+steps:
+  - name: build_net8
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    commands:
+      - cd src/Chess/
+      - dotnet restore Chess.sln
+      - dotnet build Chess.sln -c Release --no-restore /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2TooPath=$ANDROID_SDK_ROOT/build-tools/33.3.3
+      - dotnet publish Chess.sln - Release --no-restore -o $CI_PROJET_DIR/build/release
+    depends_on: [clone]
+
+    # - name: code-inspection-linux-only
+    #   image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet7
+    #   secrets: [ CHESS_SECRET ]
+    #   environment:
+    #     sonart_host: https://codefirst.iut.uca.fr/sonar/
+    #     sonar_token:
+    #       from_secret: CHESS_SECRET
+

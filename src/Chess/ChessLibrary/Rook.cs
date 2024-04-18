@@ -36,6 +36,8 @@ namespace ChessLibrary
             throw new InvalidOperationException("Invalid move for Rook");
         }
 
+
+
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
             if (chessboard == null)

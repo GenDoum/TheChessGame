@@ -162,9 +162,5 @@ namespace ChessLibrary
             return false;  
         }
 
-        // public User Turn()
-        // {
-        //     throw new NotImplementedException();
-        // }
     }
 }

@@ -33,7 +33,7 @@ steps:
       from_secrets: SECRET_SONAR_LOGIN
 
     commands:
-      - cd src/
+      - cd src/ChessBuild/
       - dotnet restore ChessBuild.sln
       - dotnet sonarscanner begin /k:Chess /d:sonar.host.url=$${PLUGIN_SONAR_HOST} /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.coverage.exclusions="Tests/**" /d:sonar.login=$${PLUGIN_SONAR_TOKEN} 
       - dotnet build ChessBuild.sln -c Release --no-restore

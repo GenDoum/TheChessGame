@@ -19,7 +19,7 @@ steps:
   - name: tests
     image: mcr.microsoft.com/dotnet/sdk:7.0
     commands:
-      - cd Sources/
+      - cd src/ChessBuild/
       - dotnet restore ChessBuild.sln
       - dotnet test ChessBuild.sln --no-restore
     depends_on: [build]

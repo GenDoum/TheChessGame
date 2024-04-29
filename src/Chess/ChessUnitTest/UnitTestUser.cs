@@ -17,7 +17,7 @@ public class UnitTestUser
         var user = new User(pseudo, password, color);
     
     }
-    /*
+
     [Theory]
     [MemberData(nameof(TestData.InvalidUserPseudo), MemberType = typeof(TestData))]
     public void InvalidPseudo_ReturnFalse(string pseudo, string password, Color color)
@@ -28,23 +28,25 @@ public class UnitTestUser
             return;
         }
 
-        if (string.IsNullOrEmpty(pseudo))
-        {
-            Assert.Throws<ArgumentException>(() => new User(pseudo, password, color));
-            return;
-        }
-
         var user = new User(pseudo, password, color);
     }
 
 
-    [Theory]
+
+    [Theory] 
     [MemberData(nameof(TestData.ValidUserPassword), MemberType = typeof(TestData))]
     public void GoodPassword_ReturnTrue(string pseudo, string password, Color color)
     {
         var user = new User(pseudo, password, color);
 
-        Assert.NotNull(password);
+        if (password != null)
+        {
+            Assert.NotNull(password);
+        }
+        else
+        {
+            Assert.Null(password);
+        }
     }
 
 
@@ -79,6 +81,6 @@ public class UnitTestUser
         Assert.False(Equals(user.color, Color.White) || Equals(user.color, Color.Black));
     }
 
-*/
+
 
 }

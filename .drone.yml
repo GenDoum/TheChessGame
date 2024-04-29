@@ -17,7 +17,7 @@ steps:
     depends_on: [clone]
 
   - name: tests
-    image: mcr.microsoft.com/dotnet/sdk:8.0
+    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet8
     commands:
       - cd src/ChessBuild/
       - dotnet restore ChessBuild.sln

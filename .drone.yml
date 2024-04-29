@@ -10,21 +10,11 @@ steps:
   - name: build_net8
     image: mcr.microsoft.com/dotnet/sdk:8.0
     commands:
-<<<<<<< HEAD
       - cd src/ChessBuild/
       - dotnet restore ChessBuild.sln
       - dotnet build ChessBuild.sln -c Release
       - dotnet publish ChessBuild.sln - Release --no-restore -o $CI_PROJET_DIR/build/release
-=======
-      - cd src/Chess/
-      - dotnet restore Chess.sln
-      - dotnet build Chess.sln -c Release --no-restore /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2ToolPath=$ANDROID_SDK_ROOT/build-tools/33.0.0
-      - dotnet publish Chess.sln -c Release --no-restore -o $CI_PROJET_DIR/build/release
->>>>>>> 382bce1aaf9a804ac86df86979b431e5766b65e6
     depends_on: [clone]
-
-  - name: build_maui
-    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dotnet8-maui:latest
 
     # - name: code-inspection-linux-only
     #   image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet7

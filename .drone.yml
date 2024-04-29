@@ -25,7 +25,7 @@ steps:
     depends_on: [build]
 
   - name: code-analysis
-    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet8-maui
+    image: mcr.microsoft.com/dotnet/sdk:8.0
     secrets: [ SECRET_SONAR_LOGIN ]
     settings:
     sonar_host: https://codefirst.iut.uca.fr/sonar/

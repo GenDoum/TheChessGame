@@ -24,6 +24,21 @@ steps:
       - dotnet test ChessBuild.sln --no-restore
     depends_on: [build]
 
+  - name: code-analysis
+    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet8-maui
+    secrets: [ SECRET_SONAR_LOGIN ]
+    settings:
+    sonar_host: https://codefirst.iut.uca.fr/sonar/
+    sonar_token:
+      from_secrets: SECRET_SONAR_LOGIN
+
+    when:
+      branch:
+        - master
+      event:
+        - push
+        - pull_request
+
     # - name: code-inspection-linux-only
     #   image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet7
     #   secrets: [ CHESS_SECRET ]

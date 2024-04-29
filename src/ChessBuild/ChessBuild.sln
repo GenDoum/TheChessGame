@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessLibrary", "..\Chess\ChessLibrary\ChessLibrary.csproj", "{F38760B1-52E4-427A-82E5-0F89442C28AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleChess", "..\Chess\ConsoleChess\ConsoleChess.csproj", "{BE28CEA2-F464-4D66-A753-DCC5FEEFDE21}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F38760B1-52E4-427A-82E5-0F89442C28AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F38760B1-52E4-427A-82E5-0F89442C28AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F38760B1-52E4-427A-82E5-0F89442C28AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F38760B1-52E4-427A-82E5-0F89442C28AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE28CEA2-F464-4D66-A753-DCC5FEEFDE21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE28CEA2-F464-4D66-A753-DCC5FEEFDE21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE28CEA2-F464-4D66-A753-DCC5FEEFDE21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE28CEA2-F464-4D66-A753-DCC5FEEFDE21}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

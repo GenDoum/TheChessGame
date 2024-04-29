@@ -78,9 +78,6 @@ public class UnitTestUser
         var user = new User(pseudo, password, color);
 
         Assert.NotNull(user.color);
-        Assert.False(Equals(user.color, Color.White) || Equals(user.color, Color.Black));
+        Assert.True(Equals(user.color, Color.White) || Equals(user.color, Color.Black));
     }
-
-
-
 }

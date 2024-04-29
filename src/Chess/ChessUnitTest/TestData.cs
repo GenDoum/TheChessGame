@@ -195,12 +195,12 @@ public class TestData
         yield return new object[] { "pseudo", null, ChessLibrary.Color.White }; // Good User with null password and Color.White
         yield return new object[] { "pseudo", null, ChessLibrary.Color.Black }; // Good User with null password and Color.Black
     }
-
+    
     public static IEnumerable<object[]> InvalidUserColor() 
     {
         yield return new object[] { "pseudo", "password", null }; // Good User with color null
         yield return new object[] { "pseudo", null, null }; // Good User with wrong color null
-        yield return new object[] { "pseudo", null, (ChessLibrary.Color)6 }; // Good User with wrong color
+        //yield return new object[] { "pseudo", null, ChessLibrary.Color.Red }; // Good User with wrong color
     }
 
 

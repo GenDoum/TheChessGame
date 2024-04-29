@@ -28,7 +28,7 @@ namespace ChessLibrarys
 
                 pseudo = value;
 
-                if ( string.IsNullOrWhiteSpace(Pseudo) )
+                if ( string.IsNullOrWhiteSpace(Pseudo))
                 {
                     throw new ArgumentException("Pseudo or password must be entered and must not be full of white space");
                 }
@@ -85,13 +85,17 @@ namespace ChessLibrarys
         /// <param name="password"></param>
         public User(string pseudo, string password, Color color)
         {
-            Pseudo = pseudo;
-            Password = password;
-            if ( string.IsNullOrWhiteSpace(Pseudo) && string.IsNullOrWhiteSpace(Password) )
+            // En gros ici tu vérifiais si 'Pseudo' et 'Password' étaient null ou vide après leur affectation mais dcp les exceptions étaient pas levées avant que les valeurs soient déjà définies.
+            // J'ai aussi enlever IsWhite car il était jamais utilisé je crois. Remet si il servais vraiment.
+            // Et dcp la le constructeur vérifie d'abord si pseudo sont vide ou null avant de les affecter a la propriété Pseudo.
+            if (string.IsNullOrWhiteSpace(pseudo))
             {
                 throw new ArgumentException("Pseudo or password must be entered and must not be full of white space");
             }
-            Color IsWhite = color;
+
+            Pseudo = pseudo;
+            Password = password;
+            this.color = color;
         }
 
         /// <summary>
@@ -103,7 +107,6 @@ namespace ChessLibrarys
             Pseudo = "Invité";
             Password = null;
         }
-
 
         /// <summary>
         /// Player's method to check the password

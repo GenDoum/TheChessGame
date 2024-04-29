@@ -17,7 +17,7 @@ steps:
     depends_on: [clone]
 
   - name: tests
-    image: mcr.microsoft.com/dotnet/sdk:7.0
+    image: mcr.microsoft.com/dotnet/sdk:8.0
     commands:
       - cd src/ChessBuild/
       - dotnet restore ChessBuild.sln

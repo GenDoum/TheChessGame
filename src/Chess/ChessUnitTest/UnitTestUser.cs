@@ -33,7 +33,7 @@ public class UnitTestUser
 
 
 
-    [Theory] 
+    [Theory]
     [MemberData(nameof(TestData.ValidUserPassword), MemberType = typeof(TestData))]
     public void GoodPassword_ReturnTrue(string pseudo, string password, Color color)
     {

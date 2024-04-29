@@ -7,7 +7,7 @@ trigger:
     - push
 
 steps:
-  - name: build_net8
+  - name: build
     image: mcr.microsoft.com/dotnet/sdk:8.0
     commands:
       - cd src/ChessBuild/

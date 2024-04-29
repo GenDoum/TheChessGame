@@ -13,7 +13,7 @@ steps:
       - cd src/ChessBuild/
       - dotnet restore ChessBuild.sln
       - dotnet build ChessBuild.sln -c Release --no-restore
-      #- dotnet publish ChessBuild.sln - Release --no-restore -o $CI_PROJET_DIR/build/release
+      - dotnet publish ChessBuild.sln --configuration Release --no-restore --output $CI_PROJET_DIR/build/release
     depends_on: [clone]
 
     # - name: code-inspection-linux-only

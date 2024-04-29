@@ -24,23 +24,24 @@ steps:
       - dotnet test ChessBuild.sln --no-restore
     depends_on: [build]
 
-  - name: code-analysis
-    image: mcr.microsoft.com/dotnet/sdk:8.0
+  - name: code-inspection
+    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet8
     secrets: [ SECRET_SONAR_LOGIN ]
-    settings:
-    sonar_host: https://codefirst.iut.uca.fr/sonar/
-    sonar_token:
-      from_secrets: SECRET_SONAR_LOGIN
-
+    environment:
+      sonar_host: https://codefirst.iut.uca.fr/sonar/
+      sonar_token:
+        from_secret: SECRET_SONAR_LOGIN
+      project_key: Chess
+      coverage_exclusions: "Tests/**"
     commands:
-      - cd src/ChessBuild/
-      - dotnet restore ChessBuild.sln
-      - dotnet sonarscanner begin /k:Chess /d:sonar.host.url=$${PLUGIN_SONAR_HOST} /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.coverage.exclusions="Tests/**" /d:sonar.login=$${PLUGIN_SONAR_TOKEN} 
+      - cd KataminoBuild/
+      - dotnet restore KataminoBuild.sln
+      - dotnet sonarscanner begin /k:$${project_key} /d:sonar.host.url=$${sonar_host} /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.coverage.exclusions=$${coverage_exclusions} /d:sonar.login=$${sonar_token}
       - dotnet build ChessBuild.sln -c Release --no-restore
       - dotnet test ChessBuild.sln --logger trx --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect "XPlat Code Coverage"
       - reportgenerator -reports:"**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"coveragereport"
       - dotnet publish ChessBuild.sln -c Release --no-restore -o CI_PROJECT_DIR/build/release
-      - dotnet sonarscanner end /d:sonar.login=$${PLUGIN_SONAR_TOKEN}
+      - dotnet sonarscanner end /d:sonar.login=$${sonar_token}
 
     depends_on: [build]
 

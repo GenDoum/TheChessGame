@@ -34,7 +34,7 @@ steps:
       project_key: Chess
       coverage_exclusions: "Tests/**"
     commands:
-      - cd KataminoBuild/
+      - cd src/ChessBuild/
       - dotnet restore KataminoBuild.sln
       - dotnet sonarscanner begin /k:$${project_key} /d:sonar.host.url=$${sonar_host} /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.coverage.exclusions=$${coverage_exclusions} /d:sonar.login=$${sonar_token}
       - dotnet build ChessBuild.sln -c Release --no-restore

@@ -32,12 +32,7 @@ steps:
     sonar_token:
       from_secrets: SECRET_SONAR_LOGIN
 
-    when:
-      branch:
-        - master
-      event:
-        - push
-        - pull_request
+    depends_on: [build]
 
     # - name: code-inspection-linux-only
     #   image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet7

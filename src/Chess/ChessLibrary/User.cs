@@ -63,9 +63,9 @@ namespace ChessLibrarys
         private string password;
 
         /// <summary>
-        /// Boolean for know if the player is in the white side or not
+        /// Type for know the color of the player
         /// </summary>
-        public Color IsWhite;
+        public Color color;
 
         public int Score
         {

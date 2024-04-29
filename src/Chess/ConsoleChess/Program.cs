@@ -2,6 +2,7 @@
 using System;
 using System.Reflection.Metadata;
 using ChessLibrary;
+using ChessLibrarys;
 
 class Program
 {
@@ -25,7 +26,7 @@ class Program
              Console.WriteLine("Déplacement de la piece");
             // Chessboard.DeplacerPiece(Knight(Color.Black, Chessboard[1, 4]), Chessboard[1, 4], Chessboard[3, 5]);
          }*/
-
+        testJoueurConsole();
     }
 
     /*    static void PrintChessboard(Chessboard chessboard)
@@ -94,6 +95,13 @@ class Program
             case Pawn _: return 'P';
             default: return '?';
         }
+    }
+
+
+    static void testJoueurConsole()
+    {
+        User u = new User("Genkyy", "lolilol42", Color.White);
+        u.isPasswdConsole();
     }
 }
 

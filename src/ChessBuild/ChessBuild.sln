@@ -17,5 +17,21 @@ Global
 		SolutionGuid = {C3385E5A-6044-4350-8EDB-D879782DE5A4}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B01107B4-D29A-45E9-B5F1-007A983781C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B01107B4-D29A-45E9-B5F1-007A983781C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B01107B4-D29A-45E9-B5F1-007A983781C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B01107B4-D29A-45E9-B5F1-007A983781C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A61E290-1F4D-410A-B4A3-E1873168420E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A61E290-1F4D-410A-B4A3-E1873168420E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A61E290-1F4D-410A-B4A3-E1873168420E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A61E290-1F4D-410A-B4A3-E1873168420E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEDA649D-1C9F-46E4-9338-78865D597E6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEDA649D-1C9F-46E4-9338-78865D597E6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEDA649D-1C9F-46E4-9338-78865D597E6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEDA649D-1C9F-46E4-9338-78865D597E6D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 EndGlobal

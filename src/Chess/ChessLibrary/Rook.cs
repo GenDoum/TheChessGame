@@ -36,6 +36,8 @@ namespace ChessLibrary
             throw new InvalidOperationException("Invalid move for Rook");
         }
 
+
+
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
             if (chessboard == null)
@@ -44,114 +46,34 @@ namespace ChessLibrary
             }
 
             List<Case> result = new List<Case>();
+            (int, int)[] directions = { (0, 1), (0, -1), (-1, 0), (1, 0) };  // Top, Bot, Left, Right
 
-
-            // Go Top 
-            for (int i = 1; i < 8; i++)
+            foreach (var (colInc, lineInc) in directions)
             {
-                int newColumn = caseInitial.Column;
-                int newLine = caseInitial.Line + i;
-                if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
+                for (int i = 1; i < 8; i++)
                 {
-                    Case potentialCase = chessboard.Board[newColumn, newLine];
-                    if (potentialCase.IsCaseEmpty())
+                    int newColumn = caseInitial.Column + colInc * i;
+                    int newLine = caseInitial.Line + lineInc * i;
+                    if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                     {
-                        result.Add(potentialCase);
-                    }
-                    else
-                    {
-                        if (potentialCase.Piece.Color != this.Color)
+                        Case potentialCase = chessboard.Board[newColumn, newLine];
+                        if (potentialCase.IsCaseEmpty())
                         {
                             result.Add(potentialCase);
                         }
-                        break;
-                    }
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-
-            // Go bottom
-            for (int i = 1; i < 8; i++)
-            {
-                int newColumn = caseInitial.Column;
-                int newLine = caseInitial.Line - i;
-                if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
-                {
-                    Case potentialCase = chessboard.Board[newColumn, newLine];
-                    if (potentialCase.IsCaseEmpty())
-                    {
-                        result.Add(potentialCase);
+                        else
+                        {
+                            if (potentialCase.Piece.Color != this.Color)
+                            {
+                                result.Add(potentialCase);
+                            }
+                            break;
+                        }
                     }
                     else
                     {
-                        if (potentialCase.Piece.Color != this.Color)
-                        {
-                            result.Add(potentialCase);
-                        }
                         break;
                     }
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            // Go Left
-            for (int i = 1; i < 8; i++)
-            {
-                int newColumn = caseInitial.Column - i;
-                int newLine = caseInitial.Line;
-                if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
-                {
-                    Case potentialCase = chessboard.Board[newColumn, newLine];
-                    if (potentialCase.IsCaseEmpty())
-                    {
-                        result.Add(potentialCase);
-                    }
-                    else
-                    {
-                        if (potentialCase.Piece.Color != this.Color)
-                        {
-                            result.Add(potentialCase);
-                        }
-                        break;
-                    }
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            // Go  Right
-            for (int i = 1; i < 8; i++)
-            {
-                int newColumn = caseInitial.Column + i;
-                int newLine = caseInitial.Line;
-                if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
-                {
-                    Case potentialCase = chessboard.Board[newColumn, newLine];
-                    if (potentialCase.IsCaseEmpty())
-                    {
-                        result.Add(potentialCase);
-                    }
-                    else
-                    {
-                        if (potentialCase.Piece.Color != this.Color)
-                        {
-                            result.Add(potentialCase);
-                        }
-                        break;
-                    }
-                }
-                else
-                {
-                    break;
                 }
             }
 

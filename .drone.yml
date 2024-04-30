@@ -32,14 +32,13 @@ steps:
       sonar_token:
         from_secret: SECRET_SONAR_LOGIN
       project_key: Chess
-      coverage_exclusions: "Tests/**"
     commands:
       - cd src/ChessBuild/
       - dotnet restore ChessBuild.sln
       - dotnet sonarscanner begin /k:$${project_key} /d:sonar.host.url=$${sonar_host} /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.coverage.exclusions=$${coverage_exclusions} /d:sonar.login=$${sonar_token}
       - dotnet build ChessBuild.sln -c Release --no-restore
       - dotnet test ChessBuild.sln --logger trx --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect "XPlat Code Coverage"
-      - reportgenerator -reports:"../../ChessUnitTest/**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"coveragereport"
+      - reportgenerator -reports:"../ChessUnitTest/TestResults/**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"coveragereport"
       - dotnet publish ChessBuild.sln -c Release --no-restore -o CI_PROJECT_DIR/build/release
       - dotnet sonarscanner end /d:sonar.login=$${sonar_token}
 

@@ -42,5 +42,3 @@ steps:
       - reportgenerator -reports:"../Chess/ChessUnitTest/TestResults/**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"../coveragereport"
       - dotnet publish ChessBuild.sln -c Release --no-restore -o CI_PROJECT_DIR/build/release
       - dotnet sonarscanner end /d:sonar.login=$${sonar_token}
-
-    depends_on: [build]

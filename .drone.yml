@@ -32,7 +32,6 @@ steps:
       sonar_token:
         from_secret: SECRET_SONAR_LOGIN
       project_key: Chess
-      coverage_exclusions: "Tests/**"
     commands:
       - cd src/ChessBuild/
       - dotnet restore ChessBuild.sln

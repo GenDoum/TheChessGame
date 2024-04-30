@@ -33,7 +33,7 @@ steps:
         from_secret: SECRET_SONAR_LOGIN
       project_key: Chess
       coverage_exclusions: "Tests/**"
-        commands:
+    commands:
       - cd src/ChessBuild/
       - dotnet restore ChessBuild.sln
       - dotnet sonarscanner begin /k:$${project_key} /d:sonar.host.url=$${sonar_host} /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.coverage.exclusions=$${coverage_exclusions} /d:sonar.login=$${sonar_token}

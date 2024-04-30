@@ -3,11 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessLibrary", "..\Chess\ChessLibrary\ChessLibrary.csproj", "{B01107B4-D29A-45E9-B5F1-007A983781C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessUnitTest", "..\Chess\ChessUnitTest\ChessUnitTest.csproj", "{7A61E290-1F4D-410A-B4A3-E1873168420E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleChess", "..\Chess\ConsoleChess\ConsoleChess.csproj", "{FEDA649D-1C9F-46E4-9338-78865D597E6D}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C3385E5A-6044-4350-8EDB-D879782DE5A4}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 	EndGlobalSection
 EndGlobal

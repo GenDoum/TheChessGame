@@ -2,7 +2,6 @@
 using System;
 using System.Reflection.Metadata;
 using ChessLibrary;
-using ChessLibrarys;
 
 class Program
 {

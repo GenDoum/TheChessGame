@@ -12,7 +12,7 @@ namespace ChessLibrary
 
         bool IsMoveValid(List<Case> Lcase, Case Final);
 
-        // User Turn();
+        //User Turn();
 
         //bool IsCaseEmpty(Case @case);
 

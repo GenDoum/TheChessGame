@@ -25,7 +25,14 @@ namespace ChessLibrarys
                 {
                     return;
                 }
-               pseudo = value;
+
+                pseudo = value;
+
+                if ( string.IsNullOrWhiteSpace(Pseudo))
+                {
+                    throw new ArgumentException("Pseudo or password must be entered and must not be full of white space");
+                }
+
             }
         }
         private string pseudo;
@@ -42,16 +49,23 @@ namespace ChessLibrarys
                 {
                     return;
                 }
+
                 password = value;
+
+                if (string.IsNullOrWhiteSpace(Password))
+                {
+                    throw new ArgumentException("Pseudo or password must be entered and must not be full of white space");
+                }
+
             }
 
         }
         private string password;
 
         /// <summary>
-        /// Boolean for know if the player is in the white side or not
+        /// Type for know the color of the player
         /// </summary>
-        public Color IsWhite;
+        public Color color;
 
         public int Score
         {
@@ -71,9 +85,17 @@ namespace ChessLibrarys
         /// <param name="password"></param>
         public User(string pseudo, string password, Color color)
         {
+            // En gros ici tu vérifiais si 'Pseudo' et 'Password' étaient null ou vide après leur affectation mais dcp les exceptions étaient pas levées avant que les valeurs soient déjà définies.
+            // J'ai aussi enlever IsWhite car il était jamais utilisé je crois. Remet si il servais vraiment.
+            // Et dcp la le constructeur vérifie d'abord si pseudo sont vide ou null avant de les affecter a la propriété Pseudo.
+            if (string.IsNullOrWhiteSpace(pseudo))
+            {
+                throw new ArgumentException("Pseudo or password must be entered and must not be full of white space");
+            }
+
             Pseudo = pseudo;
             Password = password;
-            Color IsWhite = color;
+            this.color = color;
         }
 
         /// <summary>
@@ -86,29 +108,62 @@ namespace ChessLibrarys
             Password = null;
         }
 
-
         /// <summary>
         /// Player's method to check the password
         /// </summary>
-        /// <param name="password"></param>
-        /// <returns></returns>
+        /// <returns>It return a boolean which say if the user has entering the good password of not</returns>
         public bool isPasswdConsole()
         {
 
-            Console.WriteLine("Enter your password");
-            string password = Console.ReadLine();
-            if (Password == null)
+            Console.WriteLine($"Hello {Pseudo}, Enter your password please");
+
+            ConsoleKeyInfo key;
+            string pass = string.Empty;
+            key = System.Console.ReadKey(true);
+
+            while ( key.Key != ConsoleKey.Enter )
             {
-                Console.WriteLine("Invited player, no need to check password\n");
+
+                if (key.Key != ConsoleKey.Backspace)
+                {
+                    pass += key.KeyChar;
+                    Console.Write("*");
+                }
+                else if (key.Key == ConsoleKey.Backspace && !string.IsNullOrEmpty(pass))
+                {
+                    // Supprime un élément de la liste de char de pass
+                    pass = pass.Substring(0, pass.Length - 1);
+                    // Récupère la position du curseur
+                    int pos = System.Console.CursorLeft;
+                    // Déplace le curseur d'un à gauche
+                    System.Console.SetCursorPosition(pos - 1, System.Console.CursorTop);
+                    // Remplace par un espace dans la console
+                    System.Console.Write(" ");
+                    // Déplace le curseur d'une position à gauche encore
+                    System.Console.SetCursorPosition(pos - 1, System.Console.CursorTop);
+                }
+
+                key = System.Console.ReadKey(true);
+
+            }
+            Console.WriteLine(pass);
+            
+            if ( Equals( this.Password, null) )
+            {
+                Console.WriteLine("\nInvited player, no need to check password\n");
                 return true;
             }
-
-            if (Password == password)
+            if ( Equals(this.Password, pass) )
             {
+                Console.WriteLine($"\nGood password, have fun {Pseudo}");
                 return true;
             }
+            else 
+            {
+                Console.WriteLine($"\nIt seems like you misswrite {Pseudo}, try again");
+                return false;
 
-            return false;
+            }
         }
 
         public bool isPasswd(string password)

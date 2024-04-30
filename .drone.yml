@@ -44,4 +44,3 @@ steps:
       - dotnet sonarscanner end /d:sonar.login=$${sonar_token}
 
     depends_on: [build]
-

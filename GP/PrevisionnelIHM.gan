@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Gantt_Prévisionnel_IHM" company="" webLink="http://" view-date="2024-03-04" view-index="0" gantt-divider-location="380" resource-divider-location="300" version="3.3.3307" locale="fr_FR">
+<?xml version="1.0" encoding="UTF-8"?><project name="Gantt_Prévisionnel_IHM" company="" webLink="http://" view-date="2024-02-26" view-index="2" gantt-divider-location="365" resource-divider-location="300" version="3.3.3307" locale="fr_FR">
     <description/>
     <view zooming-state="default:5" id="gantt-chart">
-        <field id="tpd3" name="Nom" width="217" order="0"/>
-        <field id="tpd4" name="Date de début" width="81" order="1"/>
-        <field id="tpd5" name="Date de fin" width="81" order="2"/>
+        <field id="tpd3" name="Nom" width="199" order="0"/>
+        <field id="tpd4" name="Date de début" width="75" order="1"/>
+        <field id="tpd5" name="Date de fin" width="75" order="2"/>
         <field id="tpd15" name="Notes" width="20" order="3"/>
         <option id="filter.completedTasks" value="false"/>
         <option id="filter.dueTodayTasks" value="false"/>
@@ -40,7 +40,6 @@
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
         <task id="1" uid="e54ac4425c3248a1a469e66b9f4742aa" name="Jalon 1 : Conception préliminaire" meeting="false" start="2024-03-18" duration="10" complete="0" expand="true">
-            <depend id="2" type="2" difference="0" hardness="Strong"/>
             <task id="7" uid="0c131ded9fa5450bb60395de35f7b0f4" name="Contexte" color="#ffff99" meeting="false" start="2024-03-18" duration="1" complete="0" expand="true">
                 <depend id="0" type="2" difference="0" hardness="Strong"/>
                 <depend id="5" type="2" difference="0" hardness="Strong"/>
@@ -60,7 +59,12 @@
                 <depend id="0" type="2" difference="0" hardness="Strong"/>
                 <depend id="4" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="0" uid="8efb7f5ff6744fdcba04dc6a424bde1e" name="Création wiki" color="#ffff99" meeting="false" start="2024-03-27" duration="3" complete="0" expand="true"/>
+            <task id="0" uid="8efb7f5ff6744fdcba04dc6a424bde1e" name="Création wiki" color="#ffff99" meeting="false" start="2024-03-27" duration="3" complete="0" expand="true">
+                <depend id="2" type="2" difference="0" hardness="Strong"/>
+                <depend id="13" type="2" difference="0" hardness="Strong"/>
+                <depend id="14" type="2" difference="0" hardness="Strong"/>
+                <depend id="15" type="2" difference="0" hardness="Strong"/>
+            </task>
             <task id="4" uid="231658268e9e49d2a62ecdd6697a9431" name="Storyboard" color="#8cb6ce" meeting="false" start="2024-03-25" duration="1" complete="0" expand="true">
                 <depend id="0" type="2" difference="0" hardness="Strong"/>
                 <depend id="9" type="2" difference="0" hardness="Strong"/>
@@ -70,37 +74,72 @@
             </task>
         </task>
         <task id="2" uid="8054d91b544a4282846477305bf6879d" name="Création des visuels de l'application" color="#000000" meeting="false" start="2024-04-01" duration="10" complete="0" expand="true">
-            <depend id="20" type="2" difference="0" hardness="Strong"/>
             <task id="15" uid="2027e4b57a5548d3b26a1e3bc2f81881" name="Vue Connexion" color="#ccffcc" meeting="false" start="2024-04-01" duration="5" complete="0" expand="true">
                 <depend id="17" type="2" difference="0" hardness="Strong"/>
             </task>
             <task id="17" uid="d13cc8763bbe4673b77780f0c95fd436" name="Vue Plateau de jeu" color="#ccffcc" meeting="false" start="2024-04-08" duration="3" complete="0" expand="true">
                 <depend id="18" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="18" uid="414ebfc4aed8414f9f1b84e7ff49aaad" name="Vue Pause" color="#ccffcc" meeting="false" start="2024-04-11" duration="2" complete="0" expand="true"/>
+            <task id="18" uid="414ebfc4aed8414f9f1b84e7ff49aaad" name="Vue Pause" color="#ccffcc" meeting="false" start="2024-04-11" duration="2" complete="0" expand="true">
+                <depend id="20" type="2" difference="0" hardness="Strong"/>
+                <depend id="21" type="2" difference="0" hardness="Strong"/>
+                <depend id="22" type="2" difference="0" hardness="Strong"/>
+                <depend id="23" type="2" difference="0" hardness="Strong"/>
+            </task>
             <task id="13" uid="ab134c0e0c8444609f3c4c1502cb1f65" name="Vue Inscription" color="#ff9999" meeting="false" start="2024-04-01" duration="5" complete="0" expand="true">
                 <depend id="16" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="16" uid="e2c194fb664d442f9b344ed5cab1dd8a" name="Vue règle du jeu" color="#ff9999" meeting="false" start="2024-04-08" duration="5" complete="0" expand="true"/>
+            <task id="16" uid="e2c194fb664d442f9b344ed5cab1dd8a" name="Vue règle du jeu" color="#ff9999" meeting="false" start="2024-04-08" duration="5" complete="0" expand="true">
+                <depend id="20" type="2" difference="0" hardness="Strong"/>
+                <depend id="21" type="2" difference="0" hardness="Strong"/>
+                <depend id="22" type="2" difference="0" hardness="Strong"/>
+                <depend id="23" type="2" difference="0" hardness="Strong"/>
+                <depend id="24" type="2" difference="0" hardness="Strong"/>
+            </task>
             <task id="14" uid="930050f376a94d01a0d1e89958db9917" name="Vue Accueil" color="#8cb6ce" meeting="false" start="2024-04-01" duration="5" complete="0" expand="true">
                 <depend id="19" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="19" uid="6d956d83fb9c439a8c6c5b027a8b465c" name="Vue Tableau des scores" color="#8cb6ce" meeting="false" start="2024-04-08" duration="5" complete="0" expand="true"/>
+            <task id="19" uid="6d956d83fb9c439a8c6c5b027a8b465c" name="Vue Tableau des scores" color="#8cb6ce" meeting="false" start="2024-04-08" duration="5" complete="0" expand="true">
+                <depend id="20" type="2" difference="0" hardness="Strong"/>
+                <depend id="21" type="2" difference="0" hardness="Strong"/>
+                <depend id="22" type="2" difference="0" hardness="Strong"/>
+                <depend id="23" type="2" difference="0" hardness="Strong"/>
+                <depend id="24" type="2" difference="0" hardness="Strong"/>
+            </task>
         </task>
         <task id="20" uid="6ea453a361914b8387bc9a911773b80a" name="Jalon 2 : Conception + Application console" meeting="false" start="2024-04-15" duration="22" complete="0" expand="true">
-            <depend id="31" type="2" difference="0" hardness="Strong"/>
             <task id="21" uid="8b2693517e1b43cb9629b25939f2a248" name="Création des classes" meeting="false" start="2024-04-15" duration="10" complete="0" expand="true">
                 <depend id="26" type="2" difference="0" hardness="Strong"/>
-                <task id="24" uid="dcd12cae7ea94bb2b6d8bea1672365a1" name="Création des classes pièces" color="#ccffcc" meeting="false" start="2024-04-15" duration="10" complete="0" expand="true"/>
-                <task id="23" uid="5b1b4fdcad134a5bb4513440e634c878" name="Création classe Plateau de jeu" color="#ff9999" meeting="false" start="2024-04-15" duration="10" complete="0" expand="true"/>
-                <task id="22" uid="3992da50740c4f0a81074ba41a86ac90" name="Création classe Joueur" meeting="false" start="2024-04-15" duration="10" complete="0" expand="true"/>
+                <task id="24" uid="dcd12cae7ea94bb2b6d8bea1672365a1" name="Création des classes pièces" color="#ccffcc" meeting="false" start="2024-04-15" duration="10" complete="0" expand="true">
+                    <depend id="27" type="2" difference="0" hardness="Strong"/>
+                    <depend id="28" type="2" difference="0" hardness="Strong"/>
+                    <depend id="29" type="2" difference="0" hardness="Strong"/>
+                    <depend id="30" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="23" uid="5b1b4fdcad134a5bb4513440e634c878" name="Création classe Plateau de jeu" color="#ff9999" meeting="false" start="2024-04-15" duration="10" complete="0" expand="true">
+                    <depend id="27" type="2" difference="0" hardness="Strong"/>
+                    <depend id="28" type="2" difference="0" hardness="Strong"/>
+                    <depend id="29" type="2" difference="0" hardness="Strong"/>
+                    <depend id="30" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="22" uid="3992da50740c4f0a81074ba41a86ac90" name="Création classe Joueur" meeting="false" start="2024-04-15" duration="10" complete="0" expand="true">
+                    <depend id="27" type="2" difference="0" hardness="Strong"/>
+                    <depend id="28" type="2" difference="0" hardness="Strong"/>
+                    <depend id="29" type="2" difference="0" hardness="Strong"/>
+                    <depend id="30" type="2" difference="0" hardness="Strong"/>
+                </task>
             </task>
             <task id="26" uid="345aad54324046cea2d27bd3782a184d" name="Conception" meeting="false" start="2024-04-29" duration="5" complete="0" expand="true">
-                <depend id="25" type="2" difference="0" hardness="Strong"/>
                 <task id="29" uid="3b10e0d010cc4dd382dcb8f7853c8713" name="Diagramme de classes" color="#ffff99" meeting="false" start="2024-04-29" duration="5" complete="0" expand="true"/>
-                <task id="27" uid="3627ab50e58843b88f639c0e621d926a" name="Diagramme de paquetage" color="#ffff99" meeting="false" start="2024-04-29" duration="5" complete="0" expand="true"/>
-                <task id="28" uid="ff310901e54f4137b310c47f09408f85" name="Diagramme de séquence" color="#ffff99" meeting="false" start="2024-04-29" duration="5" complete="0" expand="true"/>
-                <task id="30" uid="f611d26dfe514c25a73845f527e538f8" name="Description de l'architecture" color="#ffff99" meeting="false" start="2024-04-29" duration="5" complete="0" expand="true"/>
+                <task id="27" uid="3627ab50e58843b88f639c0e621d926a" name="Diagramme de paquetage" color="#ffff99" meeting="false" start="2024-04-29" duration="5" complete="0" expand="true">
+                    <depend id="25" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="28" uid="ff310901e54f4137b310c47f09408f85" name="Diagramme de séquence" color="#ffff99" meeting="false" start="2024-04-29" duration="5" complete="0" expand="true">
+                    <depend id="25" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="30" uid="f611d26dfe514c25a73845f527e538f8" name="Description de l'architecture" color="#ffff99" meeting="false" start="2024-04-29" duration="5" complete="0" expand="true">
+                    <depend id="25" type="2" difference="0" hardness="Strong"/>
+                </task>
             </task>
             <task id="25" uid="8fc6b82d05d14053bd9297c30235f800" name="Création de l'application console" color="#ffff99" meeting="false" start="2024-05-06" duration="7" complete="0" expand="true">
                 <depend id="31" type="2" difference="0" hardness="Strong"/>

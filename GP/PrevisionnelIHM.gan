@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Gantt_Prévisionnel_IHM" company="" webLink="http://" view-date="2024-02-26" view-index="2" gantt-divider-location="365" resource-divider-location="300" version="3.3.3307" locale="fr_FR">
+<?xml version="1.0" encoding="UTF-8"?><project name="Gantt_Prévisionnel_IHM" company="" webLink="http://" view-date="2024-04-15" view-index="0" gantt-divider-location="350" resource-divider-location="300" version="3.3.3307" locale="fr_FR">
     <description/>
     <view zooming-state="default:5" id="gantt-chart">
-        <field id="tpd3" name="Nom" width="199" order="0"/>
-        <field id="tpd4" name="Date de début" width="75" order="1"/>
-        <field id="tpd5" name="Date de fin" width="75" order="2"/>
+        <field id="tpd3" name="Nom" width="190" order="0"/>
+        <field id="tpd4" name="Date de début" width="72" order="1"/>
+        <field id="tpd5" name="Date de fin" width="72" order="2"/>
         <field id="tpd15" name="Notes" width="20" order="3"/>
         <option id="filter.completedTasks" value="false"/>
         <option id="filter.dueTodayTasks" value="false"/>

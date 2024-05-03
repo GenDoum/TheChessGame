@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChessLibrarys
+namespace ChessLibrary
 {
     /// <summary>
     /// Classe Player
@@ -60,6 +60,10 @@ namespace ChessLibrarys
             }
 
         }
+
+        /// <summary>
+        /// Private password of the user
+        /// </summary>
         private string password;
 
         /// <summary>
@@ -67,6 +71,9 @@ namespace ChessLibrarys
         /// </summary>
         public Color color;
 
+        /// <summary>
+        /// Score of the player
+        /// </summary>
         public int Score
         {
             get => score;
@@ -75,7 +82,9 @@ namespace ChessLibrarys
                 score = value;
             }
         }
-
+        /// <summary>
+        /// Private score oof the player
+        /// </summary>
         private int score;
 
         /// <summary>
@@ -166,6 +175,11 @@ namespace ChessLibrarys
             }
         }
 
+        /// <summary>
+        /// Player's method for check the password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public bool isPasswd(string password)
         {
             if (Password == null)

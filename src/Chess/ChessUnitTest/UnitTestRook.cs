@@ -49,4 +49,19 @@ public class UnitTestRook
         // Act & Assert
         Assert.Throws<InvalidOperationException>(() => rook.canMove(x1, y1, x2, y2));
     }
+    
+    [Fact]
+    public void PossibleMoves_EmptyBoard_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var rook = new Rook(Color.White, 1);
+        var chessboard = new Chessboard(new Case[8, 8],true);
+        var caseInitial = new Case(4, 4, rook);
+
+        // Act
+        var result = rook.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.Equal(14, result.Count);
+    }
 }

@@ -19,4 +19,19 @@ public class UnitTestPawn
         var pawn = new Pawn(Color.White, 1);
         Assert.Throws<InvalidOperationException>(() => pawn.canMove(x1, y1, x2, y2));
     }
+    
+    [Fact]
+    public void PossibleMoves_EmptyBoard_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var pawn = new Pawn(Color.White, 1);
+        var chessboard = new Chessboard(new Case[8, 8],true);
+        var caseInitial = new Case(4, 4, pawn);
+
+        // Act
+        var result = pawn.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.Equal(2, result.Count);
+    }
 }

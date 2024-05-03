@@ -21,13 +21,11 @@ namespace ChessLibrary
                 for (int C = 0; C < 8; C++)
                 {
                     for (int l = 0; l < 8; l++)
-                    { Board[C, l] = new Case(C, l, null); }
+                        Board[C, l] = new Case(C, l, null);
                 }
             }
             else
-            {
                 InitialiseChessboard(board);
-            }
         }
 
         private void InitialiseChessboard(Case[,] board)

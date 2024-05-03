@@ -1,6 +1,5 @@
 using System;
 using ChessLibrary;
-
 namespace ConsoleChess
 {
     class Program
@@ -16,8 +15,10 @@ namespace ConsoleChess
                 }
             }
 
-            Chessboard chessboard = new Chessboard(board);
+            Chessboard chessboard = new Chessboard(board,false);
 
+            DisplayBoard(chessboard);
+            
         }
 
         static void DisplayBoard(Chessboard chessboard)
@@ -40,11 +41,9 @@ namespace ConsoleChess
                         Console.Write("   |");
                     }
                 }
-
                 Console.WriteLine((i + 1));
                 Console.WriteLine(" +---+---+---+---+---+---+---+---+");
             }
-
             Console.WriteLine("   a   b   c   d   e   f   g   h");
         }
 
@@ -61,6 +60,5 @@ namespace ConsoleChess
                 default: return "?";
             }
         }
-
     }
 }

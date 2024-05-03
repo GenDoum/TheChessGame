@@ -13,7 +13,24 @@ namespace ChessLibrary
         public List<Piece> WhitePieces { get; private set; }
         public List<Piece> BlackPieces { get; private set; }
 
-        public Chessboard(Case[,] board)
+        public Chessboard(Case[,] board, bool isEmpty)
+        {
+            Board = board;
+            if (isEmpty)
+            {
+                for (int C = 0; C < 8; C++)
+                {
+                    for (int l = 0; l < 8; l++)
+                    { Board[C, l] = new Case(C, l, null); }
+                }
+            }
+            else
+            {
+                InitialiseChessboard(board);
+            }
+        }
+
+        private void InitialiseChessboard(Case[,] board)
         {
             Board = board;
             WhitePieces = new List<Piece>();
@@ -117,7 +134,6 @@ namespace ChessLibrary
             }
         }
 
-
         public bool IsMoveValid(List<Case> Lcase, Case Final)
         {
             foreach (var i in Lcase)
@@ -141,25 +157,81 @@ namespace ChessLibrary
 
         public bool PawnCanEvolve()
         {
-            
+            //Check if pawn is on line 8 and if he is white to processes for the evolved
             for (int col = 0; col < 8; col++)
             {
                 if (Board[col, 7].Piece is Pawn && Board[col, 7].Piece.Color == Color.White)
                 {
-                    return true;  
+                    Evolve(Board[col, 7].Piece as Pawn, Board[col, 7]);
+                    return true;
                 }
             }
 
-           
             for (int col = 0; col < 8; col++)
             {
                 if (Board[col, 0].Piece is Pawn && Board[col, 0].Piece.Color == Color.Black)
                 {
-                    return true;  
+                    Evolve(Board[col, 0].Piece as Pawn, Board[col, 0]);
+                    return true;
                 }
             }
 
-            return false;  
+            return false;
+        }
+
+
+        private void Evolve(Pawn P, Case C)
+        {
+            Queen NewQueen;
+            Rook NewRook;
+            Knight NewKnight;
+            Bishop NewBishop;
+            afficheEvolved();
+            var result = Console.ReadLine();
+            switch (result)
+            {
+                case "1":
+                    NewQueen = new Queen(P.Color, P.id);
+                    C.Piece = NewQueen;
+                    break;
+
+                case "2":
+                    NewRook = new Rook(P.Color,P.id);
+                    C.Piece = NewRook;
+                    break;
+                case "3":
+                    NewBishop = new Bishop(P.Color,P.id);
+                    C.Piece = NewBishop;
+                    break;
+                case "4":
+                    NewKnight = new Knight(P.Color,P.id);
+                    C.Piece = NewKnight;
+                    //ModifList(ref P, NewKnight);
+                    break;
+                default:
+                    afficheEvolved();
+                    result = Console.ReadLine();
+                    break;
+            }
+            
+        }
+
+ /*       private bool ModifList(ref Pawn P,ref Piece pi)
+        {
+            if
+        }*/
+
+        private void afficheEvolved()
+        {
+            Console.WriteLine("Entrez 1 pour changer votre pion en Renne");
+            Console.WriteLine("Entrez 2 pour changer votre pion en Tour");
+            Console.WriteLine("Entrez 3 pour changer votre pion en Fou");
+            Console.WriteLine("Entrez 4 pour changer votre pion en Chavalier");
+        }
+
+        public void Echec()
+        {
+
         }
 
     }

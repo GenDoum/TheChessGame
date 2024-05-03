@@ -46,7 +46,7 @@ steps:
     image: hub.codefirst.iut.uca.fr/maxime.batista/codefirst-docdeployer
     failure: ignore
     commands:
-      - /entrypoint.sh -l Documentation -t doxygen 
+      - /entrypoint.sh -l Documentation/doxygen -t doxygen 
     when:
       branch:
         - csharp

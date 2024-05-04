@@ -31,111 +31,79 @@ namespace ChessLibrary
                 InitialiseChessboard(board);
             }
         }
-
         private void InitialiseChessboard(Case[,] board)
         {
             Board = board;
             WhitePieces = new List<Piece>();
             BlackPieces = new List<Piece>();
 
-            int identifiant_blanc = 1;
-            int identifiant_noir = 1;
-            for (int C = 0; C < 8; C++)
+            InitializeWhitePieces();
+            InitializeBlackPieces();
+            FillEmptyCases();
+        }
+
+        private void InitializeWhitePieces()
+        {
+            int identifiantBlanc = 1;
+            AddPiece(new Rook(Color.White, identifiantBlanc++), 0, 0);
+            AddPiece(new Knight(Color.White, identifiantBlanc++), 1, 0);
+            AddPiece(new Bishop(Color.White, identifiantBlanc++), 2, 0);
+            AddPiece(new Queen(Color.White, identifiantBlanc++), 3, 0);
+            AddPiece(new King(Color.White, identifiantBlanc++), 4, 0);
+            AddPiece(new Bishop(Color.White, identifiantBlanc++), 5, 0);
+            AddPiece(new Knight(Color.White, identifiantBlanc++), 6, 0);
+            AddPiece(new Rook(Color.White, identifiantBlanc++), 7, 0);
+
+            for (int c = 0; c < 8; c++)
             {
-                for (int l = 0; l < 8; l++)
+                AddPiece(new Pawn(Color.White, identifiantBlanc++), c, 1);
+            }
+        }
+
+        private void InitializeBlackPieces()
+        {
+            int identifiantNoir = 1;
+            AddPiece(new Rook(Color.Black, identifiantNoir++), 0, 7);
+            AddPiece(new Knight(Color.Black, identifiantNoir++), 1, 7);
+            AddPiece(new Bishop(Color.Black, identifiantNoir++), 2, 7);
+            AddPiece(new Queen(Color.Black, identifiantNoir++), 3, 7);
+            AddPiece(new King(Color.Black, identifiantNoir++), 4, 7);
+            AddPiece(new Bishop(Color.Black, identifiantNoir++), 5, 7);
+            AddPiece(new Knight(Color.Black, identifiantNoir++), 6, 7);
+            AddPiece(new Rook(Color.Black, identifiantNoir++), 7, 7);
+
+            for (int c = 0; c < 8; c++)
+            {
+                AddPiece(new Pawn(Color.Black, identifiantNoir++), c, 6);
+            }
+        }
+
+        private void FillEmptyCases()
+        {
+            for (int c = 0; c < 8; c++)
+            {
+                for (int l = 2; l <= 5; l++)
                 {
-                    if ((C == 0 && l == 0) || (C == 7 && l == 0))
-                    {
-                        Rook whiteRook = new Rook(Color.White, identifiant_blanc);
-                        Board[C, l] = new Case(C, l, whiteRook);
-                        WhitePieces.Add(whiteRook);
-                        identifiant_blanc++;
-                    }
-                    else if ((C == 1 && l == 0) || (C == 6 && l == 0))
-                    {
-                        Knight whiteKnight = new Knight(Color.White, identifiant_blanc);
-                        Board[C, l] = new Case(C, l, whiteKnight);
-                        WhitePieces.Add(whiteKnight);
-                        identifiant_blanc++;
-                    }
-                    else if ((C == 2 && l == 0) || (C == 5 && l == 0))
-                    {
-                        Bishop whiteBishop = new Bishop(Color.White, identifiant_blanc);
-                        Board[C, l] = new Case(C, l, whiteBishop);
-                        WhitePieces.Add(whiteBishop);
-                        identifiant_blanc++;
-                    }
-                    else if (C == 3 && l == 0)
-                    {
-                        Queen whiteQueen = new Queen(Color.White, identifiant_blanc);
-                        Board[C, l] = new Case(C, l, whiteQueen);
-                        WhitePieces.Add(whiteQueen);
-                        identifiant_blanc++;
-                    }
-                    else if (C == 4 && l == 0)
-                    {
-                        King whiteKing = new King(Color.White, identifiant_blanc);
-                        Board[C, l] = new Case(C, l, whiteKing);
-                        WhitePieces.Add(whiteKing);
-                        identifiant_blanc++;
-                    }
-                    else if (l == 1)
-                    {
-                        Pawn whitePawn = new Pawn(Color.White, identifiant_blanc);
-                        Board[C, l] = new Case(C, l, whitePawn);
-                        WhitePieces.Add(whitePawn);
-                        identifiant_blanc++;
-                    }
-                    else if ((C == 0 && l == 7) || (C == 7 && l == 7))
-                    {
-                        Rook blackRook = new Rook(Color.Black, identifiant_noir);
-                        Board[C, l] = new Case(C, l, blackRook);
-                        BlackPieces.Add(blackRook);
-                        identifiant_noir++;
-                    }
-                    else if ((C == 1 && l == 7) || (C == 6 && l == 7))
-                    {
-                        Knight blackKnight = new Knight(Color.Black, identifiant_noir);
-                        Board[C, l] = new Case(C, l, blackKnight);
-                        BlackPieces.Add(blackKnight);
-                        identifiant_noir++;
-                    }
-                    else if ((C == 2 && l == 7) || (C == 5 && l == 7))
-                    {
-                        Bishop blackBishop = new Bishop(Color.Black, identifiant_noir);
-                        Board[C, l] = new Case(C, l, blackBishop);
-                        BlackPieces.Add(blackBishop);
-                        identifiant_noir++;
-                    }
-                    else if (C == 3 && l == 7)
-                    {
-                        Queen blackQueen = new Queen(Color.Black, identifiant_noir);
-                        Board[C, l] = new Case(C, l, blackQueen);
-                        BlackPieces.Add(blackQueen);
-                        identifiant_noir++;
-                    }
-                    else if (C == 4 && l == 7)
-                    {
-                        King blackKing = new King(Color.Black, identifiant_noir);
-                        Board[C, l] = new Case(C, l, blackKing);
-                        BlackPieces.Add(blackKing);
-                        identifiant_noir++;
-                    }
-                    else if (l == 6)
-                    {
-                        Pawn blackPawn = new Pawn(Color.Black, identifiant_noir);
-                        Board[C, l] = new Case(C, l, blackPawn);
-                        BlackPieces.Add(blackPawn);
-                        identifiant_noir++;
-                    }
-                    else
-                    {
-                        Board[C, l] = new Case(C, l, null);
-                    }
+                    Board[c, l] = new Case(c, l, null);
                 }
             }
         }
 
+        private void AddPiece(Piece piece, int column, int row)
+        {
+            Board[column, row] = new Case(column, row, piece);
+            if (piece.Color == Color.White)
+            {
+                WhitePieces.Add(piece);
+            }
+            else
+            {
+                BlackPieces.Add(piece);
+            }
+        }
+
+
+        
         public bool IsMoveValid(List<Case> Lcase, Case Final)
         {
             foreach (var i in Lcase)

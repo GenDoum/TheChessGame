@@ -197,23 +197,23 @@ namespace ChessLibrary
                     case "1":
                         NewQueen = new Queen(P.Color, P.id);
                         C.Piece = NewQueen;
-                        ModifList(P, NewQueen);
+                        ModifPawn(P, NewQueen);
                         return;
 
                     case "2":
                         NewRook = new Rook(P.Color, P.id);
                         C.Piece = NewRook;
-                        ModifList(P, NewRook);
+                        ModifPawn(P, NewRook);
                         return;
                     case "3":
                         NewBishop = new Bishop(P.Color, P.id);
                         C.Piece = NewBishop;
-                        ModifList(P, NewBishop);
+                        ModifPawn(P, NewBishop);
                         return;
                     case "4":
                         NewKnight = new Knight(P.Color, P.id);
                         C.Piece = NewKnight;
-                        ModifList(P, NewKnight);
+                        ModifPawn(P, NewKnight);
                         return;
                     default:
                         afficheEvolved();
@@ -223,7 +223,7 @@ namespace ChessLibrary
             }
         }
 
-        private void ModifList(Pawn P, Piece pi)
+        private void ModifPawn(Pawn P, Piece pi)
         {
             if (pi != null)
             {

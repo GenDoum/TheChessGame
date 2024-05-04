@@ -87,6 +87,11 @@ namespace ChessLibrary
         /// </summary>
         private int score;
 
+
+        public bool isConnected = false;
+
+
+
         /// <summary>
         /// Constructor of Player with parameters
         /// </summary>
@@ -127,7 +132,7 @@ namespace ChessLibrary
             Console.WriteLine($"Hello {Pseudo}, Enter your password please");
 
             ConsoleKeyInfo key;
-            string pass = string.Empty;
+            string pass = "";
             key = System.Console.ReadKey(true);
 
             while ( key.Key != ConsoleKey.Enter )
@@ -155,7 +160,6 @@ namespace ChessLibrary
                 key = System.Console.ReadKey(true);
 
             }
-            Console.WriteLine(pass);
             
             if ( Equals( this.Password, null) )
             {
@@ -169,7 +173,7 @@ namespace ChessLibrary
             }
             else 
             {
-                Console.WriteLine($"\nIt seems like you misswrite {Pseudo}, try again");
+                Console.WriteLine($"\nIl semblerait que tu te soit trompé {Pseudo}, essaie à nouveau");
                 return false;
 
             }

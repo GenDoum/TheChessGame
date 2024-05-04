@@ -228,6 +228,7 @@ namespace ChessLibrary
                 this.WhitePieces.Remove(P);
                 this.WhitePieces.Add(pi);
             }
+            return true;
         }
 
         private void afficheEvolved()

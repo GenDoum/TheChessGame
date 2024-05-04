@@ -10,8 +10,8 @@ namespace ChessLibrary
     {
 
         public Case[,] Board { get; private set; }
-        public List<Piece> WhitePieces { get; private set; }
-        public List<Piece> BlackPieces { get; private set; }
+        public List<Piece> ?WhitePieces { get; private set; }
+        public List<Piece> ?BlackPieces { get; private set; }
 
         public Chessboard(Case[,] board, bool isEmpty)
         {
@@ -188,38 +188,47 @@ namespace ChessLibrary
             Bishop NewBishop;
             afficheEvolved();
             var result = Console.ReadLine();
-            switch (result)
+            while (true)
             {
-                case "1":
-                    NewQueen = new Queen(P.Color, P.id);
-                    C.Piece = NewQueen;
-                    break;
+                switch (result)
+                {
+                    case "1":
+                        NewQueen = new Queen(P.Color, P.id);
+                        C.Piece = NewQueen;
+                        ModifList(P, NewQueen);
+                        return;
 
-                case "2":
-                    NewRook = new Rook(P.Color,P.id);
-                    C.Piece = NewRook;
-                    break;
-                case "3":
-                    NewBishop = new Bishop(P.Color,P.id);
-                    C.Piece = NewBishop;
-                    break;
-                case "4":
-                    NewKnight = new Knight(P.Color,P.id);
-                    C.Piece = NewKnight;
-                    //ModifList(ref P, NewKnight);
-                    break;
-                default:
-                    afficheEvolved();
-                    result = Console.ReadLine();
-                    break;
+                    case "2":
+                        NewRook = new Rook(P.Color, P.id);
+                        C.Piece = NewRook;
+                        ModifList(P, NewRook);
+                        return;
+                    case "3":
+                        NewBishop = new Bishop(P.Color, P.id);
+                        C.Piece = NewBishop;
+                        ModifList(P, NewBishop);
+                        return;
+                    case "4":
+                        NewKnight = new Knight(P.Color, P.id);
+                        C.Piece = NewKnight;
+                        ModifList(P, NewKnight);
+                        return;
+                    default:
+                        afficheEvolved();
+                        result = Console.ReadLine();
+                        break;
+                }
             }
-            
         }
 
- /*       private bool ModifList(ref Pawn P,ref Piece pi)
+        private bool ModifList( Pawn P,  Piece pi)
         {
-            if
-        }*/
+            if (pi.Color == Color.White) 
+            { 
+                this.WhitePieces.Remove(P);
+                this.WhitePieces.Add(pi);
+            }
+        }
 
         private void afficheEvolved()
         {

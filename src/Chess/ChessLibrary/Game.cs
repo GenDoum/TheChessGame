@@ -8,9 +8,9 @@ namespace ChessLibrary
 {
     public class Game
     {
-        private User Player1;
-        private User Player2;
-        private Chessboard Board;
+        User Player1;
+        User Player2;
+        Chessboard Board;
 
         public Game(User player1, User player2, Chessboard board)
         {
@@ -19,17 +19,16 @@ namespace ChessLibrary
             this.Board = board;
         }
 
- /*       public bool GameIsOver()
+/*        public bool GameIsOver()
         {
-            *//*if (Player1.isCheckMate() || Player2.isCheckMate())
+            if (Player1.isCheckMate() || Player2.isCheckMate())
             {
                 return true;
-            }*/
-           /* else
+            }
+            else
             {
                 return false;
-            }*//*
-           return 
+            }
         }*/
     }
 }

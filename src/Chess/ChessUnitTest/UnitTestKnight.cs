@@ -27,4 +27,19 @@ public class UnitTestKnight
         // Act & Assert
         Assert.Throws<InvalidOperationException>(() => knight.canMove(x1, y1, x2, y2));
     }
+    
+    [Fact]
+    public void PossibleMoves_EmptyBoard_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var knight = new Knight(Color.White, 1);
+        var chessboard = new Chessboard(new Case[8, 8],true);
+        var caseInitial = new Case(4, 4, knight);
+
+        // Act
+        var result = knight.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.Equal(8, result.Count);
+    }
 }

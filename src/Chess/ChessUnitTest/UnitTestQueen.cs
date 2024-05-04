@@ -50,13 +50,13 @@ public class UnitTestQueen
         var queen = new Queen(Color.White, 1);
         var chessboard = new Chessboard(new Case[8, 8], true);
         var caseInitial = new Case(4, 4, queen);
-        chessboard.Board[5, 5].Piece = new Pawn(Color.Black, 2); // Add a piece that the queen can capture
+        chessboard.Board[5, 5].Piece = new Pawn(Color.Black, 2); 
 
         // Act
         var result = queen.PossibleMoves(caseInitial, chessboard);
 
         // Assert
-        Assert.Contains(chessboard.Board[5, 5], result); // The queen can move to the square with the enemy piece
-        Assert.DoesNotContain(chessboard.Board[6, 6], result); // The queen cannot move past the enemy piece
+        Assert.Contains(chessboard.Board[5, 5], result);
+        Assert.DoesNotContain(chessboard.Board[6, 6], result);
     }
 }

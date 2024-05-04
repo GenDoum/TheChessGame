@@ -1,3 +1,4 @@
+using ChessLibrary;
 using System.Drawing;
 using System.Net.NetworkInformation;
 
@@ -203,5 +204,10 @@ public class TestData
         //yield return new object[] { "pseudo", null, ChessLibrary.Color.Red }; // Good User with wrong color
     }
 
-
+    public static IEnumerable<object[]> InvalidIsMoveValid()
+    {
+        yield return new object[] {  }; 
+        yield return new object[] { "pseudo", null, null }; 
+       
+    }
 }

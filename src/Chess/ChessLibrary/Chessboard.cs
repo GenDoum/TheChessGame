@@ -108,7 +108,7 @@ namespace ChessLibrary
         {
             foreach (var i in Lcase)
             {
-                if (i == Final) { return true; }
+                if (i.Column == Final.Column && i.Line == Final.Line) { return true; }
             }
             return false;
         }

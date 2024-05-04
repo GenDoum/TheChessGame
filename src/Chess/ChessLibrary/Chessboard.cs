@@ -10,14 +10,16 @@ namespace ChessLibrary
     {
 
         public Case[,] Board { get; private set; }
-        public List<Piece> ?WhitePieces { get; private set; }
-        public List<Piece> ?BlackPieces { get; private set; }
+        public List<Piece>? WhitePieces { get; private set; }
+        public List<Piece>? BlackPieces { get; private set; }
 
         public Chessboard(Case[,] board, bool isEmpty)
         {
-            Board = board;
             if (isEmpty)
             {
+                Board = board;
+                WhitePieces = new List<Piece>();
+                BlackPieces = new List<Piece>();
                 for (int C = 0; C < 8; C++)
                 {
                     for (int l = 0; l < 8; l++)
@@ -221,14 +223,29 @@ namespace ChessLibrary
             }
         }
 
-        private bool ModifList( Pawn P,  Piece pi)
+        private void ModifList(Pawn P, Piece pi)
         {
-            if (pi.Color == Color.White) 
-            { 
+            if (pi != null)
+            {
+                throw new ArgumentNullException(nameof(Pawn));
+            }
+            if (P != null)
+            {
+                throw new ArgumentNullException(nameof(Pawn));
+            }
+
+            if (pi.Color == Color.White)
+            {
                 this.WhitePieces.Remove(P);
                 this.WhitePieces.Add(pi);
             }
-            return true;
+
+            else
+            {
+                this.BlackPieces.Remove(P);
+                this.BlackPieces.Add(pi);
+            }
+
         }
 
         private void afficheEvolved()
@@ -239,6 +256,8 @@ namespace ChessLibrary
             Console.WriteLine("Entrez 4 pour changer votre pion en Chavalier");
         }
 
+
+        //To do for create class King
         public void Echec()
         {
 

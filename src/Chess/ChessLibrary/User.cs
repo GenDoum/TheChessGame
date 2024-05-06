@@ -86,8 +86,16 @@ namespace ChessLibrary
         /// </summary>
         private int score;
 
+        public bool IsConnected
+        {
+            get => isConnected;
+            set 
+            {
+                isConnected = value;
+            }
+        }
 
-        public bool isConnected = false;
+        private bool isConnected = false;
         
 
 

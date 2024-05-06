@@ -59,6 +59,10 @@ namespace ChessLibrary
             }
 
         }
+
+        /// <summary>
+        /// Private password of the user
+        /// </summary>
         private string password;
 
         /// <summary>
@@ -66,6 +70,9 @@ namespace ChessLibrary
         /// </summary>
         public Color color;
 
+        /// <summary>
+        /// Score of the player
+        /// </summary>
         public int Score
         {
             get => score;
@@ -74,8 +81,15 @@ namespace ChessLibrary
                 score = value;
             }
         }
-
+        /// <summary>
+        /// Private score oof the player
+        /// </summary>
         private int score;
+
+
+        public bool isConnected = false;
+        
+
 
         /// <summary>
         /// Constructor of Player with parameters
@@ -117,7 +131,7 @@ namespace ChessLibrary
             Console.WriteLine($"Hello {Pseudo}, Enter your password please");
 
             ConsoleKeyInfo key;
-            string pass = string.Empty;
+            string pass = "";
             key = System.Console.ReadKey(true);
 
             while ( key.Key != ConsoleKey.Enter )
@@ -145,7 +159,6 @@ namespace ChessLibrary
                 key = System.Console.ReadKey(true);
 
             }
-            Console.WriteLine(pass);
             
             if ( Equals( this.Password, null) )
             {
@@ -159,12 +172,17 @@ namespace ChessLibrary
             }
             else 
             {
-                Console.WriteLine($"\nIt seems like you misswrite {Pseudo}, try again");
+                Console.WriteLine($"\nIl semblerait que tu te soit trompé {Pseudo}, essaie à nouveau");
                 return false;
 
             }
         }
 
+        /// <summary>
+        /// Player's method for check the password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public bool isPasswd(string password)
         {
             if (Password == null)

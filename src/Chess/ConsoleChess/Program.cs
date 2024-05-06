@@ -2,6 +2,7 @@
 using System;
 using System.Reflection.Metadata;
 using ChessLibrary;
+using System.Linq;
 
 
 class Program
@@ -129,6 +130,7 @@ class Program
                 return "";
             }
             errorMessage($"Le {enter} entré n'est pas correct\nEntrez le à nouveau");
+            
             chaine = Console.ReadLine();
         }
         return chaine;
@@ -136,14 +138,7 @@ class Program
 
     public static bool pseudoIsExists(List<User> users, string pseudo)
         {
-            foreach (User u in users)
-            {
-                if ( Equals(u.Pseudo, pseudo) )
-                {
-                    return true;
-                }
-            }
-            return false;
+            return users.Any(u => u.Pseudo == pseudo);
         }
 
     public static User connexion( List<User> users, string pseudo)
@@ -151,7 +146,6 @@ class Program
         Console.Clear();
 
         User user = new User();
-        bool pseudoExist= pseudoIsExists(users, pseudo);
 
         foreach (User u in users) 
         {
@@ -161,17 +155,17 @@ class Program
             }
         }
         
-        if ( string.IsNullOrEmpty(pseudo) && !pseudoExist)
+        if ( string.IsNullOrEmpty(pseudo) )
         {
             errorMessage("Pseudo vide");
             return user;
         }
-        else if ( !pseudoExist ) 
-        {
-            errorMessage($"{pseudo} doesn't exist");
 
+        if ( !pseudoIsExists(users, pseudo) ) 
+        {
+            errorMessage($"{pseudo} n'existe pas");
             Thread.Sleep(1000);
-            return user;
+            return null;
         }
 
         user.isConnected = user.isPasswdConsole();
@@ -196,31 +190,34 @@ class Program
         return true;
     }
 
-    public static List<User> inscription ( List<User> users)
+
+    public static List<User> inscription(List<User> users)
     {
         string pseudo = "";
         string psswd = "";
 
         bool checkPseudo = false;
 
-        pseudo = enterStringCheck("pseudo");
-        while ( !checkPseudo )
-        {
-            errorMessage("Pseudo déjà existant");
-            Thread.Sleep (1500);
+
             pseudo = enterStringCheck("pseudo");
 
-            foreach (User u in users )
+            if (users.Any(u => u.Pseudo == pseudo))
             {
-                if ( !Equals(u.Pseudo, pseudo) )
+                errorMessage("Pseudo déjà existant, recommener l'opération.");
+                return users;
+            }
+            if ((!string.IsNullOrEmpty(pseudo) || !string.IsNullOrWhiteSpace(pseudo)))
+            {
                 checkPseudo = true;
             }
-        }
+            if ( !string.IsNullOrEmpty(pseudo) ) 
+            {
+                psswd = enterStringCheck("Mot de passe");
+                User user = new User(pseudo, psswd, Color.White);
+                users.Add(user);
+            }
 
-        psswd = enterStringCheck("Mot de passe");
-
-        User user = new User(pseudo, psswd, Color.White);
-        users.Add(user);
+        
         return users;
     }
 
@@ -229,9 +226,11 @@ class Program
         int choix;
         User defaultUser = new User();
 
+        choix = MultipleChoice($"{u1.Pseudo} est connecté, que souhaité vous faire ?", true, "Connecter un deuxième joueur", "Deuxième joueur invité", "Annuler et quitter");
+
+
         do
         {
-            choix = MultipleChoice($"{u1.Pseudo} est connecté, que souhaité vous faire ?", true, "Connecter un deuxième joueur", "Deuxième joueur invité", "Annuler et quitter");
 
             switch (choix)
             {
@@ -246,6 +245,9 @@ class Program
                 default:
                     return defaultUser;
             }
+
+            choix = MultipleChoice($"{u1.Pseudo} est connecté, que souhaité vous faire ?", true, "Connecter un deuxième joueur", "Deuxième joueur invité", "Annuler et quitter");
+
 
         } while (choix != -1);
 
@@ -280,7 +282,7 @@ class Program
         Console.ResetColor();
         do
         {
-            choix = MultipleChoice("Bienvenue sut The Chess", true, "Connexion", "Inscription", "Lancer une partie en tant qu'invités", "Quittez l'application");
+            choix = MultipleChoice("Bienvenue sut The Chess", true, "Connexion", "Inscription", "Lancer une partie en tant qu'invités", "Afficher les joueurs" , "Quittez l'application");
             switch (choix)
             {
                 case -1:
@@ -313,13 +315,22 @@ class Program
                 case 2:
                     Console.Clear();
                     Console.Write("Lancer un partie en tant qu'invité");
-                    Thread.Sleep(1000);
-
+                    playerOne = new User();
+                    playerTwo = new User();
                     break;
 
                 case 3:
                     Console.Clear();
-                    Console.Write("Test case 3");
+                    Console.WriteLine("Afficher les joueurs");
+                    foreach (User u in users)
+                    {
+                        Console.WriteLine(u.Pseudo);
+                    }
+                    Thread.Sleep(10000);
+                    break;
+
+                case 4:
+                    Console.Clear();
                     exitApplication();
                     return;
 

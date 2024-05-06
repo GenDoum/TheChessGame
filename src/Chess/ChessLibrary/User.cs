@@ -89,7 +89,7 @@ namespace ChessLibrary
 
 
         public bool isConnected = false;
-
+        
 
 
         /// <summary>

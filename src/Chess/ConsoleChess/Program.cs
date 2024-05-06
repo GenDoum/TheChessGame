@@ -111,7 +111,7 @@ class Program
     public static string enterStringCheck(string enter)
     {
         Console.Clear();
-        string chaine;
+        string? chaine;
         int nbError = 0;
         Console.WriteLine($"Entrez votre {enter}");
         chaine = Console.ReadLine();
@@ -141,6 +141,7 @@ class Program
             return users.Any(u => u.Pseudo == pseudo);
         }
 
+    /*
     public static User connexion( List<User> users, string pseudo)
     {
         Console.Clear();
@@ -168,12 +169,43 @@ class Program
             return null;
         }
 
-        user.isConnected = user.isPasswdConsole();
+        user.IsConnected = user.isPasswdConsole();
         
-        if ( !user.isConnected ) 
+        if ( !user.IsConnected ) 
         {
             return null;
         }
+        Thread.Sleep(2000);
+        return user;
+    }
+    */
+
+    public static User connexion(List<User> users, string pseudo)
+    {
+        Console.Clear();
+
+        if (string.IsNullOrEmpty(pseudo))
+        {
+            errorMessage("Pseudo vide");
+            return null;
+        }
+
+        User? user = users.FirstOrDefault(u => u.Pseudo == pseudo);
+
+        if (user == null)
+        {
+            errorMessage($"{pseudo} n'existe pas");
+            Thread.Sleep(1000);
+            return null;
+        }
+
+        user.IsConnected = user.isPasswdConsole();
+
+        if (!user.IsConnected)
+        {
+            return null;
+        }
+
         Thread.Sleep(2000);
         return user;
     }
@@ -196,9 +228,6 @@ class Program
         string pseudo = "";
         string psswd = "";
 
-        bool checkPseudo = false;
-
-
             pseudo = enterStringCheck("pseudo");
 
             if (users.Any(u => u.Pseudo == pseudo))
@@ -208,7 +237,6 @@ class Program
             }
             if ((!string.IsNullOrEmpty(pseudo) || !string.IsNullOrWhiteSpace(pseudo)))
             {
-                checkPseudo = true;
             }
             if ( !string.IsNullOrEmpty(pseudo) ) 
             {
@@ -227,7 +255,6 @@ class Program
         User defaultUser = new User();
 
         choix = MultipleChoice($"{u1.Pseudo} est connecté, que souhaité vous faire ?", true, "Connecter un deuxième joueur", "Deuxième joueur invité", "Annuler et quitter");
-
 
         do
         {
@@ -262,8 +289,7 @@ class Program
 
         bool chechPlayer;
 
-        string pseudo = null;
-        string enterPseudo = "pseudo";
+        string? pseudo = null;
 
         Color noir = Color.Black;
         Color blanc = Color.White;
@@ -292,13 +318,13 @@ class Program
 
                 case 0:
                     Console.Clear();
-                    pseudo = enterStringCheck(enterPseudo);
+                    pseudo = enterStringCheck("pseudo");
                     playerOne = connexion(users, pseudo);
                     chechPlayer = checkUserConnection(playerOne);
                     if ( Equals(playerOne, null) )
                         break;
                     
-                    if (playerOne.isConnected )
+                    if (playerOne.IsConnected )
                     {
                         playerTwo = menuConnexionDeuxJoueurs(playerOne, users);
                     }

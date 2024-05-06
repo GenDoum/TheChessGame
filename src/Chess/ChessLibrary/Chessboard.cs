@@ -16,6 +16,8 @@ namespace ChessLibrary
         public Chessboard(Case[,] board, bool isEmpty)
         {
             Board = board;
+            WhitePieces = new List<Piece>();
+            BlackPieces = new List<Piece>();
             if (isEmpty)
             {
                 for (int C = 0; C < 8; C++)

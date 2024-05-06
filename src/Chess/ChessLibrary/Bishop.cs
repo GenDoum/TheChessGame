@@ -33,9 +33,9 @@ namespace ChessLibrary
             return true;
         }
 
-        public override List<Case> PossibleMoves(Case initialCase, Chessboard chessboard)
+        public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
-            if (chessboard == null || initialCase == null)
+            if (chessboard == null || caseInitial == null)
             {
                 throw new ArgumentNullException();
             }
@@ -47,8 +47,8 @@ namespace ChessLibrary
             {
                 for (int i = 1; i < 8; i++)
                 {
-                    int newColumn = initialCase.Column + (colInc * i);
-                    int newLine = initialCase.Line + (lineInc * i);
+                    int newColumn = caseInitial.Column + (colInc * i);
+                    int newLine = caseInitial.Line + (lineInc * i);
             
                     if (!IsWithinBoardBoundaries(newColumn, newLine))
                     {
@@ -57,7 +57,7 @@ namespace ChessLibrary
 
                     Case potentialCase = chessboard.Board[newColumn, newLine];
 
-                    if (canMove(initialCase.Column, initialCase.Line, newColumn, newLine))
+                    if (canMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
                     {
                         AddPotentialMove(possibleMoves, potentialCase);
                     }

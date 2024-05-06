@@ -42,46 +42,46 @@ namespace ChessLibrary
 
             List<Case> possibleMoves = new List<Case>();
             (int colInc, int lineInc)[] directions = { (-1, 1), (1, 1), (-1, -1), (1, -1) }; // Top Left, Top Right, Bot Left, Bot Right
-            
+    
             foreach (var (colInc, lineInc) in directions)
             {
                 for (int i = 1; i < 8; i++)
                 {
                     int newColumn = initialCase.Column + (colInc * i);
                     int newLine = initialCase.Line + (lineInc * i);
-                    
-                    if (newColumn < 0 || newColumn >= 8 || newLine < 0 || newLine >= 8)
+            
+                    if (!IsWithinBoardBoundaries(newColumn, newLine))
                     {
                         break;
                     }
 
                     Case potentialCase = chessboard.Board[newColumn, newLine];
-                    try
+
+                    if (canMove(initialCase.Column, initialCase.Line, newColumn, newLine))
                     {
-                        if (canMove(initialCase.Column, initialCase.Line, newColumn, newLine))
-                        {
-                            if (potentialCase.IsCaseEmpty())
-                            {
-                                possibleMoves.Add(potentialCase);
-                            }
-                            else
-                            {
-                                if (potentialCase.Piece.Color != Color)
-                                {
-                                    possibleMoves.Add(potentialCase);
-                                }
-                                break;
-                            }
-                        }
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        break;
+                        AddPotentialMove(possibleMoves, potentialCase);
                     }
                 }
             }
 
             return possibleMoves;
+        }
+
+        private bool IsWithinBoardBoundaries(int column, int line)
+        {
+            return column >= 0 && column < 8 && line >= 0 && line < 8;
+        }
+
+        private void AddPotentialMove(List<Case> possibleMoves, Case potentialCase)
+        {
+            if (potentialCase.IsCaseEmpty())
+            {
+                possibleMoves.Add(potentialCase);
+            }
+            else if (potentialCase.Piece.Color != Color)
+            {
+                possibleMoves.Add(potentialCase);
+            }
         }
     }
 }

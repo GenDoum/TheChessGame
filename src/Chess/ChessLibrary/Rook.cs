@@ -54,13 +54,19 @@ namespace ChessLibrary
                 {
                     int newColumn = caseInitial.Column + colInc * i;
                     int newLine = caseInitial.Line + lineInc * i;
-
-                    if (IsWithinBoardBoundaries(newColumn, newLine))
+                    if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                     {
                         Case potentialCase = chessboard.Board[newColumn, newLine];
-                        AddPotentialMove(result, potentialCase);
-                        if (!potentialCase.IsCaseEmpty())
+                        if (potentialCase.IsCaseEmpty())
                         {
+                            result.Add(potentialCase);
+                        }
+                        else
+                        {
+                            if (potentialCase.Piece.Color != this.Color)
+                            {
+                                result.Add(potentialCase);
+                            }
                             break;
                         }
                     }
@@ -72,19 +78,6 @@ namespace ChessLibrary
             }
 
             return result;
-        }
-
-        private bool IsWithinBoardBoundaries(int column, int line)
-        {
-            return column >= 0 && column < 8 && line >= 0 && line < 8;
-        }
-
-        private void AddPotentialMove(List<Case> result, Case potentialCase)
-        {
-            if (potentialCase.IsCaseEmpty() || potentialCase.Piece.Color != this.Color)
-            {
-                result.Add(potentialCase);
-            }
         }
     }
 }

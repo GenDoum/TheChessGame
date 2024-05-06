@@ -81,4 +81,20 @@ public class UnitTestBishop
         // Assert
         Assert.Contains(chessboard.Board[5, 5], result);
     }
+    
+    [Fact]
+    public void PossibleMoves_InvalidMove_BreaksLoop()
+    {
+        // Arrange
+        var bishop = new Bishop(Color.White, 1);
+        var chessboard = new Chessboard(new Case[8, 8],true);
+        var caseInitial = new Case(4, 4, bishop);
+        chessboard.Board[5, 4] = new Case(5, 4, new Pawn(Color.Black, 2)); 
+
+        // Act
+        var result = bishop.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.DoesNotContain(chessboard.Board[5, 4], result); 
+    }
 }

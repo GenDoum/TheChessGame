@@ -65,7 +65,7 @@ namespace ChessLibrary
             return result;
         }
 
-        private bool IsWithinBoardBoundaries(int column, int line)
+        static bool IsWithinBoardBoundaries(int column, int line)
         {
             return column >= 0 && column < 8 && line >= 0 && line < 8;
         }

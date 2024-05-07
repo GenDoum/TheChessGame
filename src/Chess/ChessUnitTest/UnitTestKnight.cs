@@ -42,4 +42,16 @@ public class UnitTestKnight
         // Assert
         Assert.Equal(8, result.Count);
     }
+    
+    [Fact]
+    public void PossibleMoves_ChessboardIsNull_ThrowsArgumentNullException()
+    {
+        // Arrange
+        var knight = new Knight(Color.White, 1);
+        Chessboard chessboard = null;
+
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => knight.PossibleMoves(new Case(0, 0, knight), chessboard));
+    }
+    
 }

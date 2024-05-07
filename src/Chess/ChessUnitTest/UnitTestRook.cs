@@ -64,4 +64,47 @@ public class UnitTestRook
         // Assert
         Assert.Equal(14, result.Count);
     }
+    
+    [Fact]
+    public void PossibleMoves_ChessboardIsNull_ThrowsArgumentNullException()
+    {
+        // Arrange
+        var rook = new Rook(Color.White, 1);
+        Chessboard chessboard = null;
+
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => rook.PossibleMoves(new Case(0, 0, rook), chessboard));
+    }
+
+    [Fact]
+    public void PossibleMoves_PotentialCaseNotEmptyAndDifferentColor_AddsToResult()
+    {
+        // Arrange
+        var rook = new Rook(Color.White, 1);
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(4, 4, rook);
+        chessboard.Board[5, 4] = new Case(5, 4, new Rook(Color.Black, 2)); // Potential case with a piece of different color
+
+        // Act
+        var result = rook.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.Contains(chessboard.Board[5, 4], result);
+    }
+
+    [Fact]
+    public void PossibleMoves_PotentialCaseIsEmpty_AddsToResult()
+    {
+        // Arrange
+        var rook = new Rook(Color.White, 1);
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(4, 4, rook);
+        chessboard.Board[5, 4] = new Case(5, 4, null); // Potential case is empty
+
+        // Act
+        var result = rook.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.Contains(chessboard.Board[5, 4], result);
+    }
 }

@@ -151,8 +151,8 @@ public class TestData
         yield return new object[] { "pseudo", "password", ChessLibrary.Color.White }; // Good Pseudo with Color.White
         yield return new object[] { "pseudo", "password", ChessLibrary.Color.Black }; // Good Pseudo with Color.Black
 
-        yield return new object[] { "pseudo", null, ChessLibrary.Color.White }; // Good Pseudo with password null and Color.White
-        yield return new object[] { "pseudo", null, ChessLibrary.Color.Black }; // Good Pseudo with password null and Color.Black
+        yield return new object[] { "pseudo", "password", ChessLibrary.Color.White }; // Good Pseudo with password null and Color.White
+        yield return new object[] { "pseudo", "password", ChessLibrary.Color.Black }; // Good Pseudo with password null and Color.Black
     }
 
     public static IEnumerable<object[]> InvalidUserPseudo()

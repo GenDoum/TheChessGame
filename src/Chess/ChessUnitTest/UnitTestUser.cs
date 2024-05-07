@@ -19,15 +19,9 @@ public class UnitTestUser
 
     [Theory]
     [MemberData(nameof(TestData.InvalidUserPseudo), MemberType = typeof(TestData))]
-    public void InvalidPseudo_ReturnFalse(string pseudo, string password, Color color)
+    public void InvalidPseudo_ReturnFalse(string? pseudo, string password, Color color)
     {
-        if (string.IsNullOrWhiteSpace(pseudo))
-        {
-            Assert.Throws<ArgumentException>(() => new User(pseudo, password, color));
-            return;
-        }
-
-        var user = new User(pseudo, password, color);
+        Assert.Throws<ArgumentException>(() => new User(pseudo, password, color));
     }
 
 

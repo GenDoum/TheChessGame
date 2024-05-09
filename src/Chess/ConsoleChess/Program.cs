@@ -63,13 +63,13 @@ class Program
     {
 
 
-            Case[,] Board = new Case[8, 8];
-            var chessboard = new Chessboard(Board, 2);
-            List<Case> Test = Board[4, 4].Piece.PossibleMoves(Board[4, 4], chessboard);
-             foreach (var teste in Test)
-             {
-                teste.afficher();
-             }
+            //Case[,] Board = new Case[8, 8];
+            //var chessboard = new Chessboard(Board, 2);
+            //List<Case> Test = Board[4, 4].Piece.PossibleMoves(Board[4, 4], chessboard);
+            // foreach (var teste in Test)
+            // {
+            //    teste.afficher();
+            // }
 
         // Initialisation de l'échiquier
         /* Chessboard chessboard = new Chessboard(new Case[8, 8]);

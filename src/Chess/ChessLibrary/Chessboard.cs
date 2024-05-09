@@ -323,10 +323,10 @@ namespace ChessLibrary
         /// <param name="myKing"></param>
         /// <param name="KingCase"></param>
         /// <returns></returns>
-        public bool Echec(King King,Case KingCase)
+        public bool Echec(King king,Case KingCase)
         {
             List<CoPieces> enemyPieces;
-            if (King.Color == Color.White)
+            if (king.Color == Color.White)
             {
                 //Check if the King is white to get the black pieces as enemy pieces.
                 enemyPieces = BlackPieces;
@@ -343,7 +343,7 @@ namespace ChessLibrary
                 if (MovePiece(enemy.piece,enemy.CaseLink, enemy.CaseLink))
                     //Check if the enemy piece can move to the King case
                 {
-                    EchecMat(King.PossibleMoves(KingCase, this));
+                    EchecMat(king.PossibleMoves(KingCase, this));
                     //Check if the King is in checkmate position.
                     return true;
                 }

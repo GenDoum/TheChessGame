@@ -10,9 +10,9 @@ namespace ChessLibrary
 {
     public class Game : IRules
     {
-        User Player1;
-        User Player2;
-        Chessboard Board;
+        public User Player1;
+        public User Player2;
+        public Chessboard Board;
         //public event void ImpossibleMove();
         //public event EventHandler<ImpossibleMove> impossible;
         //protected virtual void OnGameStarted()
@@ -42,29 +42,29 @@ namespace ChessLibrary
             throw new NotImplementedException();
         }
 
-        public void movement(Case initial, Case final, Chessboard board, User ActualPlayer)
+        public void movement(Case initial, Case Final, Chessboard board, User ActualPlayer)
         {
             if(initial.Piece == null)
                 throw new ArgumentNullException(nameof(initial.Piece));
             if(initial.Piece.Color == ActualPlayer.color)
                 throw new InvalidOperationException("Invalid move for this player");
-            if (board.MovePiece(initial.Piece,initial, final))
+            if (board.MovePiece(initial.Piece,initial, Final))
             {
                 if (initial.Piece.Color == Color.White)
                 {
-                    board.WhitePieces.Add(new CoPieces { CaseLink = final, piece = initial.Piece });
+                    board.WhitePieces.Add(new CoPieces { CaseLink = Final, piece = initial.Piece });
                     board.WhitePieces.Remove(new CoPieces { CaseLink = initial, piece = initial.Piece });
                 }
                 else
                 {
-                    board.BlackPieces.Add(new CoPieces { CaseLink = final, piece = initial.Piece });
+                    board.BlackPieces.Add(new CoPieces { CaseLink = Final, piece = initial.Piece });
                     board.BlackPieces.Remove(new CoPieces { CaseLink = initial, piece = initial.Piece });
                 }
-                final.Piece = initial.Piece;
+                Final.Piece = initial.Piece;
                 initial.Piece = null;
             }
             else { }
-                // evenement
+                // evenement a implementer
         }
 
         public void start()

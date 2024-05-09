@@ -141,45 +141,6 @@ class Program
             return users.Any(u => u.Pseudo == pseudo);
         }
 
-    /*
-    public static User connexion( List<User> users, string pseudo)
-    {
-        Console.Clear();
-
-        User user = new User();
-
-        foreach (User u in users) 
-        {
-            if ( Equals(u.Pseudo, pseudo) )
-            {
-                user = u;
-            }
-        }
-        
-        if ( string.IsNullOrEmpty(pseudo) )
-        {
-            errorMessage("Pseudo vide");
-            return user;
-        }
-
-        if ( !pseudoIsExists(users, pseudo) ) 
-        {
-            errorMessage($"{pseudo} n'existe pas");
-            Thread.Sleep(1000);
-            return null;
-        }
-
-        user.IsConnected = user.isPasswdConsole();
-        
-        if ( !user.IsConnected ) 
-        {
-            return null;
-        }
-        Thread.Sleep(2000);
-        return user;
-    }
-    */
-
     public static User connexion(List<User> users, string pseudo)
     {
         Console.Clear();
@@ -196,7 +157,7 @@ class Program
         {
             errorMessage($"{pseudo} n'existe pas");
             Thread.Sleep(1000);
-            return null;
+            return user;
         }
 
         user.IsConnected = user.isPasswdConsole();
@@ -241,7 +202,7 @@ class Program
             if ( !string.IsNullOrEmpty(pseudo) ) 
             {
                 psswd = enterStringCheck("Mot de passe");
-                User user = new User(pseudo, psswd, Color.White);
+                User user = new User(pseudo, psswd, Color.White, false, new List<Piece>(), 0);
                 users.Add(user);
             }
 
@@ -294,8 +255,8 @@ class Program
         Color noir = Color.Black;
         Color blanc = Color.White;
 
-        User balko = new User("MatheoB", "chef", noir);
-        User hersan = new User("MatheoH", "proMac", blanc);
+        User balko = new User("MatheoB", "chef", noir, false, new List<Piece>(), 0);
+        User hersan = new User("MatheoH", "proMac", blanc, false, new List<Piece>(), 0);
 
         User? playerOne = null;
         User? playerTwo = null;

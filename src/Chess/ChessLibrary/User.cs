@@ -83,21 +83,38 @@ namespace ChessLibrary
             }
         }
         /// <summary>
-        /// Private score oof the player
+        /// Private score of the player
         /// </summary>
         private int score;
 
+        /// <summary>
+        /// Public boolean to know if the User is connected
+        /// </summary>
         public bool IsConnected
         {
-            get => isConnected;
-            set 
+            get;
+            set;
+        }
+        /// <summary>
+        /// Private boolean of the player
+        /// </summary>
+        private bool isConnected;
+
+        /// <summary>
+        /// Public list of pieces of the player
+        /// </summary>
+        public List<Piece> Pieces
+        {
+            get => pieces;
+            set
             {
-                isConnected = value;
+                pieces = value;
             }
         }
-
-        private bool isConnected = false;
-        
+        /// <summary>
+        /// Private list of pieces of the player
+        /// </summary>
+        private List<Piece> pieces;
 
 
         /// <summary>
@@ -105,11 +122,8 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="pseudo"></param>
         /// <param name="password"></param>
-        public User(string pseudo, string password, Color color)
+        public User(string pseudo, string password, Color color, bool connected, List<Piece> listPieces, int playerScore)
         {
-            // En gros ici tu vérifiais si 'Pseudo' et 'Password' étaient null ou vide après leur affectation mais dcp les exceptions étaient pas levées avant que les valeurs soient déjà définies.
-            // J'ai aussi enlever IsWhite car il était jamais utilisé je crois. Remet si il servais vraiment.
-            // Et dcp la le constructeur vérifie d'abord si pseudo sont vide ou null avant de les affecter a la propriété Pseudo.
             if (string.IsNullOrWhiteSpace(pseudo))
             {
                 throw new ArgumentException("Pseudo or password must be entered and must not be full of white space");
@@ -118,6 +132,10 @@ namespace ChessLibrary
             Pseudo = pseudo;
             Password = password;
             this.color = color;
+            Score = playerScore;
+            IsConnected = connected;
+            Pieces = listPieces;
+        
         }
 
         /// <summary>
@@ -196,7 +214,7 @@ namespace ChessLibrary
         {
             if (Password == null)
             {
-                Console.WriteLine("Invited player, no need to check password\n");
+                Console.WriteLine("Joeur invité, pas besoin de mot de passe\n");
                 return true;
             }
 

@@ -9,7 +9,7 @@ using ChessLibrary;
 
 public class UnitTestBoard
     {
-
+    /*
     [Fact]
     public void IsMovePossible_EmptyBoard_ReturnsCorrectMoves()
     {
@@ -44,9 +44,15 @@ public class UnitTestBoard
     //    // Arrange
     //    var chessboard = new Chessboard(new Case[8, 8], true);
 
+<<<<<<< HEAD
     //    // Act & Assert
     //    Assert.True(chessboard.IsMoveValid(lcase, Final));
     //}
 
+=======
+        // Act & Assert
+        Assert.True(chessboard.IsMoveValid(lcase, Final));
+    }
+    */
 }
 

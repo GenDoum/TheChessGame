@@ -15,6 +15,8 @@
 </p>
 
 ![Static Badge](https://img.shields.io/badge/development-in%20progress-green)
+[![Quality Gate Status](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Chess&metric=alert_status&token=c2dc7d57b98c8ce69ae71f96129688cc7992b423)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Chess)
+[![Maintainability Rating](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Chess&metric=sqale_rating&token=c2dc7d57b98c8ce69ae71f96129688cc7992b423)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Chess)
 
 ## Table of Contents
 

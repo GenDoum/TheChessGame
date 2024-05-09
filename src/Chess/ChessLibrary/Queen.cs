@@ -49,8 +49,8 @@ namespace ChessLibrary
             {
                 for (int i = 1; i < 8; i++)
                 {
-                    int newColumn = caseInitial.Column + colInc * i;
-                    int newLine = caseInitial.Line + lineInc * i;
+                    int newColumn = caseInitial.Column + (colInc * i);
+                    int newLine = caseInitial.Line + (lineInc * i);
                     if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                     {
                         Case potentialCase = chessboard.Board[newColumn, newLine];

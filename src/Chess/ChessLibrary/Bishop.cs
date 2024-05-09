@@ -30,18 +30,18 @@ namespace ChessLibrary
                 throw new InvalidOperationException("Invalid move for Bishop: destination out of bounds.");
             }
 
-            return true;
+            return true;    
         }
-
-
-
-
 
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
             if (chessboard == null)
             {
                 throw new ArgumentNullException(nameof(chessboard));
+            }
+            if (caseInitial== null)
+            {
+                throw new ArgumentNullException(nameof(caseInitial));
             }
 
             List<Case> result = new List<Case>();
@@ -51,8 +51,8 @@ namespace ChessLibrary
             {
                 for (int i = 1; i < 8; i++)
                 {
-                    int newColumn = caseInitial.Column + colInc * i;
-                    int newLine = caseInitial.Line + lineInc * i;
+                    int newColumn = caseInitial.Column + (colInc * i);
+                    int newLine = caseInitial.Line + (lineInc * i);
                     if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                     {
                         Case potentialCase = chessboard.Board[newColumn, newLine];

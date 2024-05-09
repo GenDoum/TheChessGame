@@ -13,7 +13,7 @@ namespace ChessLibrary
     {
         private bool canCastleRight;
         private bool canCastleLeft;
-        
+
         /// <summary>
         /// Constructor of the class
         /// </summary>
@@ -40,8 +40,40 @@ namespace ChessLibrary
 
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
-            throw new NotImplementedException();
-            //We need to know how we gonna check "échec" because if a case put the King in "échec position he can go on this case!!"
+            if (chessboard == null)
+            {
+                throw new ArgumentNullException(nameof(chessboard));
+            }
+            List<Case> result = new List<Case>();
+            (int, int)[] directions = { (0, 1), (0, -1), (-1, 0), (1, 0), (-1, 1), (1, 1), (-1, -1), (1, -1) };  // Top, Bot, Left, Right ,Top Left, Top Right, Bot Left,Bot Right
+            foreach (var (colInc, lineInc) in directions)
+            {
+                int newColumn = caseInitial.Column + (colInc);
+                int newLine = caseInitial.Line + (lineInc);
+                if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
+                {
+                    Case potentialCase = chessboard.Board[newColumn, newLine];
+
+                    if (potentialCase.IsCaseEmpty() || chessboard.Echec(this, potentialCase))
+                    {
+                        result.Add(potentialCase);
+                    }
+                    else
+                    {
+                        if (potentialCase.Piece.Color != this.Color || chessboard.Echec(this, potentialCase))
+                        {
+                            result.Add(potentialCase);
+                        }
+                        break;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+
+            }
+            return result;
         }
     }
 }

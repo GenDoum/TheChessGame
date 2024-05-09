@@ -7,20 +7,38 @@ trigger:
     - push
 
 steps:
-  - name: build_net8
+  - name: build
     image: mcr.microsoft.com/dotnet/sdk:8.0
     commands:
-      - cd src/Chess/
-      - dotnet restore Chess.sln
-      - dotnet build Chess.sln -c Release --no-restore /p:AndroidSdkDirectory=$ANDROID_SDK_ROOT -property:Aapt2TooPath=$ANDROID_SDK_ROOT/build-tools/33.3.3
-      - dotnet publish Chess.sln - Release --no-restore -o $CI_PROJET_DIR/build/release
+      - cd src/ChessBuild/
+      - dotnet restore ChessBuild.sln
+      - dotnet build ChessBuild.sln -c Release --no-restore
+      - dotnet publish ChessBuild.sln -c Release --no-restore -o $CI_PROJET_DIR/build/release
     depends_on: [clone]
 
-    # - name: code-inspection-linux-only
-    #   image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet7
-    #   secrets: [ CHESS_SECRET ]
-    #   environment:
-    #     sonart_host: https://codefirst.iut.uca.fr/sonar/
-    #     sonar_token:
-    #       from_secret: CHESS_SECRET
+  - name: tests
+    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet8
+    commands:
+      - cd src/ChessBuild/
+      - dotnet restore ChessBuild.sln
+      - dotnet test ChessBuild.sln --no-restore
+    depends_on: [build]
+
+  - name: code-inspection
+    image: hub.codefirst.iut.uca.fr/marc.chevaldonne/codefirst-dronesonarplugin-dotnet8
+    secrets: [ SECRET_SONAR_LOGIN ]
+    settings:
+      sonar_host: https://codefirst.iut.uca.fr/sonar/
+      sonar_token:
+        from_secret: SECRET_SONAR_LOGIN
+    commands:
+      - cd src/ChessBuild/
+      - dotnet restore ChessBuild.sln
+      - dotnet sonarscanner begin /k:Chess /d:sonar.host.url=$${PLUGIN_SONAR_HOST} /d:sonar.coverageReportPaths="coveragereport/SonarQube.xml" /d:sonar.coverage.exclusions="Tests/**" /d:sonar.login=$${PLUGIN_SONAR_TOKEN} 
+      - dotnet build ChessBuild.sln -c Release --no-restore
+      - dotnet test ChessBuild.sln --logger trx --no-restore /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect "XPlat Code Coverage"
+      - reportgenerator -reports:"../Chess/ChessUnitTest/TestResults/**/coverage.cobertura.xml" -reporttypes:SonarQube -targetdir:"../Chess/coveragereport"
+      - dotnet publish ChessBuild.sln -c Release --no-restore -o CI_PROJECT_DIR/build/release
+      - dotnet sonarscanner end /d:sonar.login=$${PLUGIN_SONAR_TOKEN}
+    depends_on: [tests]
 

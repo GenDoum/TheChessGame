@@ -6,37 +6,42 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
-    public class Chessboard : IRegles
+    public class Chessboard : IBoard
     {
 
         public Case[,] Board { get; private set; }
         public List<Piece>? WhitePieces { get; private set; }
         public List<Piece>? BlackPieces { get; private set; }
 
-        public Chessboard(Case[,] board, bool isEmpty)
+        public Chessboard(Case[,]Tcase , bool isEmpty)
         {
-            if (isEmpty)
-            {
-                Board = board;
-                WhitePieces = new List<Piece>();
-                BlackPieces = new List<Piece>();
-                for (int C = 0; C < 8; C++)
-                {
-                    for (int l = 0; l < 8; l++)
-                    { Board[C, l] = new Case(C, l, null); }
-                }
-            }
-            else
-            {
-                InitialiseChessboard(board);
-            }
-        }
-        private void InitialiseChessboard(Case[,] board)
-        {
-            Board = board;
+            Board = Tcase;
             WhitePieces = new List<Piece>();
             BlackPieces = new List<Piece>();
 
+            if (!isEmpty)
+            {
+                InitializeChessboard();
+            }
+            else
+            {
+                InitializeEmptyBoard();
+            }
+        }
+
+        private void InitializeEmptyBoard()
+        {
+            for (int row = 0; row < 8; row++)
+            {
+                for (int column = 0; column < 8; column++)
+                {
+                    Board[row, column] = new Case(row, column, null);
+                }
+            }
+        }
+
+        private void InitializeChessboard()
+        {
             InitializeWhitePieces();
             InitializeBlackPieces();
             FillEmptyCases();
@@ -80,18 +85,18 @@ namespace ChessLibrary
 
         private void FillEmptyCases()
         {
-            for (int c = 0; c < 8; c++)
+            for (int row = 2; row <= 5; row++)
             {
-                for (int l = 2; l <= 5; l++)
+                for (int column = 0; column < 8; column++)
                 {
-                    Board[c, l] = new Case(c, l, null);
+                    Board[column, row] = new Case(column, row, null);
                 }
             }
         }
 
         private void AddPiece(Piece piece, int column, int row)
         {
-            Board[column, row] = new Case(column, row, piece);
+            Board[row, column] = new Case(row, column, piece);
             if (piece.Color == Color.White)
             {
                 WhitePieces.Add(piece);
@@ -101,10 +106,10 @@ namespace ChessLibrary
                 BlackPieces.Add(piece);
             }
         }
+    
 
 
-        
-        public bool IsMoveValid(List<Case> Lcase, Case Final)
+    public bool IsMoveValid(List<Case> Lcase, Case Final)
         {
             foreach (var i in Lcase)
             {
@@ -115,14 +120,19 @@ namespace ChessLibrary
 
 
 
-        public void MovePiece(Piece piece, Case Initial, Case Final)
+        public bool MovePiece(Piece piece, Case Initial, Case Final,User P)
         {
+            if (P.color != piece.Color)
+            {
+                return false;
+            }
             List<Case> L = piece.PossibleMoves(Initial, this);
+
             if (IsMoveValid(L, Final))
             {
-                Initial.Piece = null;
-                Final.Piece = piece;
+                return true;
             }
+            return false ;
         }
 
         public bool PawnCanEvolve()
@@ -226,10 +236,39 @@ namespace ChessLibrary
 
 
         //To do for create class King
-        public void Echec()
+        public bool IsCheck(King myKing)
         {
+            List<Piece> enemyPieces;
+            if (myKing.Color == Color.White)
+            {
+                // Si le roi est blanc, les pièces ennemies sont noires
+                enemyPieces = BlackPieces;
+            }
+            else
+            {
+                // Si le roi est noir, les pièces ennemies sont blanches
+                enemyPieces = WhitePieces;
+            }
 
+            foreach (Piece enemyPiece in enemyPieces)
+            {
+                if (MovePiece(enemyPiece, Case[enemyPiece]))
+                {
+                    return true;  // Le roi est en échec
+                }
+            }
+
+            return false;  // Le roi n'est pas en échec
         }
 
+        public bool EchecMat(List<Case> )
+        {
+            return false;
+        }
+
+        public bool MovePiece(Case Initial, Case Final, User P)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

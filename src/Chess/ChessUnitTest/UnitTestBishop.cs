@@ -42,4 +42,6 @@ public class UnitTestBishop
         // Assert
         Assert.Equal(13, result.Count);
     }
+
+
 }

@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
-    internal interface IRegles
+    internal interface IBoard
     {
-        void MovePiece(Piece piece, Case Initial,Case Final);
+        bool MovePiece(Case Initial,Case Final, User P);
 
         bool IsMoveValid(List<Case> Lcase, Case Final);
+        bool Echec(King king);
 
         //User Turn();
 

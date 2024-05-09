@@ -18,7 +18,7 @@ namespace ChessLibrary
         public Color Color { get; private set; }
 
         public int id { get; private set; }
-
+            
         
         /// <summary>
         /// Property that represents if the piece has moved

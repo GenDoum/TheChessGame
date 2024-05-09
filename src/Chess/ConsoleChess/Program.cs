@@ -7,9 +7,9 @@ namespace ConsoleChess
         static void Main(string[] args)
         {
 
-            while()
+            //while()
 
-            DisplayBoard(chessboard);
+            //DisplayBoard(chessboard);
             
         }
 

@@ -6,18 +6,24 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
+    public struct CoPieces
+    {
+        public Case CaseLink { get; set; }
+        public Piece piece { get; set; }
+    };
+
     public class Chessboard : IBoard
     {
 
         public Case[,] Board { get; private set; }
-        public List<Piece>? WhitePieces { get; private set; }
-        public List<Piece>? BlackPieces { get; private set; }
+        public List<CoPieces>? WhitePieces { get; private set; }
+        public List<CoPieces>? BlackPieces { get; private set; }
 
-        public Chessboard(Case[,]Tcase , bool isEmpty)
+        public Chessboard(Case[,] Tcase, bool isEmpty)
         {
             Board = Tcase;
-            WhitePieces = new List<Piece>();
-            BlackPieces = new List<Piece>();
+            WhitePieces = new List<CoPieces>();
+            BlackPieces = new List<CoPieces>();
 
             if (!isEmpty)
             {
@@ -70,7 +76,7 @@ namespace ChessLibrary
             int identifiantNoir = 1;
             AddPiece(new Rook(Color.Black, identifiantNoir++), 0, 7);
             AddPiece(new Knight(Color.Black, identifiantNoir++), 1, 7);
-            AddPiece(new Bishop(Color.Black, identifiantNoir++), 2, 7);
+            AddPiece(new Bishop(Color.Black, identifiantNoir++),2, 7);
             AddPiece(new Queen(Color.Black, identifiantNoir++), 3, 7);
             AddPiece(new King(Color.Black, identifiantNoir++), 4, 7);
             AddPiece(new Bishop(Color.Black, identifiantNoir++), 5, 7);
@@ -99,17 +105,17 @@ namespace ChessLibrary
             Board[row, column] = new Case(row, column, piece);
             if (piece.Color == Color.White)
             {
-                WhitePieces.Add(piece);
+                WhitePieces.Add(new CoPieces { CaseLink =new Case(column, row, piece), piece = piece });
             }
             else
             {
-                BlackPieces.Add(piece);
+                BlackPieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
         }
-    
 
 
-    public bool IsMoveValid(List<Case> Lcase, Case Final)
+
+        public bool IsMoveValid(List<Case> Lcase, Case Final)
         {
             foreach (var i in Lcase)
             {
@@ -120,19 +126,15 @@ namespace ChessLibrary
 
 
 
-        public bool MovePiece(Piece piece, Case Initial, Case Final,User P)
+        public bool MovePiece(Piece piece, Case Initial, Case Final)
         {
-            if (P.color != piece.Color)
-            {
-                return false;
-            }
             List<Case> L = piece.PossibleMoves(Initial, this);
 
             if (IsMoveValid(L, Final))
             {
                 return true;
             }
-            return false ;
+            return false;
         }
 
         public bool PawnCanEvolve()
@@ -175,23 +177,23 @@ namespace ChessLibrary
                     case "1":
                         NewQueen = new Queen(P.Color, P.id);
                         C.Piece = NewQueen;
-                        ModifPawn(P, NewQueen);
+                        ModifPawn(P, NewQueen,C);
                         return;
 
                     case "2":
                         NewRook = new Rook(P.Color, P.id);
                         C.Piece = NewRook;
-                        ModifPawn(P, NewRook);
+                        ModifPawn(P, NewRook, C);
                         return;
                     case "3":
                         NewBishop = new Bishop(P.Color, P.id);
                         C.Piece = NewBishop;
-                        ModifPawn(P, NewBishop);
+                        ModifPawn(P, NewBishop, C);
                         return;
                     case "4":
                         NewKnight = new Knight(P.Color, P.id);
                         C.Piece = NewKnight;
-                        ModifPawn(P, NewKnight);
+                        ModifPawn(P, NewKnight, C);
                         return;
                     default:
                         afficheEvolved();
@@ -201,7 +203,7 @@ namespace ChessLibrary
             }
         }
 
-        private void ModifPawn(Pawn P, Piece pi)
+        private void ModifPawn(Pawn P, Piece pi,Case c)
         {
             if (pi != null)
             {
@@ -214,14 +216,15 @@ namespace ChessLibrary
 
             if (pi.Color == Color.White)
             {
-                this.WhitePieces.Remove(P);
-                this.WhitePieces.Add(pi);
+                this.WhitePieces.Add(new CoPieces { CaseLink = c , piece = pi});
+                this.WhitePieces.Remove(new CoPieces{CaseLink = c,piece = P});
+
             }
 
             else
             {
-                this.BlackPieces.Remove(P);
-                this.BlackPieces.Add(pi);
+                this.BlackPieces.Add(new CoPieces { CaseLink = c, piece = pi });
+                this.BlackPieces.Remove(new CoPieces { CaseLink = c, piece = P });
             }
 
         }
@@ -236,39 +239,34 @@ namespace ChessLibrary
 
 
         //To do for create class King
-        public bool IsCheck(King myKing)
+        public bool Echec(King myKing,Case KingCase)
         {
-            List<Piece> enemyPieces;
+            List<CoPieces> enemyPieces;
             if (myKing.Color == Color.White)
             {
-                // Si le roi est blanc, les pièces ennemies sont noires
                 enemyPieces = BlackPieces;
             }
             else
             {
-                // Si le roi est noir, les pièces ennemies sont blanches
                 enemyPieces = WhitePieces;
             }
 
-            foreach (Piece enemyPiece in enemyPieces)
+            foreach (var enemy in enemyPieces)
             {
-                if (MovePiece(enemyPiece, Case[enemyPiece]))
+                if (MovePiece(enemy.piece,enemy.CaseLink, enemy.CaseLink))
                 {
-                    return true;  // Le roi est en échec
+                    EchecMat(myKing.PossibleMoves(KingCase, this));// Le roi est en échec appel de la fonction échec et mat
+                    return true;
                 }
             }
-
-            return false;  // Le roi n'est pas en échec
+            return false;
+            // Le roi n'est pas en échec
         }
 
-        public bool EchecMat(List<Case> )
+        public bool EchecMat(List <Case> Lcase)
         {
             return false;
         }
 
-        public bool MovePiece(Case Initial, Case Final, User P)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

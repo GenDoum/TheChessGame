@@ -42,21 +42,24 @@ namespace ChessLibrary
             throw new NotImplementedException();
         }
 
-        public bool IsGameOver(Chessboard chess)
-        {
-           if(chess.EchecMat())
-             return true;
-
-           return false;
-        }
-
         public void movement(Case initial, Case final, Chessboard board, User ActualPlayer)
         {
             if(initial.Piece == null)
                 throw new ArgumentNullException(nameof(initial.Piece));
-
-            if (board.MovePiece(initial.Piece,initial, final,ActualPlayer))
+            if(initial.Piece.Color == ActualPlayer.color)
+                throw new InvalidOperationException("Invalid move for this player");
+            if (board.MovePiece(initial.Piece,initial, final))
             {
+                if (initial.Piece.Color == Color.White)
+                {
+                    board.WhitePieces.Add(new CoPieces { CaseLink = final, piece = initial.Piece });
+                    board.WhitePieces.Remove(new CoPieces { CaseLink = initial, piece = initial.Piece });
+                }
+                else
+                {
+                    board.BlackPieces.Add(new CoPieces { CaseLink = final, piece = initial.Piece });
+                    board.BlackPieces.Remove(new CoPieces { CaseLink = initial, piece = initial.Piece });
+                }
                 final.Piece = initial.Piece;
                 initial.Piece = null;
             }

@@ -12,8 +12,6 @@ namespace ChessLibrary
 
         void start();
 
-        bool IsGameOver(Chessboard chess);
-        //appel a Check Mate ,true fin de game false on continue la game
         void GameOver(User winner);
         //appel a evenement
 

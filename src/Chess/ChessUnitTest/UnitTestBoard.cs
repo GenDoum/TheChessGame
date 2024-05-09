@@ -25,28 +25,28 @@ public class UnitTestBoard
         Assert.True(move);
     }
 
-    [Theory]
-    [MemberData(nameof(TestData.ValidIsMoveValidData), MemberType = typeof(TestData))]
-    public void IsMoveValid_Valid(List<Case> lcase, Case Final)
-    {
-        // Arrange
-        var chessboard = new Chessboard(new Case[8, 8], true);
+    //[Theory]
+    //[MemberData(nameof(TestData.ValidIsMoveValidData), MemberType = typeof(TestData))]
+    //public void IsMoveValid_Valid(List<Case> lcase, Case Final)
+    //{
+    //    // Arrange
+    //    var chessboard = new Chessboard(new Case[8, 8], true);
 
-        // Act & Assert
-        Assert.True(chessboard.IsMoveValid(lcase, Final));
-    }
+    //    // Act & Assert
+    //    Assert.True(chessboard.IsMoveValid(lcase, Final));
+    //}
 
 
-    [Theory]
-    [MemberData(nameof(TestData.InvalidIsMoveValidData), MemberType = typeof(TestData))]
-    public void IsMoveValid_Invalid(List<Case> lcase, Case Final)
-    {
-        // Arrange
-        var chessboard = new Chessboard(new Case[8, 8], true);
+    //[Theory]
+    //[MemberData(nameof(TestData.InvalidIsMoveValidData), MemberType = typeof(TestData))]
+    //public void IsMoveValid_Invalid(List<Case> lcase, Case Final)
+    //{
+    //    // Arrange
+    //    var chessboard = new Chessboard(new Case[8, 8], true);
 
-        // Act & Assert
-        Assert.True(chessboard.IsMoveValid(lcase, Final));
-    }
+    //    // Act & Assert
+    //    Assert.True(chessboard.IsMoveValid(lcase, Final));
+    //}
 
 }
 

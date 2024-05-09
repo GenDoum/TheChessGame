@@ -30,8 +30,6 @@ public class UnitTestUser
         var user = new User(pseudo, password, color, connected, pieces, score);
     }
 
-
-
     [Theory]
     [MemberData(nameof(TestData.ValidUserPassword), MemberType = typeof(TestData))]
     public void GoodPassword_ReturnTrue(string pseudo, string password, Color color, bool connected, List<Piece> pieces, int score)
@@ -47,7 +45,6 @@ public class UnitTestUser
             Assert.Null(password);
         }
     }
-
 
     [Theory]
     [MemberData(nameof(TestData.InvalidUserPassword), MemberType = typeof(TestData))]
@@ -95,10 +92,25 @@ public class UnitTestUser
     {
         var user = new User(pseudo, password, color, connected ?? false, pieces, score);
 
-        // Vérifie que la valeur de connected est incorrecte (null)
         Assert.Null(connected);
     }
 
+    [Theory]
+    [MemberData(nameof(TestData.Test_UserMethodIsConnected), MemberType = typeof(TestData))]
+    public void TestGoodReturnMethodIsPassword(string password)
+    {
+        var user = new User("pseudo", password, Color.Black, false, new List<Piece>(), 0);
 
+        bool result = user.isPasswd(password);
 
+        if (password == user.Password)
+        {
+            Assert.True(result);
+        }
+        else
+        {
+            // If the password doesn't match, the result should be false
+            Assert.False(result);
+        }
+    }
 }

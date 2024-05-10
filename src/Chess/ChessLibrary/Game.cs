@@ -43,21 +43,21 @@ namespace ChessLibrary
             Console.WriteLine(winner.Pseudo + " win");
         }
 
-        public void MovePiece(Case initial, Case final, Chessboard board, User actualPlayer)
+        public void MovePiece(Case initial, Case Final, Chessboard board, User ActualPlayer)
         {
             // Validation de base pour vérifier la pièce initiale
             if (initial.Piece == null)
                 throw new ArgumentNullException(nameof(initial.Piece), "No piece at the initial position.");
 
             // Vérifier si la pièce appartient au joueur actuel
-            if (initial.Piece.Color != actualPlayer.color)
+            if (initial.Piece.Color != ActualPlayer.color)
                 throw new InvalidOperationException("It's not this player's turn.");
 
             // Effectuer le déplacement
-            if (board.MovePiece(initial.Piece, initial, final))
+            if (board.MovePiece(initial.Piece, initial, Final))
             {
-                UpdatePieceLists(initial, final, board);
-                ProcessPostMove(initial, final);
+                UpdatePieceLists(initial, Final, board);
+                ProcessPostMove(initial, Final);
             }
             else
             {

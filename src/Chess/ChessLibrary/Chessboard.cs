@@ -49,14 +49,14 @@ namespace ChessLibrary
         /// </summary>
         private void InitializeEmptyBoard()
         {
-            for (int row = 0; row < 8; row++)
-                // Loop through all rows
+            for (int column = 0; column < 8; column++)
+            // Loop through all rows
             {
-                for (int column = 0; column < 8; column++)
-                    // loop through all columns
+                for (int row = 0; row < 8; row++)
+                // loop through all columns
                 {
                     // initialize the board with empty cases
-                    Board[row, column] = new Case(row, column, null);
+                    Board[column, row] = new Case(column, row, null);
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace ChessLibrary
             // Add the black pieces to the chessboard and to the list of black pieces
             AddPiece(new Rook(Color.Black, identifiantNoir++), 0, 7);
             AddPiece(new Knight(Color.Black, identifiantNoir++), 1, 7);
-            AddPiece(new Bishop(Color.Black, identifiantNoir++),2, 7);
+            AddPiece(new Bishop(Color.Black, identifiantNoir++), 2, 7);
             AddPiece(new Queen(Color.Black, identifiantNoir++), 3, 7);
             AddPiece(new King(Color.Black, identifiantNoir++), 4, 7);
             AddPiece(new Bishop(Color.Black, identifiantNoir++), 5, 7);
@@ -126,10 +126,10 @@ namespace ChessLibrary
         private void FillEmptyCases()
         {
             for (int row = 2; row <= 5; row++)
-                // Loop through all rows
+            // Loop through all rows
             {
                 for (int column = 0; column < 8; column++)
-                    // loop through all columns
+                // loop through all columns
                 {
                     // Fill the empty cases of the chessboard with null pieces
                     Board[column, row] = new Case(column, row, null);
@@ -147,11 +147,11 @@ namespace ChessLibrary
         private void AddPiece(Piece piece, int column, int row)
         {
             // Add the piece to the chessboard
-            Board[row, column] = new Case(row, column, piece);
+            Board[column, row] = new Case(column, row, piece);
             if (piece.Color == Color.White)
-            { 
+            {
                 // Add the piece to the list of white pieces
-                WhitePieces.Add(new CoPieces { CaseLink =new Case(column, row, piece), piece = piece });
+                WhitePieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
             else
             {
@@ -170,7 +170,7 @@ namespace ChessLibrary
         public bool IsMoveValid(List<Case> Lcase, Case Final)
         {
             foreach (var i in Lcase)
-                // Loop through all cases in the list of possible moves
+            // Loop through all cases in the list of possible moves
             {
                 if (i.Column == Final.Column && i.Line == Final.Line)
                 // check if the final case is in the list of possible moves
@@ -246,7 +246,7 @@ namespace ChessLibrary
                     case "1":
                         NewQueen = new Queen(P.Color, P.id);
                         C.Piece = NewQueen;
-                        ModifPawn(P, NewQueen,C);
+                        ModifPawn(P, NewQueen, C);
                         return;
 
                     case "2":
@@ -279,7 +279,7 @@ namespace ChessLibrary
         /// <param name="pi"></param>
         /// <param name="c"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        private void ModifPawn(Pawn P, Piece pi,Case c)
+        private void ModifPawn(Pawn P, Piece pi, Case c)
         {
             if (pi == null)
             {//Check if the new piece is null
@@ -293,8 +293,8 @@ namespace ChessLibrary
             if (pi.Color == Color.White)
             {
                 //Add the new piece to the list of white pieces and remove the Pawn
-                this.WhitePieces.Add(new CoPieces { CaseLink = c , piece = pi});
-                this.WhitePieces.Remove(new CoPieces{CaseLink = c,piece = P});
+                this.WhitePieces.Add(new CoPieces { CaseLink = c, piece = pi });
+                this.WhitePieces.Remove(new CoPieces { CaseLink = c, piece = P });
 
             }
 
@@ -323,46 +323,93 @@ namespace ChessLibrary
         /// <param name="myKing"></param>
         /// <param name="KingCase"></param>
         /// <returns></returns>
-        public bool Echec(King king,Case KingCase)
+        public bool Echec(King king, Case KingCase)
         {
             List<CoPieces> enemyPieces;
-            if (king.Color == Color.White)
-            {
-                //Check if the King is white to get the black pieces as enemy pieces.
-                enemyPieces = BlackPieces;
-            }
-            else
-            {
-                //Check if the King is black to get the white pieces as enemy pieces.
-                enemyPieces = WhitePieces;
-            }
-
+            enemyPieces = (king.Color == Color.White) ? BlackPieces : WhitePieces;
+            // Check if the king is white and take the black list,and if is not white take white list, for check the movement of enemy team.
             foreach (var enemy in enemyPieces)
-                //Loop through all enemy pieces
+            //Loop through all enemy pieces
             {
-                if (MovePiece(enemy.piece,enemy.CaseLink, enemy.CaseLink))
-                    //Check if the enemy piece can move to the King case
+                if (MovePiece(enemy.piece, enemy.CaseLink, KingCase))
+                //Check if the enemy piece can move to the King case
                 {
-                    EchecMat(king.PossibleMoves(KingCase, this));
-                    //Check if the King is in checkmate position.
                     return true;
                 }
             }
             return false;
             // The King is not in check position
         }
-        
+        public Chessboard CopyBoard()
+        {
+            // Création d'une nouvelle grille de cases pour la copie
+            Case[,] newBoard = new Case[8, 8];
+
+            // Copier chaque case dans la nouvelle grille
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    // Assurez-vous de copier également les pièces pour éviter la référence partagée
+                    var originalPiece = Board[i, j].Piece;
+                    Piece copiedPiece = null;
+                    if (originalPiece != null)
+                    {
+                        // Vous pouvez ajouter une méthode de copie dans chaque classe de pièces ou utiliser une méthode de clone ici
+                        copiedPiece = originalPiece.Clone(); 
+                    }
+                    newBoard[i, j] = new Case(i, j, copiedPiece);
+                }
+            }
+
+            // Créer un nouvel échiquier avec le tableau de cases copiées
+            var newChessboard = new Chessboard(newBoard, true);
+            // Copier les listes de pièces
+            newChessboard.WhitePieces = new List<CoPieces>(WhitePieces);
+            newChessboard.BlackPieces = new List<CoPieces>(BlackPieces);
+
+            return newChessboard;
+        }
 
         /// <summary>
         /// Check if the King is in checkmate position.
         /// </summary>
         /// <param name="Lcase"></param>
         /// <returns></returns>
-        public bool EchecMat(List <Case> Lcase)
+        public bool EchecMat(King king, Case KingCase)
         {
-            // To do
-            return false;
+            var possibleKingMoves = king.PossibleMoves(KingCase, this);
+            foreach (var move in possibleKingMoves)
+            {
+                var simulatedBoard = CopyBoard(); 
+                simulatedBoard.MovePiece(king, KingCase, move);
+
+                if (!simulatedBoard.Echec(king, move))
+                    return false; // Le roi a une issue
+            }
+
+            var allyPieces = (king.Color == Color.White) ? WhitePieces : BlackPieces;
+            foreach (var pieceInfo in allyPieces)
+            {
+                var piece = pieceInfo.piece;
+                var startCase = pieceInfo.CaseLink;
+                var possibleMoves = piece.PossibleMoves(startCase, this);
+
+                foreach (var move in possibleMoves)
+                {
+                    var simulatedBoard = CopyBoard();
+                    simulatedBoard.MovePiece(piece, startCase, move);
+
+                    if (!simulatedBoard.Echec(king, KingCase))
+                        return false;
+                }
+            }
+            return true; 
         }
 
     }
 }
+
+
+
+

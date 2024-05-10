@@ -10,16 +10,16 @@ namespace ChessLibrary
 {
     public class Game : IRules
     {
-        public User Player1;
-        public User Player2;
-        public Chessboard Board;
+        public User Player1 { get; set; }
+        public User Player2 { get; set; }
+        public Chessboard Board { get; set; }
         //public event void ImpossibleMove();
         //public event EventHandler<ImpossibleMove> impossible;
         //protected virtual void OnGameStarted()
         //{
         //    impossible?.Invoke(this, EventArgs.Empty);
         //}
-        public Game(User player1, User player2, Chessboard board)
+        public Game(User player1, User player2)
         {
             this.Player1 = player1;
             this.Player2 = player2;
@@ -39,33 +39,63 @@ namespace ChessLibrary
 
         public void GameOver(User winner)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Game Over");
+            Console.WriteLine(winner.Pseudo + " win");
         }
 
-        public void movement(Case initial, Case Final, Chessboard board, User ActualPlayer)
+        public void MovePiece(Case initial, Case final, Chessboard board, User actualPlayer)
         {
-            if(initial.Piece == null)
-                throw new ArgumentNullException(nameof(initial.Piece));
-            if(initial.Piece.Color == ActualPlayer.color)
-                throw new InvalidOperationException("Invalid move for this player");
-            if (board.MovePiece(initial.Piece,initial, Final))
+            // Validation de base pour vérifier la pièce initiale
+            if (initial.Piece == null)
+                throw new ArgumentNullException(nameof(initial.Piece), "No piece at the initial position.");
+
+            // Vérifier si la pièce appartient au joueur actuel
+            if (initial.Piece.Color != actualPlayer.color)
+                throw new InvalidOperationException("It's not this player's turn.");
+
+            // Effectuer le déplacement
+            if (board.MovePiece(initial.Piece, initial, final))
             {
-                if (initial.Piece.Color == Color.White)
-                {
-                    board.WhitePieces.Add(new CoPieces { CaseLink = Final, piece = initial.Piece });
-                    board.WhitePieces.Remove(new CoPieces { CaseLink = initial, piece = initial.Piece });
-                }
-                else
-                {
-                    board.BlackPieces.Add(new CoPieces { CaseLink = Final, piece = initial.Piece });
-                    board.BlackPieces.Remove(new CoPieces { CaseLink = initial, piece = initial.Piece });
-                }
-                Final.Piece = initial.Piece;
-                initial.Piece = null;
+                UpdatePieceLists(initial, final, board);
+                ProcessPostMove(initial, final);
             }
-            else { }
-                // evenement a implementer
+            else
+            {
+                throw new InvalidOperationException("Invalid move, check the rules.");
+            }
         }
+
+        private void UpdatePieceLists(Case initial, Case final, Chessboard board)
+        {
+            // Logique pour mettre à jour les listes des pièces
+            var movedPieceInfo = new CoPieces { CaseLink = initial, piece = initial.Piece };
+            var listToUpdate = initial.Piece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
+
+            listToUpdate.Remove(movedPieceInfo);
+            listToUpdate.Add(new CoPieces { CaseLink = final, piece = initial.Piece });
+
+            if (!final.IsCaseEmpty())
+            {
+                var capturedPieceInfo = new CoPieces { CaseLink = final, piece = final.Piece };
+                var listToRemoveFrom = final.Piece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
+                listToRemoveFrom.Remove(capturedPieceInfo);
+
+                Console.WriteLine($"{final.Piece.Color} {final.Piece.GetType().Name} captured.");
+            }
+        }
+
+        private void ProcessPostMove(Case initial, Case final)
+        {
+            // Marquer les mouvements spéciaux comme le premier mouvement pour les rois, tours et pions
+            if (initial.Piece is IFirstMove.FirstMove firstMover)
+            {
+                firstMover.FirstMove = false;
+            }
+            // Mettre à jour les positions des cases
+            final.Piece = initial.Piece;
+            initial.Piece = null;
+        }
+
 
         public void start()
         {

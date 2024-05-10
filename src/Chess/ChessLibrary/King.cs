@@ -9,11 +9,9 @@ namespace ChessLibrary
     /// <summary>
     /// Class that represents a king piece
     /// </summary>
-    public class King : Piece
+    public class King : Piece , IFirstMove
     {
-        private bool canCastleRight;
-        private bool canCastleLeft;
-
+        public bool FirstMove { get; set; }
         /// <summary>
         /// Constructor of the class
         /// </summary>
@@ -21,7 +19,9 @@ namespace ChessLibrary
         /// <param name="initialCase"></param>
         public King(Color color, int id) : base(color, id)
         {
+            this.FirstMove = true;
         }
+
 
         public override bool canMove(int x, int y, int x2, int y2)
         {

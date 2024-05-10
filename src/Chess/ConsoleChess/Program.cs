@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 using ChessLibrary;
 namespace ConsoleChess
 {
@@ -7,23 +8,74 @@ namespace ConsoleChess
 
         static void Main(string[] args)
         {
+            User player1 = new User("Player 1", Color.White);
+            User player2 = new User("Player 2", Color.Black);
+            Game game = new Game(player1, player2);
+            int player = 1;
+            User actualPlayer = player1;
+            while (true)
+            {
+                if (player % 2 == 0)
+                {
+                    actualPlayer = player2;
+                    Console.WriteLine("Player 2 turn");
+                }
+                else
+                {
+                    actualPlayer = player1;
+                    Console.WriteLine("Player 1 turn");
+                }
+                try
+                {
+                    DisplayBoard(game.Board);
+                    Console.WriteLine("Enter the column of the piece you want to move:");
+                    int column = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter the row of the piece you want to move:");
+                    int row = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter the column of the destination:");
+                    int column2 = int.Parse(Console.ReadLine());
+                    Console.WriteLine("Enter the row of the destination:");
+                    int row2 = int.Parse(Console.ReadLine());
+                    game.MovePiece(game.Board.Board[column, row], game.Board.Board[column2, row2], game.Board, actualPlayer);
+                    DisplayBoard(game.Board);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    player -= 1;
+                }
+                var test = (actualPlayer.color == Color.White) ? game.Board.WhitePieces : game.Board.BlackPieces;
+                foreach (var i in test)
+                {
+                    if (i.piece.GetType().Name == "King")
+                    {
+                        if (game.Board.Echec((King)i.piece, i.CaseLink))
+                        {
+                            break;
+                        }
+                    }
+                }
+                player++;
+            }
+            game.GameOver(actualPlayer);
 
-            //while()
-
-            //DisplayBoard(chessboard);
-            
         }
 
         static void DisplayBoard(Chessboard chessboard)
         {
-            Console.WriteLine("   a   b   c   d   e   f   g   h");
+            Console.WriteLine("   0   1   2   3   4   5   6   7");
             Console.WriteLine(" +---+---+---+---+---+---+---+---+");
-            for (int i = 0; i < 8; i++)
+            for (int column = 0; column < 8; column++)
             {
-                Console.Write((i + 1) + "|");
-                for (int j = 0; j < 8; j++)
+                Console.Write((column ) + "|");
+                for (int row = 0; row < 8; row++)
                 {
-                    Piece piece = chessboard.Board[j, i].Piece;
+                    Piece piece = null;
+                    if (chessboard.Board[row, column] != null)
+                    {
+                        piece = chessboard.Board[row, column].Piece;
+                        // rest of the code
+                    }
                     if (piece != null)
                     {
                         string pieceSymbol = GetPieceSymbol(piece);
@@ -34,10 +86,10 @@ namespace ConsoleChess
                         Console.Write("   |");
                     }
                 }
-                Console.WriteLine((i + 1));
+                Console.WriteLine((column ));
                 Console.WriteLine(" +---+---+---+---+---+---+---+---+");
             }
-            Console.WriteLine("   a   b   c   d   e   f   g   h");
+            Console.WriteLine("   0   1   2   3   4   5   6   7");
         }
 
         static string GetPieceSymbol(Piece piece)
@@ -46,7 +98,7 @@ namespace ConsoleChess
             {
                 case "Pawn": return "P";
                 case "Rook": return "R";
-                case "Knight": return "N";
+                case "Knight": return "C";
                 case "Bishop": return "B";
                 case "Queen": return "Q";
                 case "King": return "K";

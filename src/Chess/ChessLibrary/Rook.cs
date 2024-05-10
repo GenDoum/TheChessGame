@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
+
     /// <summary>
     /// Class that represents a Rook piece
     /// </summary>
-    public class Rook : Piece
+    public class Rook : Piece,IFirstMove
     {
+        public bool FirstMove { get; set; }
         /// <summary>
         /// Constructor of the class
         /// </summary>
@@ -19,6 +21,7 @@ namespace ChessLibrary
         /// <param name="c"></param>
         public Rook(Color color, int id) : base(color, id)
         {
+            this.FirstMove = true;
         }
 
         public override bool canMove(int x, int y, int x2, int y2)

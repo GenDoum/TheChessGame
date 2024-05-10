@@ -19,6 +19,7 @@ namespace ChessLibrary
 
         public int id { get; private set; }
             
+
         
         /// <summary>
         /// Property that represents if the piece has moved
@@ -61,6 +62,14 @@ namespace ChessLibrary
         {
             return false;
         }
-        
+
+
+
+
+        // Méthode de clonage par défaut
+        public virtual Piece Clone()
+        {
+            return (Piece)this.MemberwiseClone(); // Copie superficielle appropriée si aucune référence profonde n'est nécessaire
+        }
     }
 }

@@ -39,27 +39,27 @@ namespace ChessLibrary
         /// <summary>
         /// Password of the Player
         /// </summary>
-        public string Password
-        {
-            get => password;
-            set
-            {
-                if (password == value)
-                {
-                    return;
-                }
+        //public string? Password
+        //{
+        //    get => password;
+        //    set
+        //    {
+        //        if (password == value)
+        //        {
+        //            return;
+        //        }
 
-                password = value;
+        //        password = value;
 
-                if (string.IsNullOrWhiteSpace(Password))
-                {
-                    throw new ArgumentException("Pseudo or password must be entered and must not be full of white space");
-                }
+        //        if (string.IsNullOrWhiteSpace(Password))
+        //        {
+        //            throw new ArgumentException("Pseudo or password must be entered and must not be full of white space");
+        //        }
 
-            }
+        //    }
 
-        }
-        private string password;
+        //}
+        //private string password;
 
         /// <summary>
         /// Type for know the color of the player
@@ -82,7 +82,7 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="pseudo"></param>
         /// <param name="password"></param>
-        public User(string pseudo, string password, Color color)
+        public User(string pseudo, Color color)
         {
             // En gros ici tu vérifiais si 'Pseudo' et 'Password' étaient null ou vide après leur affectation mais dcp les exceptions étaient pas levées avant que les valeurs soient déjà définies.
             // J'ai aussi enlever IsWhite car il était jamais utilisé je crois. Remet si il servais vraiment.
@@ -93,7 +93,7 @@ namespace ChessLibrary
             }
 
             Pseudo = pseudo;
-            Password = password;
+            //Password = password;
             this.color = color;
         }
 
@@ -104,7 +104,7 @@ namespace ChessLibrary
         public User()
         {
             Pseudo = "Invité";
-            Password = null;
+/*            Password = null;*/
         }
 
         /// <summary>
@@ -145,9 +145,8 @@ namespace ChessLibrary
                 key = System.Console.ReadKey(true);
 
             }
-            Console.WriteLine(pass);
-            
-            if ( Equals( this.Password, null) )
+/*            Console.WriteLine(pass);
+        if ( Equals( this.Password, null) )
             {
                 Console.WriteLine("\nInvited player, no need to check password\n");
                 return true;
@@ -162,10 +161,11 @@ namespace ChessLibrary
                 Console.WriteLine($"\nIt seems like you misswrite {Pseudo}, try again");
                 return false;
 
-            }
+            }*/
+return true;
         }
 
-        public bool isPasswd(string password)
+/*        public bool isPasswd(string password)
         {
             if (Password == null)
             {
@@ -179,7 +179,7 @@ namespace ChessLibrary
             }
 
             return false;
-        }
+        }*/
     }
 
 }

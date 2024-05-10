@@ -10,8 +10,9 @@ namespace ChessLibrary
     /// <summary>
     /// Class that represents a pawn piece
     /// </summary>
-    public class Pawn : Piece
+    public class Pawn : Piece, IFirstMove
     {
+        virtual public bool FirstMove { get; set; }
         /// <summary>
         /// Constructor of the class
         /// </summary>
@@ -19,6 +20,7 @@ namespace ChessLibrary
         /// <param name="ca"></param>
         public Pawn(Color c, int id) : base(c, id)
         {
+            this.FirstMove = true;
         }
 
         public override bool canMove(int x, int y, int x2, int y2)
@@ -27,7 +29,7 @@ namespace ChessLibrary
             {
                 throw new InvalidOperationException("Invalid move for Pawn: destination out of bounds.");
             }
-    
+
             int direction = (Color == Color.White) ? 1 : -1;
 
             if (x == x2)
@@ -45,7 +47,7 @@ namespace ChessLibrary
 
             throw new InvalidOperationException("Invalid move for Pawn");
         }
-        
+
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
             if (chessboard == null)
@@ -56,36 +58,68 @@ namespace ChessLibrary
 
             //Check if this is the first movement
 
-
-            if (true/*this.FirstMove()*/) // Need to create fonction first Move Maybe we need to change the constructor of the Pawn.
+            if (this.Color == Color.White)
             {
-                for (int i = 1; i <= 2; i++)
+                if (true/*this.FirstMove()*/) // Need to create fonction first Move Maybe we need to change the constructor of the Pawn.
                 {
-                    int newColumn = caseInitial.Column + i;
+                    for (int i = 1; i <= 2; i++)
+                    {
+                        int newColumn = caseInitial.Column;
+                        int newLine = caseInitial.Line - 1;
+                        Case potentialCase = chessboard.Board[newColumn, newLine];
+                        if (potentialCase.IsCaseEmpty())
+                        {
+                            result.Add(potentialCase);
+                        }
+                        // Need to create a fonction to check if the pawn can eat a other piece top Right or Top Left  
+                        // and we need to check if the left piece if we can do the special movement of the pawn.
+                    }
+                }
+                //Check for the rest.
+                else
+                {
+                    int newColumn = caseInitial.Column - 1;
                     int newLine = caseInitial.Line;
                     Case potentialCase = chessboard.Board[newColumn, newLine];
                     if (potentialCase.IsCaseEmpty())
                     {
                         result.Add(potentialCase);
                     }
-                    // Need to create a fonction to check if the pawn can eat a other piece top Right or Top Left  
-                    // and we need to check if the left piece if we can do the special movement of the pawn.
+                    // Same as last if before .
                 }
             }
-            //Check for the rest.
             else
             {
-                int newColumn = caseInitial.Column + 1;
-                int newLine = caseInitial.Line;
-                Case potentialCase = chessboard.Board[newColumn, newLine];
-                if (potentialCase.IsCaseEmpty())
+                if (true/*this.FirstMove()*/) // Need to create fonction first Move Maybe we need to change the constructor of the Pawn.
                 {
-                    result.Add(potentialCase);
+                    for (int i = 1; i <= 2; i++)
+                    {
+                        int newColumn = caseInitial.Column;
+                        int newLine = caseInitial.Line + 1;
+                        Case potentialCase = chessboard.Board[newColumn, newLine];
+                        if (potentialCase.IsCaseEmpty())
+                        {
+                            result.Add(potentialCase);
+                        }
+                        // Need to create a fonction to check if the pawn can eat a other piece top Right or Top Left  
+                        // and we need to check if the left piece if we can do the special movement of the pawn.
+                    }
                 }
-                // Same as last if before .
+                //Check for the rest.
+                else
+                {
+                    int newColumn = caseInitial.Column + 1;
+                    int newLine = caseInitial.Line;
+                    Case potentialCase = chessboard.Board[newColumn, newLine];
+                    if (potentialCase.IsCaseEmpty())
+                    {
+                        result.Add(potentialCase);
+                    }
+                    // Same as last if before .
+                }
             }
             return result;
         }
-  
+
     }
 }

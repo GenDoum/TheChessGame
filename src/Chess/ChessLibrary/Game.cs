@@ -101,5 +101,6 @@ namespace ChessLibrary
         {
             throw new NotImplementedException();
         }
+
     }
 }

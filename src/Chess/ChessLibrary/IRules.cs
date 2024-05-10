@@ -8,7 +8,7 @@ namespace ChessLibrary
 {
     internal interface IRules
     {
-        void movement(Case initial,Case Final,Chessboard board,User ActualPlayer);
+        void MovePiece(Case initial,Case Final,Chessboard board,User ActualPlayer);
 
         void start();
 

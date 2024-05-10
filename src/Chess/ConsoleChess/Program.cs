@@ -13,7 +13,8 @@ namespace ConsoleChess
             Game game = new Game(player1, player2);
             int player = 1;
             User actualPlayer = player1;
-            while (true)
+            bool IsGameOver = false;
+            while (!IsGameOver)
             {
                 if (player % 2 == 0)
                 {
@@ -51,7 +52,7 @@ namespace ConsoleChess
                     {
                         if (game.Board.Echec((King)i.piece, i.CaseLink))
                         {
-                            break;
+                            IsGameOver = true;
                         }
                     }
                 }
@@ -67,7 +68,7 @@ namespace ConsoleChess
             Console.WriteLine(" +---+---+---+---+---+---+---+---+");
             for (int column = 0; column < 8; column++)
             {
-                Console.Write((column ) + "|");
+                Console.Write((column) + "|");
                 for (int row = 0; row < 8; row++)
                 {
                     Piece piece = null;
@@ -86,7 +87,7 @@ namespace ConsoleChess
                         Console.Write("   |");
                     }
                 }
-                Console.WriteLine((column ));
+                Console.WriteLine((column));
                 Console.WriteLine(" +---+---+---+---+---+---+---+---+");
             }
             Console.WriteLine("   0   1   2   3   4   5   6   7");

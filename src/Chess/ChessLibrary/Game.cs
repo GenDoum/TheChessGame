@@ -95,12 +95,5 @@ namespace ChessLibrary
             final.Piece = initial.Piece;
             initial.Piece = null;
         }
-
-
-        public void start()
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }

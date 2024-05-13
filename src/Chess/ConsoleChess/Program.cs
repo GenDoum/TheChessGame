@@ -80,7 +80,19 @@ namespace ConsoleChess
                     if (piece != null)
                     {
                         string pieceSymbol = GetPieceSymbol(piece);
-                        Console.Write(" " + pieceSymbol + " |");
+                        Console.Write(" ");
+                        if (piece.Color != Color.White)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                            Console.Write(pieceSymbol);
+                            Console.ResetColor();
+                            Console.Write(" |");
+
+                        }
+                        else
+                        {
+                            Console.Write(pieceSymbol + " |");
+                        }
                     }
                     else
                     {

@@ -54,13 +54,13 @@ namespace ChessLibrary
                 {
                     Case potentialCase = chessboard.Board[newColumn, newLine];
 
-                    if (potentialCase.IsCaseEmpty() || chessboard.Echec(this, potentialCase))
+                    if (potentialCase.IsCaseEmpty() && chessboard.Echec(this, potentialCase))
                     {
                         result.Add(potentialCase);
                     }
                     else
                     {
-                        if (potentialCase.Piece.Color != this.Color || chessboard.Echec(this, potentialCase))
+                        if (potentialCase.Piece.Color != this.Color && chessboard.Echec(this, potentialCase) )
                         {
                             result.Add(potentialCase);
                         }

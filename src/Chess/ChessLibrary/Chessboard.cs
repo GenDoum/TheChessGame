@@ -340,6 +340,7 @@ namespace ChessLibrary
             return false;
             // The King is not in check position
         }
+
         public Chessboard CopyBoard()
         {
             // Création d'une nouvelle grille de cases pour la copie

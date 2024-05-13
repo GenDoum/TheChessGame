@@ -184,8 +184,12 @@ public class UnitTestBoard
         Assert.True(result);
     }
 
-    [Fact]
-    public void TestEvolve()
+    [Theory]
+    [InlineData("1", typeof(Queen))]
+    [InlineData("2", typeof(Rook))]
+    [InlineData("3", typeof(Bishop))]
+    [InlineData("4", typeof(Knight))]
+    public void TestEvolve(string userInput, Type expectedType)
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
@@ -193,14 +197,14 @@ public class UnitTestBoard
         Case caseForPawn = new Case(0, 7, pawn);
 
         // Act
-        using (StringReader sr = new StringReader("1\n"))
+        using (StringReader sr = new StringReader($"{userInput}\n"))
         {
             Console.SetIn(sr);
             chessboard.Evolve(pawn, caseForPawn);
         }
 
         // Assert
-        Assert.IsType<Queen>(caseForPawn.Piece);
+        Assert.IsType(expectedType, caseForPawn.Piece);
     }
     
     [Fact]

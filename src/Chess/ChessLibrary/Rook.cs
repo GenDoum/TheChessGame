@@ -11,7 +11,7 @@ namespace ChessLibrary
     /// <summary>
     /// Class that represents a Rook piece
     /// </summary>
-    public class Rook : Piece,IFirstMove
+    public class Rook : Piece, IFirstMove.FirstMove
     {
         public bool FirstMove { get; set; }
         /// <summary>

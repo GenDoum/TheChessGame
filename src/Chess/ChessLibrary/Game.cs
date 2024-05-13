@@ -66,8 +66,7 @@ namespace ChessLibrary
         }
 
         private void UpdatePieceLists(Case initial, Case final, Chessboard board)
-        {
-            // Logique pour mettre à jour les listes des pièces
+        { 
             var movedPieceInfo = new CoPieces { CaseLink = initial, piece = initial.Piece };
             var listToUpdate = initial.Piece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
 

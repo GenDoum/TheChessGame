@@ -37,7 +37,7 @@ namespace ConsoleChess
                     int column2 = int.Parse(Console.ReadLine());
                     Console.WriteLine("Enter the row of the destination:");
                     int row2 = int.Parse(Console.ReadLine());
-                    game.MovePiece(game.Board.Board[column, row], game.Board.Board[column2, row2], game.Board, actualPlayer);
+                   game.MovePiece(game.Board.Board[column, row], game.Board.Board[column2, row2], game.Board, actualPlayer);
                     DisplayBoard(game.Board);
                 }
                 catch (Exception e)

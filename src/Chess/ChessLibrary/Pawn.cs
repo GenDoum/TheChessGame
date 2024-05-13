@@ -10,7 +10,7 @@ namespace ChessLibrary
     /// <summary>
     /// Class that represents a pawn piece
     /// </summary>
-    public class Pawn : Piece, IFirstMove
+    public class Pawn : Piece, IFirstMove.FirstMove
     {
         virtual public bool FirstMove { get; set; }
         /// <summary>
@@ -56,66 +56,39 @@ namespace ChessLibrary
             }
             List<Case> result = new List<Case>();
 
-            //Check if this is the first movement
+            int direction = this.Color == Color.White ? 1 : -1; // Blanc vers le haut (-1), Noir vers le bas (+1)
 
-            if (this.Color == Color.White)
+            // Mouvements normaux (1 ou 2 cases)
+            for (int i = 1; i <= (FirstMove ? 2 : 1); i++)
             {
-                if (true/*this.FirstMove()*/) // Need to create fonction first Move Maybe we need to change the constructor of the Pawn.
+                int newLine = caseInitial.Line + direction * i;
+                int newColumn = caseInitial.Column;
+                if (newLine >= 0 && newLine < chessboard.Board.GetLength(0))
                 {
-                    for (int i = 1; i <= 2; i++)
-                    {
-                        int newColumn = caseInitial.Column;
-                        int newLine = caseInitial.Line - 1;
-                        Case potentialCase = chessboard.Board[newColumn, newLine];
-                        if (potentialCase.IsCaseEmpty())
-                        {
-                            result.Add(potentialCase);
-                        }
-                        // Need to create a fonction to check if the pawn can eat a other piece top Right or Top Left  
-                        // and we need to check if the left piece if we can do the special movement of the pawn.
-                    }
-                }
-                //Check for the rest.
-                else
-                {
-                    int newColumn = caseInitial.Column - 1;
-                    int newLine = caseInitial.Line;
                     Case potentialCase = chessboard.Board[newColumn, newLine];
                     if (potentialCase.IsCaseEmpty())
                     {
                         result.Add(potentialCase);
                     }
-                    // Same as last if before .
+                    else
+                    {
+                        break; // Blocage par une pièce, stopper ici
+                    }
                 }
             }
-            else
+
+            // Capture diagonale (gauche et droite)
+            int[] captureColumns = new int[] { caseInitial.Column - 1, caseInitial.Column + 1 };
+            foreach (int col in captureColumns)
             {
-                if (true/*this.FirstMove()*/) // Need to create fonction first Move Maybe we need to change the constructor of the Pawn.
+                if (col >= 0 && col < chessboard.Board.GetLength(1))
                 {
-                    for (int i = 1; i <= 2; i++)
-                    {
-                        int newColumn = caseInitial.Column;
-                        int newLine = caseInitial.Line + 1;
-                        Case potentialCase = chessboard.Board[newColumn, newLine];
-                        if (potentialCase.IsCaseEmpty())
-                        {
-                            result.Add(potentialCase);
-                        }
-                        // Need to create a fonction to check if the pawn can eat a other piece top Right or Top Left  
-                        // and we need to check if the left piece if we can do the special movement of the pawn.
-                    }
-                }
-                //Check for the rest.
-                else
-                {
-                    int newColumn = caseInitial.Column + 1;
-                    int newLine = caseInitial.Line;
-                    Case potentialCase = chessboard.Board[newColumn, newLine];
-                    if (potentialCase.IsCaseEmpty())
+                    int newLine = caseInitial.Line + direction;
+                    Case potentialCase = chessboard.Board[col, newLine];
+                    if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
                     {
                         result.Add(potentialCase);
                     }
-                    // Same as last if before .
                 }
             }
             return result;

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="Gantt_Prévisionnel_IHM" company="" webLink="http://" view-date="2024-04-08" view-index="0" gantt-divider-location="492" resource-divider-location="300" version="3.3.3307" locale="fr_FR">
+    <description/>
+    <view zooming-state="default:3" id="gantt-chart">
+        <field id="tpd3" name="Nom" width="305" order="0"/>
+        <field id="tpd4" name="Date de début" width="85" order="1"/>
+        <field id="tpd5" name="Date de fin" width="86" order="2"/>
+        <field id="tpd15" name="Notes" width="20" order="3"/>
+        <option id="filter.completedTasks" value="false"/>
+        <option id="filter.dueTodayTasks" value="false"/>
+        <option id="filter.overdueTasks" value="false"/>
+        <option id="filter.inProgressTodayTasks" value="false"/>
+        <option id="color.recent"><![CDATA[#ffff99 #ccffcc #ff9999 #000000 #f4f4f4 #3333ff #ff0000 #ff3333]]></option>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Nom" width="191" order="0"/>
+        <field id="1" name="Rôle par défaut" width="90" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <default-week id="1" name="default" sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+            <only-show-weekends value="false"/>
+            <overriden-day-types/>
+            <days/>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+        </taskproperties>
+        <task id="1" uid="e54ac4425c3248a1a469e66b9f4742aa" name="Jalon 1 : Conception préliminaire" meeting="false" start="2024-03-18" duration="10" complete="0" expand="true">
+            <task id="7" uid="0c131ded9fa5450bb60395de35f7b0f4" name="Contexte" color="#ffff99" meeting="false" start="2024-03-18" duration="1" complete="0" expand="true">
+                <depend id="5" type="2" difference="0" hardness="Strong"/>
+                <depend id="6" type="2" difference="0" hardness="Strong"/>
+                <depend id="11" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="11" uid="e3bae5d5f2634a16b3d17afa34066eff" name="Règle du jeu" color="#ccffcc" meeting="false" start="2024-03-19" duration="1" complete="0" expand="true">
+                <depend id="12" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="12" uid="d78228ad07544db585c69fee5daccb4e" name="Diagramme des cas d'utilisation" color="#ccffcc" meeting="false" start="2024-03-20" duration="3" complete="0" expand="true"/>
+            <task id="5" uid="7e3b89623eaa4c1e9711b5f1d980fd96" name="Personna" color="#ff9999" meeting="false" start="2024-03-19" duration="2" complete="0" expand="true">
+                <depend id="10" type="2" difference="0" hardness="Strong"/>
+                <depend id="11" type="1" difference="0" hardness="Strong"/>
+            </task>
+            <task id="10" uid="77496ab8e05a4a18a1bfec755245d39a" name="User stories" color="#ff9999" meeting="false" start="2024-03-21" duration="1" complete="0" expand="true"/>
+            <task id="6" uid="c87c0e70c0ae43d4b241801370328c99" name="Maquettes" meeting="false" start="2024-03-19" duration="4" complete="0" expand="true">
+                <depend id="4" type="2" difference="0" hardness="Strong"/>
+                <depend id="11" type="1" difference="0" hardness="Strong"/>
+            </task>
+            <task id="4" uid="231658268e9e49d2a62ecdd6697a9431" name="Storyboard" color="#8cb6ce" meeting="false" start="2024-03-25" duration="1" complete="0" expand="true">
+                <depend id="9" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="9" uid="be42e619567e4b11a7e086f49088f99c" name="Création illustrations wiki" color="#ffff99" meeting="false" start="2024-03-26" duration="1" complete="0" expand="true">
+                <depend id="0" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="0" uid="8efb7f5ff6744fdcba04dc6a424bde1e" name="Création wiki" color="#ffff99" meeting="false" start="2024-03-27" duration="3" complete="0" expand="true">
+                <depend id="2" type="2" difference="0" hardness="Strong"/>
+                <depend id="15" type="2" difference="0" hardness="Strong"/>
+            </task>
+        </task>
+        <task id="2" uid="8054d91b544a4282846477305bf6879d" name="Création des visuels de l'application" color="#000000" meeting="false" start="2024-04-01" duration="5" complete="0" expand="true">
+            <task id="15" uid="2027e4b57a5548d3b26a1e3bc2f81881" name="Vue Connexion" color="#ccffcc" meeting="false" start="2024-04-01" duration="5" complete="0" expand="true">
+                <depend id="24" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="17" uid="d13cc8763bbe4673b77780f0c95fd436" name="Vue Plateau de jeu" color="#ccffcc" meeting="false" start="2024-04-01" duration="3" complete="0" expand="true">
+                <depend id="15" type="1" difference="0" hardness="Strong"/>
+                <depend id="24" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="18" uid="414ebfc4aed8414f9f1b84e7ff49aaad" name="Vue Pause" color="#ccffcc" meeting="false" start="2024-04-01" duration="2" complete="0" expand="true">
+                <depend id="15" type="1" difference="0" hardness="Strong"/>
+                <depend id="20" type="2" difference="0" hardness="Strong"/>
+                <depend id="21" type="2" difference="0" hardness="Strong"/>
+                <depend id="24" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="13" uid="ab134c0e0c8444609f3c4c1502cb1f65" name="Vue Inscription" color="#ff9999" meeting="false" start="2024-04-01" duration="5" complete="0" expand="true">
+                <depend id="15" type="1" difference="0" hardness="Strong"/>
+                <depend id="23" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="16" uid="e2c194fb664d442f9b344ed5cab1dd8a" name="Vue règle du jeu" color="#ff9999" meeting="false" start="2024-04-01" duration="5" complete="0" expand="true">
+                <depend id="15" type="1" difference="0" hardness="Strong"/>
+                <depend id="20" type="2" difference="0" hardness="Strong"/>
+                <depend id="21" type="2" difference="0" hardness="Strong"/>
+                <depend id="23" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="14" uid="930050f376a94d01a0d1e89958db9917" name="Vue Accueil" color="#8cb6ce" meeting="false" start="2024-04-01" duration="5" complete="0" expand="true">
+                <depend id="15" type="1" difference="0" hardness="Strong"/>
+                <depend id="22" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="19" uid="6d956d83fb9c439a8c6c5b027a8b465c" name="Vue Tableau des scores" color="#8cb6ce" meeting="false" start="2024-04-01" duration="5" complete="0" expand="true">
+                <depend id="15" type="1" difference="0" hardness="Strong"/>
+                <depend id="20" type="2" difference="0" hardness="Strong"/>
+                <depend id="21" type="2" difference="0" hardness="Strong"/>
+                <depend id="22" type="2" difference="0" hardness="Strong"/>
+            </task>
+        </task>
+        <task id="20" uid="6ea453a361914b8387bc9a911773b80a" name="Jalon 2 : Conception + Application console" meeting="false" start="2024-04-08" duration="30" complete="0" expand="true">
+            <task id="21" uid="8b2693517e1b43cb9629b25939f2a248" name="Création des classes" meeting="false" start="2024-04-08" duration="10" complete="0" expand="true">
+                <task id="24" uid="dcd12cae7ea94bb2b6d8bea1672365a1" name="Création des classes pièces" color="#ccffcc" meeting="false" start="2024-04-08" duration="7" complete="0" expand="false">
+                    <depend id="41" type="2" difference="0" hardness="Strong"/>
+                    <task id="40" uid="179a0c6b193640dcb36dcf63f289db9f" name="Création classe Pièce" color="#ccffcc" meeting="false" start="2024-04-08" duration="1" complete="0" expand="true">
+                        <depend id="34" type="2" difference="0" hardness="Strong"/>
+                    </task>
+                    <task id="34" uid="60e238f73cc44c3397fa4bc533ecf691" name="Création classe Roi" color="#ccffcc" meeting="false" start="2024-04-09" duration="1" complete="0" expand="true">
+                        <depend id="35" type="2" difference="0" hardness="Strong"/>
+                    </task>
+                    <task id="35" uid="04a05764cfa74b98adcc8cd059c1519f" name="Création classe Reine" color="#ccffcc" meeting="false" start="2024-04-10" duration="1" complete="0" expand="true">
+                        <depend id="36" type="2" difference="0" hardness="Strong"/>
+                    </task>
+                    <task id="36" uid="ccc2f39700584de58ffb4f522732f709" name="Création classe Pion" color="#ccffcc" meeting="false" start="2024-04-11" duration="1" complete="0" expand="true">
+                        <depend id="37" type="2" difference="0" hardness="Strong"/>
+                    </task>
+                    <task id="37" uid="00c7ef5b73654cb0ab991c71e24d0bd3" name="Création classe Fou" color="#ccffcc" meeting="false" start="2024-04-12" duration="1" complete="0" expand="true">
+                        <depend id="38" type="2" difference="0" hardness="Strong"/>
+                    </task>
+                    <task id="38" uid="8987b8b2ef104b3a89c808c8d943fbe5" name="Création classe Tour" color="#ccffcc" meeting="false" start="2024-04-15" duration="1" complete="0" expand="true">
+                        <depend id="39" type="2" difference="0" hardness="Strong"/>
+                    </task>
+                    <task id="39" uid="5e26e5fdaec442d3b6a2d779d682bd19" name="Crréation classe Cavalier" color="#ccffcc" meeting="false" start="2024-04-16" duration="1" complete="0" expand="true">
+                        <depend id="41" type="2" difference="0" hardness="Strong"/>
+                    </task>
+                </task>
+                <task id="41" uid="8954ce41e54c40b4b4dd0e41d180381c" name="Création méthode de pièces" color="#ccffcc" meeting="false" start="2024-04-17" duration="3" complete="0" expand="true">
+                    <depend id="44" type="2" difference="5" hardness="Strong"/>
+                </task>
+                <task id="23" uid="5b1b4fdcad134a5bb4513440e634c878" name="Création classe Plateau de jeu" color="#ff9999" meeting="false" start="2024-04-08" duration="8" complete="0" expand="true">
+                    <depend id="42" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="42" uid="9a668efe3f86443aa4dd2d2066f58045" name="Création des méthodes Jeu et plateau de jeu" color="#ff9999" meeting="false" start="2024-04-18" duration="2" complete="0" expand="true">
+                    <depend id="44" type="2" difference="5" hardness="Strong"/>
+                </task>
+                <task id="22" uid="3992da50740c4f0a81074ba41a86ac90" name="Création classe Joueur" meeting="false" start="2024-04-08" duration="8" complete="0" expand="true">
+                    <depend id="43" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="43" uid="b73f1271198e46ec8b4a346f70478978" name="Création méthodes du Joueur" meeting="false" start="2024-04-18" duration="2" complete="0" expand="true">
+                    <depend id="44" type="2" difference="5" hardness="Strong"/>
+                </task>
+            </task>
+            <task id="44" uid="df6297bb2ed140878d7396f94093caa6" name="Création de l'application console" color="#ffff99" meeting="false" start="2024-04-29" duration="10" complete="0" expand="true"/>
+            <task id="26" uid="345aad54324046cea2d27bd3782a184d" name="Conception" meeting="false" start="2024-05-13" duration="5" complete="0" expand="true">
+                <task id="29" uid="3b10e0d010cc4dd382dcb8f7853c8713" name="Diagramme de classes" color="#ccffcc" meeting="false" start="2024-05-13" duration="4" complete="0" expand="true">
+                    <depend id="27" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="27" uid="3627ab50e58843b88f639c0e621d926a" name="Diagramme de paquetage" color="#ccffcc" meeting="false" start="2024-05-17" duration="1" complete="0" expand="true"/>
+                <task id="28" uid="ff310901e54f4137b310c47f09408f85" name="Diagramme de séquence" color="#ffff99" meeting="false" start="2024-05-14" duration="2" complete="0" expand="true"/>
+                <task id="30" uid="f611d26dfe514c25a73845f527e538f8" name="Description de l'architecture" color="#8cb6ce" meeting="false" start="2024-05-13" duration="3" complete="0" expand="true"/>
+            </task>
+        </task>
+    </tasks>
+    <resources>
+        <resource id="0" name="Mathéo Balko" function="Default:0" contacts="" phone="">
+            <rate name="standard" value="11.65"/>
+        </resource>
+        <resource id="1" name="Mathéo Hersan" function="Default:0" contacts="" phone="">
+            <rate name="standard" value="11.65"/>
+        </resource>
+        <resource id="2" name="Yannis Doumir Fernandes" function="Default:0" contacts="" phone="">
+            <rate name="standard" value="11.65"/>
+        </resource>
+    </resources>
+    <allocations>
+        <allocation task-id="7" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="10" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="0" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="2" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="5" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="16" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="23" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="29" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="27" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="28" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="30" resource-id="0" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="13" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="0" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="2" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="7" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="11" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="17" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="24" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="29" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="27" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="28" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="30" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="15" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="18" resource-id="1" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="9" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="0" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="2" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="4" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="6" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="7" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="19" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="22" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+        <allocation task-id="29" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="27" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="28" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="30" resource-id="2" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="14" resource-id="2" function="Default:0" responsible="true" load="100.0"/>
+    </allocations>
+    <vacations/>
+    <previous/>
+    <roles roleset-name="Default"/>
+</project>

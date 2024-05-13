@@ -31,13 +31,13 @@ namespace ConsoleChess
                     DisplayBoard(game.Board);
                     Console.WriteLine("Enter the column of the piece you want to move:");
                     int column = int.Parse(Console.ReadLine());
-                    Console.WriteLine("Enter the row of the piece you want to move:");
+                        Console.WriteLine("Enter the row of the piece you want to move:");
                     int row = int.Parse(Console.ReadLine());
                     Console.WriteLine("Enter the column of the destination:");
                     int column2 = int.Parse(Console.ReadLine());
                     Console.WriteLine("Enter the row of the destination:");
                     int row2 = int.Parse(Console.ReadLine());
-                   game.MovePiece(game.Board.Board[column, row], game.Board.Board[column2, row2], game.Board, actualPlayer);
+                    game.MovePiece(game.Board.Board[column, row], game.Board.Board[column2, row2], game.Board, actualPlayer);
                     DisplayBoard(game.Board);
                 }
                 catch (Exception e)

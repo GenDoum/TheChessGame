@@ -11,22 +11,10 @@ namespace ChessLibrary
 {
     public class Game : IRules
     {
-/*        public event void endGame();
-        public event endGame OnEndGame;
-        private void DisplayEndGame()
-        {
-            endgame?.Invoke(this, EventArgs.Empty);
-        }*/
-
         public User Player1 { get; set; }
         public User Player2 { get; set; }
         public Chessboard Board { get; set; }
-        //public event void ImpossibleMove();
-        //public event EventHandler<ImpossibleMove> impossible;
-        //protected virtual void OnGameStarted()
-        //{
-        //    impossible?.Invoke(this, EventArgs.Empty);
-        //}
+
         public Game(User player1, User player2)
         {
             
@@ -51,12 +39,9 @@ namespace ChessLibrary
             var pieces = (actualPlayer.color == Color.White) ? game.Board.BlackPieces : game.Board.WhitePieces;
             foreach (var pieceInfo in pieces)
             {
-                if (pieceInfo.piece is King king)
+                if (pieceInfo.piece is King king && game.Board.Echec(king, pieceInfo.CaseLink))
                 {
-                    if (game.Board.Echec(king, pieceInfo.CaseLink))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;
@@ -67,12 +52,9 @@ namespace ChessLibrary
             var pieces = (game.Player1.color == Color.White) ? game.Board.BlackPieces : game.Board.WhitePieces;
             foreach (var pieceInfo in pieces)
             {
-                if (pieceInfo.piece is King king)
+                if (pieceInfo.piece is King king && game.Board.EchecMat(king, pieceInfo.CaseLink))
                 {
-                    if (game.Board.EchecMat(king, pieceInfo.CaseLink))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;
@@ -81,16 +63,14 @@ namespace ChessLibrary
 
         public void GameOver(User winner)
         {
-           /* OnEndGame?.Invoke();
-            OnEndGame();*/
             Console.WriteLine($"Game Over! {winner.Pseudo} wins!");
         }
 
         public void MovePiece(Case initial, Case Final, Chessboard board, User ActualPlayer)
         {
             // Validation de base pour vérifier la pièce initiale
-            if (initial.Piece == null)
-                throw new ArgumentNullException(nameof(initial.Piece), "No piece at the initial position.");
+            if (initial?.Piece == null)
+                throw new ArgumentNullException(nameof(initial), "No piece at the initial position.");
 
             // Vérifier si la pièce appartient au joueur actuel
             if (initial.Piece.Color != ActualPlayer.color)

@@ -1,3 +1,4 @@
+using ChessLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
-  /*  / <summary>
-    / Classe Player
-    / </summary>*/
+    /// <summary>
+    /// Classe Player
+    /// </summary>
     public class User
     {
-        
-/*        / <summary>
-        / Pseudo of the Player
-        / </summary>*/
+
+        /// <summary>
+        /// Pseudo of the Player
+        /// </summary>
         public string Pseudo
         {
             get => pseudo;
@@ -39,7 +40,7 @@ namespace ChessLibrary
         /// <summary>
         /// Password of the Player
         /// </summary>
-        public string? Password
+        public string Password
         {
             get => password;
             set
@@ -59,6 +60,10 @@ namespace ChessLibrary
             }
 
         }
+
+        /// <summary>
+        /// Private password of the user
+        /// </summary>
         private string password;
 
         /// <summary>
@@ -66,6 +71,9 @@ namespace ChessLibrary
         /// </summary>
         public Color color;
 
+        /// <summary>
+        /// Score of the player
+        /// </summary>
         public int Score
         {
             get => score;
@@ -74,19 +82,48 @@ namespace ChessLibrary
                 score = value;
             }
         }
-
+        /// <summary>
+        /// Private score of the player
+        /// </summary>
         private int score;
+
+        /// <summary>
+        /// Public boolean to know if the User is connected
+        /// </summary>
+        public bool IsConnected
+        {
+            get;
+            set;
+        }
+        /// <summary>
+        /// Private boolean of the player
+        /// </summary>
+        private bool isConnected;
+
+        /// <summary>
+        /// Public list of pieces of the player
+        /// </summary>
+        public List<Piece> Pieces
+        {
+            get => pieces;
+            set
+            {
+                pieces = value;
+            }
+        }
+        /// <summary>
+        /// Private list of pieces of the player
+        /// </summary>
+        private List<Piece> pieces;
+
 
         /// <summary>
         /// Constructor of Player with parameters
         /// </summary>
         /// <param name="pseudo"></param>
         /// <param name="password"></param>
-        public User(string pseudo, Color color)
+        public User(string pseudo, string password, Color color, bool connected, List<Piece> listPieces, int playerScore)
         {
-           // En gros ici tu vérifiais si 'Pseudo' et 'Password' étaient null ou vide après leur affectation mais dcp les exceptions étaient pas levées avant que les valeurs soient déjà définies.
-           // J'ai aussi enlever IsWhite car il était jamais utilisé je crois. Remet si il servais vraiment.
-           // Et dcp la le constructeur vérifie d'abord si pseudo sont vide ou null avant de les affecter a la propriété Pseudo.
             if (string.IsNullOrWhiteSpace(pseudo))
             {
                 throw new ArgumentException("Pseudo or password must be entered and must not be full of white space");
@@ -95,6 +132,10 @@ namespace ChessLibrary
             Pseudo = pseudo;
             Password = password;
             this.color = color;
+            Score = playerScore;
+            IsConnected = connected;
+            Pieces = listPieces;
+
         }
 
         /// <summary>
@@ -104,7 +145,7 @@ namespace ChessLibrary
         public User()
         {
             Pseudo = "Invité";
-            /*            Password = null;*/
+            Password = null;
         }
 
         /// <summary>
@@ -117,7 +158,7 @@ namespace ChessLibrary
             Console.WriteLine($"Hello {Pseudo}, Enter your password please");
 
             ConsoleKeyInfo key;
-            string pass = string.Empty;
+            string pass = "";
             key = System.Console.ReadKey(true);
 
             while (key.Key != ConsoleKey.Enter)
@@ -145,7 +186,7 @@ namespace ChessLibrary
                 key = System.Console.ReadKey(true);
 
             }
-            Console.WriteLine(pass);
+
             if (Equals(this.Password, null))
             {
                 Console.WriteLine("\nInvited player, no need to check password\n");
@@ -158,18 +199,22 @@ namespace ChessLibrary
             }
             else
             {
-                Console.WriteLine($"\nIt seems like you misswrite {Pseudo}, try again");
+                Console.WriteLine($"\nIl semblerait que tu te soit trompé {Pseudo}, essaie à nouveau");
                 return false;
 
             }
-            return true;
         }
 
+        /// <summary>
+        /// Player's method for check the password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public bool isPasswd(string password)
         {
             if (Password == null)
             {
-                Console.WriteLine("Invited player, no need to check password\n");
+                Console.WriteLine("Joeur invité, pas besoin de mot de passe\n");
                 return true;
             }
 

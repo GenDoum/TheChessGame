@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Numerics;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,13 @@ namespace ChessLibrary
 {
     public class Game : IRules
     {
+/*        public event void endGame();
+        public event endGame OnEndGame;
+        private void DisplayEndGame()
+        {
+            endgame?.Invoke(this, EventArgs.Empty);
+        }*/
+
         public User Player1 { get; set; }
         public User Player2 { get; set; }
         public Chessboard Board { get; set; }
@@ -21,6 +29,7 @@ namespace ChessLibrary
         //}
         public Game(User player1, User player2)
         {
+            
             this.Player1 = player1;
             this.Player2 = player2;
             Case[,] allcase = new Case[8, 8];
@@ -72,8 +81,9 @@ namespace ChessLibrary
 
         public void GameOver(User winner)
         {
-            Console.WriteLine("Game Over");
-            Console.WriteLine(winner.Pseudo + " win");
+           /* OnEndGame?.Invoke();
+            OnEndGame();*/
+            Console.WriteLine($"Game Over! {winner.Pseudo} wins!");
         }
 
         public void MovePiece(Case initial, Case Final, Chessboard board, User ActualPlayer)
@@ -130,9 +140,7 @@ namespace ChessLibrary
 
         public void checkEvolved()
         {
-            if (this.Board.PawnCanEvolve())
-            { 
-            }
+        this.Board.PawnCanEvolve();
         }
     }
 }

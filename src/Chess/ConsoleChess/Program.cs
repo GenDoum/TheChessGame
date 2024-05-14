@@ -7,9 +7,11 @@ namespace ConsoleChess
     {
         static void Main()
         {
+            
             User player1 = new User("Player 1", Color.White);
             User player2 = new User("Player 2", Color.Black);
             Game game = new Game(player1, player2);
+            game.Board.SetupEvolveEventHandler();
             int player = 1;
             bool isGameOver = false;
             DisplayBoard(game.Board);
@@ -36,6 +38,7 @@ namespace ConsoleChess
                 {
                     isGameOver = game.CheckGameOver(game);
                 }
+                game.checkEvolved();
                 player++;
             }
 

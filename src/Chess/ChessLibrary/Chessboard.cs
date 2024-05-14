@@ -7,12 +7,24 @@ using System.Threading.Tasks;
 namespace ChessLibrary
 {
 
-    public delegate void EvolveHandler(out string result);
-
-    public event EvolveHandler OnEvolve;
 
     public class Chessboard : IBoard
     {
+        public delegate void EvolveHandler(out string result);
+        public event EvolveHandler OnEvolve;
+        public void SetupEvolveEventHandler()
+        {
+            OnEvolve += DisplayEvolveOptions;
+        }
+
+        private void DisplayEvolveOptions(out string result)
+        {
+            Console.WriteLine("Entrez 1 pour changer votre pion en Reine");
+            Console.WriteLine("Entrez 2 pour changer votre pion en Tour");
+            Console.WriteLine("Entrez 3 pour changer votre pion en Fou");
+            Console.WriteLine("Entrez 4 pour changer votre pion en Chavalier");
+            result = Console.ReadLine();
+        }
 
         public Case[,] Board { get; private set; }
         public List<CoPieces>? WhitePieces { get; private set; }
@@ -229,12 +241,15 @@ namespace ChessLibrary
         /// <param name="C"></param>
         public void Evolve(Pawn P, Case C)
         {
+            string result = string.Empty;
+            // Déclencher l'événement pour obtenir l'entrée de l'utilisateur
+            OnEvolve?.Invoke(out result);
+
             Queen NewQueen;
             Rook NewRook;
             Knight NewKnight;
             Bishop NewBishop;
-            afficheEvolved();
-            var result = Console.ReadLine();
+
             while (true)
             {
                 switch (result)
@@ -261,12 +276,12 @@ namespace ChessLibrary
                         ModifPawn(P, NewKnight, C);
                         return;
                     default:
-                        afficheEvolved();
-                        result = Console.ReadLine();
+                        OnEvolve?.Invoke(out result);
                         break;
                 }
             }
         }
+
 
         /// <summary>
         /// Modify the list of pieces when a Pawn is evolved,add the new piece and remove the Pawn.
@@ -301,14 +316,6 @@ namespace ChessLibrary
                 this.BlackPieces.Remove(new CoPieces { CaseLink = c, piece = P });
             }
 
-        }
-
-        private void afficheEvolved()
-        {
-            Console.WriteLine("Entrez 1 pour changer votre pion en Renne");
-            Console.WriteLine("Entrez 2 pour changer votre pion en Tour");
-            Console.WriteLine("Entrez 3 pour changer votre pion en Fou");
-            Console.WriteLine("Entrez 4 pour changer votre pion en Chavalier");
         }
 
 

@@ -283,11 +283,11 @@ namespace ChessLibrary
         {
             if (pi == null)
             {//Check if the new piece is null
-                throw new ArgumentNullException(nameof(Pawn));
+                throw new ArgumentNullException(nameof(P));
             }
             if (P == null)
             {//Check if the Pawn is null
-                throw new ArgumentNullException(nameof(Pawn));
+                throw new ArgumentNullException(nameof(P));
             }
 
             if (pi.Color == Color.White)

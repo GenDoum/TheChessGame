@@ -95,7 +95,7 @@ public class UnitTestUser
 
         Assert.Null(connected);
     }
-    /*
+
     [Theory]
     [MemberData(nameof(TestData.Test_UserMethodIsConnected), MemberType = typeof(TestData))]
     public void TestGoodReturnMethodIsPassword(string password)
@@ -114,5 +114,4 @@ public class UnitTestUser
             Assert.False(result);
         }
     }
-    */
 }

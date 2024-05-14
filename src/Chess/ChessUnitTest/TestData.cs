@@ -279,13 +279,13 @@ public class TestData
         yield return new object[] { "pseudo", "password", ChessLibrary.Color.Black, false, ""};
         yield return new object[] { "pseudo", "password", ChessLibrary.Color.Black, false, ""};
     }
-    /*
+
     public static IEnumerable<object[]> Test_UserMethodIsConnected()
     {
         yield return new object[] { "validPassword" };
         yield return new object[] { "....." };
         yield return new object[] { null };
     }
-    */
+
 
 }

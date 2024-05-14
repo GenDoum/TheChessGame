@@ -94,6 +94,29 @@ namespace ChessLibrary
             pseudo = "Invité";
             Password = null;
         }
+
+        
+
+        /// <summary>
+        /// Player's method for check the password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public bool isPasswd(string password)
+        {
+            if (Password == null)
+            {
+                Console.WriteLine("Joeur invité, pas besoin de mot de passe\n");
+                return true;
+            }
+
+            if (password.Equals(Password))
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 
 }

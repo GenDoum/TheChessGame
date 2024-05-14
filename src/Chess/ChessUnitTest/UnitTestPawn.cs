@@ -8,7 +8,7 @@ public class UnitTestPawn
     public void CanMove_ValidMove_ReturnsTrue(int x1, int y1, int x2, int y2)
     {
         var pawn = new Pawn(Color.White, 1);
-        var result = pawn.canMove(x1, y1, x2, y2);
+        var result = pawn.CanMove(x1, y1, x2, y2);
         Assert.True(result);
     }
 
@@ -17,7 +17,7 @@ public class UnitTestPawn
     public void CanMove_InvalidMove_ThrowsException(int x1, int y1, int x2, int y2)
     {
         var pawn = new Pawn(Color.White, 1);
-        Assert.Throws<InvalidOperationException>(() => pawn.canMove(x1, y1, x2, y2));
+        Assert.Throws<InvalidOperationException>(() => pawn.CanMove(x1, y1, x2, y2));
     }
     
     [Fact]
@@ -72,8 +72,8 @@ public class UnitTestPawn
     //     var pawn = new Pawn(color, 1);
     //
     //     // Act
-    //     var result1 = pawn.canMove(4, y1, 4, y2);
-    //     var result2 = pawn.canMove(4, y1, 4, y3);
+    //     var result1 = pawn.CanMove(4, y1, 4, y2);
+    //     var result2 = pawn.CanMove(4, y1, 4, y3);
     //
     //     // Assert
     //     Assert.True(result1);

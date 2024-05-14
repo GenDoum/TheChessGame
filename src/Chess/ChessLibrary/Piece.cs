@@ -50,22 +50,10 @@ namespace ChessLibrary
         /// <param name="x2"></param>
         /// <param name="y2"></param>
         /// <returns></returns>
-        public abstract bool canMove(int x, int y, int x2, int y2);
+        public abstract bool CanMove(int x, int y, int x2, int y2);
 
         public abstract List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard);
         
-        /// <summary>
-        /// Method that checks if the piece is eaten
-        /// </summary>
-        /// <returns></returns>
-        public bool isKilled()
-        {
-            return false;
-        }
-
-
-
-
         // Méthode de clonage par défaut
         public virtual Piece Clone()
         {

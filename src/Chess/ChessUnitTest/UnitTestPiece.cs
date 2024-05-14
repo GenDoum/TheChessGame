@@ -28,19 +28,6 @@ public class UnitTestPiece
         // Act & Assert
         Assert.Throws<ArgumentException>(() => new Rook(color, id));
     }
-    
-    [Fact]
-    public void IsKilled_Always_ReturnsFalse()
-    {
-        // Arrange
-        var piece = new Rook(Color.White, 1);
-
-        // Act
-        var result = piece.isKilled();
-
-        // Assert
-        Assert.False(result);
-    }
 
 }
 

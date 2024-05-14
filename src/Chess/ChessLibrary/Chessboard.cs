@@ -177,14 +177,7 @@ namespace ChessLibrary
         /// <returns> Bool True if the move is in the list of possible move Valid,false if is not</returns>
         public bool IsMoveValid(List<Case> Lcase, Case Final)
         {
-            foreach (var i in Lcase)
-            // Loop through all cases in the list of possible moves
-            {
-                if (i.Column == Final.Column && i.Line == Final.Line)
-                // check if the final case is in the list of possible moves
-                { return true; }
-            }
-            return false;
+            return Lcase.Any(i => i.Column == Final.Column && i.Line == Final.Line);
         }
 
 
@@ -199,11 +192,7 @@ namespace ChessLibrary
         {
             List<Case> L = piece.PossibleMoves(Initial, this);
             // Create a list of possible moves
-            if (IsMoveValid(L, Final))
-            {
-                return true;
-            }
-            return false;
+            return IsMoveValid(L, Final);
         }
 
         /// <summary>
@@ -292,14 +281,8 @@ namespace ChessLibrary
         /// <exception cref="ArgumentNullException"></exception>
         public void ModifPawn(Pawn P, Piece pi, Case c)
         {
-            if (pi == null)
-            {//Check if the new piece is null
-                throw new ArgumentNullException(nameof(P));
-            }
-            if (P == null)
-            {//Check if the Pawn is null
-                throw new ArgumentNullException(nameof(P));
-            }
+            ArgumentNullException.ThrowIfNull(pi);
+            ArgumentNullException.ThrowIfNull(P);
 
             if (pi.Color == Color.White)
             {

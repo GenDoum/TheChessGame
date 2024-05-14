@@ -43,10 +43,7 @@ namespace ChessLibrary
 
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
-            if (chessboard == null)
-            {
-                throw new ArgumentNullException(nameof(chessboard));
-            }
+            ArgumentNullException.ThrowIfNull(chessboard);
 
             List<Case> result = new List<Case>();
             (int, int)[] directions = { (0, 1), (0, -1), (-1, 0), (1, 0) };  // Top, Bot, Left, Right

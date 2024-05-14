@@ -309,23 +309,32 @@ namespace ChessLibrary
         /// <param name="myKing"></param>
         /// <param name="KingCase"></param>
         /// <returns></returns>
-        public bool Echec(King king, Case KingCase)
+
+        public bool Echec(King king, Case kingCase)
         {
-            List<CoPieces> enemyPieces;
-            enemyPieces = (king.Color == Color.White) ? BlackPieces : WhitePieces;
-            // Check if the king is white and take the black list,and if is not white take white list, for check the movement of enemy team.
+            List<CoPieces> enemyPieces = (king.Color == Color.White) ? BlackPieces : WhitePieces;
+
             foreach (var enemy in enemyPieces)
-            //Loop through all enemy pieces
             {
-                if (MovePiece(enemy.piece, enemy.CaseLink, KingCase))
-                //Check if the enemy piece can move to the King case
+                if (enemy.piece is King)
                 {
-                    return true;
+                    continue; // Ignorez les mouvements du roi ennemi pour éviter les boucles infinies
+                }
+
+                // Utilisez les mouvements possibles de l'ennemi pour vérifier s'ils attaquent la case du roi
+                var possibleMoves = enemy.piece.PossibleMoves(enemy.CaseLink, this);
+                foreach (var move in possibleMoves)
+                {
+                    if (move.Column == kingCase.Column && move.Line == kingCase.Line)
+                    {
+                        return true;
+                    }
                 }
             }
-            return false;
-            // The King is not in check position
+
+            return false; // Le roi n'est pas en échec
         }
+
 
         public Chessboard CopyBoard()
         {
@@ -343,7 +352,7 @@ namespace ChessLibrary
                     if (originalPiece != null)
                     {
                         // Vous pouvez ajouter une méthode de copie dans chaque classe de pièces ou utiliser une méthode de clone ici
-                        copiedPiece = originalPiece.Clone(); 
+                        copiedPiece = originalPiece;
                     }
                     newBoard[i, j] = new Case(i, j, copiedPiece);
                 }
@@ -363,19 +372,26 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="Lcase"></param>
         /// <returns></returns>
-        public bool EchecMat(King king, Case KingCase)
+        public bool EchecMat(King king, Case kingCase)
         {
-            var possibleKingMoves = king.PossibleMoves(KingCase, this);
+            // Obtenez tous les mouvements possibles pour le roi
+            var possibleKingMoves = king.PossibleMoves(kingCase, this);
+
+            // Vérifiez si le roi peut échapper à l'échec
             foreach (var move in possibleKingMoves)
             {
-                var simulatedBoard = CopyBoard(); 
-                simulatedBoard.MovePiece(king, KingCase, move);
+                var simulatedBoard = CopyBoard();
+                simulatedBoard.MovePiece(king, kingCase, simulatedBoard.Board[move.Column, move.Line]);
 
-                if (!simulatedBoard.Echec(king, move))
-                    return false; // Le roi a une issue
+                // Si le roi n'est pas en échec après ce mouvement, il n'y a pas échec et mat
+                if (!simulatedBoard.Echec(king, simulatedBoard.Board[move.Column, move.Line]))
+                    return false;
             }
 
+            // Obtenez toutes les pièces alliées
             var allyPieces = (king.Color == Color.White) ? WhitePieces : BlackPieces;
+
+            // Vérifiez si une pièce alliée peut protéger le roi
             foreach (var pieceInfo in allyPieces)
             {
                 var piece = pieceInfo.piece;
@@ -385,14 +401,19 @@ namespace ChessLibrary
                 foreach (var move in possibleMoves)
                 {
                     var simulatedBoard = CopyBoard();
-                    simulatedBoard.MovePiece(piece, startCase, move);
+                    simulatedBoard.MovePiece(piece, startCase, simulatedBoard.Board[move.Column, move.Line]);
 
-                    if (!simulatedBoard.Echec(king, KingCase))
+                    // Si le roi n'est pas en échec après ce mouvement, il n'y a pas échec et mat
+                    if (!simulatedBoard.Echec(king, simulatedBoard.Board[kingCase.Column, kingCase.Line]))
                         return false;
                 }
             }
-            return true; 
+
+            // Si aucune évasion possible n'a été trouvée, c'est échec et mat
+            return true;
         }
+
+
 
     }
 }

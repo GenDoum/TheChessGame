@@ -5,7 +5,7 @@ namespace ConsoleChess
 {
     class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
 
             User player1 = new User("Player 1", "mdp", Color.White, false, new List<Piece>(), 0);
@@ -40,7 +40,7 @@ namespace ConsoleChess
                 {
                     isGameOver = game.CheckGameOver(game);
                 }
-                game.checkEvolved();
+                game.CheckEvolved();
                 player++;
             }
 

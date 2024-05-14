@@ -85,21 +85,21 @@ namespace ChessLibrary
             OnEndGame(winner);
         }
 
-        public void MovePiece(Case initial, Case Final, Chessboard board, User ActualPlayer)
+        public void MovePiece(Case initial, Case final, Chessboard board, User actualPlayer)
         {
             // Validation de base pour vérifier la pièce initiale
             if (initial.Piece == null)
                 throw new ArgumentNullException(nameof(initial.Piece), "No piece at the initial position.");
 
             // Vérifier si la pièce appartient au joueur actuel
-            if (initial.Piece.Color != ActualPlayer.color)
+            if (initial.Piece.Color != actualPlayer.color)
                 throw new InvalidOperationException("It's not this player's turn.");
 
             // Effectuer le déplacement
-            if (board.MovePiece(initial.Piece, initial, Final))
+            if (board.MovePiece(initial.Piece, initial, final))
             {
-                UpdatePieceLists(initial, Final, board);
-                ProcessPostMove(initial, Final);
+                UpdatePieceLists(initial, final, board);
+                ProcessPostMove(initial, final);
             }
             else
             {
@@ -112,10 +112,12 @@ namespace ChessLibrary
             var movedPieceInfo = new CoPieces { CaseLink = initial, piece = initial.Piece };
             var listToUpdate = initial.Piece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
 
+            // Mettre à jour la position de la pièce déplacée
             listToUpdate.Remove(movedPieceInfo);
             listToUpdate.Add(new CoPieces { CaseLink = final, piece = initial.Piece });
 
-            if (!final.IsCaseEmpty())
+            // Vérifier si une pièce a été capturée
+            if (final.Piece != null && final.Piece.Color != initial.Piece.Color)
             {
                 var capturedPieceInfo = new CoPieces { CaseLink = final, piece = final.Piece };
                 var listToRemoveFrom = final.Piece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
@@ -127,19 +129,21 @@ namespace ChessLibrary
 
         private void ProcessPostMove(Case initial, Case final)
         {
-            // Marquer les mouvements spéciaux comme le premier mouvement pour les rois, tours et pions
-            if (initial.Piece is IFirstMove.FirstMove firstMover)
-            {
-                firstMover.FirstMove = false;
-            }
             // Mettre à jour les positions des cases
             final.Piece = initial.Piece;
             initial.Piece = null;
+
+            // Marquer les mouvements spéciaux comme le premier mouvement pour les rois, tours et pions
+            if (final.Piece is IFirstMove.FirstMove firstMover)
+            {
+                firstMover.FirstMove = false;
+            }
         }
 
-        public void checkEvolved()
+        public void CheckEvolved()
         {
             this.Board.PawnCanEvolve();
         }
+
     }
 }

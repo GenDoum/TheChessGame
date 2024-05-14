@@ -37,6 +37,39 @@ namespace ChessLibrary
 
         }
 
+        public bool CheckChec(Game game, User actualPlayer)
+        {
+            var pieces = (actualPlayer.color == Color.White) ? game.Board.BlackPieces : game.Board.WhitePieces;
+            foreach (var pieceInfo in pieces)
+            {
+                if (pieceInfo.piece is King king)
+                {
+                    if (game.Board.Echec(king, pieceInfo.CaseLink))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool CheckGameOver(Game game)
+        {
+            var pieces = (game.Player1.color == Color.White) ? game.Board.BlackPieces : game.Board.WhitePieces;
+            foreach (var pieceInfo in pieces)
+            {
+                if (pieceInfo.piece is King king)
+                {
+                    if (game.Board.EchecMat(king, pieceInfo.CaseLink))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+
+        }
+
         public void GameOver(User winner)
         {
             Console.WriteLine("Game Over");

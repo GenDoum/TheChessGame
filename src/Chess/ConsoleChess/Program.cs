@@ -5,31 +5,23 @@ namespace ConsoleChess
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             User player1 = new User("Player 1", Color.White);
             User player2 = new User("Player 2", Color.Black);
             Game game = new Game(player1, player2);
             int player = 1;
-            User actualPlayer = player1;
-            bool IsGameOver = false;
-
-            while (!IsGameOver)
+            bool isGameOver = false;
+            DisplayBoard(game.Board);
+            while (!isGameOver)
             {
-                actualPlayer = (player % 2 == 0) ? player2 : player1;
+                User actualPlayer = (player % 2 == 0) ? player2 : player1;
                 Console.WriteLine($"{actualPlayer.Pseudo}'s turn");
 
                 try
                 {
-                    DisplayBoard(game.Board);
-
-                    Console.WriteLine("Enter the position of the piece you want to move (a1,f7 ...):");
-                    string startPos = Console.ReadLine();
-                    (int startColumn, int startRow) = ParseChessNotation(startPos);
-
-                    Console.WriteLine("Enter the destination position(a1,f7 ...):");
-                    string endPos = Console.ReadLine();
-                    (int endColumn, int endRow) = ParseChessNotation(endPos);
+                    (int startColumn, int startRow) = GetMoveCoordinates("Enter the position of the piece you want to move (a1, f7 ...):");
+                    (int endColumn, int endRow) = GetMoveCoordinates("Enter the destination position (a1, f7 ...):");
 
                     game.MovePiece(game.Board.Board[startColumn, startRow], game.Board.Board[endColumn, endRow], game.Board, actualPlayer);
                     DisplayBoard(game.Board);
@@ -37,25 +29,38 @@ namespace ConsoleChess
                 catch (Exception e)
                 {
                     Console.WriteLine($"Error: {e.Message}");
-                    player -= 1;
+                    player--; // Retry the same player's turn
                 }
 
-                var pieces = (actualPlayer.color == Color.White) ? game.Board.WhitePieces : game.Board.BlackPieces;
-                foreach (var pieceInfo in pieces)
+                if( game.CheckChec(game, actualPlayer)) 
                 {
-                    if (pieceInfo.piece is King king)
-                    {
-                        if (game.Board.Echec(king, pieceInfo.CaseLink))
-                        {
-                            IsGameOver = true;
-                            Console.WriteLine("Checkmate!");
-                        }
-                    }
+                    isGameOver = game.CheckGameOver(game);
                 }
                 player++;
             }
-            game.GameOver(actualPlayer);
+
+            game.GameOver(player % 2 == 0 ? player1 : player2);
         }
+
+
+        static (int, int) GetMoveCoordinates(string prompt)
+        {
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine(prompt);
+                    string pos = Console.ReadLine();
+                    return ParseChessNotation(pos);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Invalid input: {e.Message}. Please try again.");
+                }
+            }
+        }
+
+
 
         static void DisplayBoard(Chessboard chessboard)
         {
@@ -99,15 +104,13 @@ namespace ConsoleChess
 
         static (int column, int row) ParseChessNotation(string notation)
         {
-            if (notation.Length != 2 ||
-                notation[0] < 'a' || notation[0] > 'h' ||
-                notation[1] < '1' || notation[1] > '8')
+            if (notation.Length != 2 || notation[0] < 'a' || notation[0] > 'h' || notation[1] < '1' || notation[1] > '8')
             {
                 throw new ArgumentException("Invalid chess notation.");
             }
 
             int column = notation[0] - 'a';
-            int row = 8 - (notation[1] - '0'); // Row conversion (1 -> 7, 2 -> 6, ..., 8 -> 0)
+            int row = 8 - (notation[1] - '0'); 
 
             return (column, row);
         }

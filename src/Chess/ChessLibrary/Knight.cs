@@ -24,7 +24,7 @@ namespace ChessLibrary
         {
             if ((Math.Abs(x - x2) == 2 && Math.Abs(y - y2) == 1) || (Math.Abs(x - x2) == 1 && Math.Abs(y - y2) == 2))
             {
-                if (x2 < 1 || x2 > 8 || y2 < 1 || y2 > 8)
+                if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
                 {
                     throw new InvalidOperationException("Invalid move for Knight: destination out of bounds.");
                 }
@@ -44,33 +44,38 @@ namespace ChessLibrary
 
             List<Case> result = new List<Case>();
 
-            // Toutes les positions possibles que le cavalier peut prendre en forme de "L"
             int[,] offsets = new int[,]
             {
-        { 1, 2 }, { 1, -2 }, { -1, 2 }, { -1, -2 },
-        { 2, 1 }, { 2, -1 }, { -2, 1 }, { -2, -1 }
+                { 1, 2 }, { 1, -2 }, { -1, 2 }, { -1, -2 },
+                { 2, 1 }, { 2, -1 }, { -2, 1 }, { -2, -1 }
             };
 
-            // Vérifiez chacun des déplacements possibles
             for (int i = 0; i < 8; i++)
             {
                 int newColumn = caseInitial.Column + offsets[i, 0];
                 int newLine = caseInitial.Line + offsets[i, 1];
 
-                // Vérifiez si la nouvelle position est sur l'échiquier
-                if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
+                if (IsWithinBoardBoundaries(newColumn, newLine) && canMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
                 {
                     Case potentialCase = chessboard.Board[newColumn, newLine];
-                    // Ajouter la case si elle est vide ou contient une pièce adverse
-                    if (potentialCase.IsCaseEmpty() || potentialCase.Piece.Color != this.Color)
-                    {
-                        result.Add(potentialCase);
-                    }
+                    AddPotentialMove(result, potentialCase);
                 }
             }
 
             return result;
         }
+
+        static bool IsWithinBoardBoundaries(int column, int line)
+        {
+            return column >= 0 && column < 8 && line >= 0 && line < 8;
+        }
+
+        private void AddPotentialMove(List<Case> result, Case potentialCase)
+        {
+            if (potentialCase.IsCaseEmpty() || potentialCase.Piece.Color != this.Color)
+            {
+                result.Add(potentialCase);
+            }
+        }
     }
 }
-

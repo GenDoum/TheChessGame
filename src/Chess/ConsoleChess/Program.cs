@@ -307,8 +307,7 @@ namespace ConsoleChess
                     case 2:
                         Console.Clear();
                         Console.Write("Lancer un partie en tant qu'invité");
-                        playerOne = new User();
-                        playerTwo = new User();
+                        Thread.Sleep(1000);
                         break;
 
                     case 3:

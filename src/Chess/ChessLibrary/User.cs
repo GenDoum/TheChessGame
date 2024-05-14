@@ -34,21 +34,7 @@ namespace ChessLibrary
         /// <summary>
         /// Password of the Player
         /// </summary>
-        public string? Password
-        {
-            get => password;
-            set
-            {
-                password = value;
-
-            }
-
-        }
-
-        /// <summary>
-        /// Private password of the user
-        /// </summary>
-        private string? password;
+        public string? Password { get; set; }
 
         /// <summary>
         /// Type for know the color of the player
@@ -56,11 +42,9 @@ namespace ChessLibrary
         /// 
         public Color Color
         {
-            get { return color; }
-            set { color = value; }
-            
+            get;
+            set;
         }
-        private Color color;
 
 
         /// <summary>
@@ -68,16 +52,9 @@ namespace ChessLibrary
         /// </summary>
         public int Score
         {
-            get => score;
-            set
-            {
-                score = value;
-            }
+            get;
+            set;
         }
-        /// <summary>
-        /// Private score of the player
-        /// </summary>
-        private int score;
 
         /// <summary>
         /// Public boolean to know if the User is connected
@@ -160,7 +137,7 @@ namespace ChessLibrary
                 Console.WriteLine("\nInvited player, no need to check password\n");
                 return true;
             }
-            if ( this.password.Equals(pass.ToString()) )
+            if ( this.Password.Equals(pass.ToString()) )
             {
                 Console.WriteLine($"\nGood password, have fun {Pseudo}");
                 return true;

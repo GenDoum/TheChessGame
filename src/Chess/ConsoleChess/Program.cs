@@ -7,9 +7,14 @@ namespace ConsoleChess
     {
         static void Main()
         {
+<<<<<<< HEAD
             
             User player1 = new User("Player 1", Color.White);
             User player2 = new User("Player 2", Color.Black);
+=======
+            User player1 = new User("Player 1", "mdp", Color.White, false, new List<Piece>(), 0);
+            User player2 = new User("Player 2", "mdp", Color.Black, false, new List<Piece>(), 0);
+>>>>>>> fc323131ace64c419ed81d08d10ef00149dd1fd4
             Game game = new Game(player1, player2);
             game.Board.SetupEvolveEventHandler();
             int player = 1;

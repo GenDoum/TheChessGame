@@ -36,7 +36,7 @@ namespace ConsoleChess
             Console.ResetColor();   //Reset la couleur du texte par défaut (à blanc)
         }
 
-
+        /*
         public static int MultipleChoice(string title, bool canCancel, params string[] options)
         {
 
@@ -108,6 +108,73 @@ namespace ConsoleChess
 
             return currentSelection;
         }
+        */
+        public static int MultipleChoice(string title, bool canCancel, params string[] options)
+        {
+            displayTitle(title, true);
+            const uint startX = 17;
+            const uint startY = 4;
+            const int optionsPerLine = 1;
+            const int spacingPerLine = 50;
+            int currentSelection = 0;
+
+            ConsoleKey key;
+            System.Console.CursorVisible = false;
+
+            void DisplayOptions()
+            {
+                for (int i = 0; i < options.Length; i++)
+                {
+                    System.Console.SetCursorPosition((int)(startX + (i % optionsPerLine) * spacingPerLine),
+                                                     (int)(startY + i / optionsPerLine));
+                    if (i == currentSelection)
+                        System.Console.ForegroundColor = ConsoleColor.Blue;
+
+                    System.Console.Write(options[i]);
+                    System.Console.ResetColor();
+                }
+            }
+
+            bool HandleKey(ConsoleKey key)
+            {
+                switch (key)
+                {
+                    case ConsoleKey.LeftArrow:
+                        if (currentSelection % optionsPerLine > 0)
+                            currentSelection--;
+                        break;
+                    case ConsoleKey.RightArrow:
+                        if (currentSelection % optionsPerLine < optionsPerLine - 1)
+                            currentSelection++;
+                        break;
+                    case ConsoleKey.UpArrow:
+                        if (currentSelection >= optionsPerLine)
+                            currentSelection -= optionsPerLine;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        if (currentSelection + optionsPerLine < options.Length)
+                            currentSelection += optionsPerLine;
+                        break;
+                    case ConsoleKey.Escape:
+                        if (canCancel)
+                            return false;
+                        break;
+                    case ConsoleKey.Enter:
+                        return false;
+                }
+                return true;
+            }
+
+            do
+            {
+                DisplayOptions();
+                key = System.Console.ReadKey(true).Key;
+            } while (HandleKey(key));
+
+            System.Console.CursorVisible = true;
+
+            return key == ConsoleKey.Enter ? currentSelection : -1;
+        }
 
 
         public static string enterStringCheck(string enter)
@@ -143,7 +210,7 @@ namespace ConsoleChess
             return users.Any(u => u.Pseudo == pseudo);
         }
 
-        public static User connexion(List<User> users, string pseudo)
+        public static User? connexion(List<User> users, string pseudo)
         {
             Console.Clear();
 
@@ -153,13 +220,13 @@ namespace ConsoleChess
                 return null;
             }
 
-            User? user = users.FirstOrDefault(u => u.Pseudo == pseudo);
+            User? user = users.Find(u => u.Pseudo == pseudo);
 
             if (user == null)
             {
                 errorMessage($"{pseudo} n'existe pas");
                 Thread.Sleep(1000);
-                return user;
+                return null;
             }
 
             user.IsConnected = user.isPasswdConsole();
@@ -193,56 +260,56 @@ namespace ConsoleChess
 
             pseudo = enterStringCheck("pseudo");
 
-            if (users.Any(u => u.Pseudo == pseudo))
+            if (!users.Any(u => u.Pseudo == pseudo))
             {
-                errorMessage("Pseudo déjà existant, recommener l'opération.");
+                if (!string.IsNullOrEmpty(pseudo))
+                {
+                    psswd = enterStringCheck("Mot de passe");
+                    User user = new User(pseudo, psswd, Color.White, false, 0);
+                    users.Add(user);
+                }
+
+
                 return users;
             }
-            if ((!string.IsNullOrEmpty(pseudo) || !string.IsNullOrWhiteSpace(pseudo)))
-            {
-            }
-            if (!string.IsNullOrEmpty(pseudo))
-            {
-                psswd = enterStringCheck("Mot de passe");
-                User user = new User(pseudo, psswd, Color.White, false, 0);
-                users.Add(user);
-            }
-
-
+            errorMessage("Pseudo déjà existant, recommener l'opération.");
             return users;
         }
 
-        public static User menuConnexionDeuxJoueurs(User u1, List<User> users)
+        public static User? menuConnexionDeuxJoueurs(User u1, List<User> users)
         {
             int choix;
             User defaultUser = new User();
 
-            choix = MultipleChoice($"{u1.Pseudo} est connecté, que souhaité vous faire ?", true, "Connecter un deuxième joueur", "Deuxième joueur invité", "Annuler et quitter");
 
             do
             {
+
+                choix = MultipleChoice($"{u1.Pseudo} est connecté, que souhaité vous faire ?", true, "Connecter un deuxième joueur", "Deuxième joueur invité", "Annuler et quitter");
 
                 switch (choix)
                 {
                     case 0:
                         string pseudoUser2 = enterStringCheck("Pseudo");
-                        User user2 = connexion(users, pseudoUser2);
+                        User? user2 = connexion(users, pseudoUser2);
                         return user2;
 
                     case 1:
                         return defaultUser;
 
+
+                    case -1:
+                        break;
+
                     default:
                         return defaultUser;
                 }
 
-                choix = MultipleChoice($"{u1.Pseudo} est connecté, que souhaité vous faire ?", true, "Connecter un deuxième joueur", "Deuxième joueur invité", "Annuler et quitter");
 
 
             } while (choix != -1);
 
             return defaultUser;
-
         }
 
 
@@ -262,7 +329,6 @@ namespace ConsoleChess
 
             User? playerOne = null;
             User? playerTwo = null;
-            User defaultPlayer = new User();
 
             List<User> users = new List<User>();
             users.Add(hersan);

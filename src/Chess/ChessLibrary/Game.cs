@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,25 +12,25 @@ namespace ChessLibrary
 {
     public class Game : IRules
     {
-/*        public event void endGame();
-        public event endGame OnEndGame;
-        private void DisplayEndGame()
-        {
-            endgame?.Invoke(this, EventArgs.Empty);
-        }*/
+        public delegate void EndGameHandler(User winner);
+        public event EndGameHandler OnEndGame;
 
+        private void DisplayEndGame(User winner)
+        {
+            Console.WriteLine($"{winner.Pseudo} wins!");
+            Console.WriteLine("Game Over!");
+        }
+        public void SetupEndEventHandler()
+        {
+            OnEndGame += DisplayEndGame;
+        }
         public User Player1 { get; set; }
         public User Player2 { get; set; }
         public Chessboard Board { get; set; }
-        //public event void ImpossibleMove();
-        //public event EventHandler<ImpossibleMove> impossible;
-        //protected virtual void OnGameStarted()
-        //{
-        //    impossible?.Invoke(this, EventArgs.Empty);
-        //}
+
         public Game(User player1, User player2)
         {
-            
+
             this.Player1 = player1;
             this.Player2 = player2;
             Case[,] allcase = new Case[8, 8];
@@ -81,9 +82,7 @@ namespace ChessLibrary
 
         public void GameOver(User winner)
         {
-           /* OnEndGame?.Invoke();
-            OnEndGame();*/
-            Console.WriteLine($"Game Over! {winner.Pseudo} wins!");
+            OnEndGame(winner);
         }
 
         public void MovePiece(Case initial, Case Final, Chessboard board, User ActualPlayer)
@@ -109,7 +108,7 @@ namespace ChessLibrary
         }
 
         private void UpdatePieceLists(Case initial, Case final, Chessboard board)
-        { 
+        {
             var movedPieceInfo = new CoPieces { CaseLink = initial, piece = initial.Piece };
             var listToUpdate = initial.Piece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
 
@@ -140,7 +139,7 @@ namespace ChessLibrary
 
         public void checkEvolved()
         {
-        this.Board.PawnCanEvolve();
+            this.Board.PawnCanEvolve();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace ConsoleChess
 
             Game game = new Game(player1, player2);
             game.Board.SetupEvolveEventHandler();
+            game.SetupEndEventHandler();
             int player = 1;
             bool isGameOver = false;
             DisplayBoard(game.Board);

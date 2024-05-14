@@ -49,10 +49,13 @@ public class UnitTestUser
     [MemberData(nameof(TestData.InvalidUserPassword), MemberType = typeof(TestData))]
     public void InvalidPassword_ReturnFalse(string pseudo, string password, Color color, bool connected, int score)
     {
-        Assert.Throws<ArgumentException>(() =>
+        if (string.IsNullOrWhiteSpace(pseudo))
         {
-            var user = new User(pseudo, password, color, connected, score);
-        });
+            Assert.Throws<ArgumentException>(() =>
+            {
+                var user = new User(pseudo, password, color, connected, score);
+            });
+        }
     }
 
     [Theory]

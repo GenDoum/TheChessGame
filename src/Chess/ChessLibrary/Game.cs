@@ -127,5 +127,12 @@ namespace ChessLibrary
             final.Piece = initial.Piece;
             initial.Piece = null;
         }
+
+        public void checkEvolved()
+        {
+            if (this.Board.PawnCanEvolve())
+            { 
+            }
+        }
     }
 }

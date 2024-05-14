@@ -15,6 +15,10 @@ namespace ChessLibrary
         public Piece piece { get; set; }
     };
 
+    public delegate void EvolveHandler(out string result);
+
+    public event EvolveHandler OnEvolve;
+
     public class Chessboard : IBoard
     {
 

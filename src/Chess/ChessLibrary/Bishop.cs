@@ -30,7 +30,7 @@ namespace ChessLibrary
                 throw new InvalidOperationException("Invalid move for Bishop: destination out of bounds.");
             }
 
-            return true;
+            return true;    
         }
 
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)

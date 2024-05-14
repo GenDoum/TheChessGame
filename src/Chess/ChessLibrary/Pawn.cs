@@ -10,8 +10,9 @@ namespace ChessLibrary
     /// <summary>
     /// Class that represents a pawn piece
     /// </summary>
-    public class Pawn : Piece
+    public class Pawn : Piece, IFirstMove.FirstMove
     {
+        virtual public bool FirstMove { get; set; }
         /// <summary>
         /// Constructor of the class
         /// </summary>
@@ -19,6 +20,7 @@ namespace ChessLibrary
         /// <param name="ca"></param>
         public Pawn(Color c, int id) : base(c, id)
         {
+            this.FirstMove = true;
         }
 
         public override bool canMove(int x, int y, int x2, int y2)
@@ -27,7 +29,7 @@ namespace ChessLibrary
             {
                 throw new InvalidOperationException("Invalid move for Pawn: destination out of bounds.");
             }
-    
+
             int direction = (Color == Color.White) ? 1 : -1;
 
             if (x == x2)
@@ -45,47 +47,68 @@ namespace ChessLibrary
 
             throw new InvalidOperationException("Invalid move for Pawn");
         }
-        
+
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
             if (chessboard == null)
             {
                 throw new ArgumentNullException(nameof(chessboard));
             }
+
             List<Case> result = new List<Case>();
+            int direction = this.Color == Color.White ? 1 : -1; // Blanc vers le haut (+1), Noir vers le bas (-1)
 
-            //Check if this is the first movement
+            // Mouvements normaux (1 ou 2 cases)
+            AddNormalMoves(caseInitial, chessboard, direction, result);
 
+            // Capture diagonale (gauche et droite)
+            AddDiagonalCaptures(caseInitial, chessboard, direction, result);
 
-            if (true/*this.FirstMove()*/) // Need to create fonction first Move Maybe we need to change the constructor of the Pawn.
+            return result;
+        }
+
+        private void AddNormalMoves(Case caseInitial, Chessboard chessboard, int direction, List<Case> result)
+        {
+            for (int i = 1; i <= (FirstMove ? 2 : 1); i++)
             {
-                for (int i = 1; i <= 2; i++)
+                int newLine = caseInitial.Line + direction * i;
+                int newColumn = caseInitial.Column;
+                if (IsWithinBoard(newLine, newColumn, chessboard))
                 {
-                    int newColumn = caseInitial.Column + i;
-                    int newLine = caseInitial.Line;
                     Case potentialCase = chessboard.Board[newColumn, newLine];
                     if (potentialCase.IsCaseEmpty())
                     {
                         result.Add(potentialCase);
                     }
-                    // Need to create a fonction to check if the pawn can eat a other piece top Right or Top Left  
-                    // and we need to check if the left piece if we can do the special movement of the pawn.
+                    else
+                    {
+                        break; // Blocage par une pièce, stopper ici
+                    }
                 }
             }
-            //Check for the rest.
-            else
-            {
-                int newColumn = caseInitial.Column + 1;
-                int newLine = caseInitial.Line;
-                Case potentialCase = chessboard.Board[newColumn, newLine];
-                if (potentialCase.IsCaseEmpty())
-                {
-                    result.Add(potentialCase);
-                }
-                // Same as last if before .
-            }
-            return result;
         }
-  
+
+        private void AddDiagonalCaptures(Case caseInitial, Chessboard chessboard, int direction, List<Case> result)
+        {
+            int[] captureColumns = new int[] { caseInitial.Column - 1, caseInitial.Column + 1 };
+            foreach (int col in captureColumns)
+            {
+                int newLine = caseInitial.Line + direction;
+                if (IsWithinBoard(newLine, col, chessboard))
+                {
+                    Case potentialCase = chessboard.Board[col, newLine];
+                    if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
+                    {
+                        result.Add(potentialCase);
+                    }
+                }
+            }
+        }
+
+        private bool IsWithinBoard(int line, int column, Chessboard chessboard)
+        {
+            return line >= 0 && line < chessboard.Board.GetLength(1) && column >= 0 && column < chessboard.Board.GetLength(0);
+        }
     }
+
 }

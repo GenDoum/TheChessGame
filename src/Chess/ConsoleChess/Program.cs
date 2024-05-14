@@ -1,389 +1,118 @@
-// See https://aka.ms/new-console-template for more information
 using System;
-using System.Reflection.Metadata;
 using ChessLibrary;
-using System.Linq;
 
 namespace ConsoleChess
 {
     class Program
     {
-        public static void exitApplication()
+        static void Main()
         {
-            Console.Clear();
-            Console.WriteLine("\n\n\t\t A bientot !");
-            Console.WriteLine();
-            Thread.Sleep(1000);
-        }
-
-        public static void errorMessage(string message)
-        {
-            Console.WriteLine($"{message}");
-        }
-
-        public static void displayTitle(string title, bool clear)
-        {
-            Console.Clear();
-            if (clear)
+            User player1 = new User("Player 1", Color.White);
+            User player2 = new User("Player 2", Color.Black);
+            Game game = new Game(player1, player2);
+            int player = 1;
+            bool isGameOver = false;
+            DisplayBoard(game.Board);
+            while (!isGameOver)
             {
-                System.Console.Clear();
-            }
+                User actualPlayer = (player % 2 == 0) ? player2 : player1;
+                Console.WriteLine($"{actualPlayer.Pseudo}'s turn");
 
-            Console.ForegroundColor = ConsoleColor.Green; //Ecris le titre suivant en vert
-            Console.WriteLine();
-            Console.WriteLine($"-==============- {title} -==============-");
-            Console.WriteLine();
-            Console.ResetColor(); //Reset la couleur du texte par défaut (à blanc)
-        }
-
-
-        public static int MultipleChoice(string title, bool canCancel, params string[] options)
-        {
-
-            displayTitle(title, true);
-            // Uint = unsigned int -> pour pas que le décalage soit négatif et entraine une exception
-            const uint startX = 17; // Décalage à partir de la gauche
-            const uint startY = 4; // Décalage à partir du haut
-            const int optionsPerLine = 1;
-            const int spacingPerLine = 50;
-            int currentSelection = 0;
-
-            ConsoleKey key;
-
-            System.Console.CursorVisible = false;
-
-            do
-            {
-
-                for (int i = 0; i < options.Length; i++)
+                try
                 {
-                    System.Console.SetCursorPosition((int)(startX + (i % optionsPerLine) * spacingPerLine),
-                        (int)(startY + i / optionsPerLine));
+                    (int startColumn, int startRow) = GetMoveCoordinates("Enter the position of the piece you want to move (a1, f7 ...):");
+                    (int endColumn, int endRow) = GetMoveCoordinates("Enter the destination position (a1, f7 ...):");
 
-                    if (i == currentSelection)
-                        System.Console.ForegroundColor = ConsoleColor.Blue;
-
-                    System.Console.Write(options[i]);
-
-                    System.Console.ResetColor();
+                    game.MovePiece(game.Board.Board[startColumn, startRow], game.Board.Board[endColumn, endRow], game.Board, actualPlayer);
+                    DisplayBoard(game.Board);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error: {e.Message}");
+                    player--; // Retry the same player's turn
                 }
 
-                key = System.Console.ReadKey(true).Key;
-
-                switch (key)
+                if( game.CheckChec(game, actualPlayer)) 
                 {
-                    case ConsoleKey.LeftArrow:
+                    isGameOver = game.CheckGameOver(game);
+                }
+                player++;
+            }
+
+            game.GameOver(player % 2 == 0 ? player1 : player2);
+        }
+
+
+        static (int, int) GetMoveCoordinates(string prompt)
+        {
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine(prompt);
+                    string pos = Console.ReadLine();
+                    return ParseChessNotation(pos);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Invalid input: {e.Message}. Please try again.");
+                }
+            }
+        }
+
+
+
+        static void DisplayBoard(Chessboard chessboard)
+        {
+            Console.WriteLine("   a   b   c   d   e   f   g   h");
+            Console.WriteLine(" +---+---+---+---+---+---+---+---+");
+            for (int row = 0; row < 8; row++)
+            {
+                Console.Write((8 - row) + " |");
+                for (int column = 0; column < 8; column++)
+                {
+                    var square = chessboard.Board[column, row];
+                    string pieceSymbol = square?.Piece != null ? GetPieceSymbol(square.Piece) : " ";
+                    ConsoleColor originalColor = Console.ForegroundColor;
+                    if (square?.Piece != null && square.Piece.Color != Color.White)
                     {
-                        if (currentSelection % optionsPerLine > 0)
-                            currentSelection--;
-                        break;
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
                     }
-                    case ConsoleKey.RightArrow:
-                    {
-                        if (currentSelection % optionsPerLine < optionsPerLine - 1)
-                            currentSelection++;
-                        break;
-                    }
-                    case ConsoleKey.UpArrow:
-                    {
-                        if (currentSelection >= optionsPerLine)
-                            currentSelection -= optionsPerLine;
-                        break;
-                    }
-                    case ConsoleKey.DownArrow:
-                    {
-                        if (currentSelection + optionsPerLine < options.Length)
-                            currentSelection += optionsPerLine;
-                        break;
-                    }
-                    case ConsoleKey.Escape:
-                    {
-                        if (canCancel)
-                            return -1;
-                        break;
-                    }
+                    Console.Write($" {pieceSymbol} ");
+                    Console.ForegroundColor = originalColor;
+                    Console.Write("|");
                 }
-            } while (key != ConsoleKey.Enter);
-
-            System.Console.CursorVisible = true;
-
-            return currentSelection;
+                Console.WriteLine($" {8 - row}");
+                Console.WriteLine(" +---+---+---+---+---+---+---+---+");
+            }
+            Console.WriteLine("   a   b   c   d   e   f   g   h");
         }
 
-
-        public static string enterStringCheck(string enter)
+        static string GetPieceSymbol(Piece piece)
         {
-            Console.Clear();
-            string? chaine;
-            int nbError = 0;
-            Console.WriteLine($"Entrez votre {enter}");
-            chaine = Console.ReadLine();
-
-            // Demande le pseudo, laisse trois chance. Si au bout de trois fois
-            // le pseudo est toujours vide, on retourne une chaine vide
-            while (string.IsNullOrWhiteSpace(chaine) || string.IsNullOrEmpty(chaine))
+            return piece.GetType().Name switch
             {
-                ++nbError;
-
-                if (nbError >= 3)
-                {
-                    Console.WriteLine("Vous avez atteind le nombre maximal de tentative.");
-                    Console.WriteLine("Au revoir");
-                    Thread.Sleep(800);
-                    return "";
-                }
-
-                errorMessage($"Le {enter} entré n'est pas correct\nEntrez le à nouveau");
-
-                chaine = Console.ReadLine();
-            }
-
-            return chaine;
+                "Pawn" => "P",
+                "Rook" => "R",
+                "Knight" => "C",
+                "Bishop" => "B",
+                "Queen" => "Q",
+                "King" => "K",
+                _ => "?",
+            };
         }
 
-        public static bool pseudoIsExists(List<User> users, string pseudo)
+        static (int column, int row) ParseChessNotation(string notation)
         {
-            return users.Any(u => u.Pseudo == pseudo);
-        }
-
-        /*
-        public static User connexion( List<User> users, string pseudo)
-        {
-            Console.Clear();
-
-            User user = new User();
-
-            foreach (User u in users)
+            if (notation.Length != 2 || notation[0] < 'a' || notation[0] > 'h' || notation[1] < '1' || notation[1] > '8')
             {
-                if ( Equals(u.Pseudo, pseudo) )
-                {
-                    user = u;
-                }
+                throw new ArgumentException("Invalid chess notation.");
             }
 
-            if ( string.IsNullOrEmpty(pseudo) )
-            {
-                errorMessage("Pseudo vide");
-                return user;
-            }
+            int column = notation[0] - 'a';
+            int row = 8 - (notation[1] - '0'); 
 
-            if ( !pseudoIsExists(users, pseudo) )
-            {
-                errorMessage($"{pseudo} n'existe pas");
-                Thread.Sleep(1000);
-                return null;
-            }
-
-            user.IsConnected = user.isPasswdConsole();
-
-            if ( !user.IsConnected )
-            {
-                return null;
-            }
-            Thread.Sleep(2000);
-            return user;
-        }
-        */
-
-        public static User connexion(List<User> users, string pseudo)
-        {
-            Console.Clear();
-
-            if (string.IsNullOrEmpty(pseudo))
-            {
-                errorMessage("Pseudo vide");
-                return null;
-            }
-
-            User? user = users.FirstOrDefault(u => u.Pseudo == pseudo);
-
-            if (user == null)
-            {
-                errorMessage($"{pseudo} n'existe pas");
-                Thread.Sleep(1000);
-                return null;
-            }
-
-            user.IsConnected = user.isPasswdConsole();
-
-            if (!user.IsConnected)
-            {
-                return null;
-            }
-
-            Thread.Sleep(2000);
-            return user;
-        }
-
-        public static bool checkUserConnection(User user)
-        {
-
-            if (Equals(user, null))
-            {
-                Console.WriteLine("La connexion n'a pas marché, connecter vous à nouveau");
-                Thread.Sleep(1000);
-                return false;
-            }
-
-            return true;
-        }
-
-
-        public static List<User> inscription(List<User> users)
-        {
-            string pseudo = "";
-            string psswd = "";
-
-            pseudo = enterStringCheck("pseudo");
-
-            if (users.Any(u => u.Pseudo == pseudo))
-            {
-                errorMessage("Pseudo déjà existant, recommener l'opération.");
-                return users;
-            }
-
-            if ((!string.IsNullOrEmpty(pseudo) || !string.IsNullOrWhiteSpace(pseudo)))
-            {
-            }
-
-            if (!string.IsNullOrEmpty(pseudo))
-            {
-                psswd = enterStringCheck("Mot de passe");
-                User user = new User(pseudo, psswd, Color.White);
-                users.Add(user);
-            }
-
-
-            return users;
-        }
-
-        public static User menuConnexionDeuxJoueurs(User u1, List<User> users)
-        {
-            int choix;
-            User defaultUser = new User();
-
-            choix = MultipleChoice($"{u1.Pseudo} est connecté, que souhaité vous faire ?", true,
-                "Connecter un deuxième joueur", "Deuxième joueur invité", "Annuler et quitter");
-
-            do
-            {
-
-                switch (choix)
-                {
-                    case 0:
-                        string pseudoUser2 = enterStringCheck("Pseudo");
-                        User user2 = connexion(users, pseudoUser2);
-                        return user2;
-
-                    case 1:
-                        return defaultUser;
-
-                    default:
-                        return defaultUser;
-                }
-
-                choix = MultipleChoice($"{u1.Pseudo} est connecté, que souhaité vous faire ?", true,
-                    "Connecter un deuxième joueur", "Deuxième joueur invité", "Annuler et quitter");
-
-
-            } while (choix != -1);
-
-            return defaultUser;
-
-        }
-
-
-        public static void menuAccueil()
-        {
-            int choix;
-
-            bool chechPlayer;
-
-            string? pseudo = null;
-
-            Color noir = Color.Black;
-            Color blanc = Color.White;
-
-            User balko = new User("MatheoB", "chef", noir);
-            User hersan = new User("MatheoH", "proMac", blanc);
-
-            User? playerOne = null;
-            User? playerTwo = null;
-            User defaultPlayer = new User();
-
-            List<User> users = new List<User>();
-            users.Add(hersan);
-            users.Add(balko);
-
-            Console.ResetColor();
-            do
-            {
-                choix = MultipleChoice("Bienvenue sut The Chess", true, "Connexion", "Inscription",
-                    "Lancer une partie en tant qu'invités", "Afficher les joueurs", "Quittez l'application");
-                switch (choix)
-                {
-                    case -1:
-                        Console.Clear();
-                        exitApplication();
-                        break;
-
-                    case 0:
-                        Console.Clear();
-                        pseudo = enterStringCheck("pseudo");
-                        playerOne = connexion(users, pseudo);
-                        chechPlayer = checkUserConnection(playerOne);
-                        if (Equals(playerOne, null))
-                            break;
-
-                        if (playerOne.IsConnected)
-                        {
-                            playerTwo = menuConnexionDeuxJoueurs(playerOne, users);
-                        }
-
-                        break;
-
-                    case 1:
-                        Console.Clear();
-                        Console.Write("Inscription");
-                        Thread.Sleep(1000);
-                        inscription(users);
-
-                        break;
-
-                    case 2:
-                        Console.Clear();
-                        Console.Write("Lancer un partie en tant qu'invité");
-                        playerOne = new User();
-                        playerTwo = new User();
-                        break;
-
-                    case 3:
-                        Console.Clear();
-                        Console.WriteLine("Afficher les joueurs");
-                        foreach (User u in users)
-                        {
-                            Console.WriteLine(u.Pseudo);
-                        }
-
-                        Thread.Sleep(10000);
-                        break;
-
-                    case 4:
-                        Console.Clear();
-                        exitApplication();
-                        return;
-
-                    default:
-                        exitApplication();
-                        return;
-                }
-            } while (choix != -1);
-
-        }
-
-        static void Main(string[] args)
-        {
-            menuAccueil();
+            return (column, row);
         }
     }
 }

@@ -107,4 +107,32 @@ public class UnitTestRook
         // Assert
         Assert.Contains(chessboard.Board[5, 4], result);
     }
+    
+    [Fact]
+    public void CaseIsFree_WhenPieceIsNull_ReturnsTrue()
+    {
+        // Arrange
+        var rook = new Rook(Color.White, 1);
+        var caseForRook = new Case(0, 0, null);
+
+        // Act
+        bool result = caseForRook.IsCaseEmpty();
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void CaseIsFree_WhenPieceIsNotNull_ReturnsFalse()
+    {
+        // Arrange
+        var rook = new Rook(Color.White, 1);
+        var caseForRook = new Case(0, 0, rook);
+
+        // Act
+        bool result = caseForRook.IsCaseEmpty();
+
+        // Assert
+        Assert.False(result);
+    }
 }

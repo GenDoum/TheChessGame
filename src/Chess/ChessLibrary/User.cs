@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
-    /// <summary>
-    /// Classe Player
-    /// </summary>
-    public class User 
+  /*  / <summary>
+    / Classe Player
+    / </summary>*/
+    public class User
     {
         
-        /// <summary>
-        /// Pseudo of the Player
-        /// </summary>
+/*        / <summary>
+        / Pseudo of the Player
+        / </summary>*/
         public string Pseudo
         {
             get => pseudo;
@@ -27,7 +27,7 @@ namespace ChessLibrary
 
                 pseudo = value;
 
-                if ( string.IsNullOrWhiteSpace(Pseudo))
+                if (string.IsNullOrWhiteSpace(Pseudo))
                 {
                     throw new ArgumentException("Pseudo or password must be entered and must not be full of white space");
                 }
@@ -39,7 +39,7 @@ namespace ChessLibrary
         /// <summary>
         /// Password of the Player
         /// </summary>
-        public string Password
+        public string? Password
         {
             get => password;
             set
@@ -59,10 +59,6 @@ namespace ChessLibrary
             }
 
         }
-
-        /// <summary>
-        /// Private password of the user
-        /// </summary>
         private string password;
 
         /// <summary>
@@ -70,9 +66,6 @@ namespace ChessLibrary
         /// </summary>
         public Color color;
 
-        /// <summary>
-        /// Score of the player
-        /// </summary>
         public int Score
         {
             get => score;
@@ -81,34 +74,19 @@ namespace ChessLibrary
                 score = value;
             }
         }
-        /// <summary>
-        /// Private score oof the player
-        /// </summary>
+
         private int score;
-
-        public bool IsConnected
-        {
-            get => isConnected;
-            set 
-            {
-                isConnected = value;
-            }
-        }
-
-        private bool isConnected = false;
-        
-
 
         /// <summary>
         /// Constructor of Player with parameters
         /// </summary>
         /// <param name="pseudo"></param>
         /// <param name="password"></param>
-        public User(string pseudo, string password, Color color)
+        public User(string pseudo, Color color)
         {
-            // En gros ici tu vérifiais si 'Pseudo' et 'Password' étaient null ou vide après leur affectation mais dcp les exceptions étaient pas levées avant que les valeurs soient déjà définies.
-            // J'ai aussi enlever IsWhite car il était jamais utilisé je crois. Remet si il servais vraiment.
-            // Et dcp la le constructeur vérifie d'abord si pseudo sont vide ou null avant de les affecter a la propriété Pseudo.
+           // En gros ici tu vérifiais si 'Pseudo' et 'Password' étaient null ou vide après leur affectation mais dcp les exceptions étaient pas levées avant que les valeurs soient déjà définies.
+           // J'ai aussi enlever IsWhite car il était jamais utilisé je crois. Remet si il servais vraiment.
+           // Et dcp la le constructeur vérifie d'abord si pseudo sont vide ou null avant de les affecter a la propriété Pseudo.
             if (string.IsNullOrWhiteSpace(pseudo))
             {
                 throw new ArgumentException("Pseudo or password must be entered and must not be full of white space");
@@ -126,7 +104,7 @@ namespace ChessLibrary
         public User()
         {
             Pseudo = "Invité";
-            Password = null;
+            /*            Password = null;*/
         }
 
         /// <summary>
@@ -139,10 +117,10 @@ namespace ChessLibrary
             Console.WriteLine($"Hello {Pseudo}, Enter your password please");
 
             ConsoleKeyInfo key;
-            string pass = "";
+            string pass = string.Empty;
             key = System.Console.ReadKey(true);
 
-            while ( key.Key != ConsoleKey.Enter )
+            while (key.Key != ConsoleKey.Enter)
             {
 
                 if (key.Key != ConsoleKey.Backspace)
@@ -167,30 +145,26 @@ namespace ChessLibrary
                 key = System.Console.ReadKey(true);
 
             }
-            
-            if ( Equals( this.Password, null) )
+            Console.WriteLine(pass);
+            if (Equals(this.Password, null))
             {
                 Console.WriteLine("\nInvited player, no need to check password\n");
                 return true;
             }
-            if ( Equals(this.Password, pass) )
+            if (Equals(this.Password, pass))
             {
                 Console.WriteLine($"\nGood password, have fun {Pseudo}");
                 return true;
             }
-            else 
+            else
             {
-                Console.WriteLine($"\nIl semblerait que tu te soit trompé {Pseudo}, essaie à nouveau");
+                Console.WriteLine($"\nIt seems like you misswrite {Pseudo}, try again");
                 return false;
 
             }
+            return true;
         }
 
-        /// <summary>
-        /// Player's method for check the password
-        /// </summary>
-        /// <param name="password"></param>
-        /// <returns></returns>
         public bool isPasswd(string password)
         {
             if (Password == null)

@@ -1,3 +1,4 @@
+using ChessLibrary;
 using System.Drawing;
 using System.Net.NetworkInformation;
 
@@ -199,5 +200,45 @@ public class TestData
         //yield return new object[] { "pseudo", null, ChessLibrary.Color.Red }; // Good User with wrong color
     }
 
+    public static IEnumerable<object[]> InvalidIsMoveValid()
+    {
+        yield return new object[] {  }; 
+        yield return new object[] { "pseudo", null, null }; 
+       
+    }
+
+    public static IEnumerable<object[]> ValidIsMoveValidData()
+    {
+        var chessboard = new Chessboard(new Case[8, 8], true); // Initialisation d'un échiquier vide pour les tests contrôlés
+
+        // Ajout d'un fou blanc en position (2,0) et vérification d'un mouvement diagonal valide
+        chessboard.Board[2, 0] = new Case(2, 0, new Bishop(ChessLibrary.Color.White, 1));
+        yield return new object[] { chessboard, new List<Case> { new Case(3, 1, null) }, new Case(3, 1, null), true };
+
+        // Ajout d'une tour noire en position (5,7) et vérification d'un mouvement vertical valide
+        chessboard.Board[5, 7] = new Case(5, 7, new Rook(ChessLibrary.Color.Black, 2));
+        yield return new object[] { chessboard, new List<Case> { new Case(5, 5, null) }, new Case(5, 5, null), true };
+
+        // Ajout d'un cavalier blanc et vérification d'un mouvement en "L" valide
+        chessboard.Board[1, 1] = new Case(1, 1, new Knight(ChessLibrary.Color.White, 3));
+        yield return new object[] { chessboard, new List<Case> { new Case(2, 3, null) }, new Case(2, 3, null), true };
+    }
+
+    public static IEnumerable<object[]> InvalidIsMoveValidData()
+    {
+        var chessboard = new Chessboard(new Case[8, 8], true); // Initialisation d'un échiquier vide pour les tests contrôlés
+
+        // Fou faisant un mouvement horizontal invalide
+        chessboard.Board[4, 4] = new Case(4, 4, new Bishop(ChessLibrary.Color.White, 4));
+        yield return new object[] { chessboard, new List<Case> { new Case(5, 4, null) }, new Case(5, 4, null), false };
+
+        // Tour effectuant un mouvement diagonal
+        chessboard.Board[7, 7] = new Case(7, 7, new Rook(ChessLibrary.Color.Black, 5));
+        yield return new object[] { chessboard, new List<Case> { new Case(6, 6, null) }, new Case(6, 6, null), false };
+
+        // Cavalier essayant de se déplacer hors du plateau
+        chessboard.Board[0, 0] = new Case(0, 0, new Knight(ChessLibrary.Color.White, 6));
+        yield return new object[] { chessboard, new List<Case> { new Case(-1, 2, null) }, new Case(-1, 2, null), false };
+    }
 
 }

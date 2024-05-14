@@ -106,15 +106,18 @@ namespace ChessLibrary
             }
         }
 
+
         private void UpdatePieceLists(Case initial, Case final, Chessboard board)
         {
             var movedPieceInfo = new CoPieces { CaseLink = initial, piece = initial.Piece };
             var listToUpdate = initial.Piece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
 
+            // Mettre à jour la position de la pièce déplacée
             listToUpdate.Remove(movedPieceInfo);
             listToUpdate.Add(new CoPieces { CaseLink = final, piece = initial.Piece });
 
-            if (!final.IsCaseEmpty())
+            // Vérifier si une pièce a été capturée
+            if (final.Piece != null && final.Piece.Color != initial.Piece.Color)
             {
                 var capturedPieceInfo = new CoPieces { CaseLink = final, piece = final.Piece };
                 var listToRemoveFrom = final.Piece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
@@ -126,14 +129,16 @@ namespace ChessLibrary
 
         private void ProcessPostMove(Case initial, Case final)
         {
-            // Marquer les mouvements spéciaux comme le premier mouvement pour les rois, tours et pions
-            if (initial.Piece is IFirstMove.FirstMove firstMover)
-            {
-                firstMover.FirstMove = false;
-            }
             // Mettre à jour les positions des cases
             final.Piece = initial.Piece;
             initial.Piece = null;
+
+            // Marquer les mouvements spéciaux comme le premier mouvement pour les rois, tours et pions
+            if (final.Piece is IFirstMove.FirstMove firstMover)
+            {
+                firstMover.FirstMove = false;
+            }
         }
+
     }
 }

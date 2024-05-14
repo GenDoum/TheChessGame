@@ -3,6 +3,7 @@ using System;
 using System.Reflection.Metadata;
 using ChessLibrary;
 using System.Linq;
+using System.Text;
 
 
 namespace ConsoleChess
@@ -36,6 +37,60 @@ namespace ConsoleChess
             Console.ResetColor();   
         }
 
+        /// <summary>
+        /// Player's method to check the password
+        /// </summary>
+        /// <returns>It return a boolean which say if the user has entering the good password of not</returns>
+        public static bool isPasswdConsole(User user)
+        {
+            Console.WriteLine($"Hello {user.Pseudo}, Enter your password please");
+
+            ConsoleKeyInfo key;
+            key = System.Console.ReadKey(true);
+            StringBuilder pass = new StringBuilder();
+            while (key.Key != ConsoleKey.Enter)
+            {
+
+                if (key.Key != ConsoleKey.Backspace)
+                {
+                    pass.Append(key.KeyChar);
+                    Console.Write("*");
+                }
+                else if (key.Key == ConsoleKey.Backspace && pass.Length > 0)
+                {
+                    // Supprime un élément de la liste de char de pass
+                    pass.Remove(pass.Length - 1, 1);
+                    // Récupère la position du curseur
+                    int pos = System.Console.CursorLeft;
+                    // Déplace le curseur d'un à gauche
+                    System.Console.SetCursorPosition(pos - 1, System.Console.CursorTop);
+                    // Remplace par un espace dans la console
+                    System.Console.Write(" ");
+                    // Déplace le curseur d'une position à gauche encore
+                    System.Console.SetCursorPosition(pos - 1, System.Console.CursorTop);
+                }
+
+                key = System.Console.ReadKey(true);
+
+            }
+
+            if (Equals(user.Password, null))
+            {
+                Console.WriteLine("\nInvited player, no need to check password\n");
+                return true;
+            }
+            if (user.Password.Equals(pass.ToString()))
+            {
+                Console.WriteLine($"\nGood password, have fun {user.Pseudo}");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine($"\nIl semblerait que tu te soit trompé {user.Pseudo}, essaie à nouveau");
+                return false;
+
+            }
+        }
 
         public static int MultipleChoice(string title, bool canCancel, params string[] options)
         {
@@ -169,7 +224,7 @@ namespace ConsoleChess
                 return null;
             }
 
-            user.IsConnected = user.isPasswdConsole();
+            user.IsConnected = isPasswdConsole(user);
 
             if (!user.IsConnected)
             {
@@ -200,7 +255,7 @@ namespace ConsoleChess
 
             pseudo = enterStringCheck("pseudo");
 
-            if (!users.Any(u => u.Pseudo == pseudo))
+            if (!users.Exists(u => u.Pseudo == pseudo))
             {
                 if (!string.IsNullOrEmpty(pseudo))
                 {

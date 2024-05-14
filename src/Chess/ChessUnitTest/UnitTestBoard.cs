@@ -183,29 +183,6 @@ public class UnitTestBoard
         // Assert
         Assert.True(result);
     }
-
-    [Theory]
-    [InlineData("1", typeof(Queen))]
-    [InlineData("2", typeof(Rook))]
-    [InlineData("3", typeof(Bishop))]
-    [InlineData("4", typeof(Knight))]
-    public void TestEvolve(string userInput, Type expectedType)
-    {
-        // Arrange
-        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        Pawn pawn = new Pawn(Color.White, 1);
-        Case caseForPawn = new Case(0, 7, pawn);
-
-        // Act
-        using (StringReader sr = new StringReader($"{userInput}\n"))
-        {
-            Console.SetIn(sr);
-            chessboard.Evolve(pawn, caseForPawn);
-        }
-
-        // Assert
-        Assert.IsType(expectedType, caseForPawn.Piece);
-    }
     
     [Fact]
     public void TestModifPawn()

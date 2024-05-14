@@ -118,7 +118,7 @@ namespace ChessLibrary
             initial.Piece = null;
         }
 
-        public void checkEvolved()
+        public void CheckEvolved()
         {
         this.Board.PawnCanEvolve();
         }

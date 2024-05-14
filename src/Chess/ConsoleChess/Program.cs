@@ -39,7 +39,7 @@ namespace ConsoleChess
                 {
                     isGameOver = game.CheckGameOver(game);
                 }
-                game.checkEvolved();
+                game.CheckEvolved();
                 player++;
             }
 

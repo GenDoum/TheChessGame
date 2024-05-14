@@ -22,7 +22,7 @@ namespace ChessLibrary
 
         public override bool canMove(int x, int y, int x2, int y2)
         {
-            if (x2 < 1 || x2 > 8 || y2 < 1 || y2 > 8)
+            if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
             {
                 throw new InvalidOperationException("Invalid move for Queen: destination out of bounds.");
             }
@@ -37,10 +37,8 @@ namespace ChessLibrary
 
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
-            if (chessboard == null)
-            {
-                throw new ArgumentNullException(nameof(chessboard));
-            }
+            
+            ArgumentNullException.ThrowIfNull(chessboard, nameof(chessboard));
 
             List<Case> result = new List<Case>();
             (int, int)[] directions = { (0, 1), (0, -1), (-1, 0), (1, 0),(-1, 1), (1, 1), (-1, -1), (1, -1) };  // Top, Bot, Left, Right ,Top Left, Top Right, Bot Left,Bot Right
@@ -54,16 +52,12 @@ namespace ChessLibrary
                     if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                     {
                         Case potentialCase = chessboard.Board[newColumn, newLine];
-                        if (potentialCase.IsCaseEmpty())
+                        if (canMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
                         {
                             result.Add(potentialCase);
                         }
-                        else
+                        if (!potentialCase.IsCaseEmpty())
                         {
-                            if (potentialCase.Piece.Color != this.Color)
-                            {
-                                result.Add(potentialCase);
-                            }
                             break;
                         }
                     }
@@ -76,6 +70,7 @@ namespace ChessLibrary
 
             return result;
         }
+
 
     }
 }

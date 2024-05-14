@@ -410,7 +410,3 @@ namespace ChessLibrary
 
     }
 }
-
-
-
-

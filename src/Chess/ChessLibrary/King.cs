@@ -27,7 +27,7 @@ namespace ChessLibrary
         {
             if (Math.Abs(x - x2) <= 1 && Math.Abs(y - y2) <= 1)
             {
-                if (x2 < 1 || x2 > 8 || y2 < 1 || y2 > 8)
+                if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
                 {
                     throw new InvalidOperationException("Invalid move for King: destination out of bounds.");
                 }

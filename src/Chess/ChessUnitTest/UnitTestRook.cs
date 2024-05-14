@@ -116,7 +116,7 @@ public class UnitTestRook
         var caseForRook = new Case(0, 0, null);
 
         // Act
-        bool result = caseForRook.CaseIsFree;
+        bool result = caseForRook.IsCaseEmpty();
 
         // Assert
         Assert.True(result);
@@ -130,7 +130,7 @@ public class UnitTestRook
         var caseForRook = new Case(0, 0, rook);
 
         // Act
-        bool result = caseForRook.CaseIsFree;
+        bool result = caseForRook.IsCaseEmpty();
 
         // Assert
         Assert.False(result);

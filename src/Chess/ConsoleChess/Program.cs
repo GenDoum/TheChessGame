@@ -33,10 +33,10 @@ namespace ConsoleChess
             Console.WriteLine();
             Console.WriteLine($"-==============- {title} -==============-");
             Console.WriteLine();
-            Console.ResetColor();   //Reset la couleur du texte par défaut (à blanc)
+            Console.ResetColor();   
         }
 
-        /*
+
         public static int MultipleChoice(string title, bool canCancel, params string[] options)
         {
 
@@ -108,73 +108,6 @@ namespace ConsoleChess
 
             return currentSelection;
         }
-        */
-        public static int MultipleChoice(string title, bool canCancel, params string[] options)
-        {
-            displayTitle(title, true);
-            const uint startX = 17;
-            const uint startY = 4;
-            const int optionsPerLine = 1;
-            const int spacingPerLine = 50;
-            int currentSelection = 0;
-
-            ConsoleKey key;
-            System.Console.CursorVisible = false;
-
-            void DisplayOptions()
-            {
-                for (int i = 0; i < options.Length; i++)
-                {
-                    System.Console.SetCursorPosition((int)(startX + (i % optionsPerLine) * spacingPerLine),
-                                                     (int)(startY + i / optionsPerLine));
-                    if (i == currentSelection)
-                        System.Console.ForegroundColor = ConsoleColor.Blue;
-
-                    System.Console.Write(options[i]);
-                    System.Console.ResetColor();
-                }
-            }
-
-            bool HandleKey(ConsoleKey key)
-            {
-                switch (key)
-                {
-                    case ConsoleKey.LeftArrow:
-                        if (currentSelection % optionsPerLine > 0)
-                            currentSelection--;
-                        break;
-                    case ConsoleKey.RightArrow:
-                        if (currentSelection % optionsPerLine < optionsPerLine - 1)
-                            currentSelection++;
-                        break;
-                    case ConsoleKey.UpArrow:
-                        if (currentSelection >= optionsPerLine)
-                            currentSelection -= optionsPerLine;
-                        break;
-                    case ConsoleKey.DownArrow:
-                        if (currentSelection + optionsPerLine < options.Length)
-                            currentSelection += optionsPerLine;
-                        break;
-                    case ConsoleKey.Escape:
-                        if (canCancel)
-                            return false;
-                        break;
-                    case ConsoleKey.Enter:
-                        return false;
-                }
-                return true;
-            }
-
-            do
-            {
-                DisplayOptions();
-                key = System.Console.ReadKey(true).Key;
-            } while (HandleKey(key));
-
-            System.Console.CursorVisible = true;
-
-            return key == ConsoleKey.Enter ? currentSelection : -1;
-        }
 
 
         public static string enterStringCheck(string enter)
@@ -207,7 +140,7 @@ namespace ConsoleChess
 
         public static bool pseudoIsExists(List<User> users, string pseudo)
         {
-            return users.Any(u => u.Pseudo == pseudo);
+            return users.Exists(u => u.Pseudo == pseudo);
         }
 
         public static User? connexion(List<User> users, string pseudo)
@@ -229,12 +162,19 @@ namespace ConsoleChess
                 return null;
             }
 
+            if (user.IsConnected)
+            {
+                errorMessage($"{pseudo} est déjà connecté");
+                Thread.Sleep(1000);
+                return null;
+            }
+
             user.IsConnected = user.isPasswdConsole();
 
             if (!user.IsConnected)
             {
                 return null;
-            }
+            }            
 
             Thread.Sleep(2000);
             return user;
@@ -289,6 +229,10 @@ namespace ConsoleChess
 
                 switch (choix)
                 {
+                    case -1:
+                        break;
+
+
                     case 0:
                         string pseudoUser2 = enterStringCheck("Pseudo");
                         User? user2 = connexion(users, pseudoUser2);
@@ -296,10 +240,6 @@ namespace ConsoleChess
 
                     case 1:
                         return defaultUser;
-
-
-                    case -1:
-                        break;
 
                     default:
                         return defaultUser;
@@ -316,8 +256,6 @@ namespace ConsoleChess
         public static void menuAccueil()
         {
             int choix;
-
-            bool chechPlayer;
 
             string? pseudo = null;
 
@@ -349,7 +287,6 @@ namespace ConsoleChess
                         Console.Clear();
                         pseudo = enterStringCheck("pseudo");
                         playerOne = connexion(users, pseudo);
-                        chechPlayer = checkUserConnection(playerOne);
                         if (Equals(playerOne, null))
                             break;
 

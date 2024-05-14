@@ -336,7 +336,7 @@ namespace ChessLibrary
         }
 
 
-        public Chessboard CopyBoard()
+        public Chessboard CopyBoard() 
         {
             // Création d'une nouvelle grille de cases pour la copie
             Case[,] newBoard = new Case[8, 8];

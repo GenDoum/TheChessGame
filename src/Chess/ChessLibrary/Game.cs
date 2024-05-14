@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Numerics;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,13 +12,25 @@ namespace ChessLibrary
 {
     public class Game : IRules
     {
+        public delegate void EndGameHandler(User winner);
+        public event EndGameHandler OnEndGame;
+
+        private void DisplayEndGame(User winner)
+        {
+            Console.WriteLine($"{winner.Pseudo} wins!");
+            Console.WriteLine("Game Over!");
+        }
+        public void SetupEndEventHandler()
+        {
+            OnEndGame += DisplayEndGame;
+        }
         public User Player1 { get; set; }
         public User Player2 { get; set; }
         public Chessboard Board { get; set; }
 
         public Game(User player1, User player2)
         {
-            
+
             this.Player1 = player1;
             this.Player2 = player2;
             Case[,] allcase = new Case[8, 8];
@@ -39,9 +52,12 @@ namespace ChessLibrary
             var pieces = (actualPlayer.color == Color.White) ? game.Board.BlackPieces : game.Board.WhitePieces;
             foreach (var pieceInfo in pieces)
             {
-                if (pieceInfo.piece is King king && game.Board.Echec(king, pieceInfo.CaseLink))
+                if (pieceInfo.piece is King king)
                 {
-                    return true;
+                    if (game.Board.Echec(king, pieceInfo.CaseLink))
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -52,9 +68,12 @@ namespace ChessLibrary
             var pieces = (game.Player1.color == Color.White) ? game.Board.BlackPieces : game.Board.WhitePieces;
             foreach (var pieceInfo in pieces)
             {
-                if (pieceInfo.piece is King king && game.Board.EchecMat(king, pieceInfo.CaseLink))
+                if (pieceInfo.piece is King king)
                 {
-                    return true;
+                    if (game.Board.EchecMat(king, pieceInfo.CaseLink))
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -63,14 +82,14 @@ namespace ChessLibrary
 
         public void GameOver(User winner)
         {
-            Console.WriteLine($"Game Over! {winner.Pseudo} wins!");
+            OnEndGame(winner);
         }
 
         public void MovePiece(Case initial, Case Final, Chessboard board, User ActualPlayer)
         {
             // Validation de base pour vérifier la pièce initiale
-            if (initial?.Piece == null)
-                throw new ArgumentNullException(nameof(initial), "No piece at the initial position.");
+            if (initial.Piece == null)
+                throw new ArgumentNullException(nameof(initial.Piece), "No piece at the initial position.");
 
             // Vérifier si la pièce appartient au joueur actuel
             if (initial.Piece.Color != ActualPlayer.color)
@@ -89,7 +108,7 @@ namespace ChessLibrary
         }
 
         private void UpdatePieceLists(Case initial, Case final, Chessboard board)
-        { 
+        {
             var movedPieceInfo = new CoPieces { CaseLink = initial, piece = initial.Piece };
             var listToUpdate = initial.Piece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
 
@@ -118,9 +137,9 @@ namespace ChessLibrary
             initial.Piece = null;
         }
 
-        public void CheckEvolved()
+        public void checkEvolved()
         {
-        this.Board.PawnCanEvolve();
+            this.Board.PawnCanEvolve();
         }
     }
 }

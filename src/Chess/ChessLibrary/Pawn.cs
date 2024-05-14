@@ -23,7 +23,7 @@ namespace ChessLibrary
             this.FirstMove = true;
         }
 
-        public override bool canMove(int x, int y, int x2, int y2)
+        public override bool CanMove(int x, int y, int x2, int y2)
         {
             if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
             {

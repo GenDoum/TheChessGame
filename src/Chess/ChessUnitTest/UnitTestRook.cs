@@ -33,7 +33,7 @@ public class UnitTestRook
         var rook = new Rook(Color.White, 1);
         
         // Act
-        var result = rook.canMove(x1, y1, x2, y2);
+        var result = rook.CanMove(x1, y1, x2, y2);
         
         // Assert
         Assert.True(result);
@@ -47,7 +47,7 @@ public class UnitTestRook
         var rook = new Rook(Color.White, 1);
         
         // Act & Assert
-        Assert.Throws<InvalidOperationException>(() => rook.canMove(x1, y1, x2, y2));
+        Assert.Throws<InvalidOperationException>(() => rook.CanMove(x1, y1, x2, y2));
     }
     
     [Fact]

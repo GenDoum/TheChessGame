@@ -24,7 +24,7 @@ namespace ChessLibrary
             this.FirstMove = true;
         }
 
-        public override bool canMove(int x, int y, int x2, int y2)
+        public override bool CanMove(int x, int y, int x2, int y2)
         {
             if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
             {
@@ -39,8 +39,6 @@ namespace ChessLibrary
             throw new InvalidOperationException("Invalid move for Rook");
         }
 
-
-
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
             ArgumentNullException.ThrowIfNull(chessboard);
@@ -54,21 +52,11 @@ namespace ChessLibrary
                 {
                     int newColumn = caseInitial.Column + colInc * i;
                     int newLine = caseInitial.Line + lineInc * i;
-                    if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
+
+                    if (IsWithinBoardBoundaries(newColumn, newLine) && CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
                     {
                         Case potentialCase = chessboard.Board[newColumn, newLine];
-                        if (potentialCase.IsCaseEmpty())
-                        {
-                            result.Add(potentialCase);
-                        }
-                        else
-                        {
-                            if (potentialCase.Piece.Color != this.Color)
-                            {
-                                result.Add(potentialCase);
-                            }
-                            break;
-                        }
+                        AddPotentialMove(result, potentialCase);
                     }
                     else
                     {
@@ -78,6 +66,19 @@ namespace ChessLibrary
             }
 
             return result;
+        }
+
+        static bool IsWithinBoardBoundaries(int column, int line)
+        {
+            return column >= 0 && column < 8 && line >= 0 && line < 8;
+        }
+
+        private void AddPotentialMove(List<Case> result, Case potentialCase)
+        {
+            if (potentialCase.IsCaseEmpty() || potentialCase.Piece.Color != this.Color)
+            {
+                result.Add(potentialCase);
+            }
         }
     }
 }

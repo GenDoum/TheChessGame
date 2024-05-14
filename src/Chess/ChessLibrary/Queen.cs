@@ -20,7 +20,7 @@ namespace ChessLibrary
         {
         }
 
-        public override bool canMove(int x, int y, int x2, int y2)
+        public override bool CanMove(int x, int y, int x2, int y2)
         {
             if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
             {
@@ -52,7 +52,7 @@ namespace ChessLibrary
                     if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                     {
                         Case potentialCase = chessboard.Board[newColumn, newLine];
-                        if (canMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
+                        if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
                         {
                             result.Add(potentialCase);
                         }

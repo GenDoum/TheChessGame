@@ -23,7 +23,7 @@ namespace ChessLibrary
         }
 
 
-        public override bool canMove(int x, int y, int x2, int y2)
+        public override bool CanMove(int x, int y, int x2, int y2)
         {
             if (Math.Abs(x - x2) <= 1 && Math.Abs(y - y2) <= 1)
             {

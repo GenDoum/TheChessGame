@@ -11,7 +11,7 @@ public class UnitTestKing
         var king = new King(Color.White, 1);
         
         // Act
-        var result = king.canMove(x1, y1, x2, y2);
+        var result = king.CanMove(x1, y1, x2, y2);
         
         // Assert
         Assert.True(result);
@@ -25,7 +25,7 @@ public class UnitTestKing
         var king = new King(Color.White, 1);
         
         // Act and Assert
-        Assert.Throws<InvalidOperationException>(() => king.canMove(x1, y1, x2, y2));
+        Assert.Throws<InvalidOperationException>(() => king.CanMove(x1, y1, x2, y2));
     }
     
     [Fact]

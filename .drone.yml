@@ -42,3 +42,15 @@ steps:
       - dotnet sonarscanner end /d:sonar.login=$${PLUGIN_SONAR_TOKEN}
     depends_on: [tests]
 
+  - name: generate-and-deploy-docs
+    image: hub.codefirst.iut.uca.fr/maxime.batista/codefirst-docdeployer
+    failure: ignore
+    commands:
+      - /entrypoint.sh -l Documentation/doxygen -t doxygen 
+    when:
+      branch:
+        - csharp
+      event:
+        - push
+    depends_on: [ build, tests ]
+

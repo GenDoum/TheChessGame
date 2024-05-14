@@ -6,14 +6,6 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
-    /// <summary>
-    /// Structure pour facilité la gestion des pièces
-    /// </summary>
-    public struct CoPieces
-    {
-        public Case CaseLink { get; set; }
-        public Piece piece { get; set; }
-    };
 
     public class Chessboard : IBoard
     {
@@ -47,7 +39,7 @@ namespace ChessLibrary
         /// <summary>
         /// Initialize an empty chessboard.
         /// </summary>
-        private void InitializeEmptyBoard()
+        public void InitializeEmptyBoard()
         {
             for (int column = 0; column < 8; column++)
             // Loop through all rows
@@ -64,7 +56,7 @@ namespace ChessLibrary
         /// <summary>
         /// Initialize a chessboard with all pieces at their initial position,using multiple functions to initialize each type of pieces.
         /// </summary>
-        private void InitializeChessboard()
+        public void InitializeChessboard()
         {
             // Call the functions to initialize the white pieces
             InitializeWhitePieces();
@@ -77,7 +69,7 @@ namespace ChessLibrary
         /// <summary>
         /// Initialize all white pieces at their initial position.
         /// </summary>
-        private void InitializeWhitePieces()
+        public void InitializeWhitePieces()
         {
             int identifiantBlanc = 1;
             // Add the white pieces to the chessboard and to the list of white pieces
@@ -100,7 +92,7 @@ namespace ChessLibrary
         /// <summary>
         /// Initialize all black pieces at their initial position.
         /// </summary>
-        private void InitializeBlackPieces()
+        public void InitializeBlackPieces()
         {
             int identifiantNoir = 1;
             // Add the black pieces to the chessboard and to the list of black pieces
@@ -123,7 +115,7 @@ namespace ChessLibrary
         /// <summary>
         /// Fill the empty cases of the chessboard with null pieces.
         /// </summary>
-        private void FillEmptyCases()
+        public void FillEmptyCases()
         {
             for (int row = 2; row <= 5; row++)
             // Loop through all rows
@@ -144,7 +136,7 @@ namespace ChessLibrary
         /// <param name="piece"></param>
         /// <param name="column"></param>
         /// <param name="row"></param>
-        private void AddPiece(Piece piece, int column, int row)
+        public void AddPiece(Piece piece, int column, int row)
         {
             // Add the piece to the chessboard
             Board[column, row] = new Case(column, row, piece);
@@ -231,7 +223,7 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="P"></param>
         /// <param name="C"></param>
-        private void Evolve(Pawn P, Case C)
+        public void Evolve(Pawn P, Case C)
         {
             Queen NewQueen;
             Rook NewRook;
@@ -279,15 +271,15 @@ namespace ChessLibrary
         /// <param name="pi"></param>
         /// <param name="c"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        private void ModifPawn(Pawn P, Piece pi, Case c)
+        public void ModifPawn(Pawn P, Piece pi, Case c)
         {
             if (pi == null)
             {//Check if the new piece is null
-                throw new ArgumentNullException(nameof(Pawn));
+                throw new ArgumentNullException(nameof(P));
             }
             if (P == null)
             {//Check if the Pawn is null
-                throw new ArgumentNullException(nameof(Pawn));
+                throw new ArgumentNullException(nameof(P));
             }
 
             if (pi.Color == Color.White)
@@ -410,7 +402,3 @@ namespace ChessLibrary
 
     }
 }
-
-
-
-

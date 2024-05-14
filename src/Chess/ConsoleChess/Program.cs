@@ -1,122 +1,118 @@
 using System;
-using System.Linq.Expressions;
 using ChessLibrary;
+
 namespace ConsoleChess
 {
     class Program
     {
-
-        static void Main(string[] args)
+        static void Main()
         {
             User player1 = new User("Player 1", "mdp", Color.White, false, new List<Piece>(), 0);
             User player2 = new User("Player 2", "mdp", Color.Black, false, new List<Piece>(), 0);
             Game game = new Game(player1, player2);
             int player = 1;
-            User actualPlayer = player1;
-            bool IsGameOver = false;
-            while (!IsGameOver)
+            bool isGameOver = false;
+            DisplayBoard(game.Board);
+            while (!isGameOver)
             {
-                if (player % 2 == 0)
-                {
-                    actualPlayer = player2;
-                    Console.WriteLine("Player 2 turn");
-                }
-                else
-                {
-                    actualPlayer = player1;
-                    Console.WriteLine("Player 1 turn");
-                }
+                User actualPlayer = (player % 2 == 0) ? player2 : player1;
+                Console.WriteLine($"{actualPlayer.Pseudo}'s turn");
+
                 try
                 {
-                    DisplayBoard(game.Board);
-                    Console.WriteLine("Enter the column of the piece you want to move:");
-                    int column = int.Parse(Console.ReadLine());
-                    Console.WriteLine("Enter the row of the piece you want to move:");
-                    int row = int.Parse(Console.ReadLine());
-                    Console.WriteLine("Enter the column of the destination:");
-                    int column2 = int.Parse(Console.ReadLine());
-                    Console.WriteLine("Enter the row of the destination:");
-                    int row2 = int.Parse(Console.ReadLine());
-                   game.MovePiece(game.Board.Board[column, row], game.Board.Board[column2, row2], game.Board, actualPlayer);
+                    (int startColumn, int startRow) = GetMoveCoordinates("Enter the position of the piece you want to move (a1, f7 ...):");
+                    (int endColumn, int endRow) = GetMoveCoordinates("Enter the destination position (a1, f7 ...):");
+
+                    game.MovePiece(game.Board.Board[startColumn, startRow], game.Board.Board[endColumn, endRow], game.Board, actualPlayer);
                     DisplayBoard(game.Board);
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
-                    player -= 1;
+                    Console.WriteLine($"Error: {e.Message}");
+                    player--; // Retry the same player's turn
                 }
-                var test = (actualPlayer.color == Color.White) ? game.Board.WhitePieces : game.Board.BlackPieces;
-                foreach (var i in test)
+
+                if( game.CheckChec(game, actualPlayer)) 
                 {
-                    if (i.piece.GetType().Name == "King")
-                    {
-                        if (game.Board.Echec((King)i.piece, i.CaseLink))
-                        {
-                            IsGameOver = true;
-                        }
-                    }
+                    isGameOver = game.CheckGameOver(game);
                 }
                 player++;
             }
-            game.GameOver(actualPlayer);
 
+            game.GameOver(player % 2 == 0 ? player1 : player2);
         }
+
+
+        static (int, int) GetMoveCoordinates(string prompt)
+        {
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine(prompt);
+                    string pos = Console.ReadLine();
+                    return ParseChessNotation(pos);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Invalid input: {e.Message}. Please try again.");
+                }
+            }
+        }
+
+
 
         static void DisplayBoard(Chessboard chessboard)
         {
-            Console.WriteLine("   0   1   2   3   4   5   6   7");
+            Console.WriteLine("   a   b   c   d   e   f   g   h");
             Console.WriteLine(" +---+---+---+---+---+---+---+---+");
-            for (int column = 0; column < 8; column++)
+            for (int row = 0; row < 8; row++)
             {
-                Console.Write((column) + "|");
-                for (int row = 0; row < 8; row++)
+                Console.Write((8 - row) + " |");
+                for (int column = 0; column < 8; column++)
                 {
-                    Piece piece = null;
-                    if (chessboard.Board[row, column] != null)
+                    var square = chessboard.Board[column, row];
+                    string pieceSymbol = square?.Piece != null ? GetPieceSymbol(square.Piece) : " ";
+                    ConsoleColor originalColor = Console.ForegroundColor;
+                    if (square?.Piece != null && square.Piece.Color != Color.White)
                     {
-                        piece = chessboard.Board[row, column].Piece;
-                        // rest of the code
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
                     }
-                    if (piece != null)
-                    {
-                        string pieceSymbol = GetPieceSymbol(piece);
-                        Console.Write(" ");
-                        if (piece.Color != Color.White)
-                        {
-                            Console.ForegroundColor = ConsoleColor.DarkMagenta;
-                            Console.Write(pieceSymbol);
-                            Console.ResetColor();
-                            Console.Write(" |");
-
-                        }
-                        else
-                        {
-                            Console.Write(pieceSymbol + " |");
-                        }
-                    }
-                    else
-                    {
-                        Console.Write("   |");
-                    }
+                    Console.Write($" {pieceSymbol} ");
+                    Console.ForegroundColor = originalColor;
+                    Console.Write("|");
                 }
-                Console.WriteLine((column));
+                Console.WriteLine($" {8 - row}");
                 Console.WriteLine(" +---+---+---+---+---+---+---+---+");
             }
-            Console.WriteLine("   0   1   2   3   4   5   6   7");
+            Console.WriteLine("   a   b   c   d   e   f   g   h");
         }
 
         static string GetPieceSymbol(Piece piece)
         {
-            switch (piece.GetType().Name)
+            return piece.GetType().Name switch
             {
-                case "Pawn": return "P";
-                case "Rook": return "R";
-                case "Knight": return "C";
-                case "Bishop": return "B";
-                case "Queen": return "Q";
-                case "King": return "K";
-                default: return "?";
+                "Pawn" => "P",
+                "Rook" => "R",
+                "Knight" => "C",
+                "Bishop" => "B",
+                "Queen" => "Q",
+                "King" => "K",
+                _ => "?",
+            };
+        }
+
+        static (int column, int row) ParseChessNotation(string notation)
+        {
+            if (notation.Length != 2 || notation[0] < 'a' || notation[0] > 'h' || notation[1] < '1' || notation[1] > '8')
+            {
+                throw new ArgumentException("Invalid chess notation.");
             }
+
+            int column = notation[0] - 'a';
+            int row = 8 - (notation[1] - '0'); 
+
+            return (column, row);
         }
     }
 }

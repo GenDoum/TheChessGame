@@ -25,7 +25,7 @@ namespace ChessLibrary
 
         public override bool canMove(int x, int y, int x2, int y2)
         {
-            if (x2 < 1 || x2 > 8 || y2 < 1 || y2 > 8)
+            if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
             {
                 throw new InvalidOperationException("Invalid move for Pawn: destination out of bounds.");
             }
@@ -50,20 +50,27 @@ namespace ChessLibrary
 
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
-            if (chessboard == null)
-            {
-                throw new ArgumentNullException(nameof(chessboard));
-            }
-            List<Case> result = new List<Case>();
+            ArgumentNullException.ThrowIfNull(chessboard);
 
-            int direction = this.Color == Color.White ? 1 : -1; // Blanc vers le haut (-1), Noir vers le bas (+1)
+            List<Case> result = new List<Case>();
+            int direction = this.Color == Color.White ? 1 : -1; // Blanc vers le haut (+1), Noir vers le bas (-1)
 
             // Mouvements normaux (1 ou 2 cases)
+            AddNormalMoves(caseInitial, chessboard, direction, result);
+
+            // Capture diagonale (gauche et droite)
+            AddDiagonalCaptures(caseInitial, chessboard, direction, result);
+
+            return result;
+        }
+
+        private void AddNormalMoves(Case caseInitial, Chessboard chessboard, int direction, List<Case> result)
+        {
             for (int i = 1; i <= (FirstMove ? 2 : 1); i++)
             {
                 int newLine = caseInitial.Line + direction * i;
                 int newColumn = caseInitial.Column;
-                if (newLine >= 0 && newLine < chessboard.Board.GetLength(0))
+                if (IsWithinBoard(newLine, newColumn, chessboard))
                 {
                     Case potentialCase = chessboard.Board[newColumn, newLine];
                     if (potentialCase.IsCaseEmpty())
@@ -76,14 +83,16 @@ namespace ChessLibrary
                     }
                 }
             }
+        }
 
-            // Capture diagonale (gauche et droite)
+        private void AddDiagonalCaptures(Case caseInitial, Chessboard chessboard, int direction, List<Case> result)
+        {
             int[] captureColumns = new int[] { caseInitial.Column - 1, caseInitial.Column + 1 };
             foreach (int col in captureColumns)
             {
-                if (col >= 0 && col < chessboard.Board.GetLength(1))
+                int newLine = caseInitial.Line + direction;
+                if (IsWithinBoard(newLine, col, chessboard))
                 {
-                    int newLine = caseInitial.Line + direction;
                     Case potentialCase = chessboard.Board[col, newLine];
                     if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
                     {
@@ -91,8 +100,12 @@ namespace ChessLibrary
                     }
                 }
             }
-            return result;
         }
 
+        private bool IsWithinBoard(int line, int column, Chessboard chessboard)
+        {
+            return line >= 0 && line < chessboard.Board.GetLength(1) && column >= 0 && column < chessboard.Board.GetLength(0);
+        }
     }
+
 }

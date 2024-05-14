@@ -12,8 +12,13 @@ namespace ConsoleChess
             User player2 = new User("Player 2", "mdp", Color.Black, false, new List<Piece>(), 0);
 
             Game game = new Game(player1, player2);
-            game.Board.SetupEvolveEventHandler();
-            game.SetupEndEventHandler();
+            
+            game.EvolveNotified += (sender, args) =>
+            {
+                ChoiceUser choice = GetUserChoice();
+                Evolve(game, args.Pawn, args.Case, choice);
+            };
+            
             int player = 1;
             bool isGameOver = false;
             DisplayBoard(game.Board);
@@ -40,7 +45,6 @@ namespace ConsoleChess
                 {
                     isGameOver = game.CheckGameOver(game);
                 }
-                game.checkEvolved();
                 player++;
             }
 
@@ -65,7 +69,58 @@ namespace ConsoleChess
             }
         }
 
+        /// <summary>
+        /// Change a Pawn to another piece.
+        /// </summary>
+        /// <param name="P"></param>
+        /// <param name="C"></param>
+        static void Evolve(Game game, Pawn P, Case C, ChoiceUser choiceUser)
+        {
+            Queen newQueen;
+            Rook newRook;
+            Knight newKnight;
+            Bishop newBishop;
 
+            switch (choiceUser)
+            {
+                case ChoiceUser.Queen:
+                    newQueen = new Queen(P.Color, P.id);
+                    C.Piece = newQueen;
+                    game.Board.ModifPawn(P, newQueen, C);
+                    return;
+
+                case ChoiceUser.Rook:
+                    newRook = new Rook(P.Color, P.id);
+                    C.Piece = newRook;
+                    game.Board.ModifPawn(P, newRook, C);
+                    return;
+                case ChoiceUser.Bishop:
+                    newBishop = new Bishop(P.Color, P.id);
+                    C.Piece = newBishop;
+                    game.Board.ModifPawn(P, newBishop, C);
+                    return;
+                case ChoiceUser.Knight:
+                    newKnight = new Knight(P.Color, P.id);
+                    C.Piece = newKnight;
+                    game.Board.ModifPawn(P, newKnight, C);
+                    return;
+                default:
+                    break;
+            }
+        }
+        
+        static ChoiceUser GetUserChoice()
+        {
+            Console.WriteLine("Choose the piece to evolve to:");
+            Console.WriteLine("1. Queen");
+            Console.WriteLine("2. Rook");
+            Console.WriteLine("3. Bishop");
+            Console.WriteLine("4. Knight");
+
+            int choice = Convert.ToInt32(Console.ReadLine());
+
+            return (ChoiceUser)choice;
+        }
 
         static void DisplayBoard(Chessboard chessboard)
         {

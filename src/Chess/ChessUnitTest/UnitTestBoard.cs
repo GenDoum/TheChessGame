@@ -178,7 +178,7 @@ public class UnitTestBoard
         Case Final = new Case(0, 1, null);
 
         // Act
-        bool result = chessboard.MovePiece(piece, Initial, Final);
+        bool result = chessboard.CanMovePiece(piece, Initial, Final);
 
         // Assert
         Assert.True(result);

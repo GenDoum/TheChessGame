@@ -12,18 +12,11 @@ namespace ChessLibrary
 {
     public class Game : IRules
     {
-        public delegate void EndGameHandler(User winner);
-        public event EndGameHandler OnEndGame;
-
-        private void DisplayEndGame(User winner)
-        {
-            Console.WriteLine($"{winner.Pseudo} wins!");
-            Console.WriteLine("Game Over!");
-        }
-        public void SetupEndEventHandler()
-        {
-            OnEndGame += DisplayEndGame;
-        }
+        public event EventHandler<EvolveNotifiedEventArgs> EvolveNotified;
+        
+        protected virtual void OnEvolvePiece(EvolveNotifiedEventArgs args)
+            => EvolveNotified?.Invoke(this, args);
+        
         public User Player1 { get; set; }
         public User Player2 { get; set; }
         public Chessboard Board { get; set; }
@@ -82,7 +75,6 @@ namespace ChessLibrary
 
         public void GameOver(User winner)
         {
-            OnEndGame(winner);
         }
 
         public void MovePiece(Case initial, Case Final, Chessboard board, User ActualPlayer)
@@ -96,10 +88,17 @@ namespace ChessLibrary
                 throw new InvalidOperationException("It's not this player's turn.");
 
             // Effectuer le déplacement
-            if (board.MovePiece(initial.Piece, initial, Final))
+            if (board.CanMovePiece(initial.Piece, initial, Final))
             {
                 UpdatePieceLists(initial, Final, board);
                 ProcessPostMove(initial, Final);
+
+                // Vérifier si la case finale est un pion et qu'elle peut évoluer
+                if (Final.Piece is Pawn && (Final.Line == 0 || Final.Line == 7))
+                {
+                    // Dans ce cas, on doit demander au joueur quelle pièce il veut. (Avec un événement)
+                    OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = Final.Piece as Pawn, Case = Final });
+                }
             }
             else
             {
@@ -135,11 +134,6 @@ namespace ChessLibrary
             // Mettre à jour les positions des cases
             final.Piece = initial.Piece;
             initial.Piece = null;
-        }
-
-        public void checkEvolved()
-        {
-            this.Board.PawnCanEvolve();
         }
     }
 }

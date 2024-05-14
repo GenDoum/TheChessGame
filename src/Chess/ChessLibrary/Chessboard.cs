@@ -10,12 +10,6 @@ namespace ChessLibrary
 
     public class Chessboard : IBoard
     {
-        public delegate void EvolveHandler(out string result);
-        public event EvolveHandler OnEvolve;
-        public void SetupEvolveEventHandler()
-        {
-            OnEvolve += DisplayEvolveOptions;
-        }
 
         private void DisplayEvolveOptions(out string result)
         {
@@ -188,90 +182,13 @@ namespace ChessLibrary
         /// <param name="Initial"></param>
         /// <param name="Final"></param>
         /// <returns>Bool True if we can move the piece</returns>
-        public bool MovePiece(Piece piece, Case Initial, Case Final)
+        public bool CanMovePiece(Piece piece, Case Initial, Case Final)
         {
             List<Case> L = piece.PossibleMoves(Initial, this);
             // Create a list of possible moves
             return IsMoveValid(L, Final);
         }
-
-        /// <summary>
-        /// Check if a Pawn can be evolved and call the function Evolve to change the Pawn to another piece.
-        /// </summary>
-        /// <returns>Bool,True if a Pawn can Evolved , False if not</returns>
-        public bool PawnCanEvolve()
-        {
-            //Check if pawn is on line 8 and if he is white to processes for the evolved
-            for (int col = 0; col < 8; col++)
-            {
-                if (Board[col, 7].Piece is Pawn && Board[col, 7].Piece.Color == Color.White)
-                { //Check if pawn is on line 1 and if he is white to processes for the evolved
-                    Evolve(Board[col, 7].Piece as Pawn, Board[col, 7]);
-                    return true;
-                }
-            }
-
-            for (int col = 0; col < 8; col++)
-            {
-                if (Board[col, 0].Piece is Pawn && Board[col, 0].Piece.Color == Color.Black)
-                {//Check if pawn is on line 1 and if he is black to processes for the evolved
-                    Evolve(Board[col, 0].Piece as Pawn, Board[col, 0]);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Change a Pawn to another piece.
-        /// </summary>
-        /// <param name="P"></param>
-        /// <param name="C"></param>
-        public void Evolve(Pawn P, Case C)
-        {
-            string result = string.Empty;
-            // Déclencher l'événement pour obtenir l'entrée de l'utilisateur
-            OnEvolve?.Invoke(out result);
-
-            Queen NewQueen;
-            Rook NewRook;
-            Knight NewKnight;
-            Bishop NewBishop;
-
-            while (true)
-            {
-                switch (result)
-                {
-                    case "1":
-                        NewQueen = new Queen(P.Color, P.id);
-                        C.Piece = NewQueen;
-                        ModifPawn(P, NewQueen, C);
-                        return;
-
-                    case "2":
-                        NewRook = new Rook(P.Color, P.id);
-                        C.Piece = NewRook;
-                        ModifPawn(P, NewRook, C);
-                        return;
-                    case "3":
-                        NewBishop = new Bishop(P.Color, P.id);
-                        C.Piece = NewBishop;
-                        ModifPawn(P, NewBishop, C);
-                        return;
-                    case "4":
-                        NewKnight = new Knight(P.Color, P.id);
-                        C.Piece = NewKnight;
-                        ModifPawn(P, NewKnight, C);
-                        return;
-                    default:
-                        OnEvolve?.Invoke(out result);
-                        break;
-                }
-            }
-        }
-
-
+        
         /// <summary>
         /// Modify the list of pieces when a Pawn is evolved,add the new piece and remove the Pawn.
         /// </summary>
@@ -301,7 +218,6 @@ namespace ChessLibrary
 
         }
 
-
         //To do for create class King
         /// <summary>
         /// Check if the King is in check position.
@@ -317,7 +233,7 @@ namespace ChessLibrary
             foreach (var enemy in enemyPieces)
             //Loop through all enemy pieces
             {
-                if (MovePiece(enemy.piece, enemy.CaseLink, KingCase))
+                if (CanMovePiece(enemy.piece, enemy.CaseLink, KingCase))
                 //Check if the enemy piece can move to the King case
                 {
                     return true;
@@ -369,7 +285,7 @@ namespace ChessLibrary
             foreach (var move in possibleKingMoves)
             {
                 var simulatedBoard = CopyBoard(); 
-                simulatedBoard.MovePiece(king, KingCase, move);
+                simulatedBoard.CanMovePiece(king, KingCase, move);
 
                 if (!simulatedBoard.Echec(king, move))
                     return false; // Le roi a une issue
@@ -385,7 +301,7 @@ namespace ChessLibrary
                 foreach (var move in possibleMoves)
                 {
                     var simulatedBoard = CopyBoard();
-                    simulatedBoard.MovePiece(piece, startCase, move);
+                    simulatedBoard.CanMovePiece(piece, startCase, move);
 
                     if (!simulatedBoard.Echec(king, KingCase))
                         return false;

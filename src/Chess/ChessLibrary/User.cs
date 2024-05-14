@@ -100,29 +100,13 @@ namespace ChessLibrary
         /// </summary>
         private bool isConnected;
 
-        /// <summary>
-        /// Public list of pieces of the player
-        /// </summary>
-        public List<Piece> Pieces
-        {
-            get => pieces;
-            set
-            {
-                pieces = value;
-            }
-        }
-        /// <summary>
-        /// Private list of pieces of the player
-        /// </summary>
-        private List<Piece> pieces;
-
 
         /// <summary>
         /// Constructor of Player with parameters
         /// </summary>
         /// <param name="pseudo"></param>
         /// <param name="password"></param>
-        public User(string pseudo, string password, Color color, bool connected, List<Piece> listPieces, int playerScore)
+        public User(string pseudo, string password, Color color, bool connected, int playerScore)
         {
             if (string.IsNullOrWhiteSpace(pseudo))
             {
@@ -134,7 +118,6 @@ namespace ChessLibrary
             this.color = color;
             Score = playerScore;
             IsConnected = connected;
-            Pieces = listPieces;
         
         }
 

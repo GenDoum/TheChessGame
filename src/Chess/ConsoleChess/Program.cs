@@ -202,7 +202,7 @@ class Program
             if ( !string.IsNullOrEmpty(pseudo) ) 
             {
                 psswd = enterStringCheck("Mot de passe");
-                User user = new User(pseudo, psswd, Color.White, false, new List<Piece>(), 0);
+                User user = new User(pseudo, psswd, Color.White, false, 0);
                 users.Add(user);
             }
 
@@ -255,8 +255,8 @@ class Program
         Color noir = Color.Black;
         Color blanc = Color.White;
 
-        User balko = new User("MatheoB", "chef", noir, false, new List<Piece>(), 0);
-        User hersan = new User("MatheoH", "proMac", blanc, false, new List<Piece>(), 0);
+        User balko = new User("MatheoB", "chef", noir, false, 0);
+        User hersan = new User("MatheoH", "proMac", blanc, false, 0);
 
         User? playerOne = null;
         User? playerTwo = null;

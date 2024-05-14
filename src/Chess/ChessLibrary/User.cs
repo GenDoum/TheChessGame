@@ -21,18 +21,12 @@ namespace ChessLibrary
             get => pseudo;
             set
             {
-                if (pseudo == value)
-                {
-                    return;
-                }
-
                 pseudo = value;
 
                 if ( string.IsNullOrWhiteSpace(Pseudo))
                 {
-                    throw new ArgumentException("Pseudo or password must be entered and must not be full of white space");
+                    throw new ArgumentException("Pseudo or password must be entered and must not be full of white space", nameof(Pseudo));
                 }
-
             }
         }
         private string pseudo;
@@ -40,22 +34,12 @@ namespace ChessLibrary
         /// <summary>
         /// Password of the Player
         /// </summary>
-        public string Password
+        public string? Password
         {
             get => password;
             set
             {
-                if (password == value)
-                {
-                    return;
-                }
-
                 password = value;
-
-                if (string.IsNullOrWhiteSpace(Password))
-                {
-                    throw new ArgumentException("Pseudo or password must be entered and must not be full of white space");
-                }
 
             }
 
@@ -64,12 +48,20 @@ namespace ChessLibrary
         /// <summary>
         /// Private password of the user
         /// </summary>
-        private string password;
+        private string? password;
 
         /// <summary>
         /// Type for know the color of the player
         /// </summary>
-        public Color color;
+        /// 
+        public Color Color
+        {
+            get { return color; }
+            set { color = value; }
+            
+        }
+        private Color color;
+
 
         /// <summary>
         /// Score of the player
@@ -95,11 +87,6 @@ namespace ChessLibrary
             get;
             set;
         }
-        /// <summary>
-        /// Private boolean of the player
-        /// </summary>
-        private bool isConnected;
-
 
         /// <summary>
         /// Constructor of Player with parameters
@@ -115,7 +102,7 @@ namespace ChessLibrary
 
             Pseudo = pseudo;
             Password = password;
-            this.color = color;
+            this.Color = color;
             Score = playerScore;
             IsConnected = connected;
         
@@ -137,25 +124,23 @@ namespace ChessLibrary
         /// <returns>It return a boolean which say if the user has entering the good password of not</returns>
         public bool isPasswdConsole()
         {
-
             Console.WriteLine($"Hello {Pseudo}, Enter your password please");
 
             ConsoleKeyInfo key;
-            string pass = "";
             key = System.Console.ReadKey(true);
-
+            StringBuilder pass = new StringBuilder();
             while ( key.Key != ConsoleKey.Enter )
             {
 
                 if (key.Key != ConsoleKey.Backspace)
                 {
-                    pass += key.KeyChar;
+                    pass.Append(key.KeyChar);
                     Console.Write("*");
                 }
-                else if (key.Key == ConsoleKey.Backspace && !string.IsNullOrEmpty(pass))
+                else if (key.Key == ConsoleKey.Backspace && pass.Length > 0)
                 {
                     // Supprime un élément de la liste de char de pass
-                    pass = pass.Substring(0, pass.Length - 1);
+                    pass.Remove(pass.Length - 1, 1);
                     // Récupère la position du curseur
                     int pos = System.Console.CursorLeft;
                     // Déplace le curseur d'un à gauche
@@ -175,7 +160,7 @@ namespace ChessLibrary
                 Console.WriteLine("\nInvited player, no need to check password\n");
                 return true;
             }
-            if ( Equals(this.Password, pass) )
+            if ( this.password.Equals(pass.ToString()) )
             {
                 Console.WriteLine($"\nGood password, have fun {Pseudo}");
                 return true;

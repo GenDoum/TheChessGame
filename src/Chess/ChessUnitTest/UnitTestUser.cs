@@ -63,7 +63,7 @@ public class UnitTestUser
 
         Assert.Equal(pseudo, user.Pseudo);
         Assert.Equal(password, user.Password);
-        Assert.True(Equals(user.color, Color.White) || Equals(user.color, Color.Black));
+        Assert.True(Equals(user.Color, Color.White) || Equals(user.Color, Color.Black));
     }
 
     [Theory]
@@ -72,8 +72,8 @@ public class UnitTestUser
     {
         var user = new User(pseudo, password, color, connected, score);
 
-        Assert.NotNull(user.color);
-        Assert.True(Equals(user.color, Color.White) || Equals(user.color, Color.Black));
+        Assert.NotNull(user.Color);
+        Assert.True(Equals(user.Color, Color.White) || Equals(user.Color, Color.Black));
     }
 
     [Theory]

@@ -70,15 +70,15 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="pseudo"></param>
         /// <param name="password"></param>
-        public User(string pseudo, string password, Color color, bool connected, int playerScore)
+        public User(string pseudo, string? password, Color color, bool connected, int playerScore)
         {
             if (string.IsNullOrWhiteSpace(pseudo))
             {
                 throw new ArgumentException("Pseudo or password must be entered and must not be full of white space");
             }
 
-            Pseudo = pseudo;
-            Password = password;
+            this.pseudo = pseudo;
+            this.Password = password;
             this.Color = color;
             Score = playerScore;
             IsConnected = connected;
@@ -91,7 +91,7 @@ namespace ChessLibrary
         /// </summary>
         public User()
         {
-            Pseudo = "Invité";
+            pseudo = "Invité";
             Password = null;
         }
 

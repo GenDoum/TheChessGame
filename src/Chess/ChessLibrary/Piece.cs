@@ -31,7 +31,7 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="color"></param>
         /// <param name="indentifiant"></param>
-        public Piece(Color color, int indentifiant)
+        protected Piece(Color color, int indentifiant)
         {
             Color = color;
             Id = indentifiant;

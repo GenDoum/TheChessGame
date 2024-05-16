@@ -160,7 +160,7 @@ namespace ChessLibrary
         /// <returns> Bool True if the move is in the list of possible move Valid,false if is not</returns>
         public bool IsMoveValid(List<Case> Lcase, Case Final)
         {
-            return Lcase.Any(i => i.Column == Final.Column && i.Line == Final.Line);
+            return Lcase.Exists(i => i.Column == Final.Column && i.Line == Final.Line);
         }
 
 
@@ -181,20 +181,20 @@ namespace ChessLibrary
         /// <summary>
         /// Modify the list of pieces when a Pawn is evolved,add the new piece and remove the Pawn.
         /// </summary>
-        /// <param name="P"></param>
+        /// <param name="p"></param>
         /// <param name="pi"></param>
         /// <param name="c"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public void ModifPawn(Pawn P, Piece pi, Case c)
+        public void ModifPawn(Pawn p, Piece pi, Case c)
         {
             ArgumentNullException.ThrowIfNull(pi);
-            ArgumentNullException.ThrowIfNull(P);
+            ArgumentNullException.ThrowIfNull(p);
 
             if (pi.Color == Color.White)
             {
                 //Add the new piece to the list of white pieces and remove the Pawn
                 this.WhitePieces.Add(new CoPieces { CaseLink = c, piece = pi });
-                this.WhitePieces.Remove(new CoPieces { CaseLink = c, piece = P });
+                this.WhitePieces.Remove(new CoPieces { CaseLink = c, piece = p });
 
             }
 
@@ -202,7 +202,7 @@ namespace ChessLibrary
             {
                 //Add the new piece to the list of black pieces and remove the Pawn
                 this.BlackPieces.Add(new CoPieces { CaseLink = c, piece = pi });
-                this.BlackPieces.Remove(new CoPieces { CaseLink = c, piece = P });
+                this.BlackPieces.Remove(new CoPieces { CaseLink = c, piece = p });
             }
 
         }
@@ -211,13 +211,13 @@ namespace ChessLibrary
         /// <summary>
         /// Check if the King is in check position.
         /// </summary>
-        /// <param name="myKing"></param>
-        /// <param name="KingCase"></param>
+        /// <param name="king"></param>
+        /// <param name="kingCase"></param>
         /// <returns></returns>
 
         public bool Echec(King king, Case kingCase)
         {
-            List<CoPieces> enemyPieces = (king.Color == Color.White) ? BlackPieces : WhitePieces;
+            List<CoPieces>? enemyPieces = (king.Color == Color.White) ? BlackPieces : WhitePieces;
 
             foreach (var enemy in enemyPieces)
             {
@@ -274,7 +274,7 @@ namespace ChessLibrary
 
         public bool EchecMat(King king, Case kingCase)
         {
-            // Obtenez tous les mouvements possibles pour le roi
+            // Obtenez tous les mouvements possibles pour le roi       
             var possibleKingMoves = king.PossibleMoves(kingCase, this);
 
             // Vérifiez si le roi peut échapper à l'échec
@@ -292,6 +292,7 @@ namespace ChessLibrary
             var allyPieces = (king.Color == Color.White) ? WhitePieces : BlackPieces;
 
             // Vérifiez si une pièce alliée peut protéger le roi
+            if (allyPieces == null) return true;
             foreach (var pieceInfo in allyPieces)
             {
                 var piece = pieceInfo.piece;

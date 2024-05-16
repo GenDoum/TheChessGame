@@ -84,23 +84,23 @@ namespace ConsoleChess
             switch (choiceUser)
             {
                 case ChoiceUser.Queen:
-                    newQueen = new Queen(P.Color, P.id);
+                    newQueen = new Queen(P.Color, P.Id);
                     C.Piece = newQueen;
                     game.Board.ModifPawn(P, newQueen, C);
                     return;
 
                 case ChoiceUser.Rook:
-                    newRook = new Rook(P.Color, P.id);
+                    newRook = new Rook(P.Color, P.Id);
                     C.Piece = newRook;
                     game.Board.ModifPawn(P, newRook, C);
                     return;
                 case ChoiceUser.Bishop:
-                    newBishop = new Bishop(P.Color, P.id);
+                    newBishop = new Bishop(P.Color, P.Id);
                     C.Piece = newBishop;
                     game.Board.ModifPawn(P, newBishop, C);
                     return;
                 case ChoiceUser.Knight:
-                    newKnight = new Knight(P.Color, P.id);
+                    newKnight = new Knight(P.Color, P.Id);
                     C.Piece = newKnight;
                     game.Board.ModifPawn(P, newKnight, C);
                     return;

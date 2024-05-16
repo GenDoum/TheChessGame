@@ -45,12 +45,9 @@ namespace ChessLibrary
             var pieces = (actualPlayer.color == Color.White) ? game.Board.BlackPieces : game.Board.WhitePieces;
             foreach (var pieceInfo in pieces)
             {
-                if (pieceInfo.piece is King king)
+                if (pieceInfo.piece is King king && game.Board.Echec(king, pieceInfo.CaseLink))
                 {
-                    if (game.Board.Echec(king, pieceInfo.CaseLink))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;
@@ -61,27 +58,25 @@ namespace ChessLibrary
             var pieces = (game.Player1.color == Color.White) ? game.Board.BlackPieces : game.Board.WhitePieces;
             foreach (var pieceInfo in pieces)
             {
-                if (pieceInfo.piece is King king)
+                if (pieceInfo.piece is King king && game.Board.EchecMat(king, pieceInfo.CaseLink))
                 {
-                    if (game.Board.EchecMat(king, pieceInfo.CaseLink))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;
 
         }
 
+        
         public void GameOver(User winner)
         {
+            // This method is currently empty because the game over logic has not been implemented yet.
         }
 
         public void MovePiece(Case initial, Case Final, Chessboard board, User ActualPlayer)
         {
             // Validation de base pour vérifier la pièce initiale
-            if (initial.Piece == null)
-                throw new ArgumentNullException(nameof(initial.Piece), "No piece at the initial position.");
+            ArgumentNullException.ThrowIfNull(initial);
 
             // Vérifier si la pièce appartient au joueur actuel
             if (initial.Piece.Color != ActualPlayer.color)
@@ -94,7 +89,7 @@ namespace ChessLibrary
                 ProcessPostMove(initial, Final);
 
                 // Vérifier si la case finale est un pion et qu'elle peut évoluer
-                if (Final.Piece is Pawn && (Final.Line == 0 || Final.Line == 7))
+                if (Final is { Piece: Pawn, Line: 0 or 7 })
                 {
                     // Dans ce cas, on doit demander au joueur quelle pièce il veut. (Avec un événement)
                     OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = Final.Piece as Pawn, Case = Final });
@@ -134,7 +129,7 @@ namespace ChessLibrary
             initial.Piece = null;
 
             // Marquer les mouvements spéciaux comme le premier mouvement pour les rois, tours et pions
-            if (final.Piece is IFirstMove.FirstMove firstMover)
+            if (final.Piece is IFirstMove firstMover)
             {
                 firstMover.FirstMove = false;
             }

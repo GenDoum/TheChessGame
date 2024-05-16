@@ -8,9 +8,6 @@ namespace ChessLibrary
 {
     public interface IFirstMove
     {
-        public interface FirstMove
-        {
-            bool FirstMove { get; set; }
-        }
+        bool FirstMove { get; set; }
     }
 }

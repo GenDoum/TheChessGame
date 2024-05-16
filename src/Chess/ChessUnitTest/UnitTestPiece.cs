@@ -15,7 +15,7 @@ public class UnitTestPiece
 
         // Assert
         Assert.Equal(color, piece.Color);
-        Assert.Equal(id, piece.id);
+        Assert.Equal(id, piece.Id);
     }
 
     [Fact]

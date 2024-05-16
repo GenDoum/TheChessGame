@@ -17,7 +17,7 @@ namespace ChessLibrary
         /// </summary>
         public Color Color { get; private set; }
 
-        public int id { get; private set; }
+        public int Id { get; private set; }
             
 
         
@@ -30,11 +30,11 @@ namespace ChessLibrary
         /// Constructor of the class
         /// </summary>
         /// <param name="color"></param>
-        /// <param name="c"></param>
+        /// <param name="indentifiant"></param>
         public Piece(Color color, int indentifiant)
         {
             Color = color;
-            id = indentifiant;
+            Id = indentifiant;
 
             if (color != Color.Black && color != Color.White)
             {

@@ -10,14 +10,14 @@ namespace ChessLibrary
     /// <summary>
     /// Class that represents a pawn piece
     /// </summary>
-    public class Pawn : Piece, IFirstMove.FirstMove
+    public class Pawn : Piece, IFirstMove
     {
         virtual public bool FirstMove { get; set; }
         /// <summary>
         /// Constructor of the class
         /// </summary>
         /// <param name="c"></param>
-        /// <param name="ca"></param>
+        /// <param name="id"></param>
         public Pawn(Color c, int id) : base(c, id)
         {
             this.FirstMove = true;
@@ -32,12 +32,9 @@ namespace ChessLibrary
 
             int direction = (Color == Color.White) ? 1 : -1;
 
-            if (x == x2)
+            if (x == x2 && (y2 == y + direction || (Color == Color.White && y == 1 || Color == Color.Black && y == 6) && y2 == y + 2 * direction))
             {
-                if (y2 == y + direction || (Color == Color.White && y == 1 || Color == Color.Black && y == 6) && y2 == y + 2 * direction)
-                {
-                    return true;
-                }
+                return true;
             }
 
             if (Math.Abs(x2 - x) == 1 && y2 == y + direction)
@@ -94,7 +91,7 @@ namespace ChessLibrary
                 if (IsWithinBoard(newLine, col, chessboard))
                 {
                     Case potentialCase = chessboard.Board[col, newLine];
-                    if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
+                    if (potentialCase.Piece != null && !potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
                     {
                         result.Add(potentialCase);
                     }

@@ -9,7 +9,7 @@ namespace ChessLibrary
     /// <summary>
     /// Class that represents a king piece
     /// </summary>
-    public class King : Piece, IFirstMove.FirstMove
+    public class King : Piece, IFirstMove
     {
         public bool FirstMove { get; set; }
         /// <summary>

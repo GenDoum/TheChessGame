@@ -8,12 +8,10 @@ namespace ChessLibrary
 {
     internal interface IRules
     {
-        void MovePiece(Case initial,Case Final,Chessboard board,User ActualPlayer);
+        void MovePiece(Case initial,Case final,Chessboard board,User actualPlayer);
 
 
         void GameOver(User winner);
         //appel a evenement
-
-
     }
 }

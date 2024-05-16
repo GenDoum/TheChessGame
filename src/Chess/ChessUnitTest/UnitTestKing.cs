@@ -33,10 +33,10 @@ public class UnitTestKing
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        King king = new King(Color.White, 1);
+        King? king = new King(Color.White, 1);
         Case kingCase = new Case(0, 0, king);
         chessboard.AddPiece(king, 0, 0);
-        Pawn enemyPawn = new Pawn(Color.Black, 2);
+        Pawn? enemyPawn = new Pawn(Color.Black, 2);
         chessboard.AddPiece(enemyPawn, 0, 1);
 
         // Act
@@ -50,7 +50,7 @@ public class UnitTestKing
     public void TestKingPossibleMoves_WithNullChessboard()
     {
         // Arrange
-        King king = new King(Color.White, 1);
+        King? king = new King(Color.White, 1);
         Case kingCase = new Case(0, 0, king);
 
         // Act & Assert

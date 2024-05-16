@@ -136,7 +136,7 @@ public class UnitTestBoard
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        Piece piece = new Pawn(Color.White, 1);
+        Piece? piece = new Pawn(Color.White, 1);
         int column = 0;
         int row = 0;
 
@@ -173,7 +173,7 @@ public class UnitTestBoard
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        Piece piece = new Pawn(Color.White, 1);
+        Piece? piece = new Pawn(Color.White, 1);
         Case Initial = new Case(0, 0, piece);
         Case Final = new Case(0, 1, null);
 
@@ -190,7 +190,7 @@ public class UnitTestBoard
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        Pawn pawn = new Pawn(Color.White, 1);
+        Pawn? pawn = new Pawn(Color.White, 1);
         Case caseForPawn = new Case(0, 7, pawn);
         Queen newPiece = new Queen(Color.White, 2);
 
@@ -213,7 +213,7 @@ public class UnitTestBoard
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        King king = new King(Color.White, 1);
+        King? king = new King(Color.White, 1);
         Case kingCase = new Case(0, 0, king);
         chessboard.AddPiece(king, 0, 0);
 
@@ -250,7 +250,7 @@ public class UnitTestBoard
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        King king = new King(Color.White, 1);
+        King? king = new King(Color.White, 1);
         Case kingCase = new Case(0, 0, king);
         chessboard.AddPiece(king, 0, 0);
 

@@ -74,7 +74,7 @@ namespace ConsoleChess
         /// </summary>
         /// <param name="P"></param>
         /// <param name="C"></param>
-        static void Evolve(Game game, Pawn P, Case C, ChoiceUser choiceUser)
+        static void Evolve(Game game, Pawn? P, Case C, ChoiceUser choiceUser)
         {
             Queen newQueen;
             Rook newRook;

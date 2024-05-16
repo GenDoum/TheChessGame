@@ -8,10 +8,10 @@ namespace ChessLibrary
 {
     internal interface IBoard
     {
-        bool CanMovePiece(Piece piece, Case Initial,Case Final);
+        bool CanMovePiece(Piece? piece, Case initial,Case final);
 
-        bool IsMoveValid(List<Case> Lcase, Case Final);
-        bool Echec(King king,Case kingCase);
+        bool IsMoveValid(List<Case> lcase, Case final);
+        bool Echec(King? king,Case kingCase);
 
     }
 }

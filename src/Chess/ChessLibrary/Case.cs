@@ -28,7 +28,7 @@ namespace ChessLibrary
         /// <param name="column">La colonne de la case</param>
         /// <param name="line">La ligne de la case</param>
         /// <param name="piece">La pièce sur la case</param>
-        public Case(int column, int line, Piece piece)
+        public Case(int column, int line, Piece? piece)
         {
             Column = column;
             Line = line;

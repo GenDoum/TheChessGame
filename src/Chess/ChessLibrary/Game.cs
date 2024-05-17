@@ -78,26 +78,26 @@ namespace ChessLibrary
             OnGameOver(new GameOverNotifiedEventArgs { Winner = winner });
         }
 
-        public void MovePiece(Case initial, Case Final, Chessboard board, User ActualPlayer)
+        public void MovePiece(Case initial, Case final, Chessboard board, User actualPlayer)
         {
             // Validation de base pour vérifier la pièce initiale
             ArgumentNullException.ThrowIfNull(initial);
 
             // Vérifier si la pièce appartient au joueur actuel
-            if (initial.Piece.Color != ActualPlayer.color)
+            if (initial.Piece.Color != actualPlayer.color)
                 throw new InvalidOperationException("It's not this player's turn.");
 
             // Effectuer le déplacement
-            if (board.CanMovePiece(initial.Piece, initial, Final))
+            if (board.CanMovePiece(initial.Piece, initial, final))
             {
-                UpdatePieceLists(initial, Final, board);
-                ProcessPostMove(initial, Final);
+                UpdatePieceLists(initial, final, board);
+                ProcessPostMove(initial, final);
 
                 // Vérifier si la case finale est un pion et qu'elle peut évoluer
-                if (Final is { Piece: Pawn, Line: 0 or 7 })
+                if (final is { Piece: Pawn, Line: 0 or 7 })
                 {
                     // Dans ce cas, on doit demander au joueur quelle pièce il veut. (Avec un événement)
-                    OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = Final.Piece as Pawn, Case = Final });
+                    OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = final.Piece as Pawn, Case = final });
                 }
             }
             else

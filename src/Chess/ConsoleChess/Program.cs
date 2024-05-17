@@ -19,6 +19,11 @@ namespace ConsoleChess
                 Evolve(game, args.Pawn, args.Case, choice);
             };
             
+            game.GameOverNotified += (sender, args) =>
+            {
+                Console.WriteLine($"Game over! {args.Winner.Pseudo} wins!");
+            };
+            
             int player = 1;
             bool isGameOver = false;
             DisplayBoard(game.Board);
@@ -43,7 +48,7 @@ namespace ConsoleChess
 
                 if( game.CheckChec(game, actualPlayer)) 
                 {
-                    isGameOver = game.CheckGameOver(game);
+                    isGameOver = game.GameOver(actualPlayer);
                 }
                 player++;
             }

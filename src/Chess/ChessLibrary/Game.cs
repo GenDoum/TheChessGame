@@ -72,6 +72,16 @@ namespace ChessLibrary
             return false;
         }
         
+        public void AddToList(List<CoPieces> list, CoPieces item)
+        {
+            list.Add(item);
+        }
+
+        public void RemoveFromList(List<CoPieces> list, CoPieces item)
+        {
+            list.Remove(item);
+        }
+        
 
         public void MovePiece(Case initial, Case final, Chessboard board, User actualPlayer)
         {
@@ -101,24 +111,25 @@ namespace ChessLibrary
             }
         }
 
-
-        private void UpdatePieceLists(Case initial, Case final, Chessboard board)
+        public void UpdatePieceLists(Case initial, Case final, Chessboard board)
         {
             var movedPieceInfo = new CoPieces { CaseLink = initial, piece = initial.Piece };
             var listToUpdate = initial.Piece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
+            List<CoPieces> list = new List<CoPieces>(listToUpdate);
 
             // Mettre à jour la position de la pièce déplacée
-            listToUpdate.Remove(movedPieceInfo);
-            listToUpdate.Add(new CoPieces { CaseLink = final, piece = initial.Piece });
+            RemoveFromList(list, movedPieceInfo);
+            AddToList(list, new CoPieces { CaseLink = final, piece = initial.Piece });
+
 
             // Vérifier si une pièce a été capturée
             if (final.Piece != null && final.Piece.Color != initial.Piece.Color)
             {
                 var capturedPieceInfo = new CoPieces { CaseLink = final, piece = final.Piece };
                 var listToRemoveFrom = final.Piece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
-                listToRemoveFrom.Remove(capturedPieceInfo);
+                List<CoPieces> list2 = new List<CoPieces>(listToRemoveFrom);
+                RemoveFromList(list2, capturedPieceInfo);
 
-                Console.WriteLine($"{final.Piece.Color} {final.Piece.GetType().Name} captured.");
             }
         }
 

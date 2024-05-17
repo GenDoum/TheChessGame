@@ -110,7 +110,8 @@ namespace ConsoleChess
                     game.Board.ModifPawn(P, newKnight, C);
                     return;
                 default:
-                    break;
+                    // Recommencer la saisie
+                    throw new InvalidOperationException("Invalid choice.");
             }
         }
         

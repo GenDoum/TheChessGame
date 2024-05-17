@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,14 @@ namespace ChessLibrary
     public class Chessboard : IBoard
     {
         public Case[,] Board { get; private set; }
-        public List<CoPieces>? WhitePieces { get; private set; }
-        public List<CoPieces>? BlackPieces { get; private set; }
+        
+        public ReadOnlyCollection<CoPieces> WhitePieces 
+            => whitePieces.AsReadOnly();
+        public ReadOnlyCollection<CoPieces> BlackPieces 
+            => blackPieces.AsReadOnly();
+
+        List<CoPieces>? whitePieces = new List<CoPieces>();
+        List<CoPieces>? blackPieces = new List<CoPieces>();
 
         /// <summary>
         /// Create a new chessboard 
@@ -21,8 +28,8 @@ namespace ChessLibrary
         public Chessboard(Case[,] tcase, bool isEmpty)
         {
             Board = tcase;
-            WhitePieces = new List<CoPieces>();
-            BlackPieces = new List<CoPieces>();
+            whitePieces = new List<CoPieces>();
+            blackPieces = new List<CoPieces>();
 
             if (!isEmpty)
             {
@@ -142,14 +149,14 @@ namespace ChessLibrary
             if (piece != null && piece.Color == Color.White)
             {
                 // Add the piece to the list of white pieces
-                if (WhitePieces != null)
-                    WhitePieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
+                if (whitePieces != null)
+                    whitePieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
             else
             {
                 // Add the piece to the list of black pieces
-                if (BlackPieces != null)
-                    BlackPieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
+                if (blackPieces != null)
+                    blackPieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
         }
 
@@ -195,16 +202,16 @@ namespace ChessLibrary
             if (pi.Color == Color.White)
             {
                 //Add the new piece to the list of white pieces and remove the Pawn
-                this.WhitePieces!.Add(new CoPieces { CaseLink = c, piece = pi });
-                this.WhitePieces.Remove(new CoPieces { CaseLink = c, piece = p });
+                this.whitePieces!.Add(new CoPieces { CaseLink = c, piece = pi });
+                this.whitePieces.Remove(new CoPieces { CaseLink = c, piece = p });
 
             }
 
             else
             {
                 //Add the new piece to the list of black pieces and remove the Pawn
-                this.BlackPieces!.Add(new CoPieces { CaseLink = c, piece = pi });
-                this.BlackPieces.Remove(new CoPieces { CaseLink = c, piece = p });
+                this.blackPieces!.Add(new CoPieces { CaseLink = c, piece = pi });
+                this.blackPieces.Remove(new CoPieces { CaseLink = c, piece = p });
             }
 
         }
@@ -219,7 +226,7 @@ namespace ChessLibrary
 
         public bool Echec(King king, Case kingCase)
         {
-            List<CoPieces> enemyPieces = (king.Color == Color.White) ? BlackPieces : WhitePieces;
+            List<CoPieces> enemyPieces = (king.Color == Color.White) ? blackPieces : whitePieces;
 
             foreach (var enemy in enemyPieces)
             {
@@ -289,8 +296,8 @@ namespace ChessLibrary
             // Créer un nouvel échiquier avec le tableau de cases copiées
             var newChessboard = new Chessboard(newBoard, true);
             // Copier les listes de pièces
-            newChessboard.WhitePieces = new List<CoPieces>(WhitePieces!);
-            newChessboard.BlackPieces = new List<CoPieces>(BlackPieces!);
+            newChessboard.whitePieces = new List<CoPieces>(WhitePieces!);
+            newChessboard.blackPieces = new List<CoPieces>(BlackPieces!);
 
             return newChessboard;
         }

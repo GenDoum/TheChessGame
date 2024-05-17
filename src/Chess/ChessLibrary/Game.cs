@@ -76,7 +76,7 @@ namespace ChessLibrary
         public void MovePiece(Case initial, Case final, Chessboard board, User actualPlayer)
         {
             // Validation de base pour vérifier la pièce initiale
-            ArgumentNullException.ThrowIfNull(initial);
+            ArgumentNullException.ThrowIfNull(initial.Piece ,"Vous ne pouvez pas déplacer une piece qui n'existe pas.");
 
             // Vérifier si la pièce appartient au joueur actuel
             if (initial.Piece.Color != actualPlayer.color)

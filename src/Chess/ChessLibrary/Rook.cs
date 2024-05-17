@@ -30,7 +30,7 @@ namespace ChessLibrary
             {
                 throw new InvalidOperationException("Invalid move for Rook: destination out of bounds.");
             }
-            
+
             if (x == x2 || y == y2)
             {
                 return true;
@@ -38,6 +38,8 @@ namespace ChessLibrary
 
             throw new InvalidOperationException("Invalid move for Rook");
         }
+
+
 
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
@@ -50,13 +52,27 @@ namespace ChessLibrary
             {
                 for (int i = 1; i < 8; i++)
                 {
-                    int newColumn = caseInitial.Column + colInc * i;
-                    int newLine = caseInitial.Line + lineInc * i;
-
-                    if (IsWithinBoardBoundaries(newColumn, newLine) && CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
+                    int newColumn = caseInitial.Column + (colInc * i);
+                    int newLine = caseInitial.Line + (lineInc * i);
+                    if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                     {
                         Case potentialCase = chessboard.Board[newColumn, newLine];
-                        AddPotentialMove(result, potentialCase);
+                        if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
+                        {
+                            if (potentialCase.IsCaseEmpty())
+                            {
+                                result.Add(potentialCase);
+                            }
+                            else if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
+                            {
+                                result.Add(potentialCase);
+                                break;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
                     }
                     else
                     {
@@ -75,10 +91,7 @@ namespace ChessLibrary
 
         private void AddPotentialMove(List<Case> result, Case potentialCase)
         {
-                if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
-                {
-                    result.Add(potentialCase);
-                }
+
         }
     }
 }

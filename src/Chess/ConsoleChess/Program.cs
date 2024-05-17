@@ -110,6 +110,8 @@ namespace ConsoleChess
                     game.Board.ModifPawn(P, newKnight, C);
                     return;
                 default:
+                    Console.WriteLine("Invalid Possibility");
+                    choiceUser = GetUserChoice();
                     break;
             }
         }

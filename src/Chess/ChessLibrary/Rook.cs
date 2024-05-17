@@ -79,16 +79,6 @@ namespace ChessLibrary
 
             return result;
         }
-
-        static bool IsWithinBoardBoundaries(int column, int line)
-        {
-            return column >= 0 && column < 8 && line >= 0 && line < 8;
-        }
-
-        private void AddPotentialMove(List<Case> result, Case potentialCase)
-        {
-
-        }
     }
 }
 

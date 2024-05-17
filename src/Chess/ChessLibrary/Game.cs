@@ -1,7 +1,4 @@
-﻿
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -13,23 +10,65 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
+    /// <summary>
+    /// Classe qui représente le point d'entrée du jeu d'échecs
+    /// </summary>
     public class Game : IRules
     {
+        /// <summary>
+        /// Événement déclenché lorsqu'un pion peut évoluer
+        /// </summary>
         public event EventHandler<EvolveNotifiedEventArgs> EvolveNotified;
 
+        /// <summary>
+        /// Événement déclenché lorsqu'un pion peut évoluer
+        /// </summary>
+        /// <param name="args"></param>
         protected virtual void OnEvolvePiece(EvolveNotifiedEventArgs args)
             => EvolveNotified?.Invoke(this, args);
 
+        /// <summary>
+        /// Événement déclenché lorsqu'un joueur gagne la partie
+        /// </summary>
         public event EventHandler<GameOverNotifiedEventArgs> GameOverNotified;
 
+        /// <summary>
+        /// Événement déclenché lorsqu'un joueur gagne la partie
+        /// </summary>
+        /// <param name="args"></param>
         protected virtual void OnGameOver(GameOverNotifiedEventArgs args)
             => GameOverNotified?.Invoke(this, args);
 
+        /// <summary>
+        /// Représente le joueur 1
+        /// </summary>
         public User Player1 { get; set; }
+        
+        /// <summary>
+        /// Représente le joueur 2
+        /// </summary>
         public User Player2 { get; set; }
+        
+        /// <summary>
+        /// Représente l'echiquier
+        /// </summary>
         public Chessboard Board { get; set; }
+        
+        /// <summary>
+        /// Savoir si le joueur blanc est en échec
+        /// </summary>
         public bool WhiteCheck { get; set; }
+        
+        /// <summary>
+        /// Savoir si le joueur noir est en échec
+        /// </summary>
         public bool BlackCheck { get; set; }
+        
+        /// <summary>
+        /// Constructeur de la classe Game
+        /// </summary>
+        /// <param name="player1"></param>
+        /// <param name="player2"></param>
         public Game(User player1, User player2)
         {
             WhiteCheck = false;
@@ -50,6 +89,12 @@ namespace ChessLibrary
 
         }
 
+        /// <summary>
+        /// Vérifie si le joueur est en échec
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="actualPlayer"></param>
+        /// <returns></returns>
         public bool CheckChec(Game game, User actualPlayer)
         {
             var pieces = (actualPlayer.color == Color.White) ? game.Board.BlackPieces : game.Board.WhitePieces;
@@ -71,6 +116,11 @@ namespace ChessLibrary
             return false;
         }
 
+        /// <summary>
+        /// Fonction permettant de savoir si la partie est terminée
+        /// </summary>
+        /// <param name="winner"></param>
+        /// <returns></returns>
         public bool GameOver(User winner)
         {
             var pieces = (Player1.color == Color.White) ? Board.BlackPieces : Board.WhitePieces;
@@ -85,17 +135,34 @@ namespace ChessLibrary
             return false;
         }
 
+        /// <summary>
+        /// Fonction pour ajouter une pièce à une liste
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="item"></param>
         public void AddToList(List<CoPieces> list, CoPieces item)
         {
             list.Add(item);
         }
 
+        /// <summary>
+        /// Fonction pour retirer une pièce d'une liste
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="item"></param>
         public void RemoveFromList(List<CoPieces> list, CoPieces item)
         {
             list.Remove(item);
         }
 
-
+        /// <summary>
+        /// Fonction pour le déplacement d'une pièce
+        /// </summary>
+        /// <param name="initial"></param>
+        /// <param name="final"></param>
+        /// <param name="board"></param>
+        /// <param name="actualPlayer"></param>
+        /// <exception cref="InvalidOperationException"></exception>
         public void MovePiece(Case initial, Case final, Chessboard board, User actualPlayer)
         {
             // Validation de base pour vérifier la pièce initiale
@@ -174,6 +241,11 @@ namespace ChessLibrary
             }
         }
 
+        /// <summary>
+        /// Fonction pour traiter le déplacement d'une pièce
+        /// </summary>
+        /// <param name="initial"></param>
+        /// <param name="final"></param>
         private void ProcessPostMove(Case initial, Case final)
         {
             // Mettre à jour les positions des cases

@@ -126,6 +126,7 @@ namespace ChessLibrary
                 }
             }
         }
+        
         public void UpdatePieceLists(Case initial, Case final, Chessboard board)
         {
             var movedPieceInfo = new CoPieces { CaseLink = initial, piece = initial.Piece };

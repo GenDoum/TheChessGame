@@ -105,19 +105,37 @@ namespace ChessLibrary
             if (initial.Piece.Color != actualPlayer.color)
                 throw new InvalidOperationException("It's not this player's turn.");
 
-            // Vérifier si le joueur actuel est en échec
-            bool isInCheck = board.IsInCheck(actualPlayer.color);
+            // Effectuer le déplacement temporaire pour la vérification
+            final.Piece = initial.Piece;
+            initial.Piece = null;
 
-            // Si le joueur est en échec, vérifier que le mouvement résout l'échec
+            // Vérifier si le mouvement met le roi en échec
+            if (board.IsInCheck(actualPlayer.color))
+            {
+                // Restaurer l'état initial des cases
+                initial.Piece = final.Piece;
+                final.Piece = null;
+                throw new InvalidOperationException("You cannot move into check.");
+            }
+
+            // Restaurer l'état initial des cases avant de faire le déplacement réel
+            initial.Piece = final.Piece;
+            final.Piece = null;
+
+            // Si le joueur actuel est en échec, vérifier que le mouvement résout l'échec
+            bool isInCheck = board.IsInCheck(actualPlayer.color);
             if (isInCheck)
             {
                 if (!board.CanResolveCheck(initial, final, actualPlayer.color))
                     throw new InvalidOperationException("You must move out of check.");
             }
 
-            // Effectuer le déplacement
+            // Effectuer le déplacement réel
             if (board.CanMovePiece(initial.Piece, initial, final))
             {
+                // Mettre à jour l'état réel du plateau
+
+
                 UpdatePieceLists(initial, final, board);
                 ProcessPostMove(initial, final);
 
@@ -125,10 +143,14 @@ namespace ChessLibrary
                 if (final is { Piece: Pawn, Line: 0 or 7 })
                 {
                     OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = final.Piece as Pawn, Case = final });
-
                 }
             }
+            else
+            {
+                throw new InvalidOperationException("Invalid move, check the rules.");
+            }
         }
+
 
         public void UpdatePieceLists(Case initial, Case final, Chessboard board)
         {

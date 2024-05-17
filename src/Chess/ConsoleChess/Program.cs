@@ -5,6 +5,8 @@ namespace ConsoleChess
 {
     class Program
     {
+
+
         static void Main()
         {
 
@@ -12,18 +14,18 @@ namespace ConsoleChess
             User player2 = new User("Player 2", "mdp", Color.Black, false, new List<Piece>(), 0);
 
             Game game = new Game(player1, player2);
-            
+
             game.EvolveNotified += (sender, args) =>
             {
                 ChoiceUser choice = GetUserChoice();
                 Evolve(game, args.Pawn, args.Case, choice);
             };
-            
+
             game.GameOverNotified += (sender, args) =>
             {
                 Console.WriteLine($"Game over! {args.Winner.Pseudo} wins!");
             };
-            
+
             int player = 1;
             bool isGameOver = false;
             DisplayBoard(game.Board);
@@ -46,7 +48,7 @@ namespace ConsoleChess
                     player--; // Retry the same player's turn
                 }
 
-                if( game.CheckChec(game, actualPlayer)) 
+                if (game.CheckChec(game, actualPlayer))
                 {
                     isGameOver = game.GameOver(actualPlayer);
                 }
@@ -85,7 +87,7 @@ namespace ConsoleChess
             Rook newRook;
             Knight newKnight;
             Bishop newBishop;
-            
+
             switch (choiceUser)
             {
                 case ChoiceUser.Queen:
@@ -113,7 +115,7 @@ namespace ConsoleChess
                     break;
             }
         }
-        
+
         static ChoiceUser GetUserChoice()
         {
             int choice;
@@ -182,7 +184,7 @@ namespace ConsoleChess
             }
 
             int column = notation[0] - 'a';
-            int row = 8 - (notation[1] - '0'); 
+            int row = 8 - (notation[1] - '0');
 
             return (column, row);
         }

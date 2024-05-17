@@ -19,6 +19,11 @@ namespace ConsoleChess
                 Evolve(game, args.Pawn, args.Case, choice);
             };
             
+            game.GameOverNotified += (sender, args) =>
+            {
+                Console.WriteLine($"Game over! {args.Winner.Pseudo} wins!");
+            };
+            
             int player = 1;
             bool isGameOver = false;
             DisplayBoard(game.Board);

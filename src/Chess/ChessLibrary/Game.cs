@@ -17,6 +17,11 @@ namespace ChessLibrary
         protected virtual void OnEvolvePiece(EvolveNotifiedEventArgs args)
             => EvolveNotified?.Invoke(this, args);
         
+        public event EventHandler<GameOverNotifiedEventArgs> GameOverNotified;
+        
+        protected virtual void OnGameOver(GameOverNotifiedEventArgs args)
+            => GameOverNotified?.Invoke(this, args);
+        
         public User Player1 { get; set; }
         public User Player2 { get; set; }
         public Chessboard Board { get; set; }
@@ -70,7 +75,7 @@ namespace ChessLibrary
         
         public void GameOver(User winner)
         {
-            // This method is currently empty because the game over logic has not been implemented yet.
+            OnGameOver(new GameOverNotifiedEventArgs { Winner = winner });
         }
 
         public void MovePiece(Case initial, Case Final, Chessboard board, User ActualPlayer)

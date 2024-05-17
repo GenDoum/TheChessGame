@@ -81,7 +81,7 @@ namespace ChessLibrary
             }
             return false;
         }
-        
+
         public void AddToList(List<CoPieces> list, CoPieces item)
         {
             list.Add(item);
@@ -91,7 +91,7 @@ namespace ChessLibrary
         {
             list.Remove(item);
         }
-        
+
 
         public void MovePiece(Case initial, Case final, Chessboard board, User actualPlayer)
         {
@@ -126,7 +126,7 @@ namespace ChessLibrary
                 }
             }
         }
-        
+
         public void UpdatePieceLists(Case initial, Case final, Chessboard board)
         {
             var movedPieceInfo = new CoPieces { CaseLink = initial, piece = initial.Piece };
@@ -164,3 +164,4 @@ namespace ChessLibrary
 
     }
 }
+

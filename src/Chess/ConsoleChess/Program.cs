@@ -1,15 +1,13 @@
-// See https://aka.ms/new-console-template for more information
 using System;
-using System.Reflection.Metadata;
 using ChessLibrary;
 using System.Linq;
 using System.Text;
-
 
 namespace ConsoleChess
 {
     class Program
     {
+        
         public static void exitApplication()
         {
             Console.Clear();
@@ -271,6 +269,13 @@ namespace ConsoleChess
             return users;
         }
 
+
+        /// <summary>
+        /// Menu de connexion pour le deuxième joueur
+        /// </summary>
+        /// <param name="u1"></param>
+        /// <param name="users"></param>
+        /// <returns></returns>
         public static User? menuConnexionDeuxJoueurs(User u1, List<User> users)
         {
             int choix;
@@ -307,8 +312,14 @@ namespace ConsoleChess
             return defaultUser;
         }
 
+//        public static void
 
-        public static void menuAccueil()
+        /// <summary>
+        /// Fonction qui gère l'accueil de l'application et la gestion des joueurs
+        /// </summary>
+        /// <param name="playerOne"></param>
+        /// <param name="playerTwo"></param>
+        public static void menuAccueil(User? playerOne, User? playerTwo)
         {
             int choix;
 
@@ -317,11 +328,9 @@ namespace ConsoleChess
             Color noir = Color.Black;
             Color blanc = Color.White;
 
-            User balko = new User("MatheoB", "chef", noir, false, 0);
-            User hersan = new User("MatheoH", "proMac", blanc, false, 0);
+            User balko = new User("MatheoB", "chef", blanc, false, 25);
+            User hersan = new User("MatheoH", "proMac", noir, false, 10);
 
-            User? playerOne = null;
-            User? playerTwo = null;
 
             List<User> users = new List<User>();
             users.Add(hersan);
@@ -330,15 +339,15 @@ namespace ConsoleChess
             Console.ResetColor();
             do
             {
-                choix = MultipleChoice("Bienvenue sut The Chess", true, "Connexion", "Inscription", "Lancer une partie en tant qu'invités", "Afficher les joueurs", "Quittez l'application");
+                choix = MultipleChoice("Welcome on The Chess", true, "Connection", "Inscription", "Start a game", "Learderboard", "Exit application");
                 switch (choix)
                 {
-                    case -1:
+                    case -1: // Option pour quitter l'application
                         Console.Clear();
                         exitApplication();
                         break;
 
-                    case 0:
+                    case 0: // Option pour se connecter
                         Console.Clear();
                         pseudo = enterStringCheck("pseudo");
                         playerOne = connexion(users, pseudo);
@@ -351,7 +360,7 @@ namespace ConsoleChess
                         }
                         break;
 
-                    case 1:
+                    case 1: // Option pour s'inscrire
                         Console.Clear();
                         Console.Write("Inscription");
                         Thread.Sleep(1000);
@@ -359,28 +368,26 @@ namespace ConsoleChess
 
                         break;
 
-                    case 2:
+                    case 2:  // Option pourl ancer une partie
                         Console.Clear();
-                        Console.Write("Lancer un partie en tant qu'invité");
+                        Console.WriteLine("Lancer un partie");
                         Thread.Sleep(1000);
+                        Jeu(playerOne, playerTwo);
                         break;
 
-                    case 3:
+                    case 3: // Option pour afficher le leaderboard
                         Console.Clear();
-                        Console.WriteLine("Afficher les joueurs");
-                        foreach (User u in users)
-                        {
-                            Console.WriteLine(u.Pseudo);
-                        }
-                        Thread.Sleep(10000);
+                        Console.WriteLine("Leaderboard");
+                        Thread.Sleep(1000);
+                        MultipleChoice("Leaderbotd", true, users[1].Pseudo, users[1].Score.ToString(), users[0].Pseudo, users[0].Score.ToString());
                         break;
 
-                    case 4:
+                    case 4: // Option pour quitter l'application
                         Console.Clear();
                         exitApplication();
                         return;
 
-                    default:
+                    default: 
                         exitApplication();
                         return;
                 }
@@ -388,11 +395,193 @@ namespace ConsoleChess
 
         }
 
-        static void Main(string[] args)
+        static void Jeu(User? player1, User? player2)
         {
-            menuAccueil();
+            Game game = new Game(player1, player2);
+
+            game.EvolveNotified += (sender, args) =>
+            {
+                ChoiceUser choice = GetUserChoice();
+                Evolve(game, args.Pawn, args.Case, choice);
+            };
+
+            game.GameOverNotified += (sender, args) =>
+            {
+                Console.WriteLine($"Game over! {args.Winner.Pseudo} wins!");
+            };
+
+            int player = 1;
+            bool isGameOver = false;
+            DisplayBoard(game.Board);
+
+
+            while (!isGameOver)
+            {
+                User actualPlayer = (player % 2 == 0) ? player2 : player1;
+                Console.WriteLine($"{actualPlayer.Pseudo}'s turn");
+
+                try
+                {
+                    (int startColumn, int startRow) = GetMoveCoordinates("Enter the position of the piece you want to move (a1, f7 ...):");
+                    (int endColumn, int endRow) = GetMoveCoordinates("Enter the destination position (a1, f7 ...):");
+
+                    game.MovePiece(game.Board.Board[startColumn, startRow], game.Board.Board[endColumn, endRow], game.Board, actualPlayer);
+                    DisplayBoard(game.Board);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error: {e.Message}");
+                    player--; // Retry the same player's turn
+                }
+
+                if (game.CheckChec(game, actualPlayer))
+                {
+                    isGameOver = game.GameOver(actualPlayer);
+                }
+                player++;
+            }
+
+            game.GameOver(player % 2 == 0 ? player1 : player2);
+        }
+
+
+
+        static void Main()
+        {
+
+
+            User player1 = new User();
+            User player2 = new User();
+
+            menuAccueil(player1, player2);
+
+  
+        }
+
+
+        static (int, int) GetMoveCoordinates(string prompt)
+        {
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine(prompt);
+                    string pos = Console.ReadLine();
+                    return ParseChessNotation(pos);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Invalid input: {e.Message}. Please try again.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Change a Pawn to another piece.
+        /// </summary>
+        /// <param name="P"></param>
+        /// <param name="C"></param>
+        static void Evolve(Game game, Pawn? P, Case C, ChoiceUser choiceUser)
+        {
+            Queen newQueen;
+            Rook newRook;
+            Knight newKnight;
+            Bishop newBishop;
+
+            switch (choiceUser)
+            {
+                case ChoiceUser.Queen:
+                    newQueen = new Queen(P.Color, P.Id);
+                    C.Piece = newQueen;
+                    game.Board.ModifPawn(P, newQueen, C);
+                    return;
+
+                case ChoiceUser.Rook:
+                    newRook = new Rook(P.Color, P.Id);
+                    C.Piece = newRook;
+                    game.Board.ModifPawn(P, newRook, C);
+                    return;
+                case ChoiceUser.Bishop:
+                    newBishop = new Bishop(P.Color, P.Id);
+                    C.Piece = newBishop;
+                    game.Board.ModifPawn(P, newBishop, C);
+                    return;
+                case ChoiceUser.Knight:
+                    newKnight = new Knight(P.Color, P.Id);
+                    C.Piece = newKnight;
+                    game.Board.ModifPawn(P, newKnight, C);
+                    return;
+                default:
+                    Console.WriteLine("Invalid Possibility");
+                    choiceUser = GetUserChoice();
+                    break;
+            }
+        }
+        
+        static ChoiceUser GetUserChoice()
+        {
+            Console.WriteLine("Choose the piece to evolve to:");
+            Console.WriteLine("1. Queen");
+            Console.WriteLine("2. Rook");
+            Console.WriteLine("3. Bishop");
+            Console.WriteLine("4. Knight");
+
+            int choice = Convert.ToInt32(Console.ReadLine());
+
+            return (ChoiceUser)choice;
+        }
+
+        static void DisplayBoard(Chessboard chessboard)
+        {
+            Console.WriteLine("   a   b   c   d   e   f   g   h");
+            Console.WriteLine(" +---+---+---+---+---+---+---+---+");
+            for (int row = 0; row < 8; row++)
+            {
+                Console.Write((8 - row) + " |");
+                for (int column = 0; column < 8; column++)
+                {
+                    var square = chessboard.Board[column, row];
+                    string pieceSymbol = square?.Piece != null ? GetPieceSymbol(square.Piece) : " ";
+                    ConsoleColor originalColor = Console.ForegroundColor;
+                    if (square?.Piece != null && square.Piece.Color != Color.White)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    }
+                    Console.Write($" {pieceSymbol} ");
+                    Console.ForegroundColor = originalColor;
+                    Console.Write("|");
+                }
+                Console.WriteLine($" {8 - row}");
+                Console.WriteLine(" +---+---+---+---+---+---+---+---+");
+            }
+            Console.WriteLine("   a   b   c   d   e   f   g   h");
+        }
+
+        static string GetPieceSymbol(Piece piece)
+        {
+            return piece.GetType().Name switch
+            {
+                "Pawn" => "P",
+                "Rook" => "R",
+                "Knight" => "C",
+                "Bishop" => "B",
+                "Queen" => "Q",
+                "King" => "K",
+                _ => "?",
+            };
+        }
+
+        static (int column, int row) ParseChessNotation(string notation)
+        {
+            if (notation.Length != 2 || notation[0] < 'a' || notation[0] > 'h' || notation[1] < '1' || notation[1] > '8')
+            {
+                throw new ArgumentException("Invalid chess notation.");
+            }
+
+            int column = notation[0] - 'a';
+            int row = 8 - (notation[1] - '0'); 
+
+            return (column, row);
         }
     }
-
 }
-

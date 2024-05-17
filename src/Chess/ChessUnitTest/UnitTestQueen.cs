@@ -11,7 +11,7 @@ public class UnitTestQueen
         var queen = new Queen(Color.White, 1);
         
         // Act
-        var result = queen.canMove(x1, y1, x2, y2);
+        var result = queen.CanMove(x1, y1, x2, y2);
         
         // Assert
         Assert.True(result);
@@ -25,6 +25,38 @@ public class UnitTestQueen
         var queen = new Queen(Color.White, 1);
         
         // Act & Assert
-        Assert.Throws<InvalidOperationException>(() => queen.canMove(x1, y1, x2, y2));
+        Assert.Throws<InvalidOperationException>(() => queen.CanMove(x1, y1, x2, y2));
+    }
+    
+    [Fact]
+    public void PossibleMoves_EmptyBoard_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var queen = new Queen(Color.White, 1);
+        var chessboard = new Chessboard(new Case[8, 8],true);
+        var caseInitial = new Case(4, 4, queen);
+
+        // Act
+        var result = queen.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.Equal(27, result.Count);
+    }
+    
+    [Fact]
+    public void PossibleMoves_BoardWithPieces_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var queen = new Queen(Color.White, 1);
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(4, 4, queen);
+        chessboard.Board[5, 5].Piece = new Pawn(Color.Black, 2); 
+
+        // Act
+        var result = queen.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.Contains(chessboard.Board[5, 5], result);
+        Assert.DoesNotContain(chessboard.Board[6, 6], result);
     }
 }

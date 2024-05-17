@@ -12,7 +12,7 @@ public class UnitTestUser
             Assert.Throws<ArgumentException>(() => new User(pseudo, password, color, connected, score));
             return;
         }
-    
+
         var user = new User(pseudo, password, color, connected, score);
     }
 
@@ -20,7 +20,7 @@ public class UnitTestUser
     [MemberData(nameof(TestData.InvalidUserPseudo), MemberType = typeof(TestData))]
     public void InvalidPseudo_ReturnFalse(string pseudo, string password, Color color, bool connected, int score)
     {
-        if ( !string.IsNullOrWhiteSpace(pseudo) )
+        if (!string.IsNullOrWhiteSpace(pseudo))
         {
             var user = new User(pseudo, password, color, connected, score);
         }
@@ -95,7 +95,7 @@ public class UnitTestUser
 
         Assert.Null(connected);
     }
-
+    /*
     [Theory]
     [MemberData(nameof(TestData.Test_UserMethodIsConnected), MemberType = typeof(TestData))]
     public void TestGoodReturnMethodIsPassword(string password)
@@ -114,4 +114,5 @@ public class UnitTestUser
             Assert.False(result);
         }
     }
+    */
 }

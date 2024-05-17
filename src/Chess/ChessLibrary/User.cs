@@ -10,9 +10,9 @@ namespace ChessLibrary
     /// <summary>
     /// Classe Player
     /// </summary>
-    public class User 
+    public class User
     {
-        
+
         /// <summary>
         /// Pseudo of the Player
         /// </summary>
@@ -23,7 +23,7 @@ namespace ChessLibrary
             {
                 pseudo = value;
 
-                if ( string.IsNullOrWhiteSpace(Pseudo))
+                if (string.IsNullOrWhiteSpace(Pseudo))
                 {
                     throw new ArgumentException("Pseudo or password must be entered and must not be full of white space", nameof(Pseudo));
                 }
@@ -82,7 +82,7 @@ namespace ChessLibrary
             this.Color = color;
             Score = playerScore;
             IsConnected = connected;
-        
+
         }
 
         /// <summary>
@@ -93,29 +93,6 @@ namespace ChessLibrary
         {
             pseudo = "Invité";
             Password = null;
-        }
-
-        
-
-        /// <summary>
-        /// Player's method for check the password
-        /// </summary>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public bool isPasswd(string password)
-        {
-            if (Password == null)
-            {
-                Console.WriteLine("Joeur invité, pas besoin de mot de passe\n");
-                return true;
-            }
-
-            if (password.Equals(Password))
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 

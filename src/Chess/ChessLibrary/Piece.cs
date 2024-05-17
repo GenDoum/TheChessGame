@@ -17,7 +17,9 @@ namespace ChessLibrary
         /// </summary>
         public Color Color { get; private set; }
 
-        public int id { get; private set; }
+        public int Id { get; private set; }
+            
+
         
         /// <summary>
         /// Property that represents if the piece has moved
@@ -28,11 +30,11 @@ namespace ChessLibrary
         /// Constructor of the class
         /// </summary>
         /// <param name="color"></param>
-        /// <param name="c"></param>
-        public Piece(Color color, int indentifiant)
+        /// <param name="indentifiant"></param>
+        protected Piece(Color color, int indentifiant)
         {
             Color = color;
-            id = indentifiant;
+            Id = indentifiant;
 
             if (color != Color.Black && color != Color.White)
             {
@@ -48,18 +50,14 @@ namespace ChessLibrary
         /// <param name="x2"></param>
         /// <param name="y2"></param>
         /// <returns></returns>
-        public abstract bool canMove(int x, int y, int x2, int y2);
+        public abstract bool CanMove(int x, int y, int x2, int y2);
 
         public abstract List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard);
         
-        /// <summary>
-        /// Method that checks if the piece is eaten
-        /// </summary>
-        /// <returns></returns>
-        public bool isKilled()
+        // Méthode de clonage par défaut
+        public virtual Piece Clone()
         {
-            return false;
+            return (Piece)this.MemberwiseClone(); // Copie superficielle appropriée si aucune référence profonde n'est nécessaire
         }
-        
     }
 }

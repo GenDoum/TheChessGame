@@ -11,7 +11,7 @@ namespace ChessLibrary
         void MovePiece(Case initial,Case final,Chessboard board,User actualPlayer);
 
 
-        void GameOver(User winner);
+        bool GameOver(User winner);
         //appel a evenement
     }
 }

@@ -58,25 +58,20 @@ namespace ChessLibrary
             return false;
         }
 
-        public bool CheckGameOver(Game game)
+        public bool GameOver(User winner)
         {
-            var pieces = (game.Player1.color == Color.White) ? game.Board.BlackPieces : game.Board.WhitePieces;
+            var pieces = (Player1.color == Color.White) ? Board.BlackPieces : Board.WhitePieces;
             foreach (var pieceInfo in pieces)
             {
-                if (pieceInfo.piece is King king && game.Board.EchecMat(king, pieceInfo.CaseLink))
+                if (pieceInfo.piece is King king && Board.EchecMat(king, pieceInfo.CaseLink))
                 {
+                    OnGameOver(new GameOverNotifiedEventArgs { Winner = winner });
                     return true;
                 }
             }
             return false;
-
         }
-
         
-        public void GameOver(User winner)
-        {
-            OnGameOver(new GameOverNotifiedEventArgs { Winner = winner });
-        }
 
         public void MovePiece(Case initial, Case final, Chessboard board, User actualPlayer)
         {

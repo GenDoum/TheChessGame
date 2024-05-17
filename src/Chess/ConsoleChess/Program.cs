@@ -48,7 +48,7 @@ namespace ConsoleChess
 
                 if( game.CheckChec(game, actualPlayer)) 
                 {
-                    isGameOver = game.CheckGameOver(game);
+                    isGameOver = game.GameOver(actualPlayer);
                 }
                 player++;
             }

@@ -103,6 +103,28 @@ namespace ChessLibrary
         {
             return line >= 0 && line < chessboard.Board.GetLength(1) && column >= 0 && column < chessboard.Board.GetLength(0);
         }
-    }
 
+
+        public List<Case> CanEat(Case caseInitial, Chessboard chessboard)
+        {
+            ArgumentNullException.ThrowIfNull(chessboard);
+            List<Case> result = new List<Case>();
+            int direction = this.Color == Color.White ? 1 : -1; // Blanc vers le haut (+1), Noir vers le bas (-1)
+            int[] captureColumns = new int[] { caseInitial.Column - 1, caseInitial.Column + 1 };
+            foreach (int col in captureColumns)
+            {
+                int newLine = caseInitial.Line + direction;
+                if (IsWithinBoard(newLine, col, chessboard))
+                {
+                    Case potentialCase = chessboard.Board[col, newLine];
+                    if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
+                    {
+                        result.Add(potentialCase);
+                    }
+                }
+            }
+            return result;
+        }
+
+    }
 }

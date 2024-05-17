@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
-    
+
     public class Chessboard : IBoard
     {
         public Case[,] Board { get; private set; }
@@ -179,7 +179,7 @@ namespace ChessLibrary
             // Create a list of possible moves
             return IsMoveValid(L, final);
         }
-        
+
         /// <summary>
         /// Modify the list of pieces when a Pawn is evolved,add the new piece and remove the Pawn.
         /// </summary>
@@ -217,33 +217,54 @@ namespace ChessLibrary
         /// <param name="kingCase"></param>
         /// <returns></returns>
 
-        public bool Echec(King? king, Case kingCase)
+        public bool Echec(King king, Case kingCase)
         {
-            List<CoPieces>? enemyPieces = (king!.Color == Color.White) ? BlackPieces : WhitePieces;
+            List<CoPieces> enemyPieces = (king.Color == Color.White) ? BlackPieces : WhitePieces;
 
-            foreach (var enemy in enemyPieces!)
+            foreach (var enemy in enemyPieces)
             {
                 if (enemy.piece is King)
                 {
-                    continue; // Ignorez les mouvements du roi ennemi pour éviter les boucles infinies
-                }
-
-                // Utilisez les mouvements possibles de l'ennemi pour vérifier s'ils attaquent la case du roi
-                var possibleMoves = enemy.piece!.PossibleMoves(enemy.CaseLink, this);
-                foreach (var move in possibleMoves)
-                {
-                    if (move.Column == kingCase.Column && move.Line == kingCase.Line)
+                    King KingTest = (King)enemy.piece;
+                    var possibleMoves = KingTest.CanEat(enemy.CaseLink, this);
+                    foreach (var move in possibleMoves)
                     {
-                        return true;
+                        if (move.Column == kingCase.Column && move.Line == kingCase.Line)
+                        {
+                            return true;
+                        }
+                    }
+
+                }
+                else if (enemy.piece is Pawn)
+                {
+                    Pawn PawnTest = (Pawn)enemy.piece;
+                    var possibleMoves = PawnTest.CanEat(enemy.CaseLink, this);
+                    foreach (var move in possibleMoves)
+                    {
+                        if (move.Column == kingCase.Column && move.Line == kingCase.Line)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                else
+                {
+                    // Utilisez les mouvements possibles de l'ennemi pour vérifier s'ils attaquent la case du roi
+                    var possibleMoves = enemy.piece.PossibleMoves(enemy.CaseLink, this);
+                    foreach (var move in possibleMoves)
+                    {
+                        if (move.Column == kingCase.Column && move.Line == kingCase.Line)
+                        {
+                            return true;
+                        }
                     }
                 }
             }
 
             return false; // Le roi n'est pas en échec
         }
-
-
-        public Chessboard CopyBoard() 
+        public Chessboard CopyBoard()
         {
             // Création d'une nouvelle grille de cases pour la copie
             Case[,] newBoard = new Case[8, 8];

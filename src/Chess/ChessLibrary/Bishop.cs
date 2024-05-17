@@ -56,10 +56,19 @@ namespace ChessLibrary
                     }
 
                     Case potentialCase = chessboard.Board[newColumn, newLine];
-
-                    if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
+                    if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                     {
-                        AddPotentialMove(possibleMoves, potentialCase);
+                        if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
+                        {
+                            if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
+                            {
+                                possibleMoves.Add(potentialCase);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
             }
@@ -74,11 +83,7 @@ namespace ChessLibrary
 
         private void AddPotentialMove(List<Case> possibleMoves, Case potentialCase)
         {
-            if (potentialCase.IsCaseEmpty())
-            {
-                possibleMoves.Add(potentialCase);
-            }
-            else if (potentialCase.Piece.Color != Color)
+            if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
             {
                 possibleMoves.Add(potentialCase);
             }

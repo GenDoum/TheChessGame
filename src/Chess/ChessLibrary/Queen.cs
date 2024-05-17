@@ -26,7 +26,7 @@ namespace ChessLibrary
             {
                 throw new InvalidOperationException("Invalid move for Queen: destination out of bounds.");
             }
-            
+
             if (x == x2 || y == y2 || Math.Abs(x - x2) == Math.Abs(y - y2))
             {
                 return true;
@@ -37,11 +37,11 @@ namespace ChessLibrary
 
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
-            
+
             ArgumentNullException.ThrowIfNull(chessboard);
 
-            List<Case> result = new List<Case>();
-            (int, int)[] directions = { (0, 1), (0, -1), (-1, 0), (1, 0),(-1, 1), (1, 1), (-1, -1), (1, -1) };  // Top, Bot, Left, Right ,Top Left, Top Right, Bot Left,Bot Right
+            List<Case> possibleMoves = new List<Case>();
+            (int, int)[] directions = { (0, 1), (0, -1), (-1, 0), (1, 0), (-1, 1), (1, 1), (-1, -1), (1, -1) };  // Top, Bot, Left, Right ,Top Left, Top Right, Bot Left,Bot Right
 
             foreach (var (colInc, lineInc) in directions)
             {
@@ -54,11 +54,10 @@ namespace ChessLibrary
                         Case potentialCase = chessboard.Board[newColumn, newLine];
                         if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
                         {
-                            result.Add(potentialCase);
-                        }
-                        if (!potentialCase.IsCaseEmpty())
-                        {
-                            break;
+                            if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
+                            {
+                                possibleMoves.Add(potentialCase);
+                            }
                         }
                     }
                     else
@@ -67,8 +66,7 @@ namespace ChessLibrary
                     }
                 }
             }
-
-            return result;
+            return possibleMoves;
         }
 
 

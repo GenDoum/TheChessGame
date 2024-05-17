@@ -75,10 +75,10 @@ namespace ChessLibrary
 
         private void AddPotentialMove(List<Case> result, Case potentialCase)
         {
-            if (potentialCase.IsCaseEmpty() || potentialCase.Piece.Color != this.Color)
-            {
-                result.Add(potentialCase);
-            }
+                if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
+                {
+                    result.Add(potentialCase);
+                }
         }
     }
 }

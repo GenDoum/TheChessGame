@@ -77,5 +77,30 @@ namespace ChessLibrary
             return result;
         }
 
+        public List<Case> CanEat(Case caseInitial, Chessboard chessboard)
+        {
+            List<Case> result = new List<Case>();
+            (int, int)[] directions = { (0, 1), (0, -1), (-1, 0), (1, 0), (-1, 1), (1, 1), (-1, -1), (1, -1) };  // Top, Bot, Left, Right, Top Left, Top Right, Bot Left, Bot Right
+
+            foreach (var (colInc, lineInc) in directions)
+            {
+                int newColumn = caseInitial.Column + colInc;
+                int newLine = caseInitial.Line + lineInc;
+
+                if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
+                {
+                    Case potentialCase = chessboard.Board[newColumn, newLine];
+
+                    // Vérifiez si la case est vide ou contient une pièce ennemie
+                    if (potentialCase.IsCaseEmpty() || (potentialCase.Piece != null && potentialCase.Piece.Color != this.Color))
+                    {
+                        // Trouver la position du roi après le déplacement
+                        Case kingNewPosition = new Case(newColumn, newLine, this);
+                        result.Add(kingNewPosition);
+                    }
+                }
+            }
+            return result;
+        }
     }
 }

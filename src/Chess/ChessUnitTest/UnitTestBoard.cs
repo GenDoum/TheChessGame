@@ -572,8 +572,90 @@ public class UnitTestBoard
         // Test null new piece
         Assert.Throws<ArgumentNullException>(() => chessboard.ModifPawn(pawn, null, caseForPawn));
     }
-    
     [Fact]
+    public void TestModifPawn_WhitePawnToQueen()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        Pawn? pawn = new Pawn(Color.White, 1);
+        Case caseForPawn = new Case(0, 7, pawn);
+        Queen newPiece = new Queen(Color.White, 2);
+        chessboard.AddPiece(pawn, 0, 7); // Ajoute le pion à l'échiquier
+
+        // Act
+        chessboard.ModifPawn(pawn, newPiece, caseForPawn);
+
+        // Assert
+        Assert.Contains(chessboard.WhitePieces, copieces => copieces.piece == newPiece && copieces.CaseLink == caseForPawn);
+        Assert.DoesNotContain(chessboard.WhitePieces, copieces => copieces.piece == pawn && copieces.CaseLink == caseForPawn);
+    }
+
+    [Fact]
+    public void TestModifPawn_BlackPawnToQueen()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        Pawn? pawn = new Pawn(Color.Black, 1);
+        Case caseForPawn = new Case(0, 0, pawn);
+        Queen newPiece = new Queen(Color.Black, 2);
+        chessboard.AddPiece(pawn, 0, 0); // Ajoute le pion à l'échiquier
+
+        // Act
+        chessboard.ModifPawn(pawn, newPiece, caseForPawn);
+
+        // Assert
+        Assert.Contains(chessboard.BlackPieces, copieces => copieces.piece == newPiece && copieces.CaseLink == caseForPawn);
+        Assert.DoesNotContain(chessboard.BlackPieces, copieces => copieces.piece == pawn && copieces.CaseLink == caseForPawn);
+    }
+
+    [Fact]
+    public void TestModifPawn_NullPawn()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        Queen newPiece = new Queen(Color.White, 2);
+        Case caseForPawn = new Case(0, 7, newPiece);
+
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => chessboard.ModifPawn(null, newPiece, caseForPawn));
+    }
+
+    [Fact]
+    public void TestModifPawn_NullNewPiece()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        Pawn? pawn = new Pawn(Color.White, 1);
+        Case caseForPawn = new Case(0, 7, pawn);
+        chessboard.AddPiece(pawn, 0, 7); // Ajoute le pion à l'échiquier
+
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => chessboard.ModifPawn(pawn, null, caseForPawn));
+    }
+
+    [Fact]
+    public void TestModifPawn_ReplaceExistingPiece()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        Pawn? pawn = new Pawn(Color.White, 1);
+        Queen existingPiece = new Queen(Color.White, 2);
+        Case caseForPawn = new Case(0, 7, existingPiece);
+        Queen newPiece = new Queen(Color.White, 3);
+        chessboard.AddPiece(pawn, 0, 7); // Ajoute le pion à l'échiquier
+        chessboard.AddPiece(existingPiece, 0, 7); // Ajoute une pièce existante sur la même case
+
+        // Act
+        chessboard.ModifPawn(pawn, newPiece, caseForPawn);
+
+        // Assert
+        Assert.Contains(chessboard.WhitePieces, copieces => copieces.piece == newPiece && copieces.CaseLink == caseForPawn);
+        Assert.DoesNotContain(chessboard.WhitePieces, copieces => copieces.piece == pawn && copieces.CaseLink == caseForPawn);
+        Assert.DoesNotContain(chessboard.WhitePieces, copieces => copieces.piece == existingPiece && copieces.CaseLink == caseForPawn);
+    }
+
+
+[Fact]
     public void TestEchec()
     {
         // Arrange

@@ -223,6 +223,96 @@ public class UnitTestBoard
         // Assert
         Assert.False(result); // Assuming there are no other pieces on the board, the king should not be in check
     }
+    [Fact]
+    public void TestEchecParPion()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Pawn? pawn = new Pawn(Color.Black, 1);
+        Case kingCase = new Case(4, 4, king);
+        Case pawnCase = new Case(3, 5, pawn);
+        chessboard.AddPiece(king, 4, 4);
+        chessboard.AddPiece(pawn, 3, 5);
+
+        // Act
+        bool result = chessboard.Echec(king, kingCase);
+
+        // Assert
+        Assert.True(result); // The pawn should put the king in check
+    }
+    [Fact]
+    public void TestEchecParCavalier()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Knight? knight = new Knight(Color.Black, 1);
+        Case kingCase = new Case(4, 4, king);
+        Case knightCase = new Case(2, 3, knight);
+        chessboard.AddPiece(king, 4, 4);
+        chessboard.AddPiece(knight, 2, 3);
+
+        // Act
+        bool result = chessboard.Echec(king, kingCase);
+
+        // Assert
+        Assert.True(result); // The knight should put the king in check
+    }
+    [Fact]
+    public void TestEchecParReine()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Queen? queen = new Queen(Color.Black, 1);
+        Case kingCase = new Case(4, 4, king);
+        Case queenCase = new Case(4, 7, queen);
+        chessboard.AddPiece(king, 4, 4);
+        chessboard.AddPiece(queen, 4, 7);
+
+        // Act
+        bool result = chessboard.Echec(king, kingCase);
+
+        // Assert
+        Assert.True(result); // The queen should put the king in check
+    }
+    [Fact]
+    public void TestEchecParFou()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Bishop? bishop = new Bishop(Color.Black, 1);
+        Case kingCase = new Case(0, 0, king);
+        Case bishopCase = new Case(2, 2, bishop);
+        chessboard.AddPiece(king, 0, 0);
+        chessboard.AddPiece(bishop, 2, 2);
+
+        // Act
+        bool result = chessboard.Echec(king, kingCase);
+
+        // Assert
+        Assert.True(result); // The bishop should put the king in check
+    }
+    [Fact]
+    public void TestEchecParTour()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Rook? rook = new Rook(Color.Black, 1);
+        Case kingCase = new Case(0, 0, king);
+        Case rookCase = new Case(0, 7, rook);
+        chessboard.AddPiece(king, 0, 0);
+        chessboard.AddPiece(rook, 0, 7);
+
+        // Act
+        bool result = chessboard.Echec(king, kingCase);
+
+        // Assert
+        Assert.True(result); // The rook should put the king in check
+    }
 
     // [Fact]
     // public void TestCopyBoard()
@@ -260,5 +350,85 @@ public class UnitTestBoard
         // Assert
         Assert.False(result); // Assuming there are no other pieces on the board, the king should not be in checkmate
     }
+    [Fact]
+    public void TestEchecMatParReineEtTour()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Queen? queen = new Queen(Color.Black, 1);
+        Rook? rook = new Rook(Color.Black, 1);
+        Case kingCase = new Case(0, 0, king);
+        chessboard.AddPiece(king, 0, 0);
+        chessboard.AddPiece(queen, 1, 1);
+        chessboard.AddPiece(rook, 0, 1);
+
+        // Act
+        bool result = chessboard.EchecMat(king, kingCase);
+
+        // Assert
+        Assert.True(result); // The queen and rook should put the king in checkmate
+    }
+
+    [Fact]
+    public void TestEchecMatParFouEtTour()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Bishop? bishop = new Bishop(Color.Black, 1);
+        Rook? rook = new Rook(Color.Black, 1);
+        Case kingCase = new Case(0, 0, king);
+        chessboard.AddPiece(king, 0, 0);
+        chessboard.AddPiece(bishop, 1, 1);
+        chessboard.AddPiece(rook, 0, 2);
+
+        // Act
+        bool result = chessboard.EchecMat(king, kingCase);
+
+        // Assert
+        Assert.False(result); // The bishop and rook should put the king in checkmate
+    }
+    [Fact]
+    public void TestEchecMatParReineEtFou()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Queen? queen = new Queen(Color.Black, 1);
+        Bishop? bishop = new Bishop(Color.Black, 1);
+        Case kingCase = new Case(0, 0, king);
+        chessboard.AddPiece(king, 0, 0);
+        chessboard.AddPiece(queen, 1, 1);
+        chessboard.AddPiece(bishop, 2, 2);
+
+        // Act
+        bool result = chessboard.EchecMat(king, kingCase);
+
+        // Assert
+        Assert.True(result); // The queen and bishop should put the king in checkmate
+    }
+    [Fact]
+    public void TestEchecMatParCavalierEtTour()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Knight? knight = new Knight(Color.Black, 1);
+        Rook? rook = new Rook(Color.Black, 1);
+        Case kingCase = new Case(0, 0, king);
+        chessboard.AddPiece(king, 0, 0);
+        chessboard.AddPiece(knight, 2, 1);
+        chessboard.AddPiece(rook, 0, 2);
+
+        // Act
+        bool result = chessboard.EchecMat(king, kingCase);
+
+        // Assert
+        Assert.False(result); // The knight and rook should put the king in checkmate
+    }
+
+
+
 }
 

@@ -40,7 +40,7 @@ namespace ChessLibrary
 
             ArgumentNullException.ThrowIfNull(chessboard);
 
-            List<Case> possibleMoves = new List<Case>();
+            List<Case> result = new List<Case>();
             (int, int)[] directions = { (0, 1), (0, -1), (-1, 0), (1, 0), (-1, 1), (1, 1), (-1, -1), (1, -1) };  // Top, Bot, Left, Right ,Top Left, Top Right, Bot Left,Bot Right
 
             foreach (var (colInc, lineInc) in directions)
@@ -54,9 +54,18 @@ namespace ChessLibrary
                         Case potentialCase = chessboard.Board[newColumn, newLine];
                         if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
                         {
-                            if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
+                            if (potentialCase.IsCaseEmpty())
                             {
-                                possibleMoves.Add(potentialCase);
+                                result.Add(potentialCase);
+                            }
+                            else if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
+                            {
+                                result.Add(potentialCase);
+                                break;
+                            }
+                            else
+                            {
+                                break;
                             }
                         }
                     }
@@ -66,9 +75,10 @@ namespace ChessLibrary
                     }
                 }
             }
-            return possibleMoves;
+            return result;
         }
 
-
     }
+
+
 }

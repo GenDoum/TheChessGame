@@ -30,7 +30,7 @@ namespace ChessLibrary
                 throw new InvalidOperationException("Invalid move for Bishop: destination out of bounds.");
             }
 
-            return true;    
+            return true;
         }
 
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
@@ -40,29 +40,32 @@ namespace ChessLibrary
                 throw new ArgumentNullException();
             }
 
-            List<Case> possibleMoves = new List<Case>();
+            List<Case> result = new List<Case>();
             (int colInc, int lineInc)[] directions = { (-1, 1), (1, 1), (-1, -1), (1, -1) }; // Top Left, Top Right, Bot Left, Bot Right
-    
+
             foreach (var (colInc, lineInc) in directions)
             {
                 for (int i = 1; i < 8; i++)
                 {
                     int newColumn = caseInitial.Column + (colInc * i);
                     int newLine = caseInitial.Line + (lineInc * i);
-            
-                    if (!IsWithinBoardBoundaries(newColumn, newLine))
-                    {
-                        break;
-                    }
-
-                    Case potentialCase = chessboard.Board[newColumn, newLine];
                     if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                     {
+                        Case potentialCase = chessboard.Board[newColumn, newLine];
                         if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
                         {
-                            if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
+                            if (potentialCase.IsCaseEmpty())
                             {
-                                possibleMoves.Add(potentialCase);
+                                result.Add(potentialCase);
+                            }
+                            else if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
+                            {
+                                result.Add(potentialCase);
+                                break;
+                            }
+                            else
+                            {
+                                break;
                             }
                         }
                     }
@@ -73,20 +76,7 @@ namespace ChessLibrary
                 }
             }
 
-            return possibleMoves;
-        }
-
-        private bool IsWithinBoardBoundaries(int column, int line)
-        {
-            return column >= 0 && column < 8 && line >= 0 && line < 8;
-        }
-
-        private void AddPotentialMove(List<Case> possibleMoves, Case potentialCase)
-        {
-            if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
-            {
-                possibleMoves.Add(potentialCase);
-            }
+            return result;
         }
     }
 }

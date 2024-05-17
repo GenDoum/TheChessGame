@@ -85,7 +85,7 @@ namespace ConsoleChess
             Rook newRook;
             Knight newKnight;
             Bishop newBishop;
-
+            
             switch (choiceUser)
             {
                 case ChoiceUser.Queen:
@@ -110,20 +110,26 @@ namespace ConsoleChess
                     game.Board.ModifPawn(P, newKnight, C);
                     return;
                 default:
-                    // Recommencer la saisie
-                    throw new InvalidOperationException("Invalid choice.");
+                    break;
             }
         }
         
         static ChoiceUser GetUserChoice()
         {
-            Console.WriteLine("Choose the piece to evolve to:");
-            Console.WriteLine("1. Queen");
-            Console.WriteLine("2. Rook");
-            Console.WriteLine("3. Bishop");
-            Console.WriteLine("4. Knight");
+            int choice;
+            do
+            {
+                Console.WriteLine("Choose the piece to evolve to:");
+                Console.WriteLine("1. Queen");
+                Console.WriteLine("2. Rook");
+                Console.WriteLine("3. Bishop");
+                Console.WriteLine("4. Knight");
 
-            int choice = Convert.ToInt32(Console.ReadLine());
+                if (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 4)
+                {
+                    Console.WriteLine("Invalid input. Please enter a number between 1 and 4.");
+                }
+            } while (choice < 1 || choice > 4);
 
             return (ChoiceUser)choice;
         }

@@ -192,9 +192,10 @@ namespace ChessLibrary
                 if (final is { Piece: Pawn, Line: 0 or 7 })
                 {
                     OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = final.Piece as Pawn, Case = final });
-
                 }
             }
+            else
+                throw new InvalidMovementException("Invalid move for this piece.");
         }
         
         /// <summary>

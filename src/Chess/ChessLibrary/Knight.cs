@@ -25,13 +25,12 @@ namespace ChessLibrary
             if ((Math.Abs(x - x2) == 2 && Math.Abs(y - y2) == 1) || (Math.Abs(x - x2) == 1 && Math.Abs(y - y2) == 2))
             {
                 if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
-                {
-                    throw new InvalidOperationException("Invalid move for Knight: destination out of bounds.");
-                }
+                    throw new InvalidMovementException("Invalid move for Knight: destination out of bounds.");
+                
                 return true;
             }
 
-            throw new InvalidOperationException("Invalid move for Knight");
+            throw new InvalidMovementException("Invalid move for Knight: not L-shaped.");
         }
 
 
@@ -56,9 +55,7 @@ namespace ChessLibrary
                 {
                     Case potentialCase = chessboard.Board[newColumn, newLine];
                     if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine) && (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color || potentialCase.IsCaseEmpty()))
-                    {
                         result.Add(potentialCase);
-                    }
                 }
             }
             return result;

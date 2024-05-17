@@ -27,16 +27,12 @@ namespace ChessLibrary
         public override bool CanMove(int x, int y, int x2, int y2)
         {
             if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
-            {
-                throw new InvalidOperationException("Invalid move for Rook: destination out of bounds.");
-            }
+                throw new InvalidMovementException("Invalid move for Rook: destination out of bounds.");
 
             if (x == x2 || y == y2)
-            {
                 return true;
-            }
 
-            throw new InvalidOperationException("Invalid move for Rook");
+            throw new InvalidMovementException("Invalid move for Rook: not horizontal or vertical.");
         }
 
 

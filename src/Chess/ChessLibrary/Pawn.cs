@@ -26,23 +26,17 @@ namespace ChessLibrary
         public override bool CanMove(int x, int y, int x2, int y2)
         {
             if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
-            {
-                throw new InvalidOperationException("Invalid move for Pawn: destination out of bounds.");
-            }
+                throw new InvalidMovementException("Invalid move for Pawn: destination out of bounds.");
 
             int direction = (Color == Color.White) ? 1 : -1;
 
             if (x == x2 && (y2 == y + direction || (Color == Color.White && y == 1 || Color == Color.Black && y == 6) && y2 == y + 2 * direction))
-            {
                 return true;
-            }
 
             if (Math.Abs(x2 - x) == 1 && y2 == y + direction)
-            {
                 return true;
-            }
 
-            throw new InvalidOperationException("Invalid move for Pawn");
+            throw new InvalidMovementException("Invalid move for Pawn : not diagonal or forward.");
         }
 
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)

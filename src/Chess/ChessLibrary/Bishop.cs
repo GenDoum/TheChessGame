@@ -24,14 +24,10 @@ namespace ChessLibrary
         public override bool CanMove(int x, int y, int x2, int y2)
         {
             if (Math.Abs(x - x2) != Math.Abs(y - y2))
-            {
-                throw new InvalidOperationException("Invalid move for Bishop");
-            }
+                throw new InvalidMovementException("Invalid move for Bishop: not diagonal.");
 
             if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
-            {
-                throw new InvalidOperationException("Invalid move for Bishop: destination out of bounds.");
-            }
+                throw new InvalidMovementException("Invalid move for Bishop: destination out of bounds.");
 
             return true;
         }
@@ -39,9 +35,7 @@ namespace ChessLibrary
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
             if (chessboard == null || caseInitial == null)
-            {
                 throw new ArgumentNullException();
-            }
 
             List<Case> result = new List<Case>();
             (int colInc, int lineInc)[] directions = { (-1, 1), (1, 1), (-1, -1), (1, -1) }; // Top Left, Top Right, Bot Left, Bot Right
@@ -67,15 +61,11 @@ namespace ChessLibrary
                                 break;
                             }
                             else
-                            {
                                 break;
-                            }
                         }
                     }
                     else
-                    {
                         break;
-                    }
                 }
             }
 

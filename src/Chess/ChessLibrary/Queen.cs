@@ -23,16 +23,12 @@ namespace ChessLibrary
         public override bool CanMove(int x, int y, int x2, int y2)
         {
             if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
-            {
-                throw new InvalidOperationException("Invalid move for Queen: destination out of bounds.");
-            }
+                throw new InvalidMovementException("Invalid move for Queen: destination out of bounds.");
 
             if (x == x2 || y == y2 || Math.Abs(x - x2) == Math.Abs(y - y2))
-            {
                 return true;
-            }
 
-            throw new InvalidOperationException("Invalid move for Queen");
+            throw new InvalidMovementException("Invalid move for Queen: not diagonal, horizontal or vertical.");
         }
 
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
@@ -64,15 +60,11 @@ namespace ChessLibrary
                                 break;
                             }
                             else
-                            {
                                 break;
-                            }
                         }
                     }
                     else
-                    {
                         break;
-                    }
                 }
             }
             return result;

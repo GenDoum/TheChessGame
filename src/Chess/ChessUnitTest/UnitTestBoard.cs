@@ -167,6 +167,100 @@ public class UnitTestBoard
         // Assert
         Assert.True(result);
     }
+        [Fact]
+    public void TestIsMoveValidValidMove()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        List<Case> Lcase = new List<Case>
+        {
+            new Case(0, 0, null),
+            new Case(1, 1, null),
+            new Case(2, 2, null)
+        };
+        Case Final = new Case(1, 1, null);
+
+        // Act
+        bool result = chessboard.IsMoveValid(Lcase, Final);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void TestIsMoveValid_InvalidMove()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        List<Case> Lcase = new List<Case>
+        {
+            new Case(0, 0, null),
+            new Case(1, 1, null),
+            new Case(2, 2, null)
+        };
+        Case Final = new Case(3, 3, null);
+
+        // Act
+        bool result = chessboard.IsMoveValid(Lcase, Final);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void TestIsMoveValid_MoveToOccupiedCase()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        List<Case> Lcase = new List<Case>
+        {
+            new Case(0, 0, null),
+            new Case(1, 1, new Pawn(Color.White, 1)),
+            new Case(2, 2, null)
+        };
+        Case Final = new Case(1, 1, new Pawn(Color.White, 1));
+
+        // Act
+        bool result = chessboard.IsMoveValid(Lcase, Final);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void TestIsMoveValid_EmptyPossibleMoves()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        List<Case> Lcase = new List<Case>();
+        Case Final = new Case(1, 1, null);
+
+        // Act
+        bool result = chessboard.IsMoveValid(Lcase, Final);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void TestIsMoveValid_FinalCaseOutOfBounds()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        List<Case> Lcase = new List<Case>
+        {
+            new Case(0, 0, null),
+            new Case(1, 1, null),
+            new Case(2, 2, null)
+        };
+        Case Final = new Case(8, 8, null); // Out of bounds case
+
+        // Act
+        bool result = chessboard.IsMoveValid(Lcase, Final);
+
+        // Assert
+        Assert.False(result);
+    }
 
     [Fact]
     public void TestMovePiece()
@@ -428,6 +522,41 @@ public class UnitTestBoard
         Assert.False(result); // The knight and rook should put the king in checkmate
     }
 
+    [Fact]
+    public void TestEchecMatFauxAvecTour()
+    {
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Rook? rook1 = new Rook(Color.White, 2);
+        Rook? rook2 = new Rook(Color.Black, 1);
+        Case kingCase = new Case(0, 0, king);
+        Case rookCase1 = new Case(2, 1, rook1);
+        Case rookCase2 = new Case(0, 2, rook2);
+        chessboard.AddPiece(king, 0, 0);
+        chessboard.AddPiece(rook1, 2, 1);
+        chessboard.AddPiece(rook2, 0, 2);
+
+        bool result = chessboard.EchecMat(king, kingCase);
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void TestEchecMatFauxAvecRene()
+    {
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Queen? queen1 = new Queen(Color.White, 2);
+        Queen? queen2 = new Queen(Color.Black, 1);
+        Case kingCase = new Case(0, 0, king);
+        Case rookCase1 = new Case(2, 1, queen1);
+        Case rookCase2 = new Case(0, 2, queen2);
+        chessboard.AddPiece(king, 0, 0);
+        chessboard.AddPiece(queen1, 1, 0);
+        chessboard.AddPiece(queen2, 0, 2);
+
+        bool result = chessboard.EchecMat(king, kingCase);
+        Assert.False(result);
+    }
 
 
 }

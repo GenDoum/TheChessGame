@@ -259,40 +259,70 @@ namespace ChessLibrary
             return newChessboard;
         }
 
-        public bool EchecMat(King? king, Case kingCase)
+        public bool EchecMat(King king, Case kingCase)
         {
-            var possibleKingMoves = king!.PossibleMoves(kingCase, this);
+            // Obtenez tous les mouvements possibles pour le roi
+            var possibleKingMoves = king.PossibleMoves(kingCase, Board);
 
+            // Vérifiez si le roi peut échapper à l'échec
             foreach (var move in possibleKingMoves)
             {
-                var simulatedBoard = CopyBoard();
-                simulatedBoard.Board[kingCase.Column, kingCase.Line].Piece = null;
-                simulatedBoard.Board[move.Column, move.Line].Piece = king;
-
-                if (!simulatedBoard.Echec(king, simulatedBoard.Board[move.Column, move.Line]))
-                    return false;
-            }
-
-            var allyPieces = (king.Color == Color.White) ? WhitePieces : BlackPieces;
-            if (allyPieces == null) return true;
-            foreach (var pieceInfo in allyPieces)
-            {
-                var piece = pieceInfo.piece;
-                var startCase = pieceInfo.CaseLink;
-                var possibleMoves = piece!.PossibleMoves(startCase, this);
-
-                foreach (var move in possibleMoves)
+                if (TryMovePiece(kingCase, move))
                 {
-                    var simulatedBoard = CopyBoard();
-                    simulatedBoard.Board[startCase.Column, startCase.Line].Piece = null;
-                    simulatedBoard.Board[move.Column, move.Line].Piece = piece;
-
-                    if (!simulatedBoard.Echec(king, simulatedBoard.Board[kingCase.Column, kingCase.Line]))
+                    if (!Echec(king, move))
+                    {
+                        UndoMovePiece(kingCase, move);
                         return false;
+                    }
+                    UndoMovePiece(kingCase, move);
                 }
             }
 
+            // Obtenez toutes les pièces alliées
+            var allyPieces = king.Color == Color.White ? WhitePieces : BlackPieces;
+            List<CoPieces> list2 = new List<CoPieces>(allyPieces);
+            // Vérifiez si une pièce alliée peut protéger le roi
+            foreach (var pieceInfo in allyPieces!)
+            {
+                var piece = pieceInfo.piece;
+                var startCase = pieceInfo.CaseLink;
+                var possibleMoves = piece.PossibleMoves(startCase, this);
+
+                foreach (var move in possibleMoves)
+                {
+                    if (TryMovePiece(startCase, move))
+                    {
+                        if (!Echec(king, kingCase))
+                        {
+                            UndoMovePiece(startCase, move);
+                            return false;
+                        }
+                        UndoMovePiece(startCase, move);
+                    }
+                }
+            }
+
+            // Si aucune évasion possible n'a été trouvée, c'est échec et mat
             return true;
+        }
+
+        // Méthode pour simuler un mouvement de pièce
+        private bool TryMovePiece(Case initial, Case final)
+        {
+            if (CanMovePiece(initial.Piece, initial, final))
+            {
+                final.Piece = initial.Piece;
+                initial.Piece = null;
+                return true;
+            }
+            return false;
+        }
+
+        // Méthode pour annuler un mouvement de pièce
+        private void UndoMovePiece(Case initial, Case final)
+        {
+            initial.Piece = final.Piece;
+            final.Piece = null;
         }
     }
 }

@@ -13,22 +13,24 @@ namespace ChessLibrary
     public class Game : IRules
     {
         public event EventHandler<EvolveNotifiedEventArgs> EvolveNotified;
-        
+
         protected virtual void OnEvolvePiece(EvolveNotifiedEventArgs args)
             => EvolveNotified?.Invoke(this, args);
-        
+
         public event EventHandler<GameOverNotifiedEventArgs> GameOverNotified;
-        
+
         protected virtual void OnGameOver(GameOverNotifiedEventArgs args)
             => GameOverNotified?.Invoke(this, args);
-        
+
         public User Player1 { get; set; }
         public User Player2 { get; set; }
         public Chessboard Board { get; set; }
-
+        public bool WhiteCheck { get; set; }
+        public bool BlackCheck { get; set; }
         public Game(User player1, User player2)
         {
-
+            WhiteCheck = false;
+            BlackCheck = false;
             this.Player1 = player1;
             this.Player2 = player2;
             Case[,] allcase = new Case[8, 8];
@@ -52,6 +54,14 @@ namespace ChessLibrary
             {
                 if (pieceInfo.piece is King king && game.Board.Echec(king, pieceInfo.CaseLink))
                 {
+                    if (actualPlayer.color == Color.White)
+                    {
+                        WhiteCheck = true;
+                    }
+                    else
+                    {
+                        BlackCheck = true;
+                    }
                     return true;
                 }
             }
@@ -71,16 +81,26 @@ namespace ChessLibrary
             }
             return false;
         }
-        
+
 
         public void MovePiece(Case initial, Case final, Chessboard board, User actualPlayer)
         {
             // Validation de base pour vérifier la pièce initiale
-            ArgumentNullException.ThrowIfNull(initial.Piece ,"Vous ne pouvez pas déplacer une piece qui n'existe pas.");
+            ArgumentNullException.ThrowIfNull(initial.Piece, "Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
 
             // Vérifier si la pièce appartient au joueur actuel
             if (initial.Piece.Color != actualPlayer.color)
                 throw new InvalidOperationException("It's not this player's turn.");
+
+            // Vérifier si le joueur actuel est en échec
+            bool isInCheck = board.IsInCheck(actualPlayer.color);
+
+            // Si le joueur est en échec, vérifier que le mouvement résout l'échec
+            if (isInCheck)
+            {
+                if (!board.CanResolveCheck(initial, final, actualPlayer.color))
+                    throw new InvalidOperationException("You must move out of check.");
+            }
 
             // Effectuer le déplacement
             if (board.CanMovePiece(initial.Piece, initial, final))
@@ -91,17 +111,11 @@ namespace ChessLibrary
                 // Vérifier si la case finale est un pion et qu'elle peut évoluer
                 if (final is { Piece: Pawn, Line: 0 or 7 })
                 {
-                    // Dans ce cas, on doit demander au joueur quelle pièce il veut. (Avec un événement)
                     OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = final.Piece as Pawn, Case = final });
+
                 }
             }
-            else
-            {
-                throw new InvalidOperationException("Invalid move, check the rules.");
-            }
         }
-
-
         private void UpdatePieceLists(Case initial, Case final, Chessboard board)
         {
             var movedPieceInfo = new CoPieces { CaseLink = initial, piece = initial.Piece };

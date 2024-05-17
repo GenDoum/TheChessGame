@@ -262,7 +262,7 @@ namespace ChessLibrary
         public bool EchecMat(King king, Case kingCase)
         {
             // Obtenez tous les mouvements possibles pour le roi
-            var possibleKingMoves = king.PossibleMoves(kingCase, Board);
+            var possibleKingMoves = king.PossibleMoves(kingCase, this);
 
             // Vérifiez si le roi peut échapper à l'échec
             foreach (var move in possibleKingMoves)

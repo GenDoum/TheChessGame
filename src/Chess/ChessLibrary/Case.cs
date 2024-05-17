@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 namespace ChessLibrary
 {
+    /// <summary>
+    /// Classe pour une case d'un échiquier
+    /// </summary>
     public class Case
     {
         /// <summary>

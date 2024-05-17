@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace ChessLibrary
 {
     /// <summary>
-    /// Class that represents a queen piece
+    /// Classe représentant la reine
     /// </summary>
     public class Queen : Piece
     {
         /// <summary>
-        /// Constructor of the class
+        /// Constructeur de la classe Queen
         /// </summary>
         /// <param name="c"></param>
         /// <param name="ca"></param>

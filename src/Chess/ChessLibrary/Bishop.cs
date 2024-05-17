@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
+    /// <summary>
+    /// Classe Bishop (fou) qui hérite de la classe Piece
+    /// </summary>
     public class Bishop : Piece
     {
         /// <summary>
-        /// 
+        /// Constructeur de la classe Bishop
         /// </summary>
         /// <param name="color"></param>
         /// <param name="c"></param>

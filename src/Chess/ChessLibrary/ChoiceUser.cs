@@ -1,5 +1,8 @@
 namespace ChessLibrary;
 
+/// <summary>
+/// Enumération des choix de pièces pour l'évolution du pion
+/// </summary>
 public enum ChoiceUser
 {
     Queen = 1,

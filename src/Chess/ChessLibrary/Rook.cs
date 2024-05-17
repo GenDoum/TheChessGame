@@ -9,13 +9,13 @@ namespace ChessLibrary
 {
 
     /// <summary>
-    /// Class that represents a Rook piece
+    /// Classe pour la pièce Tour
     /// </summary>
     public class Rook : Piece, IFirstMove
     {
         public bool FirstMove { get; set; }
         /// <summary>
-        /// Constructor of the class
+        /// Constructeur de la classe Rook
         /// </summary>
         /// <param name="color"></param>
         /// <param name="c"></param>

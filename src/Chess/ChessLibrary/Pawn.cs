@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 namespace ChessLibrary
 {
     /// <summary>
-    /// Class that represents a pawn piece
+    /// Classe représentant le pion
     /// </summary>
     public class Pawn : Piece, IFirstMove
     {
         virtual public bool FirstMove { get; set; }
         /// <summary>
-        /// Constructor of the class
+        /// Constructeur de la classe Pawn
         /// </summary>
         /// <param name="c"></param>
         /// <param name="id"></param>

@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 namespace ChessLibrary
 {
     /// <summary>
-    /// Class that represents a knight piece
+    /// Classe représentant le chavalier
     /// </summary>
     public class Knight : Piece
     {
         /// <summary>
-        /// Constructor of the class
+        /// Constructeur de la classe Knight
         /// </summary>
         /// <param name="c"></param>
-        /// <param name="ca"></param>
+        /// <param name="id"></param>
         public Knight(Color c, int id) : base(c, id)
         {
         }

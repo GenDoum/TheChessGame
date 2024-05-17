@@ -217,7 +217,7 @@ namespace ChessLibrary
 
         private King FindKing(Color color)
         {
-            return color == Color.White ? (King)WhitePieces!.Find(x => x.piece is King)!.piece : (King)BlackPieces!.Find(x => x.piece is King)!.piece;
+            return color == Color.White ? (King)whitePieces!.Find(x => x.piece is King)!.piece : (King)blackPieces!.Find(x => x.piece is King)!.piece;
         }
 
         private Case FindCase(Piece piece)

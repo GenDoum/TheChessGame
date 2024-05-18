@@ -44,7 +44,7 @@
 
 The chess is a project in its early stages.
 
-| Tâches                                |Explication                                             | État
+| Features                              | Explanation                                            | State
 | :------------------------------------ |:------------------------------------------------------:|:-----------------------:|
 | **Piece Movement Management**         | Each type of piece (King, Queen, Rook, Knight, Bishop, Pawn) has its own movement logic implemented. For example, the King can move one square in any direction, the Queen can move in any direction without distance limit, etc. | :white_check_mark:
 | **Movement Exception Handling**       | We have set up exceptions to handle invalid movements. For example, if the bishop tries to move in a non-diagonal direction, an `InvalidMovementException` is thrown. | :white_check_mark:

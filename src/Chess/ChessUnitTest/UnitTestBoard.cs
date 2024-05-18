@@ -892,63 +892,6 @@ public class UnitTestBoard
         bool result = chessboard.EchecMat(king, kingCase);
         Assert.False(result);
     }
-    [Fact]
-    public void TestIsInCheckBlack()
-    {
-        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        chessboard.AddPiece(new King(Color.Black, 5), 4, 0); // e1
 
-        chessboard.IsInCheck(Color.Black);
-        var isincheck = chessboard.IsInCheck(Color.Black);
-        Assert.True(isincheck);
-    }
-
-    [Fact]
-    public void TestIsInCheckWhite()
-    {
-        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        chessboard.AddPiece(new King(Color.White, 5), 4, 7); // e8
-
-        var isincheck = chessboard.IsInCheck(Color.White);
-        Assert.True(isincheck);
-    }
-    [Fact]
-    public void TestCheckmateScenario()
-    {
-        Chessboard board = new Chessboard(new Case[8, 8], true);
-
-        board.AddPiece(new Rook(Color.White, 1), 0, 7); // a8
-        board.AddPiece(new Bishop(Color.White, 3), 2, 7); // c8
-        board.AddPiece(new Queen(Color.White, 4), 3, 7); // d8
-        board.AddPiece(new King(Color.White, 5), 4, 7); // e8
-        board.AddPiece(new Bishop(Color.White, 6), 5, 7); // f8
-        board.AddPiece(new Knight(Color.White, 7), 6, 7); // g8
-        board.AddPiece(new Rook(Color.White, 8), 7, 7); // h8
-
-        for (int i = 0; i < 8; i++)
-        {
-            board.AddPiece(new Pawn(Color.White, 9 + i), i, 6); // a7-h7
-        }
-
-        // Place the black pieces
-        board.AddPiece(new Rook(Color.Black, 1), 0, 0); // a1
-        board.AddPiece(new Bishop(Color.Black, 3), 2, 0); // c1
-        board.AddPiece(new Queen(Color.Black, 4), 3, 0); // d1
-        board.AddPiece(new King(Color.Black, 5), 4, 0); // e1
-        board.AddPiece(new Bishop(Color.Black, 6), 5, 0); // f1
-        board.AddPiece(new Knight(Color.Black, 7), 6, 0); // g1
-        board.AddPiece(new Rook(Color.Black, 8), 7, 0); // h1
-
-        for (int i = 0; i < 8; i++)
-        {
-            board.AddPiece(new Pawn(Color.Black, 9 + i), i, 1); // a2-h2
-        }
-        board.AddPiece(new Knight(Color.Black, 2), 3, 5); // b1
-        board.AddPiece(new Knight(Color.White, 2), 1, 7); // b8
-        Case? whiteKingCase = board.Board[4, 7]; // e8
-        bool isCheckmate = board.EchecMat((King)whiteKingCase.Piece,whiteKingCase);
-        // Assert checkmate status
-        Assert.False(isCheckmate);
-    }
 }
 

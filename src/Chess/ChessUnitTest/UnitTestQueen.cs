@@ -17,7 +17,7 @@ public class UnitTestQueen
         Assert.True(result);
     }
 
-/*    [Theory]
+    [Theory]
     [MemberData(nameof(TestData.InvalidQueenPositionsData), MemberType = typeof(TestData))]
     public void CanMove_InvalidMove_ThrowsException(int x1, int y1, int x2, int y2)
     {
@@ -25,8 +25,8 @@ public class UnitTestQueen
         var queen = new Queen(Color.White, 1);
         
         // Act & Assert
-        Assert.Throws<InvalidOperationException>(() => queen.CanMove(x1, y1, x2, y2));
-    }*/
+        Assert.Throws<InvalidMovementException>(() => queen.CanMove(x1, y1, x2, y2));
+    }
     
     [Fact]
     public void PossibleMoves_EmptyBoard_ReturnsCorrectMoves()

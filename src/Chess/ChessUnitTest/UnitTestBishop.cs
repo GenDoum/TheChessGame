@@ -17,7 +17,7 @@ public class UnitTestBishop
         Assert.True(result);
     }
     
-    /*[Theory]
+    [Theory]
     [MemberData(nameof(TestData.InvalidBishopPositionsData), MemberType = typeof(TestData))]
     public void CanMove_InvalidMove_ThrowsException(int x1, int y1, int x2, int y2)
     {
@@ -25,8 +25,8 @@ public class UnitTestBishop
         var bishop = new Bishop(Color.White, 1);
 
         // Act & Assert
-        Assert.Throws<InvalidOperationException>(() => bishop.CanMove(x1, y1, x2, y2));
-    }*/
+        Assert.Throws<InvalidMovementException>(() => bishop.CanMove(x1, y1, x2, y2));
+    }
 
     [Fact]
     public void PossibleMoves_EmptyBoard_ReturnsCorrectMoves()

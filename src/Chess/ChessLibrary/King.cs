@@ -29,12 +29,12 @@ namespace ChessLibrary
             {
                 if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
                 {
-                    throw new InvalidOperationException("Invalid move for King: destination out of bounds.");
+                    throw new InvalidMovementException("Invalid move for King: destination out of bounds.");
                 }
                 return true;
             }
 
-            throw new InvalidOperationException("Invalid move for King");
+            throw new InvalidMovementException("Invalid move for King");
         }
 
  

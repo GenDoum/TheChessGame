@@ -85,6 +85,19 @@ namespace ChessLibrary
 
         }
 
+        public User(Color color)
+        {
+            string name = $"{color.ToString()} player";
+
+            this.pseudo = name;
+            this.Password = null;
+            this.Color = color;
+            this.Score = 0;
+            this.IsConnected = false;
+
+        }
+
+
         /// <summary>
         /// Constructor of Player without paramaters.
         /// This constructor will be used for the invited player.

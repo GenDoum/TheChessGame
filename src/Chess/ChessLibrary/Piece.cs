@@ -7,32 +7,35 @@ using System.Threading.Tasks;
 namespace ChessLibrary
 {
     /// <summary>
-    /// Class that represents a piece
+    /// Classe abstraite pour les pièces
     /// </summary>
     
     public abstract class Piece
     {
         /// <summary>
-        /// Property that represents the color of the piece
+        /// Couleur de la pièce
         /// </summary>
         public Color Color { get; private set; }
 
-        public int id { get; private set; }
+        /// <summary>
+        /// Identifiant de la pièce
+        /// </summary>
+        public int Id { get; private set; }
         
         /// <summary>
-        /// Property that represents if the piece has moved
+        /// Déplacement de la pièce
         /// </summary>
         public bool Moved { get; protected set; }
         
         /// <summary>
-        /// Constructor of the class
+        /// Constructeur de la pièce
         /// </summary>
         /// <param name="color"></param>
-        /// <param name="c"></param>
-        public Piece(Color color, int indentifiant)
+        /// <param name="indentifiant"></param>
+        protected Piece(Color color, int indentifiant)
         {
             Color = color;
-            id = indentifiant;
+            Id = indentifiant;
 
             if (color != Color.Black && color != Color.White)
             {
@@ -41,25 +44,26 @@ namespace ChessLibrary
         }
         
         /// <summary>
-        /// Method that checks if the piece can move
+        /// Vérifier si la pièce peut bouger
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="x2"></param>
         /// <param name="y2"></param>
         /// <returns></returns>
-        public abstract bool canMove(int x, int y, int x2, int y2);
-
-        public abstract List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard);
+        public abstract bool CanMove(int x, int y, int x2, int y2);
         
         /// <summary>
-        /// Method that checks if the piece is eaten
+        /// Stocker tous les mouvements possibles de la pièce
         /// </summary>
+        /// <param name="caseInitial"></param>
+        /// <param name="chessboard"></param>
         /// <returns></returns>
-        public bool isKilled()
+        public abstract List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard);
+
+        public virtual Piece Clone()
         {
-            return false;
+            return (Piece)this.MemberwiseClone(); // Copie superficielle appropriée si aucune référence profonde n'est nécessaire
         }
-        
     }
 }

@@ -45,20 +45,20 @@ The chess is a project in its early stages.
 
 | Tâches                                |Explication                                             | État
 | :------------------------------------ |:------------------------------------------------------:|:-----------------------:|
-| **Piece Movement Management**         | Each type of piece (King, Queen, Rook, Knight, Bishop, Pawn) has its own movement logic implemented. For example, the King can move one square in any direction, the Queen can move in any direction without distance limit, etc. | <input type="checkbox" readonly tabindex=-1 checked>
-| **Movement Exception Handling**       | We have set up exceptions to handle invalid movements. For example, if the bishop tries to move in a non-diagonal direction, an `InvalidMovementException` is thrown. | <input type="checkbox" readonly tabindex=-1 checked>
-| **Calculation of Possible Moves**     | set up exceptions to handle invalid movements. For example, if the bishop tries to move in a non-diagonal direction, an `InvalidMovementException` is thrown. | <input type="checkbox" readonly tabindex=-1 checked>
-| **Unit Testing**                      | You have written unit tests to verify the validity of the bishop's movements. These tests check valid moves, invalid moves, and possible moves on an empty chessboard. | <input type="checkbox" readonly tabindex=-1 checked>
-| **Piece Color Management**            | Each piece has a color (white or black) that is used to determine possible moves and to check if a piece can be captured. | <input type="checkbox" readonly tabindex=-1 checked>
-| **Check**                             | The `Check` function verifies if a King is in check. It examines all possible moves of the opposing pieces to see if any of them can reach the King. | <input type="checkbox" readonly tabindex=-1>
-| **Checkmate**                         | The `Checkmate` function verifies if a player is in checkmate. It examines all possible moves of the King and its allied pieces to see if the check can be avoided. If no move can avoid the check, the player is in checkmate. | <input type="checkbox" readonly tabindex=-1>
-| **Piece Capture**                     | Pieces can be captured by moving to a square occupied by an opposing piece. | <input type="checkbox" readonly tabindex=-1 checked>
-| **First Move**                        | For pawns and rooks, there is special logic for their first move. For example, a pawn can move two squares on its first move. | <input type="checkbox" readonly tabindex=-1 checked>
-| **Pawn Promotion**                    | When a pawn reaches the last row of the board, it can be promoted to another piece (Queen, Rook, Knight, Bishop). | <input type="checkbox" readonly tabindex=-1 checked>
-| **Player Management**                 | he game manages two players, alternating turns between them. | <input type="checkbox" readonly tabindex=-1 checked>
-| **Move Validation**                   | Before making a move, the game checks if the move is valid according to chess rules. | <input type="checkbox" readonly tabindex=-1 checked>
-| **Game Events**                       | The game triggers events when a pawn can be promoted or when a player wins the game. | <input type="checkbox" readonly tabindex=-1 checked>
-| **Chessboard Management**             | The chessboard is represented by an 8x8 matrix, and each square can contain a piece or be empty. | <input type="checkbox" readonly tabindex=-1 checked>
+| **Piece Movement Management**         | Each type of piece (King, Queen, Rook, Knight, Bishop, Pawn) has its own movement logic implemented. For example, the King can move one square in any direction, the Queen can move in any direction without distance limit, etc. | :white_check_mark:
+| **Movement Exception Handling**       | We have set up exceptions to handle invalid movements. For example, if the bishop tries to move in a non-diagonal direction, an `InvalidMovementException` is thrown. | :white_check_mark:
+| **Calculation of Possible Moves**     | set up exceptions to handle invalid movements. For example, if the bishop tries to move in a non-diagonal direction, an `InvalidMovementException` is thrown. | :white_check_mark:
+| **Unit Testing**                      | You have written unit tests to verify the validity of the bishop's movements. These tests check valid moves, invalid moves, and possible moves on an empty chessboard. | :white_check_mark:
+| **Piece Color Management**            | Each piece has a color (white or black) that is used to determine possible moves and to check if a piece can be captured. | :white_check_mark:
+| **Check**                             | The `Check` function verifies if a King is in check. It examines all possible moves of the opposing pieces to see if any of them can reach the King. | :x:
+| **Checkmate**                         | The `Checkmate` function verifies if a player is in checkmate. It examines all possible moves of the King and its allied pieces to see if the check can be avoided. If no move can avoid the check, the player is in checkmate. | :x:
+| **Piece Capture**                     | Pieces can be captured by moving to a square occupied by an opposing piece. | :white_check_mark:
+| **First Move**                        | For pawns and rooks, there is special logic for their first move. For example, a pawn can move two squares on its first move. | :white_check_mark:
+| **Pawn Promotion**                    | When a pawn reaches the last row of the board, it can be promoted to another piece (Queen, Rook, Knight, Bishop). | :white_check_mark:
+| **Player Management**                 | he game manages two players, alternating turns between them. | :white_check_mark:
+| **Move Validation**                   | Before making a move, the game checks if the move is valid according to chess rules. | :white_check_mark:
+| **Game Events**                       | The game triggers events when a pawn can be promoted or when a player wins the game. | :white_check_mark:
+| **Chessboard Management**             | The chessboard is represented by an 8x8 matrix, and each square can contain a piece or be empty. | :white_check_mark:
 
 ## Contributing
 

@@ -489,7 +489,7 @@ namespace ConsoleChess
                         game.MovePiece(startCase, endCase, game.Board, actualPlayer);
                         DisplayBoard(game.Board);
 
-                        if (game.Board.IsInCheck(actualPlayer.Color))
+                        if (game.Board.IsInCheck(actualPlayer.Color == Color.White ? Color.Black : Color.White))
                         {
                             Console.WriteLine("You are in check");
                             if (game.Board.EchecMat(game.Board.FindKing(actualPlayer.Color), game.Board.FindCase(game.Board.FindKing(actualPlayer.Color))))

@@ -5,5 +5,10 @@ namespace ChessLibrary;
 /// </summary>
 public class GameOverNotifiedEventArgs : EventArgs
 {
-    public User Winner { get; set; }
+    public User Winner
+    {
+        get;
+        set;
+        
+    }
 }

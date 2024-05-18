@@ -61,6 +61,68 @@ The chess is a project in its early stages.
 | **Game Events**                       | The game triggers events when a pawn can be promoted or when a player wins the game. | :white_check_mark:
 | **Chessboard Management**             | The chessboard is represented by an 8x8 matrix, and each square can contain a piece or be empty. | :white_check_mark:
 
+### Starting the Game
+
+When you start the game, you will be presented with a chessboard. The chessboard is an **8x8 grid**, with each cell identified by a unique coordinate. The horizontal axis is labeled from **'a' to 'h'** and the vertical axis is labeled from **'1' to '8'**.
+
+The game will start with **Player 1's turn**.
+
+### Moving a Piece
+
+When it's your turn, you will be asked to enter the position of the piece you want to move. The position should be entered in the format of a letter followed by a number (e.g., **'a1'**, **'f7'**).
+
+For example, if you want to move the piece at position **'e2'**, you would type **'e2'** and press enter.
+
+The game will then ask you to enter the destination for the piece. Again, you should enter the destination in the same format. For example, if you want to move the piece from **'e2'** to **'e4'**, you would type **'e4'** and press enter.
+
+If the move is **valid**, the piece will be moved to the new position. If the move is **not valid**, you will be asked to enter a different move.
+
+Here's an example : 
+```bash
+   a   b   c   d   e   f   g   h
+ +---+---+---+---+---+---+---+---+
+8 | R | C | B | Q | K | B | C | R | 8
+ +---+---+---+---+---+---+---+---+
+7 | P | P | P | P | P | P | P | P | 7
+ +---+---+---+---+---+---+---+---+
+6 |   |   |   |   |   |   |   |   | 6
+ +---+---+---+---+---+---+---+---+
+5 |   |   |   |   |   |   |   |   | 5
+ +---+---+---+---+---+---+---+---+
+4 |   |   |   |   |   |   |   |   | 4
+ +---+---+---+---+---+---+---+---+
+3 |   |   |   |   |   |   |   |   | 3
+ +---+---+---+---+---+---+---+---+
+2 | P | P | P | P | P | P | P | P | 2
+ +---+---+---+---+---+---+---+---+
+1 | R | C | B | Q | K | B | C | R | 1
+ +---+---+---+---+---+---+---+---+
+   a   b   c   d   e   f   g   h
+Player 1's turn
+Enter the position of the piece you want to move (a1, f7 ...):
+```
+
+### Capturing a Piece
+
+If your piece's move ends on a square occupied by an opponent's piece, the opponent's piece is **captured** and removed from the game.
+
+### Check and Checkmate
+
+If your move places the opponent's king under attack, that's called **"check"**. If your opponent's king is in check, they must make a move that eliminates the threat of capture on the next move. If they cannot do so, that's called **"checkmate"**, and you win the game.
+
+### Pawn Promotion
+
+If a pawn reaches the opposite side of the board, it can be **promoted** to any other piece (except king). The game will ask you to choose between **'Queen'**, **'Rook'**, **'Bishop'**, or **'Knight'**. Type your choice and press enter.
+
+Here how it looks in game : 
+
+
+### Ending the Game
+
+The game ends when a player is **checkmated** (or if a player **resigns**. To resign, type **'resign'** instead of a move.)
+
+Remember, the goal of the game is to **checkmate** your opponent's king. **Good luck!**
+
 ## Contributing
 
 ### Prerequisites

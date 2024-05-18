@@ -59,4 +59,36 @@ public class UnitTestQueen
         Assert.Contains(chessboard.Board[5, 5], result);
         Assert.DoesNotContain(chessboard.Board[6, 6], result);
     }
+
+
+    [Fact]
+    public void PossibleMoves_BaordWithPiecesAndKing_ReturnsCorrectMoves()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Queen? queen = new Queen(Color.Black, 1);
+        Pawn? pawn = new Pawn(Color.White, 2);
+        Case kingCase = new Case(4, 0, king);
+        Case queenCase = new Case(4, 2, queen);
+        Case pawnCase = new Case(3, 1, pawn);
+        chessboard.AddPiece(king, 4, 0);
+        chessboard.AddPiece(queen, 4, 2);
+        chessboard.AddPiece(pawn, 3, 1);
+
+        // Act
+        var result = queen.PossibleMoves(queenCase, chessboard);
+
+        // Assert
+
+        Assert.Contains(chessboard.Board[4, 1], result);
+        Assert.Contains(chessboard.Board[3, 1], result);
+        Assert.Contains(chessboard.Board[5, 1], result);
+        Assert.Contains(chessboard.Board[4, 0], result);
+        Assert.Contains(chessboard.Board[7, 5], result);
+        Assert.Contains(chessboard.Board[0, 6], result);
+        Assert.DoesNotContain(chessboard.Board[5, 4], result);
+        Assert.DoesNotContain(chessboard.Board[0, 7], result);
+        Assert.Equal(24,result.Count);
+    }
 }

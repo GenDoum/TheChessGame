@@ -132,7 +132,7 @@ namespace ChessLibrary
                 if (pieceInfo.piece is King king && Board.EchecMat(king, pieceInfo.CaseLink))
                 {
                     OnGameOver(new GameOverNotifiedEventArgs { Winner = winner });
-                    if ( Board.CanDefendKing(pieceInfo, pieceInfo.CaseLink) )
+                    if ( Board.CanDefendKing(pieces, pieceInfo.CaseLink) )
                     {
                         return false;
                     }

@@ -24,6 +24,7 @@
 * [Technologies Used](#technologies-used)
 * [Contributing to the Project](#contributing)
 * [Contributors](#contributors)
+* [Current state of the project](#current-state)
 
 
 ## The Project

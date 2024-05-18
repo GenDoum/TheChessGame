@@ -61,7 +61,34 @@ The chess is a project in its early stages.
 | **Game Events**                       | The game triggers events when a pawn can be promoted or when a player wins the game. | :white_check_mark:
 | **Chessboard Management**             | The chessboard is represented by an 8x8 matrix, and each square can contain a piece or be empty. | :white_check_mark:
 
-## How to play
+## How to Play
+
+### User Registration and Login
+
+Before you can start playing the game, you will be asked to log in. Here's how you can do it:
+However, you can register or start a game without a password.
+
+### User Login
+
+To register as a new user, you will be asked to enter a unique username and a password. In our application, there are 2 users saved. They are: 
+- Username: MatheoB, Password: chef 
+- Username: MatheoH, Password: proMac.
+
+If you enter an incorrect username or password, you will be asked to try again.
+
+### Exiting the Game
+
+If you want to exit the game, you can do so by selecting the 'Exit' option from the main menu.
+
+```bash
+Welcome to the Chess Game!
+Please select an option:
+1. Register
+2. Login
+3. Exit
+> 3
+Thank you for playing the Chess Game. Goodbye!
+```
 
 ### Starting the Game
 
@@ -100,6 +127,7 @@ Here's an example :
 1 | R | C | B | Q | K | B | C | R | 1
  +---+---+---+---+---+---+---+---+
    a   b   c   d   e   f   g   h
+   
 Player 1's turn
 Enter the position of the piece you want to move (a1, f7 ...):
 ```
@@ -114,10 +142,9 @@ If your move places the opponent's king under attack, that's called **"check"**.
 
 ### Pawn Promotion
 
-If a pawn reaches the opposite side of the board, it can be **promoted** to any other piece (except king). The game will ask you to choose between **'Queen'**, **'Rook'**, **'Bishop'**, or **'Knight'**. Type your choice and press enter.
+If a pawn reaches the opposite side of the board, it can be **promoted** to any other piece (except the king). The game will ask you to choose between **'Queen'**, **'Rook'**, **'Bishop'**, or **'Knight'**. Type your choice and press enter.
 
-Here how it looks in game : 
-
+Here's how it looks in the game:
 
 ### Ending the Game
 

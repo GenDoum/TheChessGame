@@ -394,6 +394,15 @@ namespace ConsoleChess
                         Console.Clear();
                         Console.WriteLine("Lancer un partie");
                         Thread.Sleep(1000);
+                        if(playerOne.Color == Color.White)
+                        {
+                            playerTwo.Color = Color.Black;
+                        }
+                        if(playerOne.Color == Color.Black)
+                        {
+                            playerOne.Color = Color.White;
+                            playerTwo.Color = Color.Black;
+                        }
                         Jeu(playerOne, playerTwo);
                         break;
 

@@ -163,7 +163,23 @@ namespace ChessLibrary
 
             foreach (var enemy in enemyPieces)
             {
-                var possibleMoves = enemy.piece.PossibleMoves(enemy.CaseLink, this);
+                List<Case> possibleMoves;
+
+                if (enemy.piece is King)
+                {
+                    King KingTest = (King)enemy.piece;
+                    possibleMoves = KingTest.CanEat(enemy.CaseLink, this);
+                }
+                else if (enemy.piece is Pawn)
+                {
+                    Pawn PawnTest = (Pawn)enemy.piece;
+                    possibleMoves = PawnTest.CanEat(enemy.CaseLink, this);
+                }
+                else
+                {
+                    possibleMoves = enemy.piece.PossibleMoves(enemy.CaseLink, this);
+                }
+
                 if (possibleMoves.Any(move => move.Column == kingCase.Column && move.Line == kingCase.Line))
                 {
                     Console.WriteLine("Sorti de la fonction echec - roi attaqué par une pièce ennemie");
@@ -177,6 +193,7 @@ namespace ChessLibrary
             Console.WriteLine("Sorti de la fonction echec - roi non en échec");
             return false;
         }
+
 
         public bool IsInCheck(Color color)
         {

@@ -270,6 +270,10 @@ public class UnitTestBoard
         Case initial = new Case(0, 1, piece);
         Case final = new Case(1, 2, null); // Diagonal move without capture
         chessboard.AddPiece(piece, 0, 1);
+        Piece? king = new King(Color.White, 1);
+        Case kingCase = new Case(7, 7, king);
+        chessboard.AddPiece(king, 7, 7);
+
 
         // Act
         bool result = chessboard.CanMovePiece(piece, initial, final);
@@ -307,6 +311,9 @@ public class UnitTestBoard
         Case initial = new Case(0, 0, piece);
         Case final = new Case(1, 1, null); // Diagonal move
         chessboard.AddPiece(piece, 0, 0);
+        Piece? king = new King(Color.White, 1);
+        Case kingCase = new Case(7, 7, king);
+        chessboard.AddPiece(king, 7, 7);
 
         // Act
         bool result = chessboard.CanMovePiece(piece, initial, final);
@@ -361,6 +368,9 @@ public class UnitTestBoard
         Case initial = new Case(4, 4, piece);
         Case final = new Case(4, 6, null); // Move more than one square
         chessboard.AddPiece(piece, 4, 4);
+        Piece? king = new King(Color.White, 1);
+        Case kingCase = new Case(7, 7, king);
+        chessboard.AddPiece(king, 7, 7);
 
         // Act
         bool result = chessboard.CanMovePiece(piece, initial, final);
@@ -397,6 +407,9 @@ public class UnitTestBoard
         Case initial = new Case(2, 0, piece);
         Case final = new Case(4, 1, null); // Horizontal move
         chessboard.AddPiece(piece, 2, 0);
+        Piece? king = new King(Color.White, 1);
+        Case kingCase = new Case(7, 7, king);
+        chessboard.AddPiece(king, 7, 7);
 
         // Act
         bool result = chessboard.CanMovePiece(piece, initial, final);
@@ -454,6 +467,9 @@ public class UnitTestBoard
         Case initial = new Case(3, 0, piece);
         Case final = new Case(4, 2, null); // L-shaped move
         chessboard.AddPiece(piece, 3, 0);
+        Piece? king = new King(Color.White, 1);
+        Case kingCase = new Case(7, 7, king);
+        chessboard.AddPiece(king, 7, 7);
 
         // Act
         bool result = chessboard.CanMovePiece(piece, initial, final);
@@ -491,6 +507,9 @@ public class UnitTestBoard
         Case initial = new Case(0, 1, piece);
         Case final = new Case(1, 2, null); // Diagonal move without capture
         chessboard.AddPiece(piece, 0, 1);
+        Piece? king = new King(Color.White, 1);
+        Case kingCase = new Case(7, 7, king);
+        chessboard.AddPiece(king, 7, 7);
 
         // Act
         bool result = chessboard.CanMovePiece(piece, initial, final);
@@ -530,6 +549,9 @@ public class UnitTestBoard
         Case initial = new Case(0, 1, piece);
         Case final = new Case(0, 0, null); // Backward move
         chessboard.AddPiece(piece, 0, 1);
+        Piece? king = new King(Color.White, 1);
+        Case kingCase = new Case(7, 7, king);
+        chessboard.AddPiece(king, 7, 7);
 
         // Act
         bool result = chessboard.CanMovePiece(piece, initial, final);

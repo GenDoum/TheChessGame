@@ -131,6 +131,7 @@ namespace ChessLibrary
             return false;
         }
 
+
         public void ModifPawn(Pawn? p, Piece pi, Case c)
         {
             ArgumentNullException.ThrowIfNull(pi);
@@ -193,6 +194,7 @@ namespace ChessLibrary
             Console.WriteLine("Sorti de la fonction echec - roi non en échec");
             return false;
         }
+
 
 
         public bool IsInCheck(Color color)
@@ -308,7 +310,23 @@ namespace ChessLibrary
 
             foreach (var piece in teamPieces)
             {
-                var possibleMoves = piece.piece.PossibleMoves(piece.CaseLink, this);
+                List<Case> possibleMoves;
+
+                if (piece.piece is King)
+                {
+                    King kingPiece = (King)piece.piece;
+                    possibleMoves = kingPiece.CanEat(piece.CaseLink, this);
+                }
+                else if (piece.piece is Pawn)
+                {
+                    Pawn pawnPiece = (Pawn)piece.piece;
+                    possibleMoves = pawnPiece.CanEat(piece.CaseLink, this);
+                }
+                else
+                {
+                    possibleMoves = piece.piece.PossibleMoves(piece.CaseLink, this);
+                }
+
                 foreach (var move in possibleMoves)
                 {
                     Piece originalPiece = move.Piece;
@@ -333,5 +351,6 @@ namespace ChessLibrary
             Console.WriteLine("Sorti de la fonction candef - aucune pièce alliée ne peut défendre");
             return false;
         }
+
     }
 }

@@ -95,12 +95,12 @@ namespace ChessLibrary
         /// <param name="game"></param>
         /// <param name="actualPlayer"></param>
         /// <returns></returns>
-        public bool CheckChec(Game game, User actualPlayer)
+        public bool IsCheck(User actualPlayer)
         {
-            var pieces = (actualPlayer.Color == Color.White) ? game.Board.BlackPieces : game.Board.WhitePieces;
+            var pieces = (actualPlayer.Color == Color.White) ? Board.BlackPieces : Board.WhitePieces;
             foreach (var pieceInfo in pieces)
             {
-                if (pieceInfo.piece is King king && game.Board.Echec(king, pieceInfo.CaseLink))
+                if (pieceInfo.piece is King king && Board.Echec(king, pieceInfo.CaseLink))
                 {
                     if (actualPlayer.Color == Color.White)
                     {
@@ -116,6 +116,8 @@ namespace ChessLibrary
             return false;
         }
 
+
+
         /// <summary>
         /// Fonction permettant de savoir si la partie est terminée
         /// </summary>
@@ -124,11 +126,17 @@ namespace ChessLibrary
         public bool GameOver(User winner)
         {
             var pieces = (Player1.Color == Color.White) ? Board.BlackPieces : Board.WhitePieces;
+            List<CoPieces> list = new List<CoPieces>();
             foreach (var pieceInfo in pieces)
             {
                 if (pieceInfo.piece is King king && Board.EchecMat(king, pieceInfo.CaseLink))
                 {
                     OnGameOver(new GameOverNotifiedEventArgs { Winner = winner });
+                    if ( Board.CanDefendKing(pieceInfo, pieceInfo.CaseLink) )
+                    {
+                        return false;
+                    }
+
                     return true;
                 }
             }
@@ -165,51 +173,38 @@ namespace ChessLibrary
         /// <exception cref="InvalidOperationException"></exception>
         public void MovePiece(Case initial, Case final, Chessboard board, User actualPlayer)
         {
-            // Validation de base pour vérifier la pièce initiale
             ArgumentNullException.ThrowIfNull(initial.Piece, "Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
 
-            // Vérifier si la pièce appartient au joueur actuel
             if (initial.Piece.Color != actualPlayer.Color)
                 throw new InvalidOperationException("It's not this player's turn.");
 
-            // Effectuer le déplacement temporaire pour la vérification
+            var movingPiece = initial.Piece;
+            var capturedPiece = final.Piece;
+
+            // Déplacement temporaire pour la vérification
             final.Piece = initial.Piece;
             initial.Piece = null;
 
-            // Vérifier si le mouvement met le roi en échec
+            // Vérification de l'échec
             if (board.IsInCheck(actualPlayer.Color))
             {
-                // Restaurer l'état initial des cases
                 initial.Piece = final.Piece;
-                final.Piece = null;
-                throw new InvalidOperationException("You cannot move into check.");
+                final.Piece = capturedPiece;
+                // throw new InvalidOperationException("You cannot move into check."); // commenté car on veut que le joueur puisse se déplacer pour sortir de l'échec
             }
 
-            // Restaurer l'état initial des cases avant de faire le déplacement réel
+            // Déplacement réel
             initial.Piece = final.Piece;
-            final.Piece = null;
+            final.Piece = capturedPiece;
 
-            // Si le joueur actuel est en échec, vérifier que le mouvement résout l'échec
-            bool isInCheck = board.IsInCheck(actualPlayer.Color);
-            if (isInCheck)
+            if (board.CanMovePiece(movingPiece, initial, final))
             {
-                if (!board.CanResolveCheck(initial, final, actualPlayer.Color))
-                    throw new InvalidOperationException("You must move out of check.");
-            }
-
-            // Effectuer le déplacement réel
-            if (board.CanMovePiece(initial.Piece, initial, final))
-            {
-                // Mettre à jour l'état réel du plateau
-
-
                 UpdatePieceLists(initial, final, board);
                 ProcessPostMove(initial, final);
 
-                // Vérifier si la case finale est un pion et qu'elle peut évoluer
-                if (final is { Piece: Pawn, Line: 0 or 7 })
+                if (final.Piece is Pawn pawn && (final.Line == 0 || final.Line == 7))
                 {
-                    OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = final.Piece as Pawn, Case = final });
+                    OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = pawn, Case = final });
                 }
             }
             else
@@ -219,25 +214,21 @@ namespace ChessLibrary
         }
 
 
+
         public void UpdatePieceLists(Case initial, Case final, Chessboard board)
         {
-            var movedPieceInfo = new CoPieces { CaseLink = initial, piece = initial.Piece };
-            var listToUpdate = initial.Piece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
-            List<CoPieces> list = new List<CoPieces>(listToUpdate);
+            var movedPiece = initial.Piece;
+            var capturedPiece = final.Piece;
 
-            // Mettre à jour la position de la pièce déplacée
-            RemoveFromList(list, movedPieceInfo);
-            AddToList(list, new CoPieces { CaseLink = final, piece = initial.Piece });
+            var listToUpdate = movedPiece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
 
+            listToUpdate.RemoveAll(p => p.piece == movedPiece);
+            listToUpdate.Add(new CoPieces { CaseLink = final, piece = movedPiece });
 
-            // Vérifier si une pièce a été capturée
-            if (final.Piece != null && final.Piece.Color != initial.Piece.Color)
+            if (capturedPiece != null && capturedPiece.Color != movedPiece.Color)
             {
-                var capturedPieceInfo = new CoPieces { CaseLink = final, piece = final.Piece };
-                var listToRemoveFrom = final.Piece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
-                List<CoPieces> list2 = new List<CoPieces>(listToRemoveFrom);
-                RemoveFromList(list2, capturedPieceInfo);
-
+                var listToRemoveFrom = capturedPiece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
+                listToRemoveFrom.RemoveAll(p => p.piece == capturedPiece);
             }
         }
 
@@ -258,6 +249,7 @@ namespace ChessLibrary
                 firstMover.FirstMove = false;
             }
         }
+
     }
 }
 

@@ -269,6 +269,28 @@ namespace ConsoleChess
             return users;
         }
 
+        public static void displayLeaderboard(List<User> users)
+        {
+            
+
+            Console.Clear();
+            displayTitle("Leaderboard", false);
+            Console.WriteLine();
+            foreach (User user in users.OrderByDescending(u => u.Score))
+            {
+                Console.WriteLine($"\t{user.Pseudo} : {user.Score}");
+            }
+            Console.WriteLine();
+
+            while (true)
+            {
+                Console.WriteLine("Press 'q' to quit");
+                if (Console.ReadKey().Key == ConsoleKey.Q)
+                {
+                    break;
+                }
+            }
+        }   
 
         /// <summary>
         /// Menu de connexion pour le deuxième joueur
@@ -379,7 +401,8 @@ namespace ConsoleChess
                         Console.Clear();
                         Console.WriteLine("Leaderboard");
                         Thread.Sleep(1000);
-                        MultipleChoice("Leaderbotd", true, users[1].Pseudo, users[1].Score.ToString(), users[0].Pseudo, users[0].Score.ToString());
+                        displayLeaderboard(users);
+
                         break;
 
                     case 4: // Option pour quitter l'application
@@ -408,6 +431,8 @@ namespace ConsoleChess
             game.GameOverNotified += (sender, args) =>
             {
                 Console.WriteLine($"Game over! {args.Winner.Pseudo} wins!");
+                args.Winner.Score += 5;
+                Thread.Sleep(150000);
             };
 
             int player = 1;
@@ -420,10 +445,21 @@ namespace ConsoleChess
                 User actualPlayer = (player % 2 == 0) ? player2 : player1;
                 Console.WriteLine($"{actualPlayer.Pseudo}'s turn");
 
+
+
                 try
                 {
                     (int startColumn, int startRow) = GetMoveCoordinates("Enter the position of the piece you want to move (a1, f7 ...):");
                     (int endColumn, int endRow) = GetMoveCoordinates("Enter the destination position (a1, f7 ...):");
+
+                    bool isCheck = false;
+
+                    // Si IsInCheck est vrai, alors si endColumn et endRow n'est pas la case de la pièce qui mets en échec, alors on ne peut pas bouger
+
+                    if ( game.Board.IsInCheck(Color.Black))
+                    {
+                        Console.WriteLine("You are in check");
+                    }
 
                     game.MovePiece(game.Board.Board[startColumn, startRow], game.Board.Board[endColumn, endRow], game.Board, actualPlayer);
                     DisplayBoard(game.Board);
@@ -434,9 +470,9 @@ namespace ConsoleChess
                     player--; // Retry the same player's turn
                 }
 
-                if (game.CheckChec(game, actualPlayer))
+                if (game.IsCheck(actualPlayer))
                 {
-                    isGameOver = game.GameOver(actualPlayer);
+                        isGameOver = game.GameOver(actualPlayer);
                 }
                 player++;
             }
@@ -450,8 +486,8 @@ namespace ConsoleChess
         {
 
 
-            User player1 = new User();
-            User player2 = new User();
+            User player1 = new User(Color.White);
+            User player2 = new User(Color.Black);
 
             menuAccueil(player1, player2);
 

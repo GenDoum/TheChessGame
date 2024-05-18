@@ -14,10 +14,11 @@ namespace ChessLibrary
         /// Propriété pour le tableau de cases
         /// </summary>
         public Case[,] Board { get; private set; }
-        
+
         /// <summary>
         /// Encapsulation de la liste des pièces blanches
         /// </summary>
+        /*
         public ReadOnlyCollection<CoPieces> WhitePieces 
             => whitePieces.AsReadOnly();
         
@@ -26,16 +27,12 @@ namespace ChessLibrary
         /// </summary>
         public ReadOnlyCollection<CoPieces> BlackPieces 
             => blackPieces.AsReadOnly();
+        */
 
-        /// <summary>
-        /// Liste des pièces blanches
-        /// </summary>
-        List<CoPieces>? whitePieces = new List<CoPieces>();
-        
-        /// <summary>
-        /// Liste des pièces noires
-        /// </summary>
-        List<CoPieces>? blackPieces = new List<CoPieces>();
+
+
+        public List<CoPieces> WhitePieces { get; private set; }
+        public List<CoPieces> BlackPieces { get; private set; }
 
         /// <summary>
         /// Constructeur de la classe Chessboard
@@ -45,8 +42,8 @@ namespace ChessLibrary
         public Chessboard(Case[,] tcase, bool isEmpty)
         {
             Board = tcase;
-            whitePieces = new List<CoPieces>();
-            blackPieces = new List<CoPieces>();
+            WhitePieces = new List<CoPieces>();
+            BlackPieces = new List<CoPieces>();
 
             if (!isEmpty)
             {
@@ -150,14 +147,14 @@ namespace ChessLibrary
             if (piece != null && piece.Color == Color.White)
             {
                 // Add the piece to the list of white pieces
-                if (whitePieces != null)
-                    whitePieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
+                if (WhitePieces != null)
+                    WhitePieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
             else
             {
                 // Add the piece to the list of black pieces
-                if (blackPieces != null)
-                    blackPieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
+                if (BlackPieces != null)
+                    BlackPieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
         }
 
@@ -199,14 +196,14 @@ namespace ChessLibrary
             if (pi.Color == Color.White)
             {
                 //Add the new piece to the list of white pieces and remove the Pawn
-                this.whitePieces!.Add(new CoPieces { CaseLink = c, piece = pi });
-                this.whitePieces.Remove(new CoPieces { CaseLink = c, piece = p });
+                this.WhitePieces!.Add(new CoPieces { CaseLink = c, piece = pi });
+                this.WhitePieces.Remove(new CoPieces { CaseLink = c, piece = p });
             }
             else
             {
                 //Add the new piece to the list of black pieces and remove the Pawn
-                this.blackPieces!.Add(new CoPieces { CaseLink = c, piece = pi });
-                this.blackPieces.Remove(new CoPieces { CaseLink = c, piece = p });
+                this.BlackPieces!.Add(new CoPieces { CaseLink = c, piece = pi });
+                this.BlackPieces.Remove(new CoPieces { CaseLink = c, piece = p });
             }
         }
 
@@ -218,10 +215,32 @@ namespace ChessLibrary
         /// <returns></returns>
         public bool Echec(King king, Case kingCase)
         {
-            List<CoPieces> enemyPieces = (king.Color == Color.White) ? blackPieces : whitePieces;
+            List<CoPieces> enemyPieces;
+
+            if ( king.Color == Color.White)
+            {
+                enemyPieces = BlackPieces;
+                if (CanDefendKing(BlackPieces, kingCase))
+                {
+                    Console.WriteLine("You are in check ! But you can defend yourself !");
+                    return true;
+                }
+
+            }
+            else
+            {
+                enemyPieces = WhitePieces;
+                if (CanDefendKing(WhitePieces, kingCase))
+                {
+                    Console.WriteLine("You are in check ! But you can defend yourself !");
+                    return true;
+                }
+
+            }
 
             foreach (var enemy in enemyPieces)
             {
+                
                 if (enemy.piece is King)
                 {
                     King KingTest = (King)enemy.piece;
@@ -305,7 +324,7 @@ namespace ChessLibrary
         /// <returns></returns>
         private King FindKing(Color color)
         {
-            return color == Color.White ? (King)whitePieces!.Find(x => x.piece is King)!.piece : (King)blackPieces!.Find(x => x.piece is King)!.piece;
+            return color == Color.White ? (King)WhitePieces!.Find(x => x.piece is King)!.piece : (King)BlackPieces!.Find(x => x.piece is King)!.piece;
         }
 
         /// <summary>
@@ -327,35 +346,7 @@ namespace ChessLibrary
             throw new Exception("Piece not found on the board.");
         }
 
-        /// <summary>
-        /// Copie le tableau pour prévoir les mouvements
-        /// </summary>
-        /// <returns></returns>
-        public Chessboard CopyBoard()
-        {
-            Case[,] newBoard = new Case[8, 8];
 
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    var originalPiece = Board[i, j].Piece;
-                    Piece? copiedPiece = null;
-                    if (originalPiece != null)
-                    {
-                        copiedPiece = originalPiece;
-                    }
-                    newBoard[i, j] = new Case(i, j, copiedPiece);
-                }
-            }
-
-            var newChessboard = new Chessboard(newBoard, true);
-            // Copier les listes de pièces
-            newChessboard.whitePieces = new List<CoPieces>(WhitePieces!);
-            newChessboard.blackPieces = new List<CoPieces>(BlackPieces!);
-
-            return newChessboard;
-        }
 
         /// <summary>
         /// Vérifie si un joueur est en échec et mat
@@ -368,6 +359,9 @@ namespace ChessLibrary
             // Obtenez tous les mouvements possibles pour le roi
             var possibleKingMoves = king.PossibleMoves(kingCase, this);
 
+            bool kingCanEscape = false;
+            bool piecesCanSave = false;
+
             // Vérifiez si le roi peut échapper à l'échec
             foreach (var move in possibleKingMoves)
             {
@@ -376,7 +370,7 @@ namespace ChessLibrary
                     if (!Echec(king, move))
                     {
                         UndoMovePiece(kingCase, move);
-                        return false;
+                        kingCanEscape = true;
                     }
                     UndoMovePiece(kingCase, move);
                 }
@@ -384,6 +378,7 @@ namespace ChessLibrary
 
             // Obtenez toutes les pièces alliées
             var allyPieces = king.Color == Color.White ? WhitePieces : BlackPieces;
+            var enemyPieces = king.Color == Color.White ? BlackPieces : WhitePieces;
             List<CoPieces> list2 = new List<CoPieces>(allyPieces);
             // Vérifiez si une pièce alliée peut protéger le roi
             foreach (var pieceInfo in allyPieces!)
@@ -392,17 +387,28 @@ namespace ChessLibrary
                 var startCase = pieceInfo.CaseLink;
                 var possibleMoves = piece.PossibleMoves(startCase, this);
 
+                if ( CanDefendKing(enemyPieces, kingCase) )
+                {
+                    return false;
+                }
+
                 foreach (var move in possibleMoves)
                 {
+
                     if (TryMovePiece(startCase, move))
                     {
                         if (!Echec(king, kingCase))
                         {
                             UndoMovePiece(startCase, move);
-                            return false;
+                            piecesCanSave = true;
                         }
                         UndoMovePiece(startCase, move);
                     }
+                }
+
+                if (piecesCanSave || kingCanEscape)
+                {
+                    return false;
                 }
             }
 
@@ -436,6 +442,23 @@ namespace ChessLibrary
         {
             initial.Piece = final.Piece;
             final.Piece = null;
+        }
+
+        public bool CanDefendKing(List<CoPieces> teamPieces, Case enemyPiece)
+        {
+            foreach (var piece in teamPieces)
+            {
+                if ( CanMovePiece(piece.piece, piece.CaseLink, enemyPiece) )
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool CanDefendKing(CoPieces piece, Case enemyPiece)
+        {
+            return CanMovePiece(piece.piece, piece.CaseLink, enemyPiece);
         }
     }
 }

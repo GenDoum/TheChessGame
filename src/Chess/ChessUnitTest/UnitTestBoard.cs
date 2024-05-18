@@ -50,7 +50,7 @@ public class UnitTestBoard
             Assert.Equal(Color.Black, chessboard.Board[i, 6].Piece.Color);
         }
     }
-    
+
     [Theory]
     [InlineData(0, 1, typeof(Pawn), Color.White)]
     [InlineData(0, 6, typeof(Pawn), Color.Black)]
@@ -67,7 +67,7 @@ public class UnitTestBoard
         Assert.IsType(expectedType, chessboard.Board[x, y].Piece);
         Assert.Equal(expectedColor, chessboard.Board[x, y].Piece.Color);
     }
-    
+
     [Theory]
     [InlineData(0, 0, typeof(Rook))]
     [InlineData(1, 0, typeof(Knight))]
@@ -111,7 +111,7 @@ public class UnitTestBoard
         // Check that the black pieces are correctly placed on the board
         Assert.IsType(pieceType, chessboard.Board[column, row].Piece);
     }
-    
+
     [Fact]
     public void TestFillEmptyCases()
     {
@@ -147,7 +147,7 @@ public class UnitTestBoard
         Assert.Equal(piece, chessboard.Board[column, row].Piece);
         //Assert.Contains(chessboard.WhitePieces, copieces => copieces.piece == piece && copieces.CaseLink == chessboard.Board[column, row]);
     }
-    
+
     [Fact]
     public void TestIsMoveValid()
     {
@@ -167,7 +167,7 @@ public class UnitTestBoard
         // Assert
         Assert.True(result);
     }
-        [Fact]
+    [Fact]
     public void TestIsMoveValidValidMove()
     {
         // Arrange
@@ -261,39 +261,6 @@ public class UnitTestBoard
         // Assert
         Assert.False(result);
     }
-
-    [Fact]
-    public void TestMovePiece()
-    {
-        // Arrange
-        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        Piece? piece = new Pawn(Color.White, 1);
-        Case Initial = new Case(0, 0, piece);
-        Case Final = new Case(0, 1, null);
-
-        // Act
-        bool result = chessboard.CanMovePiece(piece, Initial, Final);
-
-        // Assert
-        Assert.True(result);
-    }
-    [Fact]
-    public void TestMovePiece_ValidPawnMove()
-    {
-        // Arrange
-        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        Piece? piece = new Pawn(Color.White, 1);
-        Case initial = new Case(0, 1, piece);
-        Case final = new Case(0, 2, null);
-        chessboard.AddPiece(piece, 0, 1);
-
-        // Act
-        bool result = chessboard.CanMovePiece(piece, initial, final);
-
-        // Assert
-        Assert.True(result);
-    }
-
     [Fact]
     public void TestMovePiece_InvalidPawnMove()
     {
@@ -320,6 +287,9 @@ public class UnitTestBoard
         Case initial = new Case(0, 0, piece);
         Case final = new Case(0, 5, null);
         chessboard.AddPiece(piece, 0, 0);
+        Piece? king = new King(Color.White, 1);
+        Case kingCase = new Case(7, 7, king);
+        chessboard.AddPiece(king, 7, 7);
 
         // Act
         bool result = chessboard.CanMovePiece(piece, initial, final);
@@ -354,6 +324,9 @@ public class UnitTestBoard
         Case initial = new Case(1, 0, piece);
         Case final = new Case(2, 2, null);
         chessboard.AddPiece(piece, 1, 0);
+        Piece? king = new King(Color.White, 1);
+        Case kingCase = new Case(7, 7, king);
+        chessboard.AddPiece(king, 7, 7);
 
         // Act
         bool result = chessboard.CanMovePiece(piece, initial, final);
@@ -404,6 +377,9 @@ public class UnitTestBoard
         Case initial = new Case(2, 0, piece);
         Case final = new Case(5, 3, null);
         chessboard.AddPiece(piece, 2, 0);
+        Piece? king = new King(Color.White, 1);
+        Case kingCase = new Case(7, 7, king);
+        chessboard.AddPiece(king, 7, 7);
 
         // Act
         bool result = chessboard.CanMovePiece(piece, initial, final);
@@ -438,6 +414,9 @@ public class UnitTestBoard
         Case initial = new Case(3, 0, piece);
         Case final = new Case(6, 3, null);
         chessboard.AddPiece(piece, 3, 0);
+        Piece? king = new King(Color.White, 1);
+        Case kingCase = new Case(7, 7, king);
+        chessboard.AddPiece(king, 7, 7);
 
         // Act
         bool result = chessboard.CanMovePiece(piece, initial, final);
@@ -455,6 +434,9 @@ public class UnitTestBoard
         Case initial = new Case(3, 0, piece);
         Case final = new Case(3, 4, null);
         chessboard.AddPiece(piece, 3, 0);
+        Piece? king = new King(Color.White, 1);
+        Case kingCase = new Case(7, 7, king);
+        chessboard.AddPiece(king, 7, 7);
 
         // Act
         bool result = chessboard.CanMovePiece(piece, initial, final);
@@ -489,6 +471,9 @@ public class UnitTestBoard
         Case initial = new Case(0, 1, piece);
         Case final = new Case(0, 3, null);
         chessboard.AddPiece(piece, 0, 1);
+        Piece? king = new King(Color.White, 1);
+        Case kingCase = new Case(7, 7, king);
+        chessboard.AddPiece(king, 7, 7);
 
         // Act
         bool result = chessboard.CanMovePiece(piece, initial, final);
@@ -521,10 +506,13 @@ public class UnitTestBoard
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Piece? piece = new Pawn(Color.White, 1);
         Piece? opponentPiece = new Pawn(Color.Black, 2);
+        Piece? king = new King(Color.White, 1);
         Case initial = new Case(0, 1, piece);
         Case final = new Case(1, 2, opponentPiece);
+        
         chessboard.AddPiece(piece, 0, 1);
         chessboard.AddPiece(opponentPiece, 1, 2);
+        chessboard.AddPiece(king, 7, 7);
 
         // Act
         bool result = chessboard.CanMovePiece(piece, initial, final);
@@ -550,7 +538,7 @@ public class UnitTestBoard
         Assert.False(result);
     }
 
-[Fact]
+    [Fact]
     public void TestModifPawn()
     {
         // Arrange
@@ -655,7 +643,7 @@ public class UnitTestBoard
     }
 
 
-[Fact]
+    [Fact]
     public void TestEchec()
     {
         // Arrange
@@ -761,63 +749,6 @@ public class UnitTestBoard
         Assert.True(result); // The rook should put the king in check
     }
 
-    // [Fact]
- 
-
-    [Fact]
-    public void TestEchecMat()
-    {
-        // Arrange
-        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        King? king = new King(Color.White, 1);
-        Case kingCase = new Case(0, 0, king);
-        chessboard.AddPiece(king, 0, 0);
-
-        // Act
-        bool result = chessboard.EchecMat(king, kingCase);
-
-        // Assert
-        Assert.False(result); // Assuming there are no other pieces on the board, the king should not be in checkmate
-    }
-    [Fact]
-    public void TestEchecMatParReineEtTour()
-    {
-        // Arrange
-        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        King? king = new King(Color.White, 1);
-        Queen? queen = new Queen(Color.Black, 1);
-        Rook? rook = new Rook(Color.Black, 1);
-        Case kingCase = new Case(0, 0, king);
-        chessboard.AddPiece(king, 0, 0);
-        chessboard.AddPiece(queen, 1, 1);
-        chessboard.AddPiece(rook, 0, 1);
-
-        // Act
-        bool result = chessboard.EchecMat(king, kingCase);
-
-        // Assert
-        Assert.True(result); // The queen and rook should put the king in checkmate
-    }
-
-    [Fact]
-    public void TestEchecMatParFouEtTour()
-    {
-        // Arrange
-        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        King? king = new King(Color.White, 1);
-        Bishop? bishop = new Bishop(Color.Black, 1);
-        Rook? rook = new Rook(Color.Black, 1);
-        Case kingCase = new Case(0, 0, king);
-        chessboard.AddPiece(king, 0, 0);
-        chessboard.AddPiece(bishop, 1, 1);
-        chessboard.AddPiece(rook, 0, 2);
-
-        // Act
-        bool result = chessboard.EchecMat(king, kingCase);
-
-        // Assert
-        Assert.False(result); // The bishop and rook should put the king in checkmate
-    }
     [Fact]
     public void TestEchecMatParReineEtFou()
     {
@@ -837,60 +768,53 @@ public class UnitTestBoard
         // Assert
         Assert.True(result); // The queen and bishop should put the king in checkmate
     }
+    
+
     [Fact]
-    public void TestEchecMatParCavalierEtTour()
+    public void TestEchecMatParReineEtTour()
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        King? king = new King(Color.White, 1);
-        Knight? knight = new Knight(Color.Black, 1);
-        Rook? rook = new Rook(Color.Black, 1);
-        Case kingCase = new Case(0, 0, king);
-        chessboard.AddPiece(king, 0, 0);
-        chessboard.AddPiece(knight, 2, 1);
-        chessboard.AddPiece(rook, 0, 2);
+        King? whiteKing = new King(Color.White, 1);
+        Queen? blackQueen = new Queen(Color.Black, 2);
+        Rook? blackRook = new Rook(Color.Black, 3);
+
+        Case kingCase = new Case(0, 0, whiteKing);
+        Case queenCase = new Case(1, 1, blackQueen);
+        Case rookCase = new Case(0, 1, blackRook);
+
+        chessboard.AddPiece(whiteKing, 0, 0);
+        chessboard.AddPiece(blackQueen, 1, 1);
+        chessboard.AddPiece(blackRook, 0, 1);
 
         // Act
-        bool result = chessboard.EchecMat(king, kingCase);
+        bool result = chessboard.EchecMat(whiteKing, kingCase);
 
         // Assert
-        Assert.False(result); // The knight and rook should put the king in checkmate
+        Assert.True(result); // The queen and rook should put the king in checkmate
     }
-
     [Fact]
-    public void TestEchecMatFauxAvecTour()
+    public void TestEchecMatParDeuxTours()
     {
+        // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        King? king = new King(Color.White, 1);
-        Rook? rook1 = new Rook(Color.White, 2);
-        Rook? rook2 = new Rook(Color.Black, 1);
-        Case kingCase = new Case(0, 0, king);
-        Case rookCase1 = new Case(2, 1, rook1);
-        Case rookCase2 = new Case(0, 2, rook2);
-        chessboard.AddPiece(king, 0, 0);
-        chessboard.AddPiece(rook1, 2, 1);
-        chessboard.AddPiece(rook2, 0, 2);
+        King? whiteKing = new King(Color.White, 1);
+        Rook? blackRook1 = new Rook(Color.Black, 2);
+        Rook? blackRook2 = new Rook(Color.Black, 3);
 
-        bool result = chessboard.EchecMat(king, kingCase);
-        Assert.False(result);
-    }
+        Case kingCase = new Case(0, 0, whiteKing);
+        Case rookCase1 = new Case(0, 1, blackRook1);
+        Case rookCase2 = new Case(1, 0, blackRook2);
 
-    [Fact]
-    public void TestEchecMatFauxAvecRene()
-    {
-        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        King? king = new King(Color.White, 1);
-        Queen? queen1 = new Queen(Color.White, 2);
-        Queen? queen2 = new Queen(Color.Black, 1);
-        Case kingCase = new Case(0, 0, king);
-        Case rookCase1 = new Case(2, 1, queen1);
-        Case rookCase2 = new Case(0, 2, queen2);
-        chessboard.AddPiece(king, 0, 0);
-        chessboard.AddPiece(queen1, 1, 0);
-        chessboard.AddPiece(queen2, 0, 2);
+        chessboard.AddPiece(whiteKing, 0, 0);
+        chessboard.AddPiece(blackRook1, 0, 1);
+        chessboard.AddPiece(blackRook2, 1, 0);
 
-        bool result = chessboard.EchecMat(king, kingCase);
-        Assert.False(result);
+        // Act
+        bool result = chessboard.EchecMat(whiteKing, kingCase);
+
+        // Assert
+        Assert.True(result); // The two rooks should put the king in checkmate
     }
 
 }

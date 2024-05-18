@@ -15,21 +15,6 @@ namespace ChessLibrary
         /// </summary>
         public Case[,] Board { get; private set; }
 
-        /// <summary>
-        /// Encapsulation de la liste des pièces blanches
-        /// </summary>
-        /*
-        public ReadOnlyCollection<CoPieces> WhitePieces 
-            => whitePieces.AsReadOnly();
-        
-        /// <summary>
-        /// Encapsulation de la liste des pièces noires
-        /// </summary>
-        public ReadOnlyCollection<CoPieces> BlackPieces 
-            => blackPieces.AsReadOnly();
-        */
-
-
 
         public List<CoPieces> WhitePieces { get; private set; }
         public List<CoPieces> BlackPieces { get; private set; }
@@ -213,73 +198,55 @@ namespace ChessLibrary
         /// <param name="king"></param>
         /// <param name="kingCase"></param>
         /// <returns></returns>
+
         public bool Echec(King king, Case kingCase)
         {
-            List<CoPieces> enemyPieces;
+            Console.WriteLine("entrez dans la fonction Echec");
 
-            if ( king.Color == Color.White)
-            {
-                enemyPieces = BlackPieces;
-                if (CanDefendKing(BlackPieces, kingCase))
-                {
-                    Console.WriteLine("You are in check ! But you can defend yourself !");
-                    return true;
-                }
+            // Initialisation des pièces ennemies
+            List<CoPieces> enemyPieces = king.Color == Color.White ? BlackPieces : WhitePieces;
 
-            }
-            else
-            {
-                enemyPieces = WhitePieces;
-                if (CanDefendKing(WhitePieces, kingCase))
-                {
-                    Console.WriteLine("You are in check ! But you can defend yourself !");
-                    return true;
-                }
-
-            }
-
+            // Vérifiez si une pièce ennemie peut attaquer la case du roi
             foreach (var enemy in enemyPieces)
             {
-                
-                if (enemy.piece is King)
+                if (enemy.piece is King kingEnemy)
                 {
-                    King KingTest = (King)enemy.piece;
-                    var possibleMoves = KingTest.CanEat(enemy.CaseLink, this);
-                    foreach (var move in possibleMoves)
+                    var possibleMoves = kingEnemy.CanEat(enemy.CaseLink, this);
+                    if (possibleMoves.Any(move => move.Column == kingCase.Column && move.Line == kingCase.Line))
                     {
-                        if (move.Column == kingCase.Column && move.Line == kingCase.Line)
-                        {
-                            return true;
-                        }
+                        Console.WriteLine("Sorti de la fonction echec - roi attaqué par un autre roi");
+                        return true;
                     }
-
                 }
-                else if (enemy.piece is Pawn)
+                else if (enemy.piece is Pawn pawnEnemy)
                 {
-                    Pawn PawnTest = (Pawn)enemy.piece;
-                    var possibleMoves = PawnTest.CanEat(enemy.CaseLink, this);
-                    foreach (var move in possibleMoves)
+                    var possibleMoves = pawnEnemy.CanEat(enemy.CaseLink, this);
+                    if (possibleMoves.Any(move => move.Column == kingCase.Column && move.Line == kingCase.Line))
                     {
-                        if (move.Column == kingCase.Column && move.Line == kingCase.Line)
-                        {
-                            return true;
-                        }
+                        Console.WriteLine("Sorti de la fonction echec - roi attaqué par un pion");
+                        return true;
                     }
                 }
                 else
                 {
-                    // Utilisez les mouvements possibles de l'ennemi pour vérifier s'ils attaquent la case du roi
                     var possibleMoves = enemy.piece.PossibleMoves(enemy.CaseLink, this);
-                    foreach (var move in possibleMoves)
+                    if (possibleMoves.Any(move => move.Column == kingCase.Column && move.Line == kingCase.Line))
                     {
-                        if (move.Column == kingCase.Column && move.Line == kingCase.Line)
-                        {
-                            return true;
-                        }
+                        Console.WriteLine("Sorti de la fonction echec - roi attaqué par une pièce ennemie");
+                        return true;
                     }
                 }
             }
 
+            // Vérifiez si une pièce alliée peut défendre le roi
+            List<CoPieces> allyPieces = king.Color == Color.White ? WhitePieces : BlackPieces;
+            if (CanDefendKing(allyPieces, kingCase))
+            {
+                Console.WriteLine("Sorti de la fonction echec - une pièce alliée peut défendre le roi");
+                return true;
+            }
+
+            Console.WriteLine("Sorti de la fonction echec - roi non en échec");
             return false; // Le roi n'est pas en échec
         }
 
@@ -387,7 +354,7 @@ namespace ChessLibrary
                 var startCase = pieceInfo.CaseLink;
                 var possibleMoves = piece.PossibleMoves(startCase, this);
 
-                if ( CanDefendKing(enemyPieces, kingCase) )
+                if (CanDefendKing(enemyPieces, kingCase))
                 {
                     return false;
                 }
@@ -444,15 +411,21 @@ namespace ChessLibrary
             final.Piece = null;
         }
 
-        public bool CanDefendKing(List<CoPieces> teamPieces, Case enemyPiece)
+        public bool CanDefendKing(List<CoPieces> teamPieces, Case kingCase)
         {
+            Console.WriteLine("entre de la fonction Candef");
+
             foreach (var piece in teamPieces)
             {
-                if ( CanMovePiece(piece.piece, piece.CaseLink, enemyPiece) )
+                var possibleMoves = piece.piece.PossibleMoves(piece.CaseLink, this);
+                if (possibleMoves.Any(move => move.Column == kingCase.Column && move.Line == kingCase.Line))
                 {
+                    Console.WriteLine("Sorti de la fonction candef - pièce alliée peut défendre");
                     return true;
                 }
             }
+
+            Console.WriteLine("Sorti de la fonction candef - aucune pièce alliée ne peut défendre");
             return false;
         }
 

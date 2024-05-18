@@ -49,7 +49,7 @@ steps:
       - /entrypoint.sh -l Documentation/doxygen -t doxygen 
     when:
       branch:
-        - csharp
+        - master
       event:
         - push
     depends_on: [ build, tests ]

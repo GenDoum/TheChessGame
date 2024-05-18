@@ -158,8 +158,6 @@ namespace ChessLibrary
 
             isCheckingForCheck = true;
 
-            Console.WriteLine("entrez dans la fonction Echec");
-
             List<CoPieces> enemyPieces = king.Color == Color.White ? BlackPieces : WhitePieces;
 
             foreach (var enemy  in enemyPieces)
@@ -183,15 +181,12 @@ namespace ChessLibrary
 
                   if (possibleMoves.Any(move => move.Column == kingCase.Column && move.Line == kingCase.Line))
                 {
-                    Console.WriteLine("Sorti de la fonction echec - roi attaqué par une pièce ennemie");
                     isCheckingForCheck = false;
                     return true;
                 }
              }
 
             isCheckingForCheck = false;
-
-            Console.WriteLine("Sorti de la fonction echec - roi non en échec");
             return false;
         }
 
@@ -306,7 +301,6 @@ namespace ChessLibrary
 
         public bool CanDefendKing(List<CoPieces> teamPieces, Case kingCase)
         {
-            Console.WriteLine("entre de la fonction Candef");
 
             foreach (var piece in teamPieces)
             {
@@ -342,13 +336,10 @@ namespace ChessLibrary
 
                     if (resolvesCheck)
                     {
-                        Console.WriteLine("Sorti de la fonction candef - pièce alliée peut défendre");
                         return true;
                     }
                 }
             }
-
-            Console.WriteLine("Sorti de la fonction candef - aucune pièce alliée ne peut défendre");
             return false;
         }
 

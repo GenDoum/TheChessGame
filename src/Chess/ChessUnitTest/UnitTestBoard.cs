@@ -893,6 +893,26 @@ public class UnitTestBoard
         Assert.False(result);
     }
     [Fact]
+    public void TestIsInCheckBlack()
+    {
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        chessboard.AddPiece(new King(Color.Black, 5), 4, 0); // e1
+
+        chessboard.IsInCheck(Color.Black);
+        var isincheck = chessboard.IsInCheck(Color.Black);
+        Assert.True(isincheck);
+    }
+
+    [Fact]
+    public void TestIsInCheckWhite()
+    {
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        chessboard.AddPiece(new King(Color.White, 5), 4, 7); // e8
+
+        var isincheck = chessboard.IsInCheck(Color.White);
+        Assert.True(isincheck);
+    }
+    [Fact]
     public void TestCheckmateScenario()
     {
         Chessboard board = new Chessboard(new Case[8, 8], true);
@@ -927,7 +947,6 @@ public class UnitTestBoard
         board.AddPiece(new Knight(Color.White, 2), 1, 7); // b8
         Case? whiteKingCase = board.Board[4, 7]; // e8
         bool isCheckmate = board.EchecMat((King)whiteKingCase.Piece,whiteKingCase);
-
         // Assert checkmate status
         Assert.False(isCheckmate);
     }

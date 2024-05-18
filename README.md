@@ -1,77 +1,163 @@
-
-
 <br/>
 <p align="center">
   <a href="#">
     <img src="./src/Chess/Chess/Resources/AppIcon/appicon.svg" alt="Logo" width="250" height="250">
   </a>
 
-  <h3 align="center">The chess</h3>
+  <h3 align="center">The Chess</h3>
 
   <p align="center">
-    The Chess est une application conçue pour les passionnés de jeux d'échecs. Si vous êtes un amateur de stratégie et de réflexion, The Chess est l'application parfaite pour vous aider à perfectionner votre jeu et à défier vos amis.
+    The Chess is an application designed for chess enthusiasts. If you are a fan of strategy and critical thinking, The Chess is the perfect app to help you improve your game and challenge your friends.
     <br/>
     <br/>
-    <a href="https://codefirst.iut.uca.fr/git/Chess/Chess/wiki"><strong>lien vers la documentation </strong></a>
+    <a href="https://codefirst.iut.uca.fr/git/Chess/Chess/wiki"><strong>Link to documentation</strong></a>
   </p>
 </p>
 
-## Table des matières
+![Static Badge](https://img.shields.io/badge/development-in%20progress-green)
+[![Quality Gate Status](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Chess&metric=alert_status&token=c2dc7d57b98c8ce69ae71f96129688cc7992b423)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Chess)
+[![Maintainability Rating](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Chess&metric=sqale_rating&token=c2dc7d57b98c8ce69ae71f96129688cc7992b423)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Chess)
 
-* [Le projet](#le-projet)
-* [Technologies utilisées](#fait-avec)
-* [Contribuer au projet](#contribuer)
-* [Contributeurs](#contributeurs)
+## Table of Contents
+
+* [The Project](#the-project)
+* [Technologies Used](#technologies-used)
+* [Current state of the project](#current-state)
+* [Contributing to the Project](#contributing)
+* [Contributors](#contributors)
 
 
-## Le projet
+## The Project
 
-[à compléter]
+[to be completed]
 
-## Fait avec
-- [JetBrains Rider](https://www.jetbrains.com/fr-fr/rider/) - IDE
-- [Visual Studio 2022](https://visualstudio.microsoft.com/fr/vs/ "IDE") -IDE
-- [CodeFirst](https://codefirst.iut.uca.fr/) - Technologie
+## Technologies Used
+- [JetBrains Rider](https://www.jetbrains.com/rider/) - IDE
+- [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) - IDE
+- [CodeFirst](https://codefirst.iut.uca.fr/) - Technology
 - [.NET MAUI 8.0](https://learn.microsoft.com/en-us/dotnet/maui/what-is-maui?view=net-maui-8.0) - Framework
-    - [XAML](https://learn.microsoft.com/fr-fr/dotnet/desktop/wpf/xaml/?view=netdesktop-8.0) - langage de balisage extensible
-    - [C#](https://learn.microsoft.com/fr-fr/dotnet/csharp/) - Langage
+    - [XAML](https://learn.microsoft.com/en-us/dotnet/desktop/wpf/xaml/?view=netdesktop-8.0) - Extensible Markup Language
+    - [C#](https://learn.microsoft.com/en-us/dotnet/csharp/) - Language
 - [Doxygen](https://www.doxygen.nl/) - Documentation
 
-## Contribuer
+## Current state
 
-### Prérequis
+The chess is a project in its early stages.
 
--   [Git](https://git-scm.com/) - Versionnage
--   [Visual Studio 2022](https://visualstudio.microsoft.com/fr/vs/ "IDE") - Environnement de développement intégré (IDE)
--   [.NET 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) - Framework
+| Features                              | Explanation                                            | State
+| :------------------------------------ |:------------------------------------------------------:|:-----------------------:|
+| **Piece Movement Management**         | Each type of piece (King, Queen, Rook, Knight, Bishop, Pawn) has its own movement logic implemented. For example, the King can move one square in any direction, the Queen can move in any direction without distance limit, etc. | :white_check_mark:
+| **Movement Exception Handling**       | We have set up exceptions to handle invalid movements. For example, if the bishop tries to move in a non-diagonal direction, an `InvalidMovementException` is thrown. | :white_check_mark:
+| **Calculation of Possible Moves**     | For each piece, we have a PossibleMoves method that calculates all the squares to which the piece can legally move. | :white_check_mark:
+| **Unit Testing**                      | We have written unit tests to verify the validity of all pieces movements. These tests check valid moves, invalid moves, and possible moves. | :white_check_mark:
+| **Piece Color Management**            | Each piece has a color (white or black) that is used to determine possible moves and to check if a piece can be captured. | :white_check_mark:
+| **Check**                             | The `Check` function verifies if a King is in check. It examines all possible moves of the opposing pieces to see if any of them can reach the King. | :x:
+| **Checkmate**                         | The `Checkmate` function verifies if a player is in checkmate. It examines all possible moves of the King and its allied pieces to see if the check can be avoided. If no move can avoid the check, the player is in checkmate. | :x:
+| **Piece Capture**                     | Pieces can be captured by moving to a square occupied by an opposing piece. | :white_check_mark:
+| **First Move**                        | For pawns and rooks, there is special logic for their first move. For example, a pawn can move two squares on its first move. | :white_check_mark:
+| **Pawn Promotion**                    | When a pawn reaches the last row of the board, it can be promoted to another piece (Queen, Rook, Knight, Bishop). | :white_check_mark:
+| **Player Management**                 | he game manages two players, alternating turns between them. | :white_check_mark:
+| **Move Validation**                   | Before making a move, the game checks if the move is valid according to chess rules. | :white_check_mark:
+| **Game Events**                       | The game triggers events when a pawn can be promoted or when a player wins the game. | :white_check_mark:
+| **Chessboard Management**             | The chessboard is represented by an 8x8 matrix, and each square can contain a piece or be empty. | :white_check_mark:
 
-Toutes les contributions que vous apportez sont **grandement appréciées**.
+## How to play
 
--   Si vous avez des suggestions, n'hésitez pas à [ouvrir un ticket](https://codefirst.iut.uca.fr/git/Chess/Chess/issues) pour en discuter, ou à créer directement une demande de fusion.
--   Créez une demande de fusion individuelle pour chaque suggestion.
+### Starting the Game
 
-### Création d'une demande de fusion
+When you start the game, you will be presented with a chessboard. The chessboard is an **8x8 grid**, with each cell identified by a unique coordinate. The horizontal axis is labeled from **'a' to 'h'** and the vertical axis is labeled from **'1' to '8'**.
 
-1.  Forker le projet
-2.  Créer votre branche de fonctionnalité :  
+The game will start with **Player 1's turn**.
+
+### Moving a Piece
+
+When it's your turn, you will be asked to enter the position of the piece you want to move. The position should be entered in the format of a letter followed by a number (e.g., **'a1'**, **'f7'**).
+
+For example, if you want to move the piece at position **'e2'**, you would type **'e2'** and press enter.
+
+The game will then ask you to enter the destination for the piece. Again, you should enter the destination in the same format. For example, if you want to move the piece from **'e2'** to **'e4'**, you would type **'e4'** and press enter.
+
+If the move is **valid**, the piece will be moved to the new position. If the move is **not valid**, you will be asked to enter a different move.
+
+Here's an example : 
 ```bash
-$ git checkout -b feature/fonctionnaliteIncroyable
+   a   b   c   d   e   f   g   h
+ +---+---+---+---+---+---+---+---+
+8 | R | C | B | Q | K | B | C | R | 8
+ +---+---+---+---+---+---+---+---+
+7 | P | P | P | P | P | P | P | P | 7
+ +---+---+---+---+---+---+---+---+
+6 |   |   |   |   |   |   |   |   | 6
+ +---+---+---+---+---+---+---+---+
+5 |   |   |   |   |   |   |   |   | 5
+ +---+---+---+---+---+---+---+---+
+4 |   |   |   |   |   |   |   |   | 4
+ +---+---+---+---+---+---+---+---+
+3 |   |   |   |   |   |   |   |   | 3
+ +---+---+---+---+---+---+---+---+
+2 | P | P | P | P | P | P | P | P | 2
+ +---+---+---+---+---+---+---+---+
+1 | R | C | B | Q | K | B | C | R | 1
+ +---+---+---+---+---+---+---+---+
+   a   b   c   d   e   f   g   h
+Player 1's turn
+Enter the position of the piece you want to move (a1, f7 ...):
 ```
-3.  Effectuer vos modifications : 
+
+### Capturing a Piece
+
+If your piece's move ends on a square occupied by an opponent's piece, the opponent's piece is **captured** and removed from the game.
+
+### Check and Checkmate
+
+If your move places the opponent's king under attack, that's called **"check"**. If your opponent's king is in check, they must make a move that eliminates the threat of capture on the next move. If they cannot do so, that's called **"checkmate"**, and you win the game.
+
+### Pawn Promotion
+
+If a pawn reaches the opposite side of the board, it can be **promoted** to any other piece (except king). The game will ask you to choose between **'Queen'**, **'Rook'**, **'Bishop'**, or **'Knight'**. Type your choice and press enter.
+
+Here how it looks in game : 
+
+
+### Ending the Game
+
+The game ends when a player is **checkmated** (or if a player **resigns**. To resign, type **'resign'** instead of a move.)
+
+Remember, the goal of the game is to **checkmate** your opponent's king. **Good luck!**
+
+## Contributing
+
+### Prerequisites
+
+-   [Git](https://git-scm.com/) - Version Control
+-   [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) - Integrated Development Environment (IDE)
+-   [.NET 8.0](https://dotnet.microsoft.com/download/dotnet/8.0) - Framework
+
+All contributions you make are **greatly appreciated**.
+
+-   If you have any suggestions, feel free to [open an issue](https://codefirst.iut.uca.fr/git/Chess/Chess/issues) to discuss it or create a merge request directly.
+-   Create an individual merge request for each suggestion.
+
+### Creating a Merge Request
+
+1.  Fork the project
+2.  Create your feature branch:  
 ```bash
-$ git commit -m 'Ajouter une nouvelle fonctionnalité'
+$ git checkout -b feature/awesomeFeature
 ```
-4.  Pousser vers la branche : 
+3.  Make your changes:
+```bash
+$ git commit -m 'Add a new feature'
 ```
-$ git push origin feature/fonctionnaliteIncroyable
+4.  Push to the branch:
 ```
-5.  Ouvrir une demande de fusions
+$ git push origin feature/awesomeFeature
+```
+5.  Open a merge request
 
 
-## Contributeurs
+## Contributors
 
 * [Yannis Doumir-Fernandes](https://codefirst.iut.uca.fr/git/yannis.doumir_fernandes)
 * [Mathéo Balko](https://codefirst.iut.uca.fr/git/matheo.balko) 
-* [Mathéo Hersan](https://codefirst.iut.uca.fr/git/matheo.hersan) 
-
-
+* [Mathéo Hersan](https://codefirst.iut.uca.fr/git/matheo.hersan)  

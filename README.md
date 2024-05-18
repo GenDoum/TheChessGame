@@ -91,6 +91,8 @@ Please select an option:
 Thank you for playing the Chess Game. Goodbye!
 ```
 
+Actually to chose an option we don't have to type 3, 2, etc... You just have to press your arrow key and press enter to chose an option.
+
 ### Starting the Game
 
 When you start the game, you will be presented with a chessboard. The chessboard is an **8x8 grid**, with each cell identified by a unique coordinate. The horizontal axis is labeled from **'a' to 'h'** and the vertical axis is labeled from **'1' to '8'**.

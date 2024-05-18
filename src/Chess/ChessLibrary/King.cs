@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace ChessLibrary
 {
     /// <summary>
-    /// Class that represents a king piece
+    /// Classe représentant le roi
     /// </summary>
     public class King : Piece, IFirstMove
     {
         public bool FirstMove { get; set; }
         /// <summary>
-        /// Constructor of the class
+        /// Constructeur de la classe King
         /// </summary>
         /// <param name="color"></param>
-        /// <param name="initialCase"></param>
+        /// <param name="id"></param>
         public King(Color color, int id) : base(color, id)
         {
             this.FirstMove = true;
@@ -29,12 +29,12 @@ namespace ChessLibrary
             {
                 if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
                 {
-                    throw new InvalidOperationException("Invalid move for King: destination out of bounds.");
+                    throw new InvalidMovementException("Invalid move for King: destination out of bounds.");
                 }
                 return true;
             }
 
-            throw new InvalidOperationException("Invalid move for King");
+            throw new InvalidMovementException("Invalid move for King");
         }
 
  
@@ -77,6 +77,12 @@ namespace ChessLibrary
             return result;
         }
 
+        /// <summary>
+        /// Vérifiez si le roi peut manger une pièce ennemie
+        /// </summary>
+        /// <param name="caseInitial"></param>
+        /// <param name="chessboard"></param>
+        /// <returns></returns>
         public List<Case> CanEat(Case caseInitial, Chessboard chessboard)
         {
             List<Case> result = new List<Case>();

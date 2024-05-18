@@ -12,12 +12,12 @@ public class UnitTestPawn
         Assert.True(result);
     }
 
-    [Theory]
+   [Theory]
     [MemberData(nameof(TestData.InvalidPawnPositionsData), MemberType = typeof(TestData))]
     public void CanMove_InvalidMove_ThrowsException(int x1, int y1, int x2, int y2)
     {
         var pawn = new Pawn(Color.White, 1);
-        Assert.Throws<InvalidOperationException>(() => pawn.CanMove(x1, y1, x2, y2));
+        Assert.Throws<InvalidMovementException>(() => pawn.CanMove(x1, y1, x2, y2));
     }
     
     [Fact]

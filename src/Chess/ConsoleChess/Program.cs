@@ -512,21 +512,26 @@ namespace ConsoleChess
                     game.Board.ModifPawn(P, newKnight, C);
                     return;
                 default:
-                    Console.WriteLine("Invalid Possibility");
-                    choiceUser = GetUserChoice();
                     break;
             }
         }
-        
+
         static ChoiceUser GetUserChoice()
         {
-            Console.WriteLine("Choose the piece to evolve to:");
-            Console.WriteLine("1. Queen");
-            Console.WriteLine("2. Rook");
-            Console.WriteLine("3. Bishop");
-            Console.WriteLine("4. Knight");
+            int choice;
+            do
+            {
+                Console.WriteLine("Choose the piece to evolve to:");
+                Console.WriteLine("1. Queen");
+                Console.WriteLine("2. Rook");
+                Console.WriteLine("3. Bishop");
+                Console.WriteLine("4. Knight");
 
-            int choice = Convert.ToInt32(Console.ReadLine());
+                if (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 4)
+                {
+                    Console.WriteLine("Invalid input. Please enter a number between 1 and 4.");
+                }
+            } while (choice < 1 || choice > 4);
 
             return (ChoiceUser)choice;
         }
@@ -579,7 +584,7 @@ namespace ConsoleChess
             }
 
             int column = notation[0] - 'a';
-            int row = 8 - (notation[1] - '0'); 
+            int row = 8 - (notation[1] - '0');
 
             return (column, row);
         }

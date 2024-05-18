@@ -25,7 +25,7 @@ public class UnitTestQueen
         var queen = new Queen(Color.White, 1);
         
         // Act & Assert
-        Assert.Throws<InvalidOperationException>(() => queen.CanMove(x1, y1, x2, y2));
+        Assert.Throws<InvalidMovementException>(() => queen.CanMove(x1, y1, x2, y2));
     }
     
     [Fact]

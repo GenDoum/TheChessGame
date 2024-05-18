@@ -9,13 +9,13 @@ namespace ChessLibrary
 {
 
     /// <summary>
-    /// Class that represents a Rook piece
+    /// Classe pour la pièce Tour
     /// </summary>
     public class Rook : Piece, IFirstMove
     {
         public bool FirstMove { get; set; }
         /// <summary>
-        /// Constructor of the class
+        /// Constructeur de la classe Rook
         /// </summary>
         /// <param name="color"></param>
         /// <param name="c"></param>
@@ -27,16 +27,12 @@ namespace ChessLibrary
         public override bool CanMove(int x, int y, int x2, int y2)
         {
             if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
-            {
-                throw new InvalidOperationException("Invalid move for Rook: destination out of bounds.");
-            }
+                throw new InvalidMovementException("Invalid move for Rook: destination out of bounds.");
 
             if (x == x2 || y == y2)
-            {
                 return true;
-            }
 
-            throw new InvalidOperationException("Invalid move for Rook");
+            throw new InvalidMovementException("Invalid move for Rook: not horizontal or vertical.");
         }
 
 
@@ -82,16 +78,6 @@ namespace ChessLibrary
             }
 
             return result;
-        }
-
-        static bool IsWithinBoardBoundaries(int column, int line)
-        {
-            return column >= 0 && column < 8 && line >= 0 && line < 8;
-        }
-
-        private void AddPotentialMove(List<Case> result, Case potentialCase)
-        {
-
         }
     }
 }

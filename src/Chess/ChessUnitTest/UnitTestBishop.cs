@@ -25,7 +25,7 @@ public class UnitTestBishop
         var bishop = new Bishop(Color.White, 1);
 
         // Act & Assert
-        Assert.Throws<InvalidOperationException>(() => bishop.CanMove(x1, y1, x2, y2));
+        Assert.Throws<InvalidMovementException>(() => bishop.CanMove(x1, y1, x2, y2));
     }
 
     [Fact]

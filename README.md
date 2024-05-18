@@ -23,6 +23,7 @@
 * [The Project](#the-project)
 * [Technologies Used](#technologies-used)
 * [Current state of the project](#current-state)
+* [How to play](#how-to-play)
 * [Contributing to the Project](#contributing)
 * [Contributors](#contributors)
 

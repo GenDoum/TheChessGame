@@ -60,10 +60,5 @@ namespace ChessLibrary
         /// <param name="chessboard"></param>
         /// <returns></returns>
         public abstract List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard);
-
-        public virtual Piece Clone()
-        {
-            return (Piece)this.MemberwiseClone(); // Copie superficielle appropriée si aucune référence profonde n'est nécessaire
-        }
     }
 }

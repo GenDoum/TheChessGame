@@ -61,6 +61,8 @@ The chess is a project in its early stages.
 | **Game Events**                       | The game triggers events when a pawn can be promoted or when a player wins the game. | :white_check_mark:
 | **Chessboard Management**             | The chessboard is represented by an 8x8 matrix, and each square can contain a piece or be empty. | :white_check_mark:
 
+## How to play
+
 ### Starting the Game
 
 When you start the game, you will be presented with a chessboard. The chessboard is an **8x8 grid**, with each cell identified by a unique coordinate. The horizontal axis is labeled from **'a' to 'h'** and the vertical axis is labeled from **'1' to '8'**.

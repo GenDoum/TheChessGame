@@ -326,37 +326,6 @@ namespace ChessLibrary
             }
             throw new Exception("Piece not found on the board.");
         }
-
-        /// <summary>
-        /// Copie le tableau pour prévoir les mouvements
-        /// </summary>
-        /// <returns></returns>
-        public Chessboard CopyBoard()
-        {
-            Case[,] newBoard = new Case[8, 8];
-
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    var originalPiece = Board[i, j].Piece;
-                    Piece? copiedPiece = null;
-                    if (originalPiece != null)
-                    {
-                        copiedPiece = originalPiece;
-                    }
-                    newBoard[i, j] = new Case(i, j, copiedPiece);
-                }
-            }
-
-            var newChessboard = new Chessboard(newBoard, true);
-            // Copier les listes de pièces
-            newChessboard.whitePieces = new List<CoPieces>(WhitePieces!);
-            newChessboard.blackPieces = new List<CoPieces>(BlackPieces!);
-
-            return newChessboard;
-        }
-
         /// <summary>
         /// Vérifie si un joueur est en échec et mat
         /// </summary>

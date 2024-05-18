@@ -99,8 +99,8 @@ namespace ChessLibrary
         {
             var pieces = (actualPlayer.Color == Color.White) ? Board.BlackPieces : Board.WhitePieces;
             foreach (var pieceInfo in pieces)
-            {
-                if (pieceInfo.piece is King king && Board.Echec(king, pieceInfo.CaseLink))
+             {
+                 if (pieceInfo.piece is King king && Board.Echec(king, pieceInfo.CaseLink))
                 {
                     if (actualPlayer.Color == Color.White)
                     {

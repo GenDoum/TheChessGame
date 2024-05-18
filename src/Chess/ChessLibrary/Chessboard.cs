@@ -162,7 +162,7 @@ namespace ChessLibrary
 
             List<CoPieces> enemyPieces = king.Color == Color.White ? BlackPieces : WhitePieces;
 
-            foreach (var enemy in enemyPieces)
+            foreach (var enemy  in enemyPieces)
             {
                 List<Case> possibleMoves;
 
@@ -181,13 +181,13 @@ namespace ChessLibrary
                     possibleMoves = enemy.piece.PossibleMoves(enemy.CaseLink, this);
                 }
 
-                if (possibleMoves.Any(move => move.Column == kingCase.Column && move.Line == kingCase.Line))
+                  if (possibleMoves.Any(move => move.Column == kingCase.Column && move.Line == kingCase.Line))
                 {
                     Console.WriteLine("Sorti de la fonction echec - roi attaqué par une pièce ennemie");
                     isCheckingForCheck = false;
                     return true;
                 }
-            }
+             }
 
             isCheckingForCheck = false;
 
@@ -219,12 +219,12 @@ namespace ChessLibrary
             return canResolve;
         }
 
-        private King FindKing(Color color)
+        public King FindKing(Color color)
         {
             return color == Color.White ? (King)WhitePieces!.Find(x => x.piece is King)!.piece : (King)BlackPieces!.Find(x => x.piece is King)!.piece;
         }
 
-        private Case FindCase(Piece piece)
+        public Case FindCase(Piece piece)
         {
             for (int i = 0; i < 8; i++)
             {

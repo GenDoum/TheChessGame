@@ -439,41 +439,58 @@ namespace ConsoleChess
             bool isGameOver = false;
             DisplayBoard(game.Board);
 
-
             while (!isGameOver)
             {
                 User actualPlayer = (player % 2 == 0) ? player2 : player1;
                 Console.WriteLine($"{actualPlayer.Pseudo}'s turn");
 
-
-
-                try
+                bool validMove = false;
+                while (!validMove)
                 {
-                    (int startColumn, int startRow) = GetMoveCoordinates("Enter the position of the piece you want to move (a1, f7 ...):");
-                    (int endColumn, int endRow) = GetMoveCoordinates("Enter the destination position (a1, f7 ...):");
-
-                    bool isCheck = false;
-
-                    // Si IsInCheck est vrai, alors si endColumn et endRow n'est pas la case de la pièce qui mets en échec, alors on ne peut pas bouger
-
-                    if ( game.Board.IsInCheck(Color.Black))
+                    try
                     {
-                        Console.WriteLine("You are in check");
+                        (int startColumn, int startRow) = GetMoveCoordinates("Enter the position of the piece you want to move (a1, f7 ...):");
+                        (int endColumn, int endRow) = GetMoveCoordinates("Enter the destination position (a1, f7 ...):");
+
+                        Case startCase = game.Board.Board[startColumn, startRow];
+                        Case endCase = game.Board.Board[endColumn, endRow];
+                        Piece? piece = startCase.Piece;
+
+                        if (piece == null || piece.Color != actualPlayer.Color)
+                        {
+                            Console.WriteLine("Invalid move: No piece or wrong color.");
+                            continue; // Retry the same player's turn
+                        }
+
+                        bool isValidMove = game.Board.CanMovePiece(piece, startCase, endCase);
+
+                        if (!isValidMove)
+                        {
+                            Console.WriteLine("Invalid move: Check the rules.");
+                            continue; // Retry the same player's turn
+                        }
+
+                        game.MovePiece(startCase, endCase, game.Board, actualPlayer);
+                        DisplayBoard(game.Board);
+
+                        if (game.Board.IsInCheck(actualPlayer.Color))
+                        {
+                            Console.WriteLine("You are in check");
+                            if (game.Board.EchecMat(game.Board.FindKing(actualPlayer.Color), game.Board.FindCase(game.Board.FindKing(actualPlayer.Color))))
+                            {
+                                isGameOver = true;
+                                Console.WriteLine($"Game over! {actualPlayer.Pseudo} loses!");
+                            }
+                        }
+
+                        validMove = true; // Move was successful, exit the inner loop
                     }
-
-                    game.MovePiece(game.Board.Board[startColumn, startRow], game.Board.Board[endColumn, endRow], game.Board, actualPlayer);
-                    DisplayBoard(game.Board);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Error: {e.Message}");
-                    player--; // Retry the same player's turn
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Error: {e.Message}");
+                    }
                 }
 
-                if (game.IsCheck(actualPlayer))
-                {
-                        isGameOver = game.GameOver(actualPlayer);
-                }
                 player++;
             }
 

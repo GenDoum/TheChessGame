@@ -48,8 +48,8 @@ The chess is a project in its early stages.
 | :------------------------------------ |:------------------------------------------------------:|:-----------------------:|
 | **Piece Movement Management**         | Each type of piece (King, Queen, Rook, Knight, Bishop, Pawn) has its own movement logic implemented. For example, the King can move one square in any direction, the Queen can move in any direction without distance limit, etc. | :white_check_mark:
 | **Movement Exception Handling**       | We have set up exceptions to handle invalid movements. For example, if the bishop tries to move in a non-diagonal direction, an `InvalidMovementException` is thrown. | :white_check_mark:
-| **Calculation of Possible Moves**     | For each piece, you have a PossibleMoves method that calculates all the squares to which the piece can legally move. | :white_check_mark:
-| **Unit Testing**                      | You have written unit tests to verify the validity of the bishop's movements. These tests check valid moves, invalid moves, and possible moves on an empty chessboard. | :white_check_mark:
+| **Calculation of Possible Moves**     | For each piece, we have a PossibleMoves method that calculates all the squares to which the piece can legally move. | :white_check_mark:
+| **Unit Testing**                      | We have written unit tests to verify the validity of all pieces movements. These tests check valid moves, invalid moves, and possible moves. | :white_check_mark:
 | **Piece Color Management**            | Each piece has a color (white or black) that is used to determine possible moves and to check if a piece can be captured. | :white_check_mark:
 | **Check**                             | The `Check` function verifies if a King is in check. It examines all possible moves of the opposing pieces to see if any of them can reach the King. | :x:
 | **Checkmate**                         | The `Checkmate` function verifies if a player is in checkmate. It examines all possible moves of the King and its allied pieces to see if the check can be avoided. If no move can avoid the check, the player is in checkmate. | :x:

@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
+    /// <summary>
+    /// Interface pour le premier mouvement
+    /// </summary>
     public interface IFirstMove
     {
-        public interface FirstMove
-        {
-            bool FirstMove { get; set; }
-        }
+        /// <summary>
+        /// Premier mouvement
+        /// </summary>
+        bool FirstMove { get; set; }
     }
 }

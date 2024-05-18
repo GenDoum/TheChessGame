@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
+    /// <summary>
+    /// Classe Bishop (fou) qui hérite de la classe Piece
+    /// </summary>
     public class Bishop : Piece
     {
         /// <summary>
-        /// 
+        /// Constructeur de la classe Bishop
         /// </summary>
         /// <param name="color"></param>
         /// <param name="c"></param>
@@ -21,67 +24,52 @@ namespace ChessLibrary
         public override bool CanMove(int x, int y, int x2, int y2)
         {
             if (Math.Abs(x - x2) != Math.Abs(y - y2))
-            {
-                throw new InvalidOperationException("Invalid move for Bishop");
-            }
+                throw new InvalidMovementException("Invalid move for Bishop: not diagonal.");
 
             if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
-            {
-                throw new InvalidOperationException("Invalid move for Bishop: destination out of bounds.");
-            }
+                throw new InvalidMovementException("Invalid move for Bishop: destination out of bounds.");
 
-            return true;    
+            return true;
         }
 
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
             if (chessboard == null || caseInitial == null)
-            {
                 throw new ArgumentNullException();
-            }
 
-            List<Case> possibleMoves = new List<Case>();
+            List<Case> result = new List<Case>();
             (int colInc, int lineInc)[] directions = { (-1, 1), (1, 1), (-1, -1), (1, -1) }; // Top Left, Top Right, Bot Left, Bot Right
-    
+
             foreach (var (colInc, lineInc) in directions)
             {
                 for (int i = 1; i < 8; i++)
                 {
                     int newColumn = caseInitial.Column + (colInc * i);
                     int newLine = caseInitial.Line + (lineInc * i);
-            
-                    if (!IsWithinBoardBoundaries(newColumn, newLine))
+                    if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                     {
+                        Case potentialCase = chessboard.Board[newColumn, newLine];
+                        if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
+                        {
+                            if (potentialCase.IsCaseEmpty())
+                            {
+                                result.Add(potentialCase);
+                            }
+                            else if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
+                            {
+                                result.Add(potentialCase);
+                                break;
+                            }
+                            else
+                                break;
+                        }
+                    }
+                    else
                         break;
-                    }
-
-                    Case potentialCase = chessboard.Board[newColumn, newLine];
-
-                    if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
-                    {
-                        AddPotentialMove(possibleMoves, potentialCase);
-                    }
                 }
             }
 
-            return possibleMoves;
-        }
-
-        private bool IsWithinBoardBoundaries(int column, int line)
-        {
-            return column >= 0 && column < 8 && line >= 0 && line < 8;
-        }
-
-        private void AddPotentialMove(List<Case> possibleMoves, Case potentialCase)
-        {
-            if (potentialCase.IsCaseEmpty())
-            {
-                possibleMoves.Add(potentialCase);
-            }
-            else if (potentialCase.Piece.Color != Color)
-            {
-                possibleMoves.Add(potentialCase);
-            }
+            return result;
         }
     }
 }

@@ -6,16 +6,35 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
+    /// <summary>
+    /// Interface pour le plateau de jeu
+    /// </summary>
     internal interface IBoard
     {
-        bool MovePiece(Piece piece, Case Initial,Case Final);
+        /// <summary>
+        /// Initialiser le plateau de jeu
+        /// </summary>
+        /// <param name="piece"></param>
+        /// <param name="initial"></param>
+        /// <param name="final"></param>
+        /// <returns></returns>
+        bool CanMovePiece(Piece? piece, Case initial,Case final);
 
-        bool IsMoveValid(List<Case> Lcase, Case Final);
-        bool Echec(King king,Case KingCase);
-
-        //User Turn();
-
-        //bool IsCaseEmpty(Case @case);
+        /// <summary>
+        /// Vérifier si le mouvement est valide
+        /// </summary>
+        /// <param name="lcase"></param>
+        /// <param name="final"></param>
+        /// <returns></returns>
+        bool IsMoveValid(List<Case> lcase, Case final);
+        
+        /// <summary>
+        /// Vérifier si le roi est en échec
+        /// </summary>
+        /// <param name="king"></param>
+        /// <param name="kingCase"></param>
+        /// <returns></returns>
+        bool Echec(King? king,Case kingCase);
 
     }
 }

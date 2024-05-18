@@ -25,7 +25,7 @@ public class UnitTestKnight
         var knight = new Knight(Color.White, 1);
 
         // Act & Assert
-        Assert.Throws<InvalidOperationException>(() => knight.CanMove(x1, y1, x2, y2));
+        Assert.Throws<InvalidMovementException>(() => knight.CanMove(x1, y1, x2, y2));
     }
     
     [Fact]

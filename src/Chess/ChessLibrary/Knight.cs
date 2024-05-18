@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 namespace ChessLibrary
 {
     /// <summary>
-    /// Class that represents a knight piece
+    /// Classe représentant le chavalier
     /// </summary>
     public class Knight : Piece
     {
         /// <summary>
-        /// Constructor of the class
+        /// Constructeur de la classe Knight
         /// </summary>
         /// <param name="c"></param>
-        /// <param name="ca"></param>
+        /// <param name="id"></param>
         public Knight(Color c, int id) : base(c, id)
         {
         }
@@ -25,13 +25,12 @@ namespace ChessLibrary
             if ((Math.Abs(x - x2) == 2 && Math.Abs(y - y2) == 1) || (Math.Abs(x - x2) == 1 && Math.Abs(y - y2) == 2))
             {
                 if (x2 < 0 || x2 > 7 || y2 < 0 || y2 > 7)
-                {
-                    throw new InvalidOperationException("Invalid move for Knight: destination out of bounds.");
-                }
+                    throw new InvalidMovementException("Invalid move for Knight: destination out of bounds.");
+                
                 return true;
             }
 
-            throw new InvalidOperationException("Invalid move for Knight");
+            throw new InvalidMovementException("Invalid move for Knight: not L-shaped.");
         }
 
 
@@ -52,27 +51,16 @@ namespace ChessLibrary
                 int newColumn = caseInitial.Column + offsets[i, 0];
                 int newLine = caseInitial.Line + offsets[i, 1];
 
-                if (IsWithinBoardBoundaries(newColumn, newLine) && CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
+                if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                 {
                     Case potentialCase = chessboard.Board[newColumn, newLine];
-                    AddPotentialMove(result, potentialCase);
+                    if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine) && (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color || potentialCase.IsCaseEmpty()))
+                        result.Add(potentialCase);
                 }
             }
-
             return result;
         }
 
-        static bool IsWithinBoardBoundaries(int column, int line)
-        {
-            return column >= 0 && column < 8 && line >= 0 && line < 8;
-        }
 
-        private void AddPotentialMove(List<Case> result, Case potentialCase)
-        {
-            if (potentialCase.IsCaseEmpty() || potentialCase.Piece.Color != this.Color)
-            {
-                result.Add(potentialCase);
-            }
-        }
     }
 }

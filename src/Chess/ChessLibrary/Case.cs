@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 namespace ChessLibrary
 {
+    /// <summary>
+    /// Classe pour une case d'un échiquier
+    /// </summary>
     public class Case
     {
         /// <summary>
@@ -28,7 +31,7 @@ namespace ChessLibrary
         /// <param name="column">La colonne de la case</param>
         /// <param name="line">La ligne de la case</param>
         /// <param name="piece">La pièce sur la case</param>
-        public Case(int column, int line, Piece piece)
+        public Case(int column, int line, Piece? piece)
         {
             Column = column;
             Line = line;

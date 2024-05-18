@@ -362,6 +362,7 @@ namespace ConsoleChess
             do
             {
                 choix = MultipleChoice("Welcome on The Chess", true, "Connection", "Inscription", "Start a game", "Learderboard", "Exit application");
+
                 switch (choix)
                 {
                     case -1: // Option pour quitter l'application
@@ -394,7 +395,13 @@ namespace ConsoleChess
                         Console.Clear();
                         Console.WriteLine("Lancer un partie");
                         Thread.Sleep(1000);
-                        if(playerOne.Color == Color.White)
+                        if (playerOne == null || playerTwo == null)
+                        {
+                            errorMessage("Vous devez être connecté pour lancer une partie");
+                            choix = MultipleChoice("Welcome on The Chess", true, "Connection", "Inscription", "Start a game", "Learderboard", "Exit application");
+                            continue;
+                        }
+                        if (playerOne.Color == Color.White)
                         {
                             playerTwo.Color = Color.Black;
                         }

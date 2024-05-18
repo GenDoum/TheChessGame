@@ -53,7 +53,7 @@ The chess is a project in its early stages.
 | **Unit Testing**                      | We have written unit tests to verify the validity of all pieces movements. These tests check valid moves, invalid moves, and possible moves. | :white_check_mark:
 | **Piece Color Management**            | Each piece has a color (white or black) that is used to determine possible moves and to check if a piece can be captured. | :white_check_mark:
 | **Check**                             | The `Check` function verifies if a King is in check. It examines all possible moves of the opposing pieces to see if any of them can reach the King. | :x:
-| **Checkmate**                         | The `Checkmate` function verifies if a player is in checkmate. It examines all possible moves of the King and its allied pieces to see if the check can be avoided. If no move can avoid the check, the player is in checkmate. | :x:
+| **Checkmate**                         | The `Checkmate` function verifies if a player is in checkmate. It examines all possible moves of the King and its allied pieces to see if the check can be avoided. If no move can avoid the check, the player is in checkmate.We can have the CheckMate but if the king is stuck beetwen other piece , the player can't move the other piece for try to deliver the king | :x:
 | **Piece Capture**                     | Pieces can be captured by moving to a square occupied by an opposing piece. | :white_check_mark:
 | **First Move**                        | For pawns and rooks, there is special logic for their first move. For example, a pawn can move two squares on its first move. | :white_check_mark:
 | **Pawn Promotion**                    | When a pawn reaches the last row of the board, it can be promoted to another piece (Queen, Rook, Knight, Bishop). | :white_check_mark:
@@ -61,7 +61,6 @@ The chess is a project in its early stages.
 | **Move Validation**                   | Before making a move, the game checks if the move is valid according to chess rules. | :white_check_mark:
 | **Game Events**                       | The game triggers events when a pawn can be promoted or when a player wins the game. | :white_check_mark:
 | **Chessboard Management**             | The chessboard is represented by an 8x8 matrix, and each square can contain a piece or be empty. | :white_check_mark:
-
 ## How to Play
 
 ### User Registration and Login

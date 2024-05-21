@@ -2,7 +2,9 @@
 <?xaml-comp compile="true" ?>
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ChessLibrary="clr-namespace:ChessLibrary;assembly=ChessLibrary"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
@@ -127,6 +129,14 @@
         <Setter Property="WidthRequest" Value="400"/>
         <Setter Property="Margin" Value="90"/>
     </Style>
+    
+    <ChessLibrary:Bishop x:Key="Bishop">
+        <x:Arguments>
+            <ChessLibrary:Color>White</ChessLibrary:Color>
+        </x:Arguments>
+            
+    </ChessLibrary:Bishop>
+    
     <!-- Fin ajout perso -->
 
     <Style TargetType="Button">

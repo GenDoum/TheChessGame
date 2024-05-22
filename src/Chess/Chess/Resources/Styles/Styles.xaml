@@ -130,12 +130,10 @@
         <Setter Property="Margin" Value="90"/>
     </Style>
     
-    <ChessLibrary:Bishop x:Key="Bishop">
-        <x:Arguments>
-            <ChessLibrary:Color>White</ChessLibrary:Color>
-        </x:Arguments>
-            
-    </ChessLibrary:Bishop>
+    <ChessLibrary:User x:Key="User">
+        <ChessLibrary:User.Pseudo></ChessLibrary:User.Pseudo>
+        <ChessLibrary:User.Password></ChessLibrary:User.Password>
+    </ChessLibrary:User>
     
     <!-- Fin ajout perso -->
 

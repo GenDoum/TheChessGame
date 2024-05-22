@@ -8,46 +8,46 @@
              BackgroundImageSource="test.jpg">
     
     <ContentPage.Content>
-        
-        <Label Text="{Binding UpdateSourceEventName,}"></Label>
-        
         <!-- Login Page -->
 
-        <VerticalStackLayout>
+        <VerticalStackLayout BindingContext="{StaticResource User}">
             
-        <FlexLayout JustifyContent="Start"
-                    AlignContent="Center"
-                    AlignItems="Center"
-                    Margin="0, 0, 0, 200"
+            <Label Text="{Binding Pseudo}"></Label>
+            
+            
+            <FlexLayout JustifyContent="Start"
+                        AlignContent="Center"
+                        AlignItems="Center"
+                        Margin="0, 0, 0, 200"
+            >
+
+                <ImageButton Source="returnarrow.png"
+                             HeightRequest="50"
+                             Margin="10, 0, 0, -20"
+                            />
+            </FlexLayout>
+
+            <FlexLayout JustifyContent="Center"
+                        AlignItems="Center"
+                        Direction="Column"
                         >
 
-            <ImageButton Source="returnarrow.png"
-                         HeightRequest="50"
-                         Margin="10, 0, 0, -20"
-                        />
-        </FlexLayout>
+                <Image  Source="connexion.png"  
+                        Style="{StaticResource imgAppli}"/>
 
-        <FlexLayout JustifyContent="Center"
-                    AlignItems="Center"
-                    Direction="Column"
-                    >
-
-            <Image  Source="connexion.png"  
-                    Style="{StaticResource imgAppli}"/>
-
-            <contentView:connexionModuleEntry/>
-            <HorizontalStackLayout
-                HorizontalOptions="Center"
-                VerticalOptions="Center">
-                <CheckBox Color="{StaticResource GoldUsefullColor}"
-                />
-                <Label Text="Jouer avec un invité" 
-                       TextColor="FloralWhite"
-                       Margin="12"/>
-            </HorizontalStackLayout>
-            <contentView:connexionModuleButtons/>
-            
-        </FlexLayout>
+                <contentView:connexionModuleEntry/>
+                <HorizontalStackLayout
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <CheckBox Color="{StaticResource GoldUsefullColor}"
+                    />
+                    <Label Text="Jouer avec un invité" 
+                           TextColor="FloralWhite"
+                           Margin="12"/>
+                </HorizontalStackLayout>
+                <contentView:connexionModuleButtons/>
+                
+            </FlexLayout>
         </VerticalStackLayout>
 
 

@@ -39,6 +39,10 @@
             Route="LeaderBoard" />
         
         <ShellContent
+            ContentTemplate="{DataTemplate localpages:plateauPage}"
+            Route="plateauPage" />
+        
+        <ShellContent
 
             ContentTemplate="{DataTemplate localpages:RulesPage}"
             Route="Register" />

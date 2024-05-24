@@ -772,6 +772,105 @@ public class UnitTestBoard
     }
 
     [Fact]
+    public void TestEchecParPlusieursPieces()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Queen? queen = new Queen(Color.Black, 1);
+        Rook? rook = new Rook(Color.Black, 2);
+        chessboard.AddPiece(king, 4, 4);
+        chessboard.AddPiece(queen, 4, 7);
+        chessboard.AddPiece(rook, 4, 3);
+
+        // Act
+        bool result = chessboard.Echec(king, new Case(4, 4, king));
+        bool result2 = chessboard.EchecMat(king, new Case(4, 4, king));
+        // Assert
+        Assert.True(result); // Both the queen and the rook should put the king in check
+        Assert.False(result2); // The king should not be in checkmate
+    }
+    [Fact]
+    public void TestEchecFauxParBlocage()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Queen? queen = new Queen(Color.Black, 1);
+        Pawn? blockingPawn = new Pawn(Color.White, 2);
+        chessboard.AddPiece(king, 4, 4);
+        chessboard.AddPiece(queen, 4, 7);
+        chessboard.AddPiece(blockingPawn, 4, 5);
+
+        // Act
+        bool result = chessboard.Echec(king, new Case(4, 4, king));
+
+        // Assert
+        Assert.False(result); // The pawn blocks the queen's attack on the king
+    }
+    [Fact]
+    public void TestEchecVraiApresDeblocage()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Queen? queen = new Queen(Color.Black, 1);
+        Pawn? blockingPawn = new Pawn(Color.White, 2);
+        chessboard.AddPiece(king, 4, 4);
+        chessboard.AddPiece(queen, 4, 7);
+        chessboard.AddPiece(blockingPawn, 4, 5);
+
+        // Act
+        chessboard.Board[4, 5].Piece = null; // Remove the blocking pawn
+        bool result = chessboard.Echec(king, new Case(4, 4, king));
+
+        // Assert
+        Assert.True(result); // Removing the pawn should now expose the king to check from the queen
+    }
+    [Fact]
+    public void TestNonEchecMalgreProximite()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Knight? knight = new Knight(Color.Black, 1);
+        chessboard.AddPiece(king, 4, 4);
+        chessboard.AddPiece(knight, 4, 5); // Position where the knight does not threaten the king directly
+
+        // Act
+        bool result = chessboard.Echec(king, new Case(4, 4, king));
+
+        // Assert
+        Assert.False(result); // The knight is not putting the king in check from this position
+    }
+    [Fact]
+    public void TestSauvegardeRoiParDeplacementPiece()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King? king = new King(Color.White, 1);
+        Queen? queen = new Queen(Color.Black, 1);
+        Knight? knight = new Knight(Color.White, 2);
+        chessboard.AddPiece(king, 4, 4);
+        chessboard.AddPiece(queen, 4, 7);
+        chessboard.AddPiece(knight, 2, 5);
+
+        bool result = chessboard.Echec(king, new Case(4, 4, king));
+        bool result2 = chessboard.EchecMat(king, new Case(4, 4, king));
+        // Simulate moving knight to block the attack
+        chessboard.Board[2, 5].Piece = null;
+        chessboard.AddPiece(knight, 4, 6); // Knight is moved to block the queen
+
+        // Act
+        bool result3 = chessboard.Echec(king, new Case(4, 4, king));
+
+        // Assert
+        Assert.True(result); // The knight's new position saves the king from check
+        Assert.False(result2); // The king should not be in checkmate
+        Assert.False(result3); // The king should not be in check
+    }
+
+    [Fact]
     public void TestEchecMatParReineEtFou()
     {
         // Arrange

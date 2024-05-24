@@ -245,7 +245,6 @@ namespace ChessLibrary
                 {
                     if (!Echec(king, move))
                     {
-                        UndoMovePiece(kingCase, move);
                         kingCanEscape = true;
                     }
                     UndoMovePiece(kingCase, move);
@@ -266,7 +265,6 @@ namespace ChessLibrary
                     {
                         if (!Echec(king, kingCase))
                         {
-                            UndoMovePiece(startCase, move);
                             piecesCanSave = true;
                         }
                         UndoMovePiece(startCase, move);

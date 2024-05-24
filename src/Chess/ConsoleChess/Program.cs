@@ -32,8 +32,11 @@ namespace ConsoleChess
             Console.WriteLine();
             Console.WriteLine($"-==============- {title} -==============-");
             Console.WriteLine();
-            Console.ResetColor();   
+            Console.ResetColor();
+
         }
+        
+        
 
         /// <summary>
         /// Player's method to check the password

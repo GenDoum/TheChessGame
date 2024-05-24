@@ -249,7 +249,7 @@ namespace ChessLibrary
                 firstMover.FirstMove = false;
             }
         }
-
+        
     }
 }
 

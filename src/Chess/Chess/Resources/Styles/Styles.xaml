@@ -4,7 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ChessLibrary="clr-namespace:ChessLibrary;assembly=ChessLibrary"
-    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
 
     <Style TargetType="ActivityIndicator">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource White}}" />
@@ -130,10 +131,13 @@
         <Setter Property="Margin" Value="90"/>
     </Style>
     
-    <ChessLibrary:User x:Key="User">
-        <ChessLibrary:User.Pseudo></ChessLibrary:User.Pseudo>
-        <ChessLibrary:User.Password></ChessLibrary:User.Password>
-    </ChessLibrary:User>
+    <x:Double x:Key="CellWidth">100</x:Double>
+    <x:Double x:Key="CellHeight">100</x:Double>
+    <x:Double x:Key="VerticalSpacing">10</x:Double>
+    <x:Double x:Key="HorizontalSpacing">10</x:Double>
+    <toolkit:MultiMathExpressionConverter x:Key="MultiMathExpressionConverter" />
+
+    
     
     <!-- Fin ajout perso -->
 

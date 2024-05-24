@@ -10,9 +10,8 @@
     <ContentPage.Content>
         <!-- Login Page -->
 
-        <VerticalStackLayout BindingContext="{StaticResource User}">
+        <VerticalStackLayout>
             
-            <Label Text="{Binding Pseudo}"></Label>
             
             
             <FlexLayout JustifyContent="Start"

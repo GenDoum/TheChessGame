@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Gantt_Prévisionnel_IHM" company="" webLink="http://" view-date="2024-04-18" view-index="0" gantt-divider-location="484" resource-divider-location="300" version="3.3.3307" locale="fr_FR">
+<?xml version="1.0" encoding="UTF-8"?><project name="Gantt_Prévisionnel_IHM" company="" webLink="http://" view-date="2024-03-12" view-index="0" gantt-divider-location="484" resource-divider-location="300" version="3.3.3307" locale="fr_FR">
     <description/>
     <view zooming-state="default:2" id="gantt-chart">
         <field id="tpd3" name="Nom" width="300" order="0"/>
@@ -12,8 +12,8 @@
         <option id="color.recent"><![CDATA[#ffff99 #ff9999 #ccffcc #000000 #f4f4f4 #3333ff #ff0000 #ff3333]]></option>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nom" width="202" order="0"/>
-        <field id="1" name="Rôle par défaut" width="94" order="1"/>
+        <field id="0" name="Nom" width="191" order="0"/>
+        <field id="1" name="Rôle par défaut" width="90" order="1"/>
     </view>
     <!-- -->
     <calendars>

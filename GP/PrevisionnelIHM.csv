@@ -1,0 +1,39 @@
+ID,Nom,Date de début,Date de fin,Durée,Avancée,Coût,Responsable,Prédécesseurs,Numéro hiérarchique,Ressources,Assignments,Nouvelle tâche,Notes,Lien internet,Notes
+1,Jalon 1 : Conception préliminaire,18/03/2024,29/03/2024,10,0,420.0,,,1,,,"#000000",,
+7,"  Contexte",18/03/2024,18/03/2024,1,0,40.0,Mathéo Balko,,1.1,Mathéo Balko;Mathéo Hersan,0:100.00;1:100.00,"#ffff99",,
+11,"  Règle du jeu",19/03/2024,19/03/2024,1,0,20.0,Mathéo Hersan,5-SS;6-SS;7,1.2,Mathéo Hersan,1:100.00,"#ccffcc",,
+12,"  Diagramme des cas d'utilisation",20/03/2024,22/03/2024,3,0,0,,11,1.3,,,"#ccffcc",,
+5,"  Personna",19/03/2024,20/03/2024,2,0,40.0,Mathéo Balko,7,1.4,Mathéo Balko,0:100.00,"#ff9999",,
+10,"  User stories",21/03/2024,21/03/2024,1,0,20.0,Mathéo Balko,5,1.5,Mathéo Balko,0:100.00,"#ff9999",,
+6,"  Maquettes",19/03/2024,22/03/2024,4,0,80.0,Yannis Doumir Fernandes,7,1.6,Yannis Doumir Fernandes,2:100.00,,,
+4,"  Storyboard",25/03/2024,25/03/2024,1,0,20.0,Yannis Doumir Fernandes,6,1.7,Yannis Doumir Fernandes,2:100.00,,,
+9,"  Création illustrations wiki",26/03/2024,26/03/2024,1,0,20.0,Yannis Doumir Fernandes,4,1.8,Yannis Doumir Fernandes,2:100.00,"#ffff99",,
+0,"  Création wiki",27/03/2024,29/03/2024,3,0,180.0,Yannis Doumir Fernandes,9,1.9,Mathéo Balko;Mathéo Hersan;Yannis Doumir Fernandes,0:100.00;1:100.00;2:100.00,"#ffff99",,
+2,Création des visuels de l'application,01/04/2024,05/04/2024,5,0,900.0,Mathéo Balko,0,2,Mathéo Balko;Mathéo Hersan;Yannis Doumir Fernandes,0:100.00;1:100.00;2:100.00,"#000000",,
+15,"  Vue Connexion",01/04/2024,05/04/2024,5,0,100.0,Mathéo Hersan,0;13-SS;14-SS;16-SS;17-SS;18-SS;19-SS,2.1,Mathéo Hersan,1:100.00,"#ccffcc",,
+17,"  Vue Plateau de jeu",01/04/2024,03/04/2024,3,0,60.0,Mathéo Hersan,,2.2,Mathéo Hersan,1:100.00,"#ccffcc",,
+18,"  Vue Pause",01/04/2024,02/04/2024,2,0,40.0,Mathéo Hersan,,2.3,Mathéo Hersan,1:100.00,"#ccffcc",,
+13,"  Vue Inscription",01/04/2024,05/04/2024,5,0,100.0,,,2.4,Mathéo Balko,0:100.00,"#ff9999",,
+16,"  Vue règle du jeu",01/04/2024,05/04/2024,5,0,100.0,Mathéo Balko,,2.5,Mathéo Balko,0:100.00,"#ff9999",,
+14,"  Vue Accueil",01/04/2024,05/04/2024,5,0,100.0,Yannis Doumir Fernandes,,2.6,Yannis Doumir Fernandes,2:100.00,,,
+19,"  Vue Tableau des scores",01/04/2024,05/04/2024,5,0,100.0,Yannis Doumir Fernandes,,2.7,Yannis Doumir Fernandes,2:100.00,,,
+20,Jalon 2 : Conception + Application console,08/04/2024,07/05/2024,22,0,1800.0,,16;18;19,3,,,"#000000",,
+21,"  Création des classes",08/04/2024,19/04/2024,10,0,600.0,,16;18;19,3.1,,,"#000000",,
+24,"    Création des classes pièces",08/04/2024,19/04/2024,10,0,200.0,Mathéo Hersan,15;17;18,3.1.1,Mathéo Hersan,1:100.00,"#ccffcc",,
+23,"    Création classe Plateau de jeu",08/04/2024,19/04/2024,10,0,200.0,Mathéo Balko,13;16,3.1.2,Mathéo Balko,0:100.00,"#ff9999",,
+22,"    Création classe Joueur",08/04/2024,19/04/2024,10,0,200.0,Yannis Doumir Fernandes,14;19,3.1.3,Yannis Doumir Fernandes,2:100.00,,,
+26,"  Conception",22/04/2024,26/04/2024,5,0,1200.0,,21,3.2,,,"#000000",,
+29,"    Diagramme de classes",22/04/2024,26/04/2024,5,0,300.0,Mathéo Balko,22;23;24,3.2.1,Mathéo Balko;Mathéo Hersan;Yannis Doumir Fernandes,0:100.00;1:100.00;2:100.00,"#ffff99",,
+27,"    Diagramme de paquetage",22/04/2024,26/04/2024,5,0,300.0,Mathéo Balko,22;23;24,3.2.2,Mathéo Balko;Mathéo Hersan;Yannis Doumir Fernandes,0:100.00;1:100.00;2:100.00,"#ffff99",,
+28,"    Diagramme de séquence",22/04/2024,26/04/2024,5,0,300.0,Mathéo Balko,22;23;24,3.2.3,Mathéo Balko;Mathéo Hersan;Yannis Doumir Fernandes,0:100.00;1:100.00;2:100.00,"#ffff99",,
+30,"    Description de l'architecture",22/04/2024,26/04/2024,5,0,300.0,Mathéo Balko,22;23;24,3.2.4,Mathéo Balko;Mathéo Hersan;Yannis Doumir Fernandes,0:100.00;1:100.00;2:100.00,"#ffff99",,
+25,"  Création de l'application console",29/04/2024,07/05/2024,7,0,0,,27;28;30,3.3,,,"#ffff99",,
+31,Jalon 3 : Persistance,08/05/2024,21/05/2024,10,0,600.0,Mathéo Balko,25,4,Mathéo Balko;Mathéo Hersan;Yannis Doumir Fernandes,0:100.00;1:100.00;2:100.00,"#ffff99",,
+32,Jalon 4 : Finalisation de l'application,22/05/2024,28/05/2024,5,0,300.0,Mathéo Balko,31,5,Mathéo Balko;Mathéo Hersan;Yannis Doumir Fernandes,0:100.00;1:100.00;2:100.00,"#ffff99",,
+33,Jalon 5 : Vidéo présentation de l'application,29/05/2024,04/06/2024,5,0,300.0,Mathéo Balko,32,6,Mathéo Balko;Mathéo Hersan;Yannis Doumir Fernandes,0:100.00;1:100.00;2:100.00,"#ffff99",,
+
+
+ID,Nom,Rôle par défaut,Courriel,Téléphone,Taux normal,Coût total,Charge totale
+0,Mathéo Balko,Default:0,,,20,1440,72.0
+1,Mathéo Hersan,Default:0,,,20,1400,70.0
+2,Yannis Doumir Fernandes,Default:0,,,20,1480,74.0

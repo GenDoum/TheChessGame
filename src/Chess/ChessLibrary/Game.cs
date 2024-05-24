@@ -174,31 +174,31 @@ namespace ChessLibrary
         public void MovePiece(Case initial, Case final, Chessboard board, User actualPlayer)
         {
             ArgumentNullException.ThrowIfNull(initial.Piece, "Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
-
             if (initial.Piece.Color != actualPlayer.Color)
-                throw new InvalidOperationException("It's not this player's turn.");
+                throw new InvalidOperationException("Ce n'est pas le tour de ce joueur.");
 
             var movingPiece = initial.Piece;
             var capturedPiece = final.Piece;
+            if (board.CanMovePiece(movingPiece, initial, final)){ 
+            // Simulation du mouvement pour la vérification
 
-            // Déplacement temporaire pour la vérification
-            final.Piece = initial.Piece;
+            UpdatePieceLists(initial, final, board); // Met à jour les listes de pièces de manière temporaire
+            final.Piece = movingPiece;
             initial.Piece = null;
-
-            // Vérification de l'échec
+            // Vérification de l'échec après le mouvement temporaire
             if (board.IsInCheck(actualPlayer.Color))
             {
-                initial.Piece = final.Piece;
+                // Annuler le mouvement temporaire
                 final.Piece = capturedPiece;
-                // throw new InvalidOperationException("You cannot move into check."); // commenté car on veut que le joueur puisse se déplacer pour sortir de l'échec
+                initial.Piece = movingPiece;
+                RestorePieceLists(initial, final, board, movingPiece, capturedPiece);
+                throw new InvalidOperationException("Vous ne pouvez pas vous mettre en échec.");
             }
-
-            // Déplacement réel
-            initial.Piece = final.Piece;
-            final.Piece = capturedPiece;
-
-            if (board.CanMovePiece(movingPiece, initial, final))
-            {
+            RestorePieceLists(initial, final, board, movingPiece, capturedPiece);
+                initial.Piece = movingPiece;
+                final.Piece = capturedPiece;
+                // Vérification si le mouvement est légal et si cela peut résoudre un échec existant
+                // Effectuer le mouvement réel
                 UpdatePieceLists(initial, final, board);
                 ProcessPostMove(initial, final);
 
@@ -209,10 +209,30 @@ namespace ChessLibrary
             }
             else
             {
-                throw new InvalidOperationException("Invalid move, check the rules.");
+                // Annuler le mouvement temporaire
+                initial.Piece = movingPiece;
+                final.Piece = capturedPiece;
+                throw new InvalidOperationException("Mouvement invalide, vérifiez les règles.");
             }
         }
 
+
+        public void RestorePieceLists(Case initial, Case final, Chessboard board, Piece movedPiece, Piece capturedPiece)
+        {
+            // Rétablir la pièce déplacée dans sa position originale
+            var listToUpdate = movedPiece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
+
+            // Enlever la pièce de sa nouvelle position dans la liste et la remettre à l'initial
+            listToUpdate.RemoveAll(p => p.piece == movedPiece && p.CaseLink == final);
+            listToUpdate.Add(new CoPieces { CaseLink = initial, piece = movedPiece });
+
+            // Si une pièce a été capturée, la remettre dans sa liste respective
+            if (capturedPiece != null)
+            {
+                var listToRestore = capturedPiece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
+                listToRestore.Add(new CoPieces { CaseLink = final, piece = capturedPiece });
+            }
+        }
 
 
         public void UpdatePieceLists(Case initial, Case final, Chessboard board)

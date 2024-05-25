@@ -95,7 +95,7 @@ namespace ChessLibrary
 
         public void InitializeBlackPieces()
         {
-            int identifiantNoir = 1;
+            int identifiantNoir = 17;
             AddPiece(new Rook(Color.Black, identifiantNoir++), 0, 7);
             AddPiece(new Knight(Color.Black, identifiantNoir++), 1, 7);
             AddPiece(new Bishop(Color.Black, identifiantNoir++), 2, 7);

@@ -928,8 +928,8 @@ public class UnitTestBoard
         Case rookCase2 = new Case(1, 0, blackRook2);
 
         chessboard.AddPiece(whiteKing, 0, 0);
-        chessboard.AddPiece(blackRook1, 0, 1);
-        chessboard.AddPiece(blackRook2, 1, 0);
+        chessboard.AddPiece(blackRook1, 0, 2);
+        chessboard.AddPiece(blackRook2, 1, 2);
 
         // Act
         bool result = chessboard.EchecMat(whiteKing, kingCase);

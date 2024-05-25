@@ -28,31 +28,26 @@ namespace ChessLibrary
                 InitializeEmptyBoard();
             }
         }
-
-        private readonly int[,]? board;
         
         public int NbRows => Board?.GetLength(0) ?? 0;
         public int NbColumns => Board?.GetLength(1) ?? 0;
-        
         
         public IEnumerable<Case> FlatBoard
         {
             get
             {
                 List<Case> flatBoard = new();
-                
-                if (board == null) return flatBoard;
-                
-                int[,] mat = new int[NbRows, NbColumns];
-                
+
+                Case[,] b = new Case[NbRows, NbColumns];
+
                 for(int i = 0; i < NbRows; i++)
                 {
                     for (int j = 0; j < NbColumns; j++)
                     {
-                        flatBoard.Add(new Case(i, j, null));
+                        flatBoard.Add(Board[i, j]);
                     }
                 }
-                
+
                 return flatBoard;
             }
         }

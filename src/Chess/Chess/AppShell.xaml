@@ -14,7 +14,10 @@
         <ShellContent
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage" />
+        <ShellContent
 
+            ContentTemplate="{DataTemplate localpages:chessBoard}"
+            Route="Register" />
         <ShellContent
 
             ContentTemplate="{DataTemplate localpages:Register}"

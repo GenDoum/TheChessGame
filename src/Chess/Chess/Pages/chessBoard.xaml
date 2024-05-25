@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Chess.Pages.chessBoard"
              xmlns:Library="clr-namespace:ChessLibrary;assembly=ChessLibrary"
+             xmlns:contentView="clr-namespace:Chess.contentView"
              BackgroundImageSource="test.jpg">
     
     <ContentPage.Content>
@@ -33,43 +34,43 @@
             </VerticalStackLayout>
 
 
-                <CollectionView ItemsSource="{Binding Board.FlatBoard}" Grid.Column="1"
-                                BackgroundColor="Azure"
-                                HorizontalOptions="Center"
-                                VerticalOptions="Center">
-                    <CollectionView.HeightRequest>
-                        <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 +(x0 - 1) * x2 ">
-                            <Binding Path="Board.NbRows" />
-                            <Binding Source="{StaticResource CellHeight}" />
-                            <Binding Source="{StaticResource VerticalSpacing}" />
-                        </MultiBinding>
-                    </CollectionView.HeightRequest>
-                    <CollectionView.WidthRequest>
-                        <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 +(x0 - 1) * x2 ">
-                            <Binding Path="Board.NbColumns" />
-                            <Binding Source="{StaticResource CellWidth}" />
-                            <Binding Source="{StaticResource HorizontalSpacing}" />
-                        </MultiBinding>
-                    </CollectionView.WidthRequest>
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical"
-                                         Span="{Binding Board.NbColumns}"
-                                         HorizontalItemSpacing="{StaticResource HorizontalSpacing}"
-                                         VerticalItemSpacing="{StaticResource VerticalSpacing}"/>
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Border WidthRequest="{StaticResource CellWidth}"
-                                    HeightRequest="{StaticResource CellHeight}"
-                                    BackgroundColor="DarkSalmon">
-                                <Label Text="{Binding}"
-                                       TextColor="Black"
-                                       HorizontalTextAlignment="Center"
-                                       VerticalTextAlignment="Center"/>
-                            </Border>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+            <CollectionView ItemsSource="{Binding Board.FlatBoard}" Grid.Column="1"
+                            BackgroundColor="{StaticResource GoldUsefullColor}"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                <CollectionView.HeightRequest>
+                    <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 +(x0 - 1) * x2 ">
+                        <Binding Path="Board.NbRows" />
+                        <Binding Source="{StaticResource CellHeight}" />
+                        <Binding Source="{StaticResource VerticalSpacing}" />
+                    </MultiBinding>
+                </CollectionView.HeightRequest>
+                <CollectionView.WidthRequest>
+                    <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 +(x0 - 1) * x2 ">
+                        <Binding Path="Board.NbColumns" />
+                        <Binding Source="{StaticResource CellWidth}"/>
+                        <Binding Source="{StaticResource HorizontalSpacing}" />
+                    </MultiBinding>
+                </CollectionView.WidthRequest>
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical"
+                                     Span="{Binding Board.NbColumns}"
+                                     HorizontalItemSpacing="{StaticResource HorizontalSpacing}"
+                                     VerticalItemSpacing="{StaticResource VerticalSpacing}"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border WidthRequest="{StaticResource CellWidth}"
+                                HeightRequest="{StaticResource CellHeight}"
+                                BackgroundColor="{Binding Color}">
+                            <Label Text="{Binding Piece}"
+                                   TextColor="Black"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center"/>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
             <Image Grid.Column="2" 
                    Source="pause.png" 

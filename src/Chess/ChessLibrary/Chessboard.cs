@@ -143,18 +143,17 @@ namespace ChessLibrary
         public bool CanMovePiece(Piece? piece, Case initial, Case final)
         {
             List<Case> possibleMoves = piece!.PossibleMoves(initial, this);
+
             if (IsMoveValid(possibleMoves, final))
             {
                 Piece originalPiece = final.Piece;
                 final.Piece = piece;
                 initial.Piece = null;
 
-                bool isKingSafe = !IsInCheck(piece.Color);
-
                 initial.Piece = piece;
                 final.Piece = originalPiece;
 
-                return isKingSafe;
+                return true;
             }
             return false;
         }
@@ -273,7 +272,6 @@ namespace ChessLibrary
                 {
                     if (!Echec(king, move))
                     {
-                        UndoMovePiece(kingCase, move);
                         kingCanEscape = true;
                     }
                     UndoMovePiece(kingCase, move);
@@ -294,7 +292,6 @@ namespace ChessLibrary
                     {
                         if (!Echec(king, kingCase))
                         {
-                            UndoMovePiece(startCase, move);
                             piecesCanSave = true;
                         }
                         UndoMovePiece(startCase, move);

@@ -33,23 +33,43 @@
             </VerticalStackLayout>
 
 
-            <CollectionView ItemsSource="{Binding Board.FlatBoard}" Grid.Column="1"
-                            BackgroundColor="Azure"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Border WidthRequest="30" HeightRequest="30"
-                                BackgroundColor="DarkSalmon"
-                                Margin="4">
-                            <Label Text="{Binding}"
-                                   TextColor="Black"
-                                   HorizontalTextAlignment="Center"
-                                   VerticalTextAlignment="Center"/>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                <CollectionView ItemsSource="{Binding Board.FlatBoard}" Grid.Column="1"
+                                BackgroundColor="Azure"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                    <CollectionView.HeightRequest>
+                        <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 +(x0 - 1) * x2 ">
+                            <Binding Path="Board.NbRows" />
+                            <Binding Source="{StaticResource CellHeight}" />
+                            <Binding Source="{StaticResource VerticalSpacing}" />
+                        </MultiBinding>
+                    </CollectionView.HeightRequest>
+                    <CollectionView.WidthRequest>
+                        <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 +(x0 - 1) * x2 ">
+                            <Binding Path="Board.NbColumns" />
+                            <Binding Source="{StaticResource CellWidth}" />
+                            <Binding Source="{StaticResource HorizontalSpacing}" />
+                        </MultiBinding>
+                    </CollectionView.WidthRequest>
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical"
+                                         Span="{Binding Board.NbColumns}"
+                                         HorizontalItemSpacing="{StaticResource HorizontalSpacing}"
+                                         VerticalItemSpacing="{StaticResource VerticalSpacing}"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border WidthRequest="{StaticResource CellWidth}"
+                                    HeightRequest="{StaticResource CellHeight}"
+                                    BackgroundColor="DarkSalmon">
+                                <Label Text="{Binding}"
+                                       TextColor="Black"
+                                       HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"/>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
             <Image Grid.Column="2" 
                    Source="pause.png" 

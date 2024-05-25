@@ -44,5 +44,6 @@ namespace ChessLibrary
         /// </summary>
         /// <returns>true si la case est vide, sinon false</returns>
         public bool IsCaseEmpty() => Piece == null;
+        
     }
 }

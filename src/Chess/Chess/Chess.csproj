@@ -110,4 +110,8 @@
 		</MauiXaml>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\ChessLibrary\ChessLibrary.csproj" />
+	</ItemGroup>
+
 </Project>

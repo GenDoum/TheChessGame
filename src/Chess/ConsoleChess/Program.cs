@@ -509,11 +509,10 @@ namespace ConsoleChess
                         Console.WriteLine($"Error: {e.Message}");
                     }
                 }
-
+                game.GameOver(player % 2 == 0 ? player1 : player2);
                 player++;
             }
 
-            game.GameOver(player % 2 == 0 ? player1 : player2);
         }
 
 

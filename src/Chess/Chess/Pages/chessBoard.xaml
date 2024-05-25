@@ -3,6 +3,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Chess.Pages.chessBoard"
+             xmlns:Library="clr-namespace:ChessLibrary;assembly=ChessLibrary"
              BackgroundImageSource="test.jpg">
     
     <ContentPage.Content>
@@ -33,38 +34,18 @@
 
 
             <CollectionView ItemsSource="{Binding Board.FlatBoard}" Grid.Column="1"
-                BackgroundColor="Azure"
-                HorizontalOptions="Center"
-                VerticalOptions="Center">
-                <CollectionView.HeightRequest>
-                    <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 +(x0 - 1) * x2 ">
-                        <Binding Path="Board.NbRows" />
-                        <Binding Source="{StaticResource CellHeight}" />
-                        <Binding Source="{StaticResource VerticalSpacing}" />
-                    </MultiBinding>
-                </CollectionView.HeightRequest>
-                <CollectionView.WidthRequest>
-                    <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 +(x0 - 1) * x2 ">
-                        <Binding Path="Board.NbColumns" />
-                        <Binding Source="{StaticResource CellWidth}" />
-                        <Binding Source="{StaticResource HorizontalSpacing}" />
-                    </MultiBinding>
-                </CollectionView.WidthRequest>
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical"
-                         Span="{Binding Board.NbColumns}"
-                         HorizontalItemSpacing="{StaticResource HorizontalSpacing}"
-                         VerticalItemSpacing="{StaticResource VerticalSpacing}"/>
-                </CollectionView.ItemsLayout>
+                            BackgroundColor="Azure"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Border WidthRequest="{StaticResource CellWidth}"
-                    HeightRequest="{StaticResource CellHeight}"
-                    BackgroundColor="DarkSalmon">
+                        <Border WidthRequest="30" HeightRequest="30"
+                                BackgroundColor="DarkSalmon"
+                                Margin="4">
                             <Label Text="{Binding}"
-                       TextColor="Black"
-                       HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"/>
+                                   TextColor="Black"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center"/>
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

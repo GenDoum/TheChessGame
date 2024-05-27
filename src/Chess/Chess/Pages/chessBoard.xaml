@@ -61,12 +61,9 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Border WidthRequest="{StaticResource CellWidth}"
-                                HeightRequest="{StaticResource CellHeight}"
-                                BackgroundColor="{Binding Color}">
-                            <Label Text="{Binding Piece}"
-                                   TextColor="Black"
-                                   HorizontalTextAlignment="Center"
-                                   VerticalTextAlignment="Center"/>
+                                HeightRequest="{StaticResource CellHeight}">
+                            <ImageButton Source="{Binding Piece.ImagePath}"
+                                   Aspect="AspectFit"/>
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -77,7 +74,6 @@
                    Style="{StaticResource imgAppli}"
                    VerticalOptions="Start"
                    Margin="-30,50,20,0"/>
-            
         </Grid>
         
         

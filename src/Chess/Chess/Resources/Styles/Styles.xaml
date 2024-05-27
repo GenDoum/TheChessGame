@@ -131,10 +131,10 @@
         <Setter Property="Margin" Value="90"/>
     </Style>
     
-    <x:Double x:Key="CellWidth">100</x:Double>
-    <x:Double x:Key="CellHeight">100</x:Double>
-    <x:Double x:Key="VerticalSpacing">10</x:Double>
-    <x:Double x:Key="HorizontalSpacing">10</x:Double>
+    <x:Double x:Key="CellWidth">120</x:Double>
+    <x:Double x:Key="CellHeight">120</x:Double>
+    <x:Double x:Key="VerticalSpacing">0</x:Double>
+    <x:Double x:Key="HorizontalSpacing">0</x:Double>
     <toolkit:MultiMathExpressionConverter x:Key="MultiMathExpressionConverter" />
 
     

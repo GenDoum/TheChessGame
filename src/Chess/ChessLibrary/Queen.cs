@@ -18,6 +18,7 @@ namespace ChessLibrary
         /// <param name="ca"></param>
         public Queen(Color color, int id) : base(color, id)
         {
+            ImagePath = "dame.png";
         }
 
         public override bool CanMove(int x, int y, int x2, int y2)

@@ -5,6 +5,7 @@
              x:Class="Chess.Pages.chessBoard"
              xmlns:Library="clr-namespace:ChessLibrary;assembly=ChessLibrary"
              xmlns:contentView="clr-namespace:Chess.contentView"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              BackgroundImageSource="test.jpg">
     
     <ContentPage.Content>
@@ -63,7 +64,11 @@
                         <Border WidthRequest="{StaticResource CellWidth}"
                                 HeightRequest="{StaticResource CellHeight}">
                             <ImageButton Source="{Binding Piece.ImagePath}"
-                                   Aspect="AspectFit"/>
+                                         Aspect="AspectFit">
+                                <ImageButton.Behaviors>
+                                    <toolkit:IconTintColorBehavior TintColor="{Binding Piece.Color, Converter={StaticResource EnumToStringConverter}}" />
+                                </ImageButton.Behaviors>
+                            </ImageButton>
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

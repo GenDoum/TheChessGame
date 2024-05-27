@@ -16,9 +16,10 @@ namespace ChessLibrary
         /// Constructeur de la classe Bishop
         /// </summary>
         /// <param name="color"></param>
-        /// <param name="c"></param>
+        /// <param name="id"></param>
         public Bishop(Color color, int id) : base(color, id)
         {
+            ImagePath = "fou.png";
         }
 
         public override bool CanMove(int x, int y, int x2, int y2)

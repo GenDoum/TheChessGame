@@ -22,6 +22,7 @@ namespace ChessLibrary
         public Rook(Color color, int id) : base(color, id)
         {
             this.FirstMove = true;
+            ImagePath = "tour.png";
         }
 
         public override bool CanMove(int x, int y, int x2, int y2)

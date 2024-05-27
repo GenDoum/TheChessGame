@@ -20,6 +20,7 @@ namespace ChessLibrary
         /// <param name="id"></param>
         public Pawn(Color c, int id) : base(c, id)
         {
+            ImagePath = "pion.png";
             this.FirstMove = true;
         }
 

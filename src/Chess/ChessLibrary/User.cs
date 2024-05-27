@@ -2,6 +2,7 @@ using ChessLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,12 +11,14 @@ namespace ChessLibrary
     /// <summary>
     /// Classe Player
     /// </summary>
+    [DataContract(Name = "Players")] // [DataContract, KnownType(typeof(Type fils))] Pour l'héritage
     public class User
     {
 
         /// <summary>
         /// Pseudo of the Player
         /// </summary>
+        [DataMember]
         public string Pseudo
         {
             get => pseudo;
@@ -29,17 +32,22 @@ namespace ChessLibrary
                 }
             }
         }
+
+        [DataMember]
         private string pseudo;
 
         /// <summary>
         /// Password of the Player
         /// </summary>
+        [DataMember]
+
         public string? Password { get; set; }
 
         /// <summary>
         /// Type for know the color of the player
         /// </summary>
         /// 
+        [DataMember]
         public Color Color
         {
             get;
@@ -50,6 +58,7 @@ namespace ChessLibrary
         /// <summary>
         /// Score of the player
         /// </summary>
+        [DataMember]
         public int Score
         {
             get;
@@ -95,6 +104,15 @@ namespace ChessLibrary
             this.Score = 0;
             this.IsConnected = false;
 
+        }
+
+        public User(User user)
+        {
+            this.pseudo = user.Pseudo;
+            this.Password = user.Password;
+            this.Color = user.Color;
+            this.Score = user.Score;
+            this.IsConnected = user.IsConnected;
         }
 
 

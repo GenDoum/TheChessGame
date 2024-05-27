@@ -2,6 +2,7 @@ using System;
 using ChessLibrary;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 
 namespace ConsoleChess
 {
@@ -520,13 +521,30 @@ namespace ConsoleChess
         static void Main()
         {
 
+            var serializer = new DataContractSerializer(typeof(User));
 
-            User player1 = new User(Color.White);
-            User player2 = new User(Color.Black);
+
+            string xmlFile = "user.xml";
+
+            User playerRead;
+            using (Stream s = File.OpenRead(xmlFile))
+            {
+                playerRead = serializer.ReadObject(s) as User;
+            }
+
+
+            User player1 = new User();
+            User player2 = new User();
 
             menuAccueil(player1, player2);
 
-  
+
+            using (Stream s = File.Create(xmlFile))
+            {
+                serializer.WriteObject(s, player1);
+            }
+
+
         }
 
 

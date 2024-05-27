@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 namespace ChessLibrary
@@ -8,7 +10,7 @@ namespace ChessLibrary
     /// <summary>
     /// Classe pour une case d'un échiquier
     /// </summary>
-    public class Case
+    public class Case : INotifyPropertyChanged
     {
         /// <summary>
         /// Crée un argument Column
@@ -44,6 +46,20 @@ namespace ChessLibrary
         /// </summary>
         /// <returns>true si la case est vide, sinon false</returns>
         public bool IsCaseEmpty() => Piece == null;
-        
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
+        }
     }
 }

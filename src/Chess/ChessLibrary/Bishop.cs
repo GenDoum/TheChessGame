@@ -35,8 +35,8 @@ namespace ChessLibrary
 
         public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
         {
-            if (chessboard == null || caseInitial == null)
-                throw new ArgumentNullException();
+            ArgumentNullException.ThrowIfNull(caseInitial);
+            ArgumentNullException.ThrowIfNull(chessboard);
 
             List<Case> result = new List<Case>();
             (int colInc, int lineInc)[] directions = { (-1, 1), (1, 1), (-1, -1), (1, -1) }; // Top Left, Top Right, Bot Left, Bot Right
@@ -52,25 +52,36 @@ namespace ChessLibrary
                         Case potentialCase = chessboard.Board[newColumn, newLine];
                         if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
                         {
-                            if (potentialCase.IsCaseEmpty())
+                            if (FactPossibleMove(potentialCase))
                             {
                                 result.Add(potentialCase);
-                            }
-                            else if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
-                            {
-                                result.Add(potentialCase);
-                                break;
                             }
                             else
                                 break;
                         }
+                        else
+                            break;
                     }
-                    else
-                        break;
                 }
             }
-
             return result;
+        }
+
+        private bool FactPossibleMove(Case potentialCase)
+        {
+
+            if (potentialCase.IsCaseEmpty())
+            {
+                return true;
+            }
+            else if (!potentialCase.IsCaseEmpty() && potentialCase.Piece!.Color != this.Color)
+            {
+                return true;
+            }
+            else
+                return false;
+
         }
     }
 }
+

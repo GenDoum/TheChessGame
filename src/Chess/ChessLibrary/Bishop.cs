@@ -69,19 +69,19 @@ namespace ChessLibrary
 
         private bool FactPossibleMove(Case potentialCase)
         {
+
+            if (potentialCase.IsCaseEmpty())
             {
-                if (potentialCase.IsCaseEmpty())
-                {
-                    return true;
-                }
-                else if (!potentialCase.IsCaseEmpty() && potentialCase.Piece!.Color != this.Color)
-                {
-                    return true;
-                }
-                else
-                    return false;
+                return true;
             }
+            else if (!potentialCase.IsCaseEmpty() && potentialCase.Piece!.Color != this.Color)
+            {
+                return true;
+            }
+            else
+                return false;
+
         }
     }
 }
-    
+

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace ChessLibrary
@@ -8,16 +9,22 @@ namespace ChessLibrary
     {
         public Case[,] Board { get; private set; }
 
-        public List<CoPieces> WhitePieces { get; private set; }
-        public List<CoPieces> BlackPieces { get; private set; }
+
+
+        public ReadOnlyCollection<CoPieces> WhitePieces => whitePieces.AsReadOnly();
+
+        private readonly List<CoPieces> whitePieces = new List<CoPieces>();
+        public ReadOnlyCollection<CoPieces> BlackPieces => blackPieces.AsReadOnly();
+
+        private readonly List<CoPieces> blackPieces= new List<CoPieces>();
+
 
         private bool isCheckingForCheck = false;
 
         public Chessboard(Case[,] tcase, bool isEmpty)
         {
             Board = tcase;
-            WhitePieces = new List<CoPieces>();
-            BlackPieces = new List<CoPieces>();
+
 
             if (!isEmpty)
             {
@@ -28,7 +35,25 @@ namespace ChessLibrary
                 InitializeEmptyBoard();
             }
         }
-        
+
+        public List<CoPieces> CopyWhitePieces()
+        {
+            var result = new List<CoPieces>();
+            foreach (var copiece in WhitePieces)
+            {
+                result.Add(new CoPieces { CaseLink = copiece.CaseLink, piece = copiece.piece });
+            }
+            return result;
+        }
+        public List<CoPieces> CopyBlackPieces()
+        {
+            var result = new List<CoPieces>();
+            foreach (var copiece in BlackPieces)
+            {
+                result.Add(new CoPieces { CaseLink = copiece.CaseLink, piece = copiece.piece });
+            }
+            return result;
+        }
         public int NbRows => Board?.GetLength(0) ?? 0;
         public int NbColumns => Board?.GetLength(1) ?? 0;
         
@@ -122,11 +147,11 @@ namespace ChessLibrary
             Board[column, row] = new Case(column, row, piece);
             if (piece != null && piece.Color == Color.White)
             {
-                WhitePieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
+                whitePieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
             else
             {
-                BlackPieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
+                blackPieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
         }
 
@@ -161,17 +186,17 @@ namespace ChessLibrary
 
             if (pi.Color == Color.White)
             {
-                WhitePieces.Add(new CoPieces { CaseLink = c, piece = pi });
-                WhitePieces.Remove(new CoPieces { CaseLink = c, piece = p });
+                whitePieces.Add(new CoPieces { CaseLink = c, piece = pi });
+                whitePieces.Remove(new CoPieces { CaseLink = c, piece = p });
             }
             else
             {
-                BlackPieces.Add(new CoPieces { CaseLink = c, piece = pi });
-                BlackPieces.Remove(new CoPieces { CaseLink = c, piece = p });
+                blackPieces.Add(new CoPieces { CaseLink = c, piece = pi });
+                blackPieces.Remove(new CoPieces { CaseLink = c, piece = p });
             }
         }
 
-        public bool Echec(King king, Case kingCase)
+        public bool Echec( King king, Case kingCase)
         {
             if (isCheckingForCheck)
             {
@@ -180,7 +205,7 @@ namespace ChessLibrary
 
             isCheckingForCheck = true;
 
-            List<CoPieces> enemyPieces = king.Color == Color.White ? BlackPieces : WhitePieces;
+            var enemyPieces = king.Color == Color.White ? blackPieces : whitePieces;
 
             foreach (var enemy  in enemyPieces)
             {
@@ -238,7 +263,7 @@ namespace ChessLibrary
 
         public King FindKing(Color color)
         {
-            return color == Color.White ? (King)WhitePieces!.Find(x => x.piece is King)!.piece : (King)BlackPieces!.Find(x => x.piece is King)!.piece;
+            return color == Color.White ? (King)whitePieces!.Find(x => x.piece is King)!.piece : (King)blackPieces!.Find(x => x.piece is King)!.piece;
         }
 
         public Case FindCase(Piece piece)

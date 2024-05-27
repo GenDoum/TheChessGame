@@ -125,7 +125,7 @@ namespace ChessLibrary
         /// <returns></returns>
         public bool GameOver(User winner)
         {
-            var pieces = (Player1.Color == Color.White) ? Board.BlackPieces : Board.WhitePieces;
+            var pieces = (Player1.Color == Color.White) ? Board.CopyBlackPieces() : Board.CopyWhitePieces();
             List<CoPieces> list = new List<CoPieces>();
             foreach (var pieceInfo in pieces)
             {
@@ -176,13 +176,14 @@ namespace ChessLibrary
             ArgumentNullException.ThrowIfNull(initial.Piece, "Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
             if (initial.Piece.Color != actualPlayer.Color)
                 throw new InvalidOperationException("Ce n'est pas le tour de ce joueur.");
-
+            var blackPieces = board.CopyBlackPieces();
+            var whitePieces = board.CopyWhitePieces();
             var movingPiece = initial.Piece;
             var capturedPiece = final.Piece;
             if (board.CanMovePiece(movingPiece, initial, final)){ 
             // Simulation du mouvement pour la vérification
 
-            UpdatePieceLists(initial, final, board); // Met à jour les listes de pièces de manière temporaire
+            UpdatePieceLists(blackPieces, whitePieces,initial, final, board); // Met à jour les listes de pièces de manière temporaire
             final.Piece = movingPiece;
             initial.Piece = null;
             // Vérification de l'échec après le mouvement temporaire
@@ -191,15 +192,15 @@ namespace ChessLibrary
                 // Annuler le mouvement temporaire
                 final.Piece = capturedPiece;
                 initial.Piece = movingPiece;
-                RestorePieceLists(initial, final, board, movingPiece, capturedPiece);
+                RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece);
                 throw new InvalidOperationException("Vous ne pouvez pas vous mettre en échec.");
             }
-            RestorePieceLists(initial, final, board, movingPiece, capturedPiece);
+            RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece);
                 initial.Piece = movingPiece;
                 final.Piece = capturedPiece;
                 // Vérification si le mouvement est légal et si cela peut résoudre un échec existant
                 // Effectuer le mouvement réel
-                UpdatePieceLists(initial, final, board);
+                UpdatePieceLists(blackPieces, whitePieces, initial, final, board);
                 ProcessPostMove(initial, final);
 
                 if (final.Piece is Pawn pawn && (final.Line == 0 || final.Line == 7))
@@ -217,11 +218,10 @@ namespace ChessLibrary
         }
 
 
-        public void RestorePieceLists(Case initial, Case final, Chessboard board, Piece movedPiece, Piece capturedPiece)
+        public void RestorePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case initial, Case final, Chessboard board, Piece movedPiece, Piece capturedPiece)
         {
             // Rétablir la pièce déplacée dans sa position originale
-            var listToUpdate = movedPiece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
-
+            var listToUpdate = movedPiece.Color == Color.White ? whitePieces : blackPieces;
             // Enlever la pièce de sa nouvelle position dans la liste et la remettre à l'initial
             listToUpdate.RemoveAll(p => p.piece == movedPiece && p.CaseLink == final);
             listToUpdate.Add(new CoPieces { CaseLink = initial, piece = movedPiece });
@@ -229,25 +229,24 @@ namespace ChessLibrary
             // Si une pièce a été capturée, la remettre dans sa liste respective
             if (capturedPiece != null)
             {
-                var listToRestore = capturedPiece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
+                var listToRestore = capturedPiece.Color == Color.White ? whitePieces : blackPieces;
                 listToRestore.Add(new CoPieces { CaseLink = final, piece = capturedPiece });
             }
         }
 
 
-        public void UpdatePieceLists(Case initial, Case final, Chessboard board)
+        public void UpdatePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case initial, Case final, Chessboard board)
         {
             var movedPiece = initial.Piece;
             var capturedPiece = final.Piece;
-
-            var listToUpdate = movedPiece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
+            var listToUpdate = movedPiece.Color == Color.White ? whitePieces : blackPieces;
 
             listToUpdate.RemoveAll(p => p.piece == movedPiece);
             listToUpdate.Add(new CoPieces { CaseLink = final, piece = movedPiece });
 
             if (capturedPiece != null && capturedPiece.Color != movedPiece.Color)
             {
-                var listToRemoveFrom = capturedPiece.Color == Color.White ? board.WhitePieces : board.BlackPieces;
+               var listToRemoveFrom = capturedPiece.Color == Color.White ? whitePieces : blackPieces;
                 listToRemoveFrom.RemoveAll(p => p.piece == capturedPiece);
             }
         }

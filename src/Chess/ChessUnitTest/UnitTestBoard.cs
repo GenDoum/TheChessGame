@@ -913,6 +913,94 @@ public class UnitTestBoard
         // Assert
         Assert.True(result); // The two rooks should put the king in checkmate
     }
+    
+    [Fact]
+    public void TestCopyWhitePieces()
+    {
+        // Arrange
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var whitePiece = new Pawn(Color.White, 1);
+        chessboard.AddPiece(whitePiece, 0, 0);
+
+        // Act
+        var copiedPieces = chessboard.CopyWhitePieces();
+
+        // Assert
+        Assert.Single(copiedPieces);
+        Assert.Equal(whitePiece, copiedPieces[0].piece);
+    }
+
+    [Fact]
+    public void TestCopyBlackPieces()
+    {
+        // Arrange
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var blackPiece = new Pawn(Color.Black, 1);
+        chessboard.AddPiece(blackPiece, 0, 0);
+
+        // Act
+        var copiedPieces = chessboard.CopyBlackPieces();
+
+        // Assert
+        Assert.Single(copiedPieces);
+        Assert.Equal(blackPiece, copiedPieces[0].piece);
+    }
+
+    [Fact]
+    public void TestNbRowsAndNbColumns()
+    {
+        // Arrange
+        var chessboard = new Chessboard(new Case[8, 8], true);
+
+        // Act & Assert
+        Assert.Equal(8, chessboard.NbRows);
+        Assert.Equal(8, chessboard.NbColumns);
+    }
+
+    [Fact]
+    public void TestFlatBoard()
+    {
+        // Arrange
+        var chessboard = new Chessboard(new Case[8, 8], true);
+
+        // Act
+        var flatBoard = chessboard.FlatBoard;
+
+        // Assert
+        Assert.Equal(64, flatBoard.Count());
+    }
+    
+    [Fact]
+    public void TestIsInCheck()
+    {
+        // Arrange
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var king = new King(Color.White, 1);
+        var rook = new Rook(Color.Black, 2);
+        chessboard.Board[0, 0] = new Case(0, 0, king);
+        chessboard.Board[0, 7] = new Case(0, 7, rook);
+
+        // Act
+        var result = chessboard.IsInCheck(Color.White);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void TestFindCase()
+    {
+        // Arrange
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var king = new King(Color.White, 1);
+        chessboard.Board[0, 0] = new Case(0, 0, king);
+
+        // Act
+        var result = chessboard.FindCase(king);
+
+        // Assert
+        Assert.Equal(chessboard.Board[0, 0], result);
+    }
 
 }
 

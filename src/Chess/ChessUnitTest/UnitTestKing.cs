@@ -96,4 +96,72 @@ public class UnitTestKing
         Assert.Contains(result, c => c!.Column == 4 && c.Line == 3); // King should be able to eat the pawn at (4,3)
         Assert.Contains(result, c => c!.Column == 5 && c.Line == 3); // King should be able to eat the pawn at (5,3)
     }
+    
+    [Fact]
+    public void TestKingPossibleMoves_WithEmptyCase()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King king = new King(Color.White, 1);
+        Case kingCase = new Case(4, 4, king);
+        chessboard.AddPiece(king, 4, 4);
+
+        // Act
+        var possibleMoves = king.PossibleMoves(kingCase, chessboard);
+
+        // Assert
+        Assert.Contains(possibleMoves, c => c!.Column == 5 && c.Line == 5);
+    }
+
+    [Fact]
+    public void TestKingPossibleMoves_WithOppositeColorPiece()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King king = new King(Color.White, 1);
+        Pawn enemyPawn = new Pawn(Color.Black, 2);
+        Case kingCase = new Case(4, 4, king);
+        chessboard.AddPiece(king, 4, 4);
+        chessboard.AddPiece(enemyPawn, 5, 5);
+
+        // Act
+        var possibleMoves = king.PossibleMoves(kingCase, chessboard);
+
+        // Assert
+        Assert.Contains(possibleMoves, c => c!.Column == 5 && c.Line == 5);
+    }
+
+    [Fact]
+    public void TestKingPossibleMoves_WithOppositeColorKing()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King whiteKing = new King(Color.White, 1);
+        King blackKing = new King(Color.Black, 2);
+        Case kingCase = new Case(4, 4, whiteKing);
+        chessboard.AddPiece(whiteKing, 4, 4);
+        chessboard.AddPiece(blackKing, 5, 5);
+
+        // Act
+        var possibleMoves = whiteKing.PossibleMoves(kingCase, chessboard);
+
+        // Assert
+        Assert.DoesNotContain(possibleMoves, c => c!.Column == 5 && c.Line == 5);
+    }
+
+    [Fact]
+    public void TestKingPossibleMoves_WithOutOfBoundsCase()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King king = new King(Color.White, 1);
+        Case kingCase = new Case(7, 7, king);
+        chessboard.AddPiece(king, 7, 7);
+
+        // Act
+        var possibleMoves = king.PossibleMoves(kingCase, chessboard);
+
+        // Assert
+        Assert.DoesNotContain(possibleMoves, c => c!.Column == 8 && c.Line == 8);
+    }
 }

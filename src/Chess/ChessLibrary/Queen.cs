@@ -55,7 +55,7 @@ namespace ChessLibrary
                             {
                                 result.Add(potentialCase);
                             }
-                            else if (!potentialCase.IsCaseEmpty() && potentialCase.Piece!.Color != this.Color)
+                            else if (potentialCase.IsCaseEmpty() && potentialCase.Piece!.Color != this.Color)
                             {
                                 result.Add(potentialCase);
                                 break;

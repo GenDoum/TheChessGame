@@ -16,7 +16,6 @@ namespace ChessLibrary
     {
         private Color _color;
         private int _id;
-        private bool _moved;
         private string? _imagePath;
 
         public Color Color

@@ -114,4 +114,81 @@ public class UnitTestPawn
         // Assert
         Assert.DoesNotContain(chessboard.Board[1, 2], result);
     }
+    
+    [Fact]
+    public void PossibleMoves_FirstMoveTwoSquares_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var pawn = new Pawn(Color.White, 1);
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(1, 1, pawn);
+
+        // Act
+        var result = pawn.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.Contains(chessboard.Board[1, 3], result);
+    }
+
+    [Fact]
+    public void PossibleMoves_FirstMoveTwoSquaresAfterFirstMove_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var pawn = new Pawn(Color.White, 1);
+        pawn.FirstMove = false;
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(1, 1, pawn);
+
+        // Act
+        var result = pawn.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.DoesNotContain(chessboard.Board[1, 3], result);
+    }
+
+    [Fact]
+    public void PossibleMoves_MoveOneSquareForward_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var pawn = new Pawn(Color.White, 1);
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(1, 1, pawn);
+
+        // Act
+        var result = pawn.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.Contains(chessboard.Board[1, 2], result);
+    }
+
+    [Fact]
+    public void PossibleMoves_MoveOneSquareForwardAfterFirstMove_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var pawn = new Pawn(Color.White, 1);
+        pawn.FirstMove = false;
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(1, 1, pawn);
+
+        // Act
+        var result = pawn.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.Contains(chessboard.Board[1, 2], result);
+    }
+
+    [Fact]
+    public void PossibleMoves_MoveBackward_ReturnsNoMoves()
+    {
+        // Arrange
+        var pawn = new Pawn(Color.White, 1);
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(1, 1, pawn);
+
+        // Act
+        var result = pawn.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.DoesNotContain(chessboard.Board[1, 0], result);
+    }
 }

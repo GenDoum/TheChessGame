@@ -135,4 +135,22 @@ public class UnitTestRook
         // Assert
         Assert.False(result);
     }
+    
+    [Fact]
+    public void TestRookPossibleMoves_WithEnemyPiece()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        Rook rook = new Rook(Color.White, 1);
+        Case rookCase = new Case(0, 0, rook);
+        chessboard.AddPiece(rook, 0, 0);
+        Pawn enemyPawn = new Pawn(Color.Black, 2);
+        chessboard.AddPiece(enemyPawn, 0, 3);
+
+        // Act
+        var possibleMoves = rook.PossibleMoves(rookCase, chessboard);
+
+        // Assert
+        Assert.Contains(possibleMoves, c => c!.Column == 0 && c.Line == 3);
+    }
 }

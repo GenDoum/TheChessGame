@@ -984,6 +984,29 @@ public class UnitTestBoard
         // Assert
         Assert.Equal(chessboard.Board[0, 0], result);
     }
+    
+    [Fact]
+    public void TestCanDefendKing()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King whiteKing = new King(Color.White, 1);
+        Pawn whitePawn = new Pawn(Color.White, 2);
+        Queen blackQueen = new Queen(Color.Black, 3);
+
+        chessboard.AddPiece(whiteKing, 4, 4);
+        chessboard.AddPiece(whitePawn, 3, 3);
+        chessboard.AddPiece(blackQueen, 5, 5);
+
+        List<CoPieces> whitePieces = chessboard.CopyWhitePieces();
+        Case kingCase = chessboard.FindCase(whiteKing);
+
+        // Act
+        bool result = chessboard.CanDefendKing(whitePieces, kingCase);
+
+        // Assert
+        Assert.False(result); // The pawn should be able to capture the queen and defend the king
+    }
 
 }
 

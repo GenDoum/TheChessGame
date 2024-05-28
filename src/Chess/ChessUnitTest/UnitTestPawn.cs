@@ -60,25 +60,9 @@ public class UnitTestPawn
         var caseInitial = new Case(4, 4, pawn);
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => pawn.PossibleMoves(caseInitial, null));
+        Assert.Throws<ArgumentNullException>(() => pawn.PossibleMoves(caseInitial, null!));
     }
-
-    // [Theory]
-    // [InlineData(Color.White, 1, 2, 3)]
-    // [InlineData(Color.Black, 6, 5, 4)]
-    // public void CanMove_FirstMoveTwoSteps_ReturnsTrue(Color color, int y1, int y2, int y3)
-    // {
-    //     // Arrange
-    //     var pawn = new Pawn(color, 1);
-    //
-    //     // Act
-    //     var result1 = pawn.CanMove(4, y1, 4, y2);
-    //     var result2 = pawn.CanMove(4, y1, 4, y3);
-    //
-    //     // Assert
-    //     Assert.True(result1);
-    //     Assert.False(result2);
-    // }
+    
 
     [Fact]
     public void PossibleMoves_DirectionBasedOnColor_ReturnsCorrectMoves()

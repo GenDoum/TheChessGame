@@ -70,7 +70,7 @@ public class UnitTestRook
     {
         // Arrange
         var rook = new Rook(Color.White, 1);
-        Chessboard chessboard = null;
+        Chessboard chessboard = null!;
 
         // Act & Assert
         Assert.Throws<ArgumentNullException>(() => rook.PossibleMoves(new Case(0, 0, rook), chessboard));
@@ -112,7 +112,6 @@ public class UnitTestRook
     public void CaseIsFree_WhenPieceIsNull_ReturnsTrue()
     {
         // Arrange
-        var rook = new Rook(Color.White, 1);
         var caseForRook = new Case(0, 0, null);
 
         // Act

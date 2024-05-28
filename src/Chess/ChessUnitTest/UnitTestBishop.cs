@@ -51,7 +51,7 @@ public class UnitTestBishop
         var caseInitial = new Case(4, 4, bishop);
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => bishop.PossibleMoves(caseInitial, null));
+        Assert.Throws<ArgumentNullException>(() => bishop.PossibleMoves(caseInitial, null!));
     }
 
     [Fact]
@@ -62,7 +62,7 @@ public class UnitTestBishop
         var chessboard = new Chessboard(new Case[8, 8],true);
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => bishop.PossibleMoves(null, chessboard));
+        Assert.Throws<ArgumentNullException>(() => bishop.PossibleMoves(null!, chessboard));
     }
     
     [Fact]

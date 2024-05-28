@@ -48,10 +48,10 @@ public class UnitTestKnight
     {
         // Arrange
         var knight = new Knight(Color.White, 1);
-        Chessboard chessboard = null;
+        Chessboard chessboard = null!;
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => knight.PossibleMoves(new Case(0, 0, knight), chessboard));
+        Assert.Throws<ArgumentNullException>(() => knight.PossibleMoves(new Case(0, 0, knight), chessboard!));
     }
     
 }

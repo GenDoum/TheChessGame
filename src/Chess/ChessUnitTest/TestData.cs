@@ -153,8 +153,8 @@ public class TestData
         yield return new object[] {"pseudo", "password", ChessLibrary.Color.White, true,  0}; // Good Pseudo with Color.White and connected
         yield return new object[] {"pseudo", "password", ChessLibrary.Color.Black, false, 0}; // Good Pseudo with Color.Black and not connected
 
-        yield return new object[] {"pseudo", null, ChessLibrary.Color.White, true, 0}; // Good Pseudo with password null and Color.White
-        yield return new object[] {"pseudo", null, ChessLibrary.Color.Black, false, 0}; // Good Pseudo with password null and Color.Black
+        yield return new object[] {"pseudo", null!, ChessLibrary.Color.White, true, 0}; // Good Pseudo with password null and Color.White
+        yield return new object[] {"pseudo", null!, ChessLibrary.Color.Black, false, 0}; // Good Pseudo with password null and Color.Black
     }
 
     public static IEnumerable<object[]> InvalidUserPseudo()
@@ -173,11 +173,11 @@ public class TestData
         yield return new object[] {" ", "password", ChessLibrary.Color.Black, true, 0}; // Pseudo with white space and Color.Black
         yield return new object[] {" ", "password", ChessLibrary.Color.Black, false, 0}; // Pseudo with white space and Color.Black
 
-        yield return new object[] {null, "password", ChessLibrary.Color.White, true, 0}; // Pseudo null with Color.White
-        yield return new object[] {null, "password", ChessLibrary.Color.White, false, 0}; // Pseudo null with Color.White
+        yield return new object[] {null!, "password", ChessLibrary.Color.White, true, 0}; // Pseudo null with Color.White
+        yield return new object[] {null!, "password", ChessLibrary.Color.White, false, 0}; // Pseudo null with Color.White
 
-        yield return new object[] {null, "password", ChessLibrary.Color.Black, true, 0}; // Pseudo null with Color.Black
-        yield return new object[] {null, "password", ChessLibrary.Color.Black , false, 0}; // Pseudo null with Color.Black
+        yield return new object[] {null!, "password", ChessLibrary.Color.Black, true, 0}; // Pseudo null with Color.Black
+        yield return new object[] {null!, "password", ChessLibrary.Color.Black , false, 0}; // Pseudo null with Color.Black
     }
 
     public static IEnumerable<object[]> ValidUserPassword()

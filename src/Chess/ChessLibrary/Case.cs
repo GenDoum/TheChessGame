@@ -15,17 +15,56 @@ namespace ChessLibrary
         /// <summary>
         /// Crée un argument Column
         /// </summary>
-        public int Column { get; private set; }
+        private int _column;
 
         /// <summary>
         /// Crée un argument Line
         /// </summary>
-        public int Line { get; private set; }
+        private int _line;
 
         /// <summary>
         /// Propriété pour la pièce sur cette case
         /// </summary>
-        public Piece? Piece { get; set; }
+        private Piece? _piece;
+        
+        public int Column
+        {
+            get { return _column; }
+            private set
+            {
+                if (_column != value)
+                {
+                    _column = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int Line
+        {
+            get { return _line; }
+            private set
+            {
+                if (_line != value)
+                {
+                    _line = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public Piece? Piece
+        {
+            get { return _piece; }
+            set
+            {
+                if (_piece != value)
+                {
+                    _piece = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         /// <summary>
         /// Initialise une nouvelle instance de la classe Case avec la colonne, la ligne et la pièce spécifiées.
@@ -46,20 +85,10 @@ namespace ChessLibrary
         /// </summary>
         /// <returns>true si la case est vide, sinon false</returns>
         public bool IsCaseEmpty() => Piece == null;
-
+        
         public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-            field = value;
-            OnPropertyChanged(propertyName);
-            return true;
-        }
+        
+        void OnPropertyChanged([CallerMemberName]string propertyName = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

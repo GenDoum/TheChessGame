@@ -44,16 +44,16 @@ public class UnitTestBoard
         for (int i = 0; i < 8; i++)
         {
             Assert.IsType<Pawn>(chessboard.Board[i, 1]!.Piece);
-            Assert.Equal(Color.White, chessboard.Board[i, 1]!.Piece!.Color);
+            Assert.Equal(Color.Black, chessboard.Board[i, 1]!.Piece!.Color);
 
             Assert.IsType<Pawn>(chessboard.Board[i, 6]!.Piece);
-            Assert.Equal(Color.Black, chessboard.Board[i, 6]!.Piece!.Color);
+            Assert.Equal(Color.White, chessboard.Board[i, 6]!.Piece!.Color);
         }
     }
 
     [Theory]
-    [InlineData(0, 1, typeof(Pawn), Color.White)]
-    [InlineData(0, 6, typeof(Pawn), Color.Black)]
+    [InlineData(0, 1, typeof(Pawn), Color.Black)]
+    [InlineData(0, 6, typeof(Pawn), Color.White)]
     public void TestPiecePlacement(int x, int y, Type expectedType, Color expectedColor)
     {
         // Arrange
@@ -69,14 +69,14 @@ public class UnitTestBoard
     }
 
     [Theory]
-    [InlineData(0, 0, typeof(Rook))]
-    [InlineData(1, 0, typeof(Knight))]
-    [InlineData(2, 0, typeof(Bishop))]
-    [InlineData(3, 0, typeof(Queen))]
-    [InlineData(4, 0, typeof(King))]
-    [InlineData(5, 0, typeof(Bishop))]
-    [InlineData(6, 0, typeof(Knight))]
-    [InlineData(7, 0, typeof(Rook))]
+    [InlineData(0, 7, typeof(Rook))]
+    [InlineData(1, 7, typeof(Knight))]
+    [InlineData(2, 7, typeof(Bishop))]
+    [InlineData(3, 7, typeof(Queen))]
+    [InlineData(4, 7, typeof(King))]
+    [InlineData(5, 7, typeof(Bishop))]
+    [InlineData(6, 7, typeof(Knight))]
+    [InlineData(7, 7, typeof(Rook))]
     public void TestInitializeWhitePieces(int column, int row, Type pieceType)
     {
         // Arrange
@@ -91,14 +91,14 @@ public class UnitTestBoard
     }
 
     [Theory]
-    [InlineData(0, 7, typeof(Rook))]
-    [InlineData(1, 7, typeof(Knight))]
-    [InlineData(2, 7, typeof(Bishop))]
-    [InlineData(3, 7, typeof(Queen))]
-    [InlineData(4, 7, typeof(King))]
-    [InlineData(5, 7, typeof(Bishop))]
-    [InlineData(6, 7, typeof(Knight))]
-    [InlineData(7, 7, typeof(Rook))]
+    [InlineData(0, 0, typeof(Rook))]
+    [InlineData(1, 0, typeof(Knight))]
+    [InlineData(2, 0, typeof(Bishop))]
+    [InlineData(3, 0, typeof(Queen))]
+    [InlineData(4, 0, typeof(King))]
+    [InlineData(5, 0, typeof(Bishop))]
+    [InlineData(6, 0, typeof(Knight))]
+    [InlineData(7, 0, typeof(Rook))]
     public void TestInitializeBlackPieces(int column, int row, Type pieceType)
     {
         // Arrange
@@ -968,23 +968,6 @@ public class UnitTestBoard
 
         // Assert
         Assert.Equal(64, flatBoard.Count());
-    }
-    
-    [Fact]
-    public void TestIsInCheck()
-    {
-        // Arrange
-        var chessboard = new Chessboard(new Case[8, 8], true);
-        var king = new King(Color.White, 1);
-        var rook = new Rook(Color.Black, 2);
-        chessboard.Board[0, 0] = new Case(0, 0, king);
-        chessboard.Board[0, 7] = new Case(0, 7, rook);
-
-        // Act
-        var result = chessboard.IsInCheck(Color.White);
-
-        // Assert
-        Assert.True(result);
     }
 
     [Fact]

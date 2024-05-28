@@ -7,31 +7,35 @@
              xmlns:contentView="clr-namespace:Chess.contentView"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              BackgroundImageSource="test.jpg">
-    
+
     <ContentPage.Content>
-        
+
         <Grid RowDefinitions="*"
               ColumnDefinitions="3*, 5*, 0.5*">
-            
-            
+
+
             <VerticalStackLayout>
-                
+
                 <Image  Source="title.png" 
                         Style="{StaticResource imgAppli}"
                         Margin="100"/>
-                
-                <Image  Source="joueur1.png" 
-                        Style="{StaticResource imgAppli}"
+
+                <Label  Text="{Binding game.Player1.Pseudo}" 
+                        FontSize="Large"
+                        TextColor="White"
                         Margin="50"/>
-                
+
                 <Image  Source="vs.png" 
                         Style="{StaticResource imgAppli}"
                         Margin="50"/>
-                
-                <Image  Source="joueur2.png" 
-                        Style="{StaticResource imgAppli}"
+
+                <Label  Text="{Binding game.Player2.Pseudo}"
+                        Style="{StaticResource lblAppli}"
+                        FontSize="Large"
+                        TextColor="White"
                         Margin="50"/>
-                
+
+
             </VerticalStackLayout>
 
 
@@ -80,7 +84,7 @@
                    VerticalOptions="Start"
                    Margin="-30,50,20,0"/>
         </Grid>
-        
-        
+
+
     </ContentPage.Content>
 </ContentPage>

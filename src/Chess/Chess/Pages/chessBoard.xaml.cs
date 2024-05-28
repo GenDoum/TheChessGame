@@ -11,7 +11,7 @@ namespace Chess.Pages;
 
 public partial class chessBoard : ContentPage
 {
-
+    public Game game { get; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black));
     public Chessboard Board { get; } = new Chessboard(new Case[8, 8], false);
     
     public chessBoard()

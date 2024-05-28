@@ -18,7 +18,7 @@ namespace ChessLibrary
         /// <param name="id"></param>
         public Knight(Color c, int id) : base(c, id)
         {
-            ImagePath = "chavalier.png";
+            ImagePath = c == Color.White ? "chavalier.png" : "chavalier_b.png";
         }
 
         public override bool CanMove(int x, int y, int x2, int y2)

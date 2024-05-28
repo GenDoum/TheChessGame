@@ -20,7 +20,7 @@ namespace ChessLibrary
         public King(Color color, int id) : base(color, id)
         {
             this.FirstMove = true;
-            ImagePath = "roi.png";
+            ImagePath = color == Color.White ? "roi.png" : "roi_b.png";
         }
 
 

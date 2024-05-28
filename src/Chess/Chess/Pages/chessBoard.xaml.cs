@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ChessLibrary;
 using CommunityToolkit.Maui.Behaviors;
+using Microsoft.Maui.Graphics;
 
 namespace Chess.Pages;
 

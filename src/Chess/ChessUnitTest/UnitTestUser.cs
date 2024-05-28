@@ -95,24 +95,33 @@ public class UnitTestUser
 
         Assert.Null(connected);
     }
-    /*
-    [Theory]
-    [MemberData(nameof(TestData.Test_UserMethodIsConnected), MemberType = typeof(TestData))]
-    public void TestGoodReturnMethodIsPassword(string password)
+
+    [Fact]
+    public void TestUserConstructorWithColor()
     {
-        var user = new User("pseudo", password, Color.Black, false, 0);
+        // Arrange
+        var color = Color.White;
 
-        bool result = user.isPasswd(password);
+        // Act
+        var user = new User(color);
 
-        if (password == user.Password)
-        {
-            Assert.True(result);
-        }
-        else
-        {
-            // If the password doesn't match, the result should be false
-            Assert.False(result);
-        }
+        // Assert
+        Assert.Equal("White player", user.Pseudo);
+        Assert.Null(user.Password);
+        Assert.Equal(color, user.Color);
+        Assert.Equal(0, user.Score);
+        Assert.False(user.IsConnected);
     }
-    */
+
+    [Fact]
+    public void TestUserConstructorWithoutParameters()
+    {
+        // Act
+        var user = new User();
+
+        // Assert
+        Assert.Equal("Invité", user.Pseudo);
+        Assert.Null(user.Password);
+    }
+    
 }

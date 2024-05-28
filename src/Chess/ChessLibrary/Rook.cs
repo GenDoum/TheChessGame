@@ -18,7 +18,7 @@ namespace ChessLibrary
         /// Constructeur de la classe Rook
         /// </summary>
         /// <param name="color"></param>
-        /// <param name="c"></param>
+        /// <param name="id"></param>
         public Rook(Color color, int id) : base(color, id)
         {
             this.FirstMove = true;
@@ -49,14 +49,14 @@ namespace ChessLibrary
             {
                 for (int i = 1; i < 8; i++)
                 {
-                    int newColumn = caseInitial.Column + (colInc * i);
+                    int newColumn = caseInitial!.Column + (colInc * i);
                     int newLine = caseInitial.Line + (lineInc * i);
                     if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                     {
                         Case? potentialCase = chessboard.Board[newColumn, newLine];
                         if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
                         {
-                            if (potentialCase.IsCaseEmpty())
+                            if (potentialCase!.IsCaseEmpty())
                             {
                                 result.Add(potentialCase);
                             }

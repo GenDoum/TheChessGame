@@ -33,25 +33,25 @@ public class UnitTestKing
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        King? king = new King(Color.White, 1);
-        Case? kingCase = new Case(0, 0, king);
+        King king = new King(Color.White, 1);
+        Case kingCase = new Case(0, 0, king);
         chessboard.AddPiece(king, 0, 0);
-        Pawn? enemyPawn = new Pawn(Color.Black, 2);
+        Pawn enemyPawn = new Pawn(Color.Black, 2);
         chessboard.AddPiece(enemyPawn, 0, 1);
 
         // Act
         var possibleMoves = king.PossibleMoves(kingCase, chessboard);
 
         // Assert
-        Assert.Contains(possibleMoves, c => c.Column == 0 && c.Line == 1);
+        Assert.Contains(possibleMoves, c => c!.Column == 0 && c.Line == 1);
     }
 
     [Fact]
     public void TestKingPossibleMoves_WithNullChessboard()
     {
         // Arrange
-        King? king = new King(Color.White, 1);
-        Case? kingCase = new Case(0, 0, king);
+        King king = new King(Color.White, 1);
+        Case kingCase = new Case(0, 0, king);
 
         // Act & Assert
         Assert.Throws<ArgumentNullException>(() => king.PossibleMoves(kingCase, null!));

@@ -70,7 +70,7 @@ namespace ChessLibrary
         private bool FactPossibleMove(Case? potentialCase)
         {
 
-            if (potentialCase.IsCaseEmpty())
+            if (potentialCase!.IsCaseEmpty())
             {
                 return true;
             }

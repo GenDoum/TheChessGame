@@ -50,7 +50,7 @@ public class UnitTestQueen
         var queen = new Queen(Color.White, 1);
         var chessboard = new Chessboard(new Case[8, 8], true);
         var caseInitial = new Case(4, 4, queen);
-        chessboard.Board[5, 5].Piece = new Pawn(Color.Black, 2); 
+        chessboard.Board[5, 5]!.Piece = new Pawn(Color.Black, 2); 
 
         // Act
         var result = queen.PossibleMoves(caseInitial, chessboard);
@@ -66,12 +66,10 @@ public class UnitTestQueen
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        King? king = new King(Color.White, 1);
-        Queen? queen = new Queen(Color.Black, 1);
-        Pawn? pawn = new Pawn(Color.White, 2);
-        Case kingCase = new Case(4, 0, king);
-        Case? queenCase = new Case(4, 2, queen);
-        Case pawnCase = new Case(3, 1, pawn);
+        King king = new King(Color.White, 1);
+        Queen queen = new Queen(Color.Black, 1);
+        Pawn pawn = new Pawn(Color.White, 2);
+        Case queenCase = new Case(4, 2, queen);
         chessboard.AddPiece(king, 4, 0);
         chessboard.AddPiece(queen, 4, 2);
         chessboard.AddPiece(pawn, 3, 1);

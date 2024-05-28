@@ -60,12 +60,12 @@ namespace ChessLibrary
         {
             for (int i = 1; i <= (FirstMove ? 2 : 1); i++)
             {
-                int newLine = caseInitial.Line + direction * i;
+                int newLine = caseInitial!.Line + direction * i;
                 int newColumn = caseInitial.Column;
                 if (IsWithinBoard(newLine, newColumn, chessboard))
                 {
                     Case? potentialCase = chessboard.Board[newColumn, newLine];
-                    if (potentialCase.IsCaseEmpty())
+                    if (potentialCase!.IsCaseEmpty())
                     {
                         result.Add(potentialCase);
                     }
@@ -79,14 +79,14 @@ namespace ChessLibrary
 
         private void AddDiagonalCaptures(Case? caseInitial, Chessboard chessboard, int direction, List<Case?> result)
         {
-            int[] captureColumns = new int[] { caseInitial.Column - 1, caseInitial.Column + 1 };
+            int[] captureColumns = new int[] { caseInitial!.Column - 1, caseInitial.Column + 1 };
             foreach (int col in captureColumns)
             {
                 int newLine = caseInitial.Line + direction;
                 if (IsWithinBoard(newLine, col, chessboard))
                 {
                     Case? potentialCase = chessboard.Board[col, newLine];
-                    if (potentialCase.Piece != null && !potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
+                    if (potentialCase!.Piece != null && !potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
                     {
                         result.Add(potentialCase);
                     }
@@ -105,14 +105,14 @@ namespace ChessLibrary
             ArgumentNullException.ThrowIfNull(chessboard);
             List<Case?> result = new List<Case?>();
             int direction = this.Color == Color.White ? 1 : -1; // Blanc vers le haut (+1), Noir vers le bas (-1)
-            int[] captureColumns = new int[] { caseInitial.Column - 1, caseInitial.Column + 1 };
+            int[] captureColumns = new int[] { caseInitial!.Column - 1, caseInitial.Column + 1 };
             foreach (int col in captureColumns)
             {
                 int newLine = caseInitial.Line + direction;
                 if (IsWithinBoard(newLine, col, chessboard))
                 {
                     Case? potentialCase = chessboard.Board[col, newLine];
-                    if (!potentialCase.IsCaseEmpty() && potentialCase.Piece!.Color != this.Color)
+                    if (!potentialCase!.IsCaseEmpty() && potentialCase.Piece!.Color != this.Color)
                     {
                         result.Add(potentialCase);
                     }

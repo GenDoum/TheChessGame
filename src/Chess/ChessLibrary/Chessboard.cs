@@ -16,7 +16,7 @@ namespace ChessLibrary
         private readonly List<CoPieces> _whitePieces = new List<CoPieces>();
         public ReadOnlyCollection<CoPieces> BlackPieces => _blackPieces.AsReadOnly();
 
-        private readonly List<CoPieces> _blackPieces= new List<CoPieces>();
+        private readonly List<CoPieces> _blackPieces = new List<CoPieces>();
 
 
         private bool _isCheckingForCheck = false;
@@ -157,7 +157,7 @@ namespace ChessLibrary
 
         public bool IsMoveValid(List<Case?> lcase, Case? final)
         {
-            return lcase.Exists(i => i.Column == final.Column && i.Line == final.Line);
+            return lcase.Exists(i => i!.Column == final!.Column && i.Line == final.Line);
         }
 
         public bool CanMovePiece(Piece? piece, Case? initial, Case? final)
@@ -166,9 +166,9 @@ namespace ChessLibrary
 
             if (IsMoveValid(possibleMoves, final))
             {
-                Piece originalPiece = final.Piece!;
+                Piece originalPiece = final!.Piece!;
                 final.Piece = piece;
-                initial.Piece = null;
+                initial!.Piece = null;
 
                 initial.Piece = piece;
                 final.Piece = originalPiece;
@@ -196,7 +196,7 @@ namespace ChessLibrary
             }
         }
 
-        public bool Echec( King king, Case? kingCase)
+        public bool Echec(King? king, Case? kingCase)
         {
             if (_isCheckingForCheck)
             {
@@ -213,20 +213,20 @@ namespace ChessLibrary
 
                 if (enemy.piece is King)
                 {
-                    King KingTest = (King)enemy.piece;
-                    possibleMoves = KingTest.CanEat(enemy.CaseLink, this);
+                    King kingTest = (King)enemy.piece;
+                    possibleMoves = kingTest.CanEat(enemy.CaseLink, this);
                 }
                 else if (enemy.piece is Pawn)
                 {
-                    Pawn PawnTest = (Pawn)enemy.piece;
-                    possibleMoves = PawnTest.CanEat(enemy.CaseLink, this);
+                    Pawn pawnTest = (Pawn)enemy.piece;
+                    possibleMoves = pawnTest.CanEat(enemy.CaseLink, this);
                 }
                 else
                 {
                     possibleMoves = enemy.piece!.PossibleMoves(enemy.CaseLink, this);
                 }
 
-                  if (possibleMoves.Any(move => move.Column == kingCase.Column && move.Line == kingCase.Line))
+                  if (possibleMoves.Any(move => move!.Column == kingCase!.Column && move.Line == kingCase.Line))
                 {
                     _isCheckingForCheck = false;
                     return true;
@@ -263,7 +263,7 @@ namespace ChessLibrary
 
         public King FindKing(Color color)
         {
-            return (color == Color.White ? (King)_whitePieces!.Find(x => x.piece is King)!.piece! : (King)_blackPieces!.Find(x => x.piece is King)!.piece!)!;
+            return (color == Color.White ? (King)_whitePieces.Find(x => x.piece is King).piece! : (King)_blackPieces.Find(x => x.piece is King).piece!);
         }
 
         public Case? FindCase(Piece piece)
@@ -272,7 +272,7 @@ namespace ChessLibrary
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    if (Board[i, j].Piece == piece)
+                    if (Board[i, j]!.Piece == piece)
                         return Board[i, j];
                 }
             }
@@ -286,36 +286,30 @@ namespace ChessLibrary
             bool kingCanEscape = false;
             bool piecesCanSave = false;
 
-            foreach (var move in possibleKingMoves)
+            foreach (var move in possibleKingMoves.Where(move => TryMovePiece(kingCase, move)))
             {
-                if (TryMovePiece(kingCase, move))
+                if (!Echec(king, move))
                 {
-                    if (!Echec(king, move))
-                    {
-                        kingCanEscape = true;
-                    }
-                    UndoMovePiece(kingCase, move);
+                    kingCanEscape = true;
                 }
+                UndoMovePiece(kingCase, move);
             }
 
             var allyPieces = king.Color == Color.White ? WhitePieces : BlackPieces;
 
-            foreach (var pieceInfo in allyPieces!)
+            foreach (var pieceInfo in allyPieces)
             {
                 var piece = pieceInfo.piece;
                 var startCase = pieceInfo.CaseLink;
                 var possibleMoves = piece!.PossibleMoves(startCase, this);
 
-                foreach (var move in possibleMoves)
+                foreach (var move in possibleMoves.Where(move => TryMovePiece(startCase, move)))
                 {
-                    if (TryMovePiece(startCase, move))
+                    if (!Echec(king, kingCase))
                     {
-                        if (!Echec(king, kingCase))
-                        {
-                            piecesCanSave = true;
-                        }
-                        UndoMovePiece(startCase, move);
+                        piecesCanSave = true;
                     }
+                    UndoMovePiece(startCase, move);
                 }
 
                 if (piecesCanSave || kingCanEscape)
@@ -329,9 +323,9 @@ namespace ChessLibrary
 
         private bool TryMovePiece(Case? initial, Case? final)
         {
-            if (CanMovePiece(initial.Piece, initial, final))
+            if (CanMovePiece(initial!.Piece, initial, final))
             {
-                final.Piece = initial.Piece;
+                final!.Piece = initial.Piece;
                 initial.Piece = null;
                 return true;
             }
@@ -340,7 +334,7 @@ namespace ChessLibrary
 
         private void UndoMovePiece(Case? initial, Case? final)
         {
-            initial.Piece = final.Piece;
+            initial!.Piece = final!.Piece;
             final.Piece = null;
         }
 
@@ -350,7 +344,7 @@ namespace ChessLibrary
             foreach (var piece in teamPieces)
             {
                 List<Case?> possibleMoves;
-
+                
                 if (piece.piece is King)
                 {
                     King kingPiece = (King)piece.piece;
@@ -368,11 +362,11 @@ namespace ChessLibrary
 
                 foreach (var move in possibleMoves)
                 {
-                    Piece originalPiece = move.Piece!;
+                    Piece originalPiece = move!.Piece!;
                     Case? originalCase = piece.CaseLink;
 
                     move.Piece = piece.piece;
-                    originalCase.Piece = null;
+                    originalCase!.Piece = null;
 
                     bool resolvesCheck = !IsInCheck(piece.piece.Color);
 

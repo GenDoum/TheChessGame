@@ -30,7 +30,7 @@ namespace ChessLibrary
         /// <summary>
         /// Chemin de l'image d'une pièce
         /// </summary>
-        public string ImagePath { get; protected set; }
+        public string? ImagePath { get; protected set; }
         
         /// <summary>
         /// Constructeur de la pièce

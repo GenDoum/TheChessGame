@@ -49,7 +49,7 @@ public class UnitTestPawn
         var result = pawn.PossibleMoves(caseInitial, chessboard);
 
         // Assert
-        Assert.Contains(result, c => c.Column == 5 && c.Line == 5);
+        Assert.Contains(result, c => c!.Column == 5 && c.Line == 5);
     }
 
     [Fact]
@@ -79,7 +79,7 @@ public class UnitTestPawn
         var blackMoves = blackPawn.PossibleMoves(blackCase, chessboard);
 
         // Assert
-        Assert.All(whiteMoves, move => Assert.True(move.Line > 4));
-        Assert.All(blackMoves, move => Assert.True(move.Line < 5));
+        Assert.All(whiteMoves, move => Assert.True(move!.Line > 4));
+        Assert.All(blackMoves, move => Assert.True(move!.Line < 5));
     }
 }

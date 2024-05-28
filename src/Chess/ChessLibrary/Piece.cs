@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,27 +12,64 @@ namespace ChessLibrary
     /// Classe abstraite pour les pièces
     /// </summary>
     
-    public abstract class Piece
+    public abstract class Piece : INotifyPropertyChanged
     {
-        /// <summary>
-        /// Couleur de la pièce
-        /// </summary>
-        public Color Color { get; private set; }
+        private Color _color;
+        private int _id;
+        private bool _moved;
+        private string? _imagePath;
 
-        /// <summary>
-        /// Identifiant de la pièce
-        /// </summary>
-        public int Id { get; private set; }
-        
-        /// <summary>
-        /// Déplacement de la pièce
-        /// </summary>
-        public bool Moved { get; protected set; }
-        
-        /// <summary>
-        /// Chemin de l'image d'une pièce
-        /// </summary>
-        public string? ImagePath { get; protected set; }
+        public Color Color
+        {
+            get { return _color; }
+            private set
+            {
+                if (_color != value)
+                {
+                    _color = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int Id
+        {
+            get { return _id; }
+            private set
+            {
+                if (_id != value)
+                {
+                    _id = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool Moved
+        {
+            get { return _moved; }
+            protected set
+            {
+                if (_moved != value)
+                {
+                    _moved = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string? ImagePath
+        {
+            get { return _imagePath; }
+            protected set
+            {
+                if (_imagePath != value)
+                {
+                    _imagePath = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         
         /// <summary>
         /// Constructeur de la pièce
@@ -65,5 +104,11 @@ namespace ChessLibrary
         /// <param name="chessboard"></param>
         /// <returns></returns>
         public abstract List<Case?> PossibleMoves(Case? caseInitial, Chessboard chessboard);
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
     }
 }

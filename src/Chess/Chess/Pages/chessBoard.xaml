@@ -70,7 +70,7 @@
                             <ImageButton Source="{Binding Piece.ImagePath}"
                                          Aspect="AspectFit">
                                 <ImageButton.Behaviors>
-                                    <toolkit:IconTintColorBehavior TintColor="{Binding Piece.Color, Converter={StaticResource EnumToStringConverter}}" />
+                                    <toolkit:IconTintColorBehavior TintColor="{Binding Piece, Converter={StaticResource EnumToStringConverter}}"/>
                                 </ImageButton.Behaviors>
                             </ImageButton>
                         </Border>

@@ -54,6 +54,7 @@ namespace ChessLibrary
             }
             return result;
         }
+        
         public int NbRows => Board?.GetLength(0) ?? 0;
         public int NbColumns => Board?.GetLength(1) ?? 0;
         
@@ -65,9 +66,9 @@ namespace ChessLibrary
 
                 Case[,] b = new Case[NbRows, NbColumns];
 
-                for(int i = 0; i < NbRows; i++)
+                for(int j = 0; j < NbColumns; j++)
                 {
-                    for (int j = 0; j < NbColumns; j++)
+                    for (int i = 0; i < NbRows; i++)
                     {
                         flatBoard.Add(Board[i, j]);
                     }
@@ -90,44 +91,44 @@ namespace ChessLibrary
 
         public void InitializeChessboard()
         {
-            InitializeWhitePieces();
             InitializeBlackPieces();
+            InitializeWhitePieces();
             FillEmptyCases();
-        }
-
-        public void InitializeWhitePieces()
-        {
-            int identifiantBlanc = 1;
-            AddPiece(new Rook(Color.White, identifiantBlanc++), 0, 0);
-            AddPiece(new Knight(Color.White, identifiantBlanc++), 1, 0);
-            AddPiece(new Bishop(Color.White, identifiantBlanc++), 2, 0);
-            AddPiece(new Queen(Color.White, identifiantBlanc++), 3, 0);
-            AddPiece(new King(Color.White, identifiantBlanc++), 4, 0);
-            AddPiece(new Bishop(Color.White, identifiantBlanc++), 5, 0);
-            AddPiece(new Knight(Color.White, identifiantBlanc++), 6, 0);
-            AddPiece(new Rook(Color.White, identifiantBlanc++), 7, 0);
-
-            for (int c = 0; c < 8; c++)
-            {
-                AddPiece(new Pawn(Color.White, identifiantBlanc++), c, 1);
-            }
         }
 
         public void InitializeBlackPieces()
         {
-            int identifiantNoir = 17;
-            AddPiece(new Rook(Color.Black, identifiantNoir++), 0, 7);
-            AddPiece(new Knight(Color.Black, identifiantNoir++), 1, 7);
-            AddPiece(new Bishop(Color.Black, identifiantNoir++), 2, 7);
-            AddPiece(new Queen(Color.Black, identifiantNoir++), 3, 7);
-            AddPiece(new King(Color.Black, identifiantNoir++), 4, 7);
-            AddPiece(new Bishop(Color.Black, identifiantNoir++), 5, 7);
-            AddPiece(new Knight(Color.Black, identifiantNoir++), 6, 7);
-            AddPiece(new Rook(Color.Black, identifiantNoir++), 7, 7);
+            int identifiantBlanc = 1;
+            AddPiece(new Rook(Color.Black, identifiantBlanc++), 0, 0);
+            AddPiece(new Knight(Color.Black, identifiantBlanc++), 1, 0);
+            AddPiece(new Bishop(Color.Black, identifiantBlanc++), 2, 0);
+            AddPiece(new Queen(Color.Black, identifiantBlanc++), 3, 0);
+            AddPiece(new King(Color.Black, identifiantBlanc++), 4, 0);
+            AddPiece(new Bishop(Color.Black, identifiantBlanc++), 5, 0);
+            AddPiece(new Knight(Color.Black, identifiantBlanc++), 6, 0);
+            AddPiece(new Rook(Color.Black, identifiantBlanc++), 7, 0);
 
             for (int c = 0; c < 8; c++)
             {
-                AddPiece(new Pawn(Color.Black, identifiantNoir++), c, 6);
+                AddPiece(new Pawn(Color.Black, identifiantBlanc++), c, 1);
+            }
+        }
+
+        public void InitializeWhitePieces()
+        {
+            int identifiantNoir = 17;
+            AddPiece(new Rook(Color.White, identifiantNoir++), 0, 7);
+            AddPiece(new Knight(Color.White, identifiantNoir++), 1, 7);
+            AddPiece(new Bishop(Color.White, identifiantNoir++), 2, 7);
+            AddPiece(new Queen(Color.White, identifiantNoir++), 3, 7);
+            AddPiece(new King(Color.White, identifiantNoir++), 4, 7);
+            AddPiece(new Bishop(Color.White, identifiantNoir++), 5, 7);
+            AddPiece(new Knight(Color.White, identifiantNoir++), 6, 7);
+            AddPiece(new Rook(Color.White, identifiantNoir++), 7, 7);
+
+            for (int c = 0; c < 8; c++)
+            {
+                AddPiece(new Pawn(Color.White, identifiantNoir++), c, 6);
             }
         }
 

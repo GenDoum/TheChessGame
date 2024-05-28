@@ -19,7 +19,7 @@ namespace ChessLibrary
         /// <param name="id"></param>
         public Bishop(Color color, int id) : base(color, id)
         {
-            ImagePath = "fou.png";
+            ImagePath = color == Color.White ? "fou.png" : "fou_b.png";
         }
 
         public override bool CanMove(int x, int y, int x2, int y2)

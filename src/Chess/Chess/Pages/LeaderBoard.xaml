@@ -17,7 +17,9 @@
                      HeightRequest="50"
                      FlexLayout.AlignSelf="Start"
                      Margin="10"
+                        Clicked="OnBackButtonClicked"
                      />
+                
             </FlexLayout>
             <VerticalStackLayout
                 Margin="0, 100, 0, 0">

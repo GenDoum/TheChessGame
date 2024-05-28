@@ -16,22 +16,31 @@
             
             <VerticalStackLayout>
                 
-                <Image  Source="title.png" 
-                        Style="{StaticResource imgAppli}"
-                        Margin="100"/>
+                <AbsoluteLayout>
+                    <ImageButton Source="returnarrow.png"
+                                 HeightRequest="50"
+                                 AbsoluteLayout.LayoutBounds="0, 0, AutoSize, AutoSize"
+                                 AbsoluteLayout.LayoutFlags="PositionProportional"
+                                 Clicked="OnBackButtonClicked"
+                                 Margin="20, 20, 0, 0"/>
+                </AbsoluteLayout>
                 
-                <Image  Source="joueur1.png" 
-                        Style="{StaticResource imgAppli}"
-                        Margin="50"/>
-                
-                <Image  Source="vs.png" 
-                        Style="{StaticResource imgAppli}"
-                        Margin="50"/>
-                
-                <Image  Source="joueur2.png" 
-                        Style="{StaticResource imgAppli}"
-                        Margin="50"/>
-                
+                    <Image  Source="title.png" 
+                            Style="{StaticResource imgAppli}"
+                            Margin="100"/>
+                    
+                    <Image  Source="joueur1.png" 
+                            Style="{StaticResource imgAppli}"
+                            Margin="50"/>
+                    
+                    <Image  Source="vs.png" 
+                            Style="{StaticResource imgAppli}"
+                            Margin="50"/>
+                    
+                    <Image  Source="joueur2.png" 
+                            Style="{StaticResource imgAppli}"
+                            Margin="50"/>
+                    
             </VerticalStackLayout>
 
 
@@ -74,7 +83,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Image Grid.Column="2" 
+            <ImageButton Grid.Column="2" 
                    Source="pause.png" 
                    Style="{StaticResource imgAppli}"
                    VerticalOptions="Start"

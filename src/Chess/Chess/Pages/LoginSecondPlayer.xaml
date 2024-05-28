@@ -24,8 +24,12 @@
 
             <Image  Source="connexionjdeux.png"  
                         Style="{StaticResource imgAppli}"/>
+            
             <contentView:connexionModuleEntry/>
-            <contentView:connexionModuleButtons/>
+            <Button Text="Connexion" Style="{StaticResource buttonSyle}"
+                    Clicked="OnConnexionButtonClicked"/>
+            <Button Text="Annuler" Style="{StaticResource buttonSyle}"
+                    Clicked="OnCancelButtonClicked"/>
 
 
         </FlexLayout>

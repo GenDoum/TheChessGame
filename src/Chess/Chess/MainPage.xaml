@@ -21,22 +21,20 @@
             
             <Button Text="Connexion" 
                     Style="{StaticResource buttonSyle}"
+                    Clicked="OnConnexionClicked"/>
                     
-            />
 
             <Button Text="Inscription" 
                     Style="{StaticResource buttonSyle}" 
-                    
-            />
+                    Clicked="OnInscriptionClicked"/>
 
             <Button Text="Règles du jeu" 
                     Style="{StaticResource buttonSyle}"
-            />
+                    Clicked="OnRulesClicked"/>
 
             <Button Text="Scores des joueurs" 
                     Style="{StaticResource buttonSyle}"
-                    
-            />
+                    Clicked="OnLeaderBoardClicked"/>
 
             <Label Text="Jouer en tant qu'invité" 
                    Style="{StaticResource labelStyleBottom}"

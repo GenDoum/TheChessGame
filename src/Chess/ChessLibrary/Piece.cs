@@ -45,19 +45,6 @@ namespace ChessLibrary
             }
         }
 
-        public bool Moved
-        {
-            get { return _moved; }
-            protected set
-            {
-                if (_moved != value)
-                {
-                    _moved = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
         public string? ImagePath
         {
             get { return _imagePath; }

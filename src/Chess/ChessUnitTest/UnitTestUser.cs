@@ -124,4 +124,34 @@ public class UnitTestUser
         Assert.Null(user.Password);
     }
     
+    [Fact]
+    public void Pseudo_SetEmptyString_ThrowsArgumentException()
+    {
+        // Arrange
+        var user = new User("validPseudo", "password", Color.White, true, 0);
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => user.Pseudo = "");
+    }
+
+    [Fact]
+    public void Pseudo_SetWhitespaceString_ThrowsArgumentException()
+    {
+        // Arrange
+        var user = new User("validPseudo", "password", Color.White, true, 0);
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => user.Pseudo = "   ");
+    }
+
+    [Fact]
+    public void Pseudo_SetNull_ThrowsArgumentException()
+    {
+        // Arrange
+        var user = new User("validPseudo", "password", Color.White, true, 0);
+
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => user.Pseudo = null!);
+    }
+    
 }

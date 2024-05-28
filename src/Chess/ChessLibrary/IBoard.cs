@@ -18,7 +18,7 @@ namespace ChessLibrary
         /// <param name="initial"></param>
         /// <param name="final"></param>
         /// <returns></returns>
-        bool CanMovePiece(Piece? piece, Case initial,Case final);
+        bool CanMovePiece(Piece? piece, Case? initial,Case? final);
 
         /// <summary>
         /// Vérifier si le mouvement est valide
@@ -26,7 +26,7 @@ namespace ChessLibrary
         /// <param name="lcase"></param>
         /// <param name="final"></param>
         /// <returns></returns>
-        bool IsMoveValid(List<Case> lcase, Case final);
+        bool IsMoveValid(List<Case?> lcase, Case? final);
         
         /// <summary>
         /// Vérifier si le roi est en échec
@@ -34,7 +34,7 @@ namespace ChessLibrary
         /// <param name="king"></param>
         /// <param name="kingCase"></param>
         /// <returns></returns>
-        bool Echec(King? king,Case kingCase);
+        bool Echec(King? king,Case? kingCase);
 
     }
 }

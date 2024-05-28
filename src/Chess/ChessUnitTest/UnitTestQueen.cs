@@ -70,7 +70,7 @@ public class UnitTestQueen
         Queen? queen = new Queen(Color.Black, 1);
         Pawn? pawn = new Pawn(Color.White, 2);
         Case kingCase = new Case(4, 0, king);
-        Case queenCase = new Case(4, 2, queen);
+        Case? queenCase = new Case(4, 2, queen);
         Case pawnCase = new Case(3, 1, pawn);
         chessboard.AddPiece(king, 4, 0);
         chessboard.AddPiece(queen, 4, 2);

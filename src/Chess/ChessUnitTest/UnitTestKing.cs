@@ -34,7 +34,7 @@ public class UnitTestKing
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         King? king = new King(Color.White, 1);
-        Case kingCase = new Case(0, 0, king);
+        Case? kingCase = new Case(0, 0, king);
         chessboard.AddPiece(king, 0, 0);
         Pawn? enemyPawn = new Pawn(Color.Black, 2);
         chessboard.AddPiece(enemyPawn, 0, 1);
@@ -51,7 +51,7 @@ public class UnitTestKing
     {
         // Arrange
         King? king = new King(Color.White, 1);
-        Case kingCase = new Case(0, 0, king);
+        Case? kingCase = new Case(0, 0, king);
 
         // Act & Assert
         Assert.Throws<ArgumentNullException>(() => king.PossibleMoves(kingCase, null!));

@@ -7,7 +7,7 @@ namespace ChessLibrary
 {
     public class Chessboard : IBoard
     {
-        public Case[,] Board { get; private set; }
+        public Case?[,] Board { get; private set; }
 
 
 
@@ -21,7 +21,7 @@ namespace ChessLibrary
 
         private bool _isCheckingForCheck = false;
 
-        public Chessboard(Case[,] tcase, bool isEmpty)
+        public Chessboard(Case?[,] tcase, bool isEmpty)
         {
             Board = tcase;
 
@@ -57,11 +57,11 @@ namespace ChessLibrary
         public int NbRows => Board?.GetLength(0) ?? 0;
         public int NbColumns => Board?.GetLength(1) ?? 0;
         
-        public IEnumerable<Case> FlatBoard
+        public IEnumerable<Case?> FlatBoard
         {
             get
             {
-                List<Case> flatBoard = new();
+                List<Case?> flatBoard = new();
 
                 Case[,] b = new Case[NbRows, NbColumns];
 
@@ -155,14 +155,14 @@ namespace ChessLibrary
             }
         }
 
-        public bool IsMoveValid(List<Case> lcase, Case final)
+        public bool IsMoveValid(List<Case?> lcase, Case? final)
         {
             return lcase.Exists(i => i.Column == final.Column && i.Line == final.Line);
         }
 
-        public bool CanMovePiece(Piece? piece, Case initial, Case final)
+        public bool CanMovePiece(Piece? piece, Case? initial, Case? final)
         {
-            List<Case> possibleMoves = piece!.PossibleMoves(initial, this);
+            List<Case?> possibleMoves = piece!.PossibleMoves(initial, this);
 
             if (IsMoveValid(possibleMoves, final))
             {
@@ -179,7 +179,7 @@ namespace ChessLibrary
         }
 
 
-        public void ModifPawn(Pawn? p, Piece pi, Case c)
+        public void ModifPawn(Pawn? p, Piece pi, Case? c)
         {
             ArgumentNullException.ThrowIfNull(pi);
             ArgumentNullException.ThrowIfNull(p);
@@ -196,7 +196,7 @@ namespace ChessLibrary
             }
         }
 
-        public bool Echec( King king, Case kingCase)
+        public bool Echec( King king, Case? kingCase)
         {
             if (_isCheckingForCheck)
             {
@@ -209,7 +209,7 @@ namespace ChessLibrary
 
             foreach (var enemy  in enemyPieces)
             {
-                List<Case> possibleMoves;
+                List<Case?> possibleMoves;
 
                 if (enemy.piece is King)
                 {
@@ -266,7 +266,7 @@ namespace ChessLibrary
             return (color == Color.White ? (King)_whitePieces!.Find(x => x.piece is King)!.piece! : (King)_blackPieces!.Find(x => x.piece is King)!.piece!)!;
         }
 
-        public Case FindCase(Piece piece)
+        public Case? FindCase(Piece piece)
         {
             for (int i = 0; i < 8; i++)
             {
@@ -279,7 +279,7 @@ namespace ChessLibrary
             throw new Exception("Piece not found on the board.");
         }
 
-        public bool EchecMat(King? king, Case kingCase)
+        public bool EchecMat(King? king, Case? kingCase)
         {
             var possibleKingMoves = king!.PossibleMoves(kingCase, this);
 
@@ -327,7 +327,7 @@ namespace ChessLibrary
             return true;
         }
 
-        private bool TryMovePiece(Case initial, Case final)
+        private bool TryMovePiece(Case? initial, Case? final)
         {
             if (CanMovePiece(initial.Piece, initial, final))
             {
@@ -338,18 +338,18 @@ namespace ChessLibrary
             return false;
         }
 
-        private void UndoMovePiece(Case initial, Case final)
+        private void UndoMovePiece(Case? initial, Case? final)
         {
             initial.Piece = final.Piece;
             final.Piece = null;
         }
 
-        public bool CanDefendKing(List<CoPieces> teamPieces, Case kingCase)
+        public bool CanDefendKing(List<CoPieces> teamPieces, Case? kingCase)
         {
 
             foreach (var piece in teamPieces)
             {
-                List<Case> possibleMoves;
+                List<Case?> possibleMoves;
 
                 if (piece.piece is King)
                 {
@@ -369,7 +369,7 @@ namespace ChessLibrary
                 foreach (var move in possibleMoves)
                 {
                     Piece originalPiece = move.Piece!;
-                    Case originalCase = piece.CaseLink;
+                    Case? originalCase = piece.CaseLink;
 
                     move.Piece = piece.piece;
                     originalCase.Piece = null;

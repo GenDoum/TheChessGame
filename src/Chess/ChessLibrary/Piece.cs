@@ -64,6 +64,6 @@ namespace ChessLibrary
         /// <param name="caseInitial"></param>
         /// <param name="chessboard"></param>
         /// <returns></returns>
-        public abstract List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard);
+        public abstract List<Case?> PossibleMoves(Case? caseInitial, Chessboard chessboard);
     }
 }

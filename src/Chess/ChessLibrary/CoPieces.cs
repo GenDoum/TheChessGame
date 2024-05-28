@@ -5,6 +5,6 @@ namespace ChessLibrary;
 /// </summary>
 public struct CoPieces
 {
-    public Case CaseLink { get; set; }
+    public Case? CaseLink { get; set; }
     public Piece? piece { get; set; }
 }

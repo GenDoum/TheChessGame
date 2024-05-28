@@ -33,12 +33,12 @@ namespace ChessLibrary
             return true;
         }
 
-        public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
+        public override List<Case?> PossibleMoves(Case? caseInitial, Chessboard chessboard)
         {
             ArgumentNullException.ThrowIfNull(caseInitial);
             ArgumentNullException.ThrowIfNull(chessboard);
 
-            List<Case> result = new List<Case>();
+            List<Case?> result = new List<Case?>();
             (int colInc, int lineInc)[] directions = { (-1, 1), (1, 1), (-1, -1), (1, -1) }; // Top Left, Top Right, Bot Left, Bot Right
 
             foreach (var (colInc, lineInc) in directions)
@@ -49,7 +49,7 @@ namespace ChessLibrary
                     int newLine = caseInitial.Line + (lineInc * i);
                     if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                     {
-                        Case potentialCase = chessboard.Board[newColumn, newLine];
+                        Case? potentialCase = chessboard.Board[newColumn, newLine];
                         if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
                         {
                             if (FactPossibleMove(potentialCase))
@@ -67,7 +67,7 @@ namespace ChessLibrary
             return result;
         }
 
-        private bool FactPossibleMove(Case potentialCase)
+        private bool FactPossibleMove(Case? potentialCase)
         {
 
             if (potentialCase.IsCaseEmpty())

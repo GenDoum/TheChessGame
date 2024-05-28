@@ -32,12 +32,12 @@ namespace ChessLibrary
             throw new InvalidMovementException("Invalid move for Queen: not diagonal, horizontal or vertical.");
         }
 
-        public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
+        public override List<Case?> PossibleMoves(Case? caseInitial, Chessboard chessboard)
         {
 
             ArgumentNullException.ThrowIfNull(chessboard);
 
-            List<Case> result = new List<Case>();
+            List<Case?> result = new List<Case?>();
             (int, int)[] directions = { (0, 1), (0, -1), (-1, 0), (1, 0), (-1, 1), (1, 1), (-1, -1), (1, -1) };  // Top, Bot, Left, Right ,Top Left, Top Right, Bot Left,Bot Right
 
             foreach (var (colInc, lineInc) in directions)
@@ -48,7 +48,7 @@ namespace ChessLibrary
                     int newLine = caseInitial.Line + (lineInc * i);
                     if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                     {
-                        Case potentialCase = chessboard.Board[newColumn, newLine];
+                        Case? potentialCase = chessboard.Board[newColumn, newLine];
                         if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
                         {
                             if (potentialCase.IsCaseEmpty())

@@ -11,15 +11,15 @@ namespace ChessLibrary
 
 
 
-        public ReadOnlyCollection<CoPieces> WhitePieces => whitePieces.AsReadOnly();
+        public ReadOnlyCollection<CoPieces> WhitePieces => _whitePieces.AsReadOnly();
 
-        private readonly List<CoPieces> whitePieces = new List<CoPieces>();
-        public ReadOnlyCollection<CoPieces> BlackPieces => blackPieces.AsReadOnly();
+        private readonly List<CoPieces> _whitePieces = new List<CoPieces>();
+        public ReadOnlyCollection<CoPieces> BlackPieces => _blackPieces.AsReadOnly();
 
-        private readonly List<CoPieces> blackPieces= new List<CoPieces>();
+        private readonly List<CoPieces> _blackPieces= new List<CoPieces>();
 
 
-        private bool isCheckingForCheck = false;
+        private bool _isCheckingForCheck = false;
 
         public Chessboard(Case[,] tcase, bool isEmpty)
         {
@@ -147,11 +147,11 @@ namespace ChessLibrary
             Board[column, row] = new Case(column, row, piece);
             if (piece != null && piece.Color == Color.White)
             {
-                whitePieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
+                _whitePieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
             else
             {
-                blackPieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
+                _blackPieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
         }
 
@@ -166,7 +166,7 @@ namespace ChessLibrary
 
             if (IsMoveValid(possibleMoves, final))
             {
-                Piece originalPiece = final.Piece;
+                Piece originalPiece = final.Piece!;
                 final.Piece = piece;
                 initial.Piece = null;
 
@@ -186,26 +186,26 @@ namespace ChessLibrary
 
             if (pi.Color == Color.White)
             {
-                whitePieces.Add(new CoPieces { CaseLink = c, piece = pi });
-                whitePieces.Remove(new CoPieces { CaseLink = c, piece = p });
+                _whitePieces.Add(new CoPieces { CaseLink = c, piece = pi });
+                _whitePieces.Remove(new CoPieces { CaseLink = c, piece = p });
             }
             else
             {
-                blackPieces.Add(new CoPieces { CaseLink = c, piece = pi });
-                blackPieces.Remove(new CoPieces { CaseLink = c, piece = p });
+                _blackPieces.Add(new CoPieces { CaseLink = c, piece = pi });
+                _blackPieces.Remove(new CoPieces { CaseLink = c, piece = p });
             }
         }
 
         public bool Echec( King king, Case kingCase)
         {
-            if (isCheckingForCheck)
+            if (_isCheckingForCheck)
             {
                 return false;
             }
 
-            isCheckingForCheck = true;
+            _isCheckingForCheck = true;
 
-            var enemyPieces = king.Color == Color.White ? blackPieces : whitePieces;
+            var enemyPieces = king.Color == Color.White ? _blackPieces : _whitePieces;
 
             foreach (var enemy  in enemyPieces)
             {
@@ -223,17 +223,17 @@ namespace ChessLibrary
                 }
                 else
                 {
-                    possibleMoves = enemy.piece.PossibleMoves(enemy.CaseLink, this);
+                    possibleMoves = enemy.piece!.PossibleMoves(enemy.CaseLink, this);
                 }
 
                   if (possibleMoves.Any(move => move.Column == kingCase.Column && move.Line == kingCase.Line))
                 {
-                    isCheckingForCheck = false;
+                    _isCheckingForCheck = false;
                     return true;
                 }
              }
 
-            isCheckingForCheck = false;
+            _isCheckingForCheck = false;
             return false;
         }
 
@@ -247,7 +247,7 @@ namespace ChessLibrary
 
         public bool CanResolveCheck(Case initial, Case final, Color color)
         {
-            Piece originalFinalPiece = final.Piece;
+            Piece originalFinalPiece = final.Piece!;
             Piece? movingPiece = initial.Piece;
 
             final.Piece = initial.Piece;
@@ -263,7 +263,7 @@ namespace ChessLibrary
 
         public King FindKing(Color color)
         {
-            return color == Color.White ? (King)whitePieces!.Find(x => x.piece is King)!.piece : (King)blackPieces!.Find(x => x.piece is King)!.piece;
+            return (color == Color.White ? (King)_whitePieces!.Find(x => x.piece is King)!.piece! : (King)_blackPieces!.Find(x => x.piece is King)!.piece!)!;
         }
 
         public Case FindCase(Piece piece)
@@ -304,7 +304,7 @@ namespace ChessLibrary
             {
                 var piece = pieceInfo.piece;
                 var startCase = pieceInfo.CaseLink;
-                var possibleMoves = piece.PossibleMoves(startCase, this);
+                var possibleMoves = piece!.PossibleMoves(startCase, this);
 
                 foreach (var move in possibleMoves)
                 {

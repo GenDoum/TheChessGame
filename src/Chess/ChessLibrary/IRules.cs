@@ -18,7 +18,7 @@ namespace ChessLibrary
         /// <param name="final"></param>
         /// <param name="board"></param>
         /// <param name="actualPlayer"></param>
-        void MovePiece(Case initial,Case final,Chessboard board,User actualPlayer);
+        void MovePiece(Case? initial,Case? final,Chessboard board,User actualPlayer);
         
         /// <summary>
         /// Vérifier si le mouvement est valide

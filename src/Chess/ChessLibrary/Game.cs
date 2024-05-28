@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using ChessLibrary.Events;
 
 namespace ChessLibrary
 {
@@ -18,7 +19,7 @@ namespace ChessLibrary
         /// <summary>
         /// Événement déclenché lorsqu'un pion peut évoluer
         /// </summary>
-        public event EventHandler<EvolveNotifiedEventArgs> EvolveNotified;
+        public event EventHandler<EvolveNotifiedEventArgs> EvolveNotified = null!;
 
         /// <summary>
         /// Événement déclenché lorsqu'un pion peut évoluer
@@ -30,7 +31,7 @@ namespace ChessLibrary
         /// <summary>
         /// Événement déclenché lorsqu'un joueur gagne la partie
         /// </summary>
-        public event EventHandler<GameOverNotifiedEventArgs> GameOverNotified;
+        public event EventHandler<GameOverNotifiedEventArgs> GameOverNotified = null!;
 
         /// <summary>
         /// Événement déclenché lorsqu'un joueur gagne la partie
@@ -75,7 +76,7 @@ namespace ChessLibrary
             BlackCheck = false;
             this.Player1 = player1;
             this.Player2 = player2;
-            Case[,] allcase = new Case[8, 8];
+            Case?[,] allcase = new Case[8, 8];
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
@@ -89,10 +90,10 @@ namespace ChessLibrary
 
         }
 
+       
         /// <summary>
-        /// Vérifie si le joueur est en échec
+        /// Fonction qui vérifie si un joueur est en échec
         /// </summary>
-        /// <param name="game"></param>
         /// <param name="actualPlayer"></param>
         /// <returns></returns>
         public bool IsCheck(User actualPlayer)
@@ -126,7 +127,6 @@ namespace ChessLibrary
         public bool GameOver(User winner)
         {
             var pieces = (Player1.Color == Color.White) ? Board.CopyBlackPieces() : Board.CopyWhitePieces();
-            List<CoPieces> list = new List<CoPieces>();
             foreach (var pieceInfo in pieces)
             {
                 if (pieceInfo.piece is King king && Board.EchecMat(king, pieceInfo.CaseLink))
@@ -171,15 +171,15 @@ namespace ChessLibrary
         /// <param name="board"></param>
         /// <param name="actualPlayer"></param>
         /// <exception cref="InvalidOperationException"></exception>
-        public void MovePiece(Case initial, Case final, Chessboard board, User actualPlayer)
+        public void MovePiece(Case? initial, Case? final, Chessboard board, User actualPlayer)
         {
-            ArgumentNullException.ThrowIfNull(initial.Piece, "Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
+            ArgumentNullException.ThrowIfNull(initial!.Piece, "Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
             if (initial.Piece.Color != actualPlayer.Color)
                 throw new InvalidOperationException("Ce n'est pas le tour de ce joueur.");
             var blackPieces = board.CopyBlackPieces();
             var whitePieces = board.CopyWhitePieces();
             var movingPiece = initial.Piece;
-            var capturedPiece = final.Piece;
+            var capturedPiece = final!.Piece;
             if (board.CanMovePiece(movingPiece, initial, final)){ 
             // Simulation du mouvement pour la vérification
 
@@ -192,10 +192,10 @@ namespace ChessLibrary
                 // Annuler le mouvement temporaire
                 final.Piece = capturedPiece;
                 initial.Piece = movingPiece;
-                RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece);
+                RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece!);
                 throw new InvalidOperationException("Vous ne pouvez pas vous mettre en échec.");
             }
-            RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece);
+            RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece!);
                 initial.Piece = movingPiece;
                 final.Piece = capturedPiece;
                 // Vérification si le mouvement est légal et si cela peut résoudre un échec existant
@@ -218,7 +218,7 @@ namespace ChessLibrary
         }
 
 
-        public void RestorePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case initial, Case final, Chessboard board, Piece movedPiece, Piece capturedPiece)
+        public void RestorePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board, Piece movedPiece, Piece capturedPiece)
         {
             // Rétablir la pièce déplacée dans sa position originale
             var listToUpdate = movedPiece.Color == Color.White ? whitePieces : blackPieces;
@@ -235,10 +235,10 @@ namespace ChessLibrary
         }
 
 
-        public void UpdatePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case initial, Case final, Chessboard board)
+        public void UpdatePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board)
         {
-            var movedPiece = initial.Piece;
-            var capturedPiece = final.Piece;
+            var movedPiece = initial!.Piece;
+            var capturedPiece = final!.Piece;
             var listToUpdate = movedPiece!.Color == Color.White ? whitePieces : blackPieces;
 
             listToUpdate.RemoveAll(p => p.piece == movedPiece);
@@ -256,10 +256,10 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="initial"></param>
         /// <param name="final"></param>
-        private void ProcessPostMove(Case initial, Case final)
+        private void ProcessPostMove(Case? initial, Case? final)
         {
             // Mettre à jour les positions des cases
-            final.Piece = initial.Piece;
+            final!.Piece = initial!.Piece;
             initial.Piece = null;
 
             // Marquer les mouvements spéciaux comme le premier mouvement pour les rois, tours et pions

@@ -35,11 +35,11 @@ namespace ChessLibrary
         }
 
 
-        public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
+        public override List<Case?> PossibleMoves(Case? caseInitial, Chessboard chessboard)
         {
             ArgumentNullException.ThrowIfNull(chessboard);
 
-            List<Case> result = new List<Case>();
+            List<Case?> result = new List<Case?>();
 
             int[,] offsets = new int[,]
             {
@@ -54,7 +54,7 @@ namespace ChessLibrary
 
                 if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                 {
-                    Case potentialCase = chessboard.Board[newColumn, newLine];
+                    Case? potentialCase = chessboard.Board[newColumn, newLine];
                     if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine) && (!potentialCase.IsCaseEmpty() && potentialCase.Piece!.Color != this.Color || potentialCase.IsCaseEmpty()))
                         result.Add(potentialCase);
                 }

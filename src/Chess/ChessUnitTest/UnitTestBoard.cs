@@ -13,7 +13,7 @@ public class UnitTestBoard
     public void TestInitializeEmptyBoard()
     {
         // Arrange
-        Case[,] tcase = new Case[8, 8];
+        Case?[,] tcase = new Case[8, 8];
         Chessboard chessboard = new Chessboard(tcase, true);
 
         // Act
@@ -33,7 +33,7 @@ public class UnitTestBoard
     public void TestInitializeChessboard()
     {
         // Arrange
-        Case[,] tcase = new Case[8, 8];
+        Case?[,] tcase = new Case[8, 8];
         Chessboard chessboard = new Chessboard(tcase, false);
 
         // Act
@@ -57,7 +57,7 @@ public class UnitTestBoard
     public void TestPiecePlacement(int x, int y, Type expectedType, Color expectedColor)
     {
         // Arrange
-        Case[,] tcase = new Case[8, 8];
+        Case?[,] tcase = new Case[8, 8];
         Chessboard chessboard = new Chessboard(tcase, false);
 
         // Act
@@ -152,13 +152,13 @@ public class UnitTestBoard
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        List<Case> Lcase = new List<Case>
+        List<Case?> Lcase = new List<Case?>
         {
             new Case(0, 0, null),
             new Case(1, 1, null),
             new Case(2, 2, null)
         };
-        Case final = new Case(1, 1, null);
+        Case? final = new Case(1, 1, null);
 
         // Act
         bool result = chessboard.IsMoveValid(Lcase, final);
@@ -171,13 +171,13 @@ public class UnitTestBoard
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        List<Case> lcase = new List<Case>
+        List<Case?> lcase = new List<Case?>
         {
             new Case(0, 0, null),
             new Case(1, 1, null),
             new Case(2, 2, null)
         };
-        Case final = new Case(1, 1, null);
+        Case? final = new Case(1, 1, null);
 
         // Act
         bool result = chessboard.IsMoveValid(lcase, final);
@@ -191,13 +191,13 @@ public class UnitTestBoard
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        List<Case> lcase = new List<Case>
+        List<Case?> lcase = new List<Case?>
         {
             new Case(0, 0, null),
             new Case(1, 1, null),
             new Case(2, 2, null)
         };
-        Case final = new Case(3, 3, null);
+        Case? final = new Case(3, 3, null);
 
         // Act
         bool result = chessboard.IsMoveValid(lcase, final);
@@ -211,13 +211,13 @@ public class UnitTestBoard
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        List<Case> lcase = new List<Case>
+        List<Case?> lcase = new List<Case?>
         {
             new Case(0, 0, null),
             new Case(1, 1, new Pawn(Color.White, 1)),
             new Case(2, 2, null)
         };
-        Case final = new Case(1, 1, new Pawn(Color.White, 1));
+        Case? final = new Case(1, 1, new Pawn(Color.White, 1));
 
         // Act
         bool result = chessboard.IsMoveValid(lcase, final);
@@ -231,8 +231,8 @@ public class UnitTestBoard
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        List<Case> lcase = new List<Case>();
-        Case final = new Case(1, 1, null);
+        List<Case?> lcase = new List<Case?>();
+        Case? final = new Case(1, 1, null);
 
         // Act
         bool result = chessboard.IsMoveValid(lcase, final);
@@ -246,13 +246,13 @@ public class UnitTestBoard
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        List<Case> lcase = new List<Case>
+        List<Case?> lcase = new List<Case?>
         {
             new Case(0, 0, null),
             new Case(1, 1, null),
             new Case(2, 2, null)
         };
-        Case final = new Case(8, 8, null); // Out of bounds case
+        Case? final = new Case(8, 8, null); // Out of bounds case
 
         // Act
         bool result = chessboard.IsMoveValid(lcase, final);
@@ -266,8 +266,8 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Piece? piece = new Pawn(Color.White, 1);
-        Case initial = new Case(0, 1, piece);
-        Case final = new Case(1, 2, null); // Diagonal move without capture
+        Case? initial = new Case(0, 1, piece);
+        Case? final = new Case(1, 2, null); // Diagonal move without capture
         chessboard.AddPiece(piece, 0, 1);
         Piece? king = new King(Color.White, 1);
         chessboard.AddPiece(king, 7, 7);
@@ -285,8 +285,8 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Piece? piece = new Rook(Color.White, 1);
-        Case initial = new Case(0, 0, piece);
-        Case final = new Case(0, 5, null);
+        Case? initial = new Case(0, 0, piece);
+        Case? final = new Case(0, 5, null);
         chessboard.AddPiece(piece, 0, 0);
         Piece? king = new King(Color.White, 1);
         chessboard.AddPiece(king, 7, 7);
@@ -304,8 +304,8 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Piece? piece = new Rook(Color.White, 1);
-        Case initial = new Case(0, 0, piece);
-        Case final = new Case(1, 1, null); // Diagonal move
+        Case? initial = new Case(0, 0, piece);
+        Case? final = new Case(1, 1, null); // Diagonal move
         chessboard.AddPiece(piece, 0, 0);
         Piece? king = new King(Color.White, 1);
         chessboard.AddPiece(king, 7, 7);
@@ -323,8 +323,8 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Piece? piece = new Knight(Color.White, 1);
-        Case initial = new Case(1, 0, piece);
-        Case final = new Case(2, 2, null);
+        Case? initial = new Case(1, 0, piece);
+        Case? final = new Case(2, 2, null);
         chessboard.AddPiece(piece, 1, 0);
         Piece? king = new King(Color.White, 1);
         chessboard.AddPiece(king, 7, 7);
@@ -342,8 +342,8 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Piece? piece = new King(Color.White, 1);
-        Case initial = new Case(4, 4, piece);
-        Case final = new Case(4, 5, null);
+        Case? initial = new Case(4, 4, piece);
+        Case? final = new Case(4, 5, null);
         chessboard.AddPiece(piece, 4, 4);
 
         // Act
@@ -359,8 +359,8 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Piece? piece = new King(Color.White, 1);
-        Case initial = new Case(4, 4, piece);
-        Case final = new Case(4, 6, null); // Move more than one square
+        Case? initial = new Case(4, 4, piece);
+        Case? final = new Case(4, 6, null); // Move more than one square
         chessboard.AddPiece(piece, 4, 4);
         Piece? king = new King(Color.White, 1);
         chessboard.AddPiece(king, 7, 7);
@@ -377,8 +377,8 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Piece? piece = new Bishop(Color.White, 1);
-        Case initial = new Case(2, 0, piece);
-        Case final = new Case(5, 3, null);
+        Case? initial = new Case(2, 0, piece);
+        Case? final = new Case(5, 3, null);
         chessboard.AddPiece(piece, 2, 0);
         Piece? king = new King(Color.White, 1);
         chessboard.AddPiece(king, 7, 7);
@@ -396,8 +396,8 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Piece? piece = new Bishop(Color.White, 1);
-        Case initial = new Case(2, 0, piece);
-        Case final = new Case(4, 1, null); // Horizontal move
+        Case? initial = new Case(2, 0, piece);
+        Case? final = new Case(4, 1, null); // Horizontal move
         chessboard.AddPiece(piece, 2, 0);
         Piece? king = new King(Color.White, 1);
         chessboard.AddPiece(king, 7, 7);
@@ -415,8 +415,8 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Piece? piece = new Queen(Color.White, 1);
-        Case initial = new Case(3, 0, piece);
-        Case final = new Case(6, 3, null);
+        Case? initial = new Case(3, 0, piece);
+        Case? final = new Case(6, 3, null);
         chessboard.AddPiece(piece, 3, 0);
         Piece? king = new King(Color.White, 1);
         chessboard.AddPiece(king, 7, 7);
@@ -434,8 +434,8 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Piece? piece = new Queen(Color.White, 1);
-        Case initial = new Case(3, 0, piece);
-        Case final = new Case(3, 4, null);
+        Case? initial = new Case(3, 0, piece);
+        Case? final = new Case(3, 4, null);
         chessboard.AddPiece(piece, 3, 0);
         Piece? king = new King(Color.White, 1);
         chessboard.AddPiece(king, 7, 7);
@@ -453,8 +453,8 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Piece? piece = new Queen(Color.White, 1);
-        Case initial = new Case(3, 0, piece);
-        Case final = new Case(4, 2, null); // L-shaped move
+        Case? initial = new Case(3, 0, piece);
+        Case? final = new Case(4, 2, null); // L-shaped move
         chessboard.AddPiece(piece, 3, 0);
         Piece? king = new King(Color.White, 1);
         chessboard.AddPiece(king, 7, 7);
@@ -472,8 +472,8 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Piece? piece = new Pawn(Color.White, 1);
-        Case initial = new Case(0, 1, piece);
-        Case final = new Case(0, 3, null);
+        Case? initial = new Case(0, 1, piece);
+        Case? final = new Case(0, 3, null);
         chessboard.AddPiece(piece, 0, 1);
         Piece? king = new King(Color.White, 1);
         chessboard.AddPiece(king, 7, 7);
@@ -491,8 +491,8 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Piece? piece = new Pawn(Color.White, 1);
-        Case initial = new Case(0, 1, piece);
-        Case final = new Case(1, 2, null); // Diagonal move without capture
+        Case? initial = new Case(0, 1, piece);
+        Case? final = new Case(1, 2, null); // Diagonal move without capture
         chessboard.AddPiece(piece, 0, 1);
         Piece? king = new King(Color.White, 1);
         chessboard.AddPiece(king, 7, 7);
@@ -512,8 +512,8 @@ public class UnitTestBoard
         Piece? piece = new Pawn(Color.White, 1);
         Piece? opponentPiece = new Pawn(Color.Black, 2);
         Piece? king = new King(Color.White, 1);
-        Case initial = new Case(0, 1, piece);
-        Case final = new Case(1, 2, opponentPiece);
+        Case? initial = new Case(0, 1, piece);
+        Case? final = new Case(1, 2, opponentPiece);
         
         chessboard.AddPiece(piece, 0, 1);
         chessboard.AddPiece(opponentPiece, 1, 2);
@@ -532,8 +532,8 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Piece? piece = new Pawn(Color.White, 1);
-        Case initial = new Case(0, 1, piece);
-        Case final = new Case(0, 0, null); // Backward move
+        Case? initial = new Case(0, 1, piece);
+        Case? final = new Case(0, 0, null); // Backward move
         chessboard.AddPiece(piece, 0, 1);
         Piece? king = new King(Color.White, 1);
         chessboard.AddPiece(king, 7, 7);
@@ -551,7 +551,7 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Pawn? pawn = new Pawn(Color.White, 1);
-        Case caseForPawn = new Case(0, 7, pawn);
+        Case? caseForPawn = new Case(0, 7, pawn);
         Queen newPiece = new Queen(Color.White, 2);
 
         // Act
@@ -573,7 +573,7 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Pawn? pawn = new Pawn(Color.White, 1);
-        Case caseForPawn = new Case(0, 7, pawn);
+        Case? caseForPawn = new Case(0, 7, pawn);
         Queen newPiece = new Queen(Color.White, 2);
         chessboard.AddPiece(pawn, 0, 7); // Ajoute le pion à l'échiquier
 
@@ -591,7 +591,7 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Pawn? pawn = new Pawn(Color.Black, 1);
-        Case caseForPawn = new Case(0, 0, pawn);
+        Case? caseForPawn = new Case(0, 0, pawn);
         Queen newPiece = new Queen(Color.Black, 2);
         chessboard.AddPiece(pawn, 0, 0); // Ajoute le pion à l'échiquier
 
@@ -609,7 +609,7 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Queen newPiece = new Queen(Color.White, 2);
-        Case caseForPawn = new Case(0, 7, newPiece);
+        Case? caseForPawn = new Case(0, 7, newPiece);
 
         // Act & Assert
         Assert.Throws<ArgumentNullException>(() => chessboard.ModifPawn(null, newPiece, caseForPawn));
@@ -621,7 +621,7 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Pawn? pawn = new Pawn(Color.White, 1);
-        Case caseForPawn = new Case(0, 7, pawn);
+        Case? caseForPawn = new Case(0, 7, pawn);
         chessboard.AddPiece(pawn, 0, 7); // Ajoute le pion à l'échiquier
 
         // Act & Assert
@@ -635,7 +635,7 @@ public class UnitTestBoard
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         Pawn? pawn = new Pawn(Color.White, 1);
         Queen existingPiece = new Queen(Color.White, 2);
-        Case caseForPawn = new Case(0, 7, existingPiece);
+        Case? caseForPawn = new Case(0, 7, existingPiece);
         Queen newPiece = new Queen(Color.White, 3);
         chessboard.AddPiece(pawn, 0, 7); // Ajoute le pion à l'échiquier
         chessboard.AddPiece(existingPiece, 0, 7); // Ajoute une pièce existante sur la même case
@@ -656,7 +656,7 @@ public class UnitTestBoard
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         King? king = new King(Color.White, 1);
-        Case kingCase = new Case(0, 0, king);
+        Case? kingCase = new Case(0, 0, king);
         chessboard.AddPiece(king, 0, 0);
 
         // Act
@@ -672,7 +672,7 @@ public class UnitTestBoard
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         King? king = new King(Color.White, 1);
         Pawn? pawn = new Pawn(Color.Black, 1);
-        Case kingCase = new Case(4, 4, king);
+        Case? kingCase = new Case(4, 4, king);
         chessboard.AddPiece(king, 4, 4);
         chessboard.AddPiece(pawn, 3, 5);
 
@@ -689,7 +689,7 @@ public class UnitTestBoard
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         King? king = new King(Color.White, 1);
         Knight? knight = new Knight(Color.Black, 1);
-        Case kingCase = new Case(4, 4, king);
+        Case? kingCase = new Case(4, 4, king);
         chessboard.AddPiece(king, 4, 4);
         chessboard.AddPiece(knight, 2, 3);
 
@@ -706,7 +706,7 @@ public class UnitTestBoard
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         King? king = new King(Color.White, 1);
         Queen? queen = new Queen(Color.Black, 1);
-        Case kingCase = new Case(4, 4, king);
+        Case? kingCase = new Case(4, 4, king);
         chessboard.AddPiece(king, 4, 4);
         chessboard.AddPiece(queen, 4, 7);
 
@@ -723,7 +723,7 @@ public class UnitTestBoard
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         King? king = new King(Color.White, 1);
         Bishop? bishop = new Bishop(Color.Black, 1);
-        Case kingCase = new Case(0, 0, king);
+        Case? kingCase = new Case(0, 0, king);
         chessboard.AddPiece(king, 0, 0);
         chessboard.AddPiece(bishop, 2, 2);
 
@@ -740,7 +740,7 @@ public class UnitTestBoard
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
         King? king = new King(Color.White, 1);
         Rook? rook = new Rook(Color.Black, 1);
-        Case kingCase = new Case(0, 0, king);
+        Case? kingCase = new Case(0, 0, king);
         chessboard.AddPiece(king, 0, 0);
         chessboard.AddPiece(rook, 0, 7);
 
@@ -858,7 +858,7 @@ public class UnitTestBoard
         King? king = new King(Color.White, 1);
         Queen? queen = new Queen(Color.Black, 1);
         Bishop? bishop = new Bishop(Color.Black, 1);
-        Case kingCase = new Case(0, 0, king);
+        Case? kingCase = new Case(0, 0, king);
         chessboard.AddPiece(king, 0, 0);
         chessboard.AddPiece(queen, 1, 1);
         chessboard.AddPiece(bishop, 2, 2);
@@ -880,7 +880,7 @@ public class UnitTestBoard
         Queen? blackQueen = new Queen(Color.Black, 2);
         Rook? blackRook = new Rook(Color.Black, 3);
 
-        Case kingCase = new Case(0, 0, whiteKing);
+        Case? kingCase = new Case(0, 0, whiteKing);
 
         chessboard.AddPiece(whiteKing, 0, 0);
         chessboard.AddPiece(blackQueen, 1, 1);
@@ -901,7 +901,7 @@ public class UnitTestBoard
         Rook? blackRook1 = new Rook(Color.Black, 2);
         Rook? blackRook2 = new Rook(Color.Black, 3);
 
-        Case kingCase = new Case(0, 0, whiteKing);
+        Case? kingCase = new Case(0, 0, whiteKing);
 
         chessboard.AddPiece(whiteKing, 0, 0);
         chessboard.AddPiece(blackRook1, 0, 2);

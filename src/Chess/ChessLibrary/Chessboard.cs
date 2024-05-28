@@ -279,9 +279,9 @@ namespace ChessLibrary
             throw new Exception("Piece not found on the board.");
         }
 
-        public bool EchecMat(King king, Case kingCase)
+        public bool EchecMat(King? king, Case kingCase)
         {
-            var possibleKingMoves = king.PossibleMoves(kingCase, this);
+            var possibleKingMoves = king!.PossibleMoves(kingCase, this);
 
             bool kingCanEscape = false;
             bool piecesCanSave = false;
@@ -363,12 +363,12 @@ namespace ChessLibrary
                 }
                 else
                 {
-                    possibleMoves = piece.piece.PossibleMoves(piece.CaseLink, this);
+                    possibleMoves = piece.piece!.PossibleMoves(piece.CaseLink, this);
                 }
 
                 foreach (var move in possibleMoves)
                 {
-                    Piece originalPiece = move.Piece;
+                    Piece originalPiece = move.Piece!;
                     Case originalCase = piece.CaseLink;
 
                     move.Piece = piece.piece;

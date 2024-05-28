@@ -1,5 +1,6 @@
 namespace ChessLibrary;
 
+[Serializable]
 public class InvalidMovementException : Exception
 {
     /// <summary>

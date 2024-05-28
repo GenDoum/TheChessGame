@@ -54,6 +54,6 @@ public class UnitTestKing
         Case kingCase = new Case(0, 0, king);
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => king.PossibleMoves(kingCase, null));
+        Assert.Throws<ArgumentNullException>(() => king.PossibleMoves(kingCase, null!));
     }
 }

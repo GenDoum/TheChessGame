@@ -88,7 +88,7 @@ namespace ChessLibrary
         
         public event PropertyChangedEventHandler? PropertyChanged;
         
-        void OnPropertyChanged([CallerMemberName]string propertyName = null)
+        void OnPropertyChanged([CallerMemberName]string propertyName = null!)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

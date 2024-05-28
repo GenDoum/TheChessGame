@@ -239,7 +239,7 @@ namespace ChessLibrary
         {
             var movedPiece = initial.Piece;
             var capturedPiece = final.Piece;
-            var listToUpdate = movedPiece.Color == Color.White ? whitePieces : blackPieces;
+            var listToUpdate = movedPiece!.Color == Color.White ? whitePieces : blackPieces;
 
             listToUpdate.RemoveAll(p => p.piece == movedPiece);
             listToUpdate.Add(new CoPieces { CaseLink = final, piece = movedPiece });

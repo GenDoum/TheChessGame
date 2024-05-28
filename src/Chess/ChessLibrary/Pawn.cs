@@ -112,7 +112,7 @@ namespace ChessLibrary
                 if (IsWithinBoard(newLine, col, chessboard))
                 {
                     Case potentialCase = chessboard.Board[col, newLine];
-                    if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
+                    if (!potentialCase.IsCaseEmpty() && potentialCase.Piece!.Color != this.Color)
                     {
                         result.Add(potentialCase);
                     }

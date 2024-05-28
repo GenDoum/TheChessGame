@@ -565,7 +565,7 @@ public class UnitTestBoard
         Assert.Throws<ArgumentNullException>(() => chessboard.ModifPawn(null, newPiece, caseForPawn));
 
         // Test null new piece
-        Assert.Throws<ArgumentNullException>(() => chessboard.ModifPawn(pawn, null, caseForPawn));
+        Assert.Throws<ArgumentNullException>(() => chessboard.ModifPawn(pawn, null!, caseForPawn));
     }
     [Fact]
     public void TestModifPawn_WhitePawnToQueen()
@@ -625,7 +625,7 @@ public class UnitTestBoard
         chessboard.AddPiece(pawn, 0, 7); // Ajoute le pion à l'échiquier
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => chessboard.ModifPawn(pawn, null, caseForPawn));
+        Assert.Throws<ArgumentNullException>(() => chessboard.ModifPawn(pawn, null!, caseForPawn));
     }
 
     [Fact]

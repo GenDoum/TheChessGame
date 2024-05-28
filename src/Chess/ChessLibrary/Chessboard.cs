@@ -64,8 +64,6 @@ namespace ChessLibrary
             {
                 List<Case?> flatBoard = new();
 
-                Case[,] b = new Case[NbRows, NbColumns];
-
                 for(int j = 0; j < NbColumns; j++)
                 {
                     for (int i = 0; i < NbRows; i++)
@@ -206,20 +204,18 @@ namespace ChessLibrary
 
             _isCheckingForCheck = true;
 
-            var enemyPieces = king.Color == Color.White ? _blackPieces : _whitePieces;
+            var enemyPieces = king!.Color == Color.White ? _blackPieces : _whitePieces;
 
             foreach (var enemy  in enemyPieces)
             {
                 List<Case?> possibleMoves;
 
-                if (enemy.piece is King)
+                if (enemy.piece is King kingTest)
                 {
-                    King kingTest = (King)enemy.piece;
                     possibleMoves = kingTest.CanEat(enemy.CaseLink, this);
                 }
-                else if (enemy.piece is Pawn)
+                else if (enemy.piece is Pawn pawnTest)
                 {
-                    Pawn pawnTest = (Pawn)enemy.piece;
                     possibleMoves = pawnTest.CanEat(enemy.CaseLink, this);
                 }
                 else
@@ -277,7 +273,7 @@ namespace ChessLibrary
                         return Board[i, j];
                 }
             }
-            throw new Exception("Piece not found on the board.");
+            throw new ArgumentException("Piece not found on the board.");
         }
 
         public bool EchecMat(King? king, Case? kingCase)
@@ -333,7 +329,7 @@ namespace ChessLibrary
             return false;
         }
 
-        private void UndoMovePiece(Case? initial, Case? final)
+        private static void UndoMovePiece(Case? initial, Case? final)
         {
             initial!.Piece = final!.Piece;
             final.Piece = null;
@@ -346,14 +342,12 @@ namespace ChessLibrary
             {
                 List<Case?> possibleMoves;
                 
-                if (piece.piece is King)
+                if (piece.piece is King kingPiece)
                 {
-                    King kingPiece = (King)piece.piece;
                     possibleMoves = kingPiece.CanEat(piece.CaseLink, this);
                 }
-                else if (piece.piece is Pawn)
+                else if (piece.piece is Pawn pawnPiece)
                 {
-                    Pawn pawnPiece = (Pawn)piece.piece;
                     possibleMoves = pawnPiece.CanEat(piece.CaseLink, this);
                 }
                 else

@@ -161,7 +161,7 @@
         </Setter>
         <Setter Property="TextColor" Value="Grey"/>
         <Setter Property="HeightRequest" Value="20"/>
-        <Setter Property="TextColor" Value="Blue"/>
+        <Setter Property="TextColor" Value="Gray"/>
         <Setter Property="Background" Value="Transparent"/>
     </Style>
 

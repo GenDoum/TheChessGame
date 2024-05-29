@@ -44,16 +44,16 @@ public class UnitTestBoard
         for (int i = 0; i < 8; i++)
         {
             Assert.IsType<Pawn>(chessboard.Board[i, 1]!.Piece);
-            Assert.Equal(Color.White, chessboard.Board[i, 1]!.Piece!.Color);
+            Assert.Equal(Color.Black, chessboard.Board[i, 1]!.Piece!.Color);
 
             Assert.IsType<Pawn>(chessboard.Board[i, 6]!.Piece);
-            Assert.Equal(Color.Black, chessboard.Board[i, 6]!.Piece!.Color);
+            Assert.Equal(Color.White, chessboard.Board[i, 6]!.Piece!.Color);
         }
     }
 
     [Theory]
-    [InlineData(0, 1, typeof(Pawn), Color.White)]
-    [InlineData(0, 6, typeof(Pawn), Color.Black)]
+    [InlineData(0, 1, typeof(Pawn), Color.Black)]
+    [InlineData(0, 6, typeof(Pawn), Color.White)]
     public void TestPiecePlacement(int x, int y, Type expectedType, Color expectedColor)
     {
         // Arrange
@@ -69,14 +69,14 @@ public class UnitTestBoard
     }
 
     [Theory]
-    [InlineData(0, 0, typeof(Rook))]
-    [InlineData(1, 0, typeof(Knight))]
-    [InlineData(2, 0, typeof(Bishop))]
-    [InlineData(3, 0, typeof(Queen))]
-    [InlineData(4, 0, typeof(King))]
-    [InlineData(5, 0, typeof(Bishop))]
-    [InlineData(6, 0, typeof(Knight))]
-    [InlineData(7, 0, typeof(Rook))]
+    [InlineData(0, 7, typeof(Rook))]
+    [InlineData(1, 7, typeof(Knight))]
+    [InlineData(2, 7, typeof(Bishop))]
+    [InlineData(3, 7, typeof(Queen))]
+    [InlineData(4, 7, typeof(King))]
+    [InlineData(5, 7, typeof(Bishop))]
+    [InlineData(6, 7, typeof(Knight))]
+    [InlineData(7, 7, typeof(Rook))]
     public void TestInitializeWhitePieces(int column, int row, Type pieceType)
     {
         // Arrange
@@ -91,14 +91,14 @@ public class UnitTestBoard
     }
 
     [Theory]
-    [InlineData(0, 7, typeof(Rook))]
-    [InlineData(1, 7, typeof(Knight))]
-    [InlineData(2, 7, typeof(Bishop))]
-    [InlineData(3, 7, typeof(Queen))]
-    [InlineData(4, 7, typeof(King))]
-    [InlineData(5, 7, typeof(Bishop))]
-    [InlineData(6, 7, typeof(Knight))]
-    [InlineData(7, 7, typeof(Rook))]
+    [InlineData(0, 0, typeof(Rook))]
+    [InlineData(1, 0, typeof(Knight))]
+    [InlineData(2, 0, typeof(Bishop))]
+    [InlineData(3, 0, typeof(Queen))]
+    [InlineData(4, 0, typeof(King))]
+    [InlineData(5, 0, typeof(Bishop))]
+    [InlineData(6, 0, typeof(Knight))]
+    [InlineData(7, 0, typeof(Rook))]
     public void TestInitializeBlackPieces(int column, int row, Type pieceType)
     {
         // Arrange
@@ -912,6 +912,100 @@ public class UnitTestBoard
 
         // Assert
         Assert.True(result); // The two rooks should put the king in checkmate
+    }
+    
+    [Fact]
+    public void TestCopyWhitePieces()
+    {
+        // Arrange
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var whitePiece = new Pawn(Color.White, 1);
+        chessboard.AddPiece(whitePiece, 0, 0);
+
+        // Act
+        var copiedPieces = chessboard.CopyWhitePieces();
+
+        // Assert
+        Assert.Single(copiedPieces);
+        Assert.Equal(whitePiece, copiedPieces[0].piece);
+    }
+
+    [Fact]
+    public void TestCopyBlackPieces()
+    {
+        // Arrange
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var blackPiece = new Pawn(Color.Black, 1);
+        chessboard.AddPiece(blackPiece, 0, 0);
+
+        // Act
+        var copiedPieces = chessboard.CopyBlackPieces();
+
+        // Assert
+        Assert.Single(copiedPieces);
+        Assert.Equal(blackPiece, copiedPieces[0].piece);
+    }
+
+    [Fact]
+    public void TestNbRowsAndNbColumns()
+    {
+        // Arrange
+        var chessboard = new Chessboard(new Case[8, 8], true);
+
+        // Act & Assert
+        Assert.Equal(8, chessboard.NbRows);
+        Assert.Equal(8, chessboard.NbColumns);
+    }
+
+    [Fact]
+    public void TestFlatBoard()
+    {
+        // Arrange
+        var chessboard = new Chessboard(new Case[8, 8], true);
+
+        // Act
+        var flatBoard = chessboard.FlatBoard;
+
+        // Assert
+        Assert.Equal(64, flatBoard.Count());
+    }
+
+    [Fact]
+    public void TestFindCase()
+    {
+        // Arrange
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var king = new King(Color.White, 1);
+        chessboard.Board[0, 0] = new Case(0, 0, king);
+
+        // Act
+        var result = chessboard.FindCase(king);
+
+        // Assert
+        Assert.Equal(chessboard.Board[0, 0], result);
+    }
+    
+    [Fact]
+    public void TestCanDefendKing()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King whiteKing = new King(Color.White, 1);
+        Pawn whitePawn = new Pawn(Color.White, 2);
+        Queen blackQueen = new Queen(Color.Black, 3);
+
+        chessboard.AddPiece(whiteKing, 4, 4);
+        chessboard.AddPiece(whitePawn, 3, 3);
+        chessboard.AddPiece(blackQueen, 5, 5);
+
+        List<CoPieces> whitePieces = chessboard.CopyWhitePieces();
+        Case kingCase = chessboard.FindCase(whiteKing);
+
+        // Act
+        bool result = chessboard.CanDefendKing(whitePieces, kingCase);
+
+        // Assert
+        Assert.False(result); // The pawn should be able to capture the queen and defend the king
     }
 
 }

@@ -523,7 +523,7 @@ namespace ConsoleChess
 
             User player1 = new User(Color.White);
             User player2 = new User(Color.Black);
-
+            
             menuAccueil(player1, player2);
 
   

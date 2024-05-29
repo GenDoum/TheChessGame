@@ -80,16 +80,17 @@ public class UnitTestRook
     public void PossibleMoves_PotentialCaseNotEmptyAndDifferentColor_AddsToResult()
     {
         // Arrange
-        var rook = new Rook(Color.White, 1);
         var chessboard = new Chessboard(new Case[8, 8], true);
-        var caseInitial = new Case(4, 4, rook);
-        chessboard.Board[5, 4] = new Case(5, 4, new Rook(Color.Black, 2)); // Potential case with a piece of different color
+        var rook = new Rook(Color.White, 1);
+        var enemyPiece = new Pawn(Color.Black, 2);
+        chessboard.Board[4, 4] = new Case(4, 4, rook);
+        chessboard.Board[4, 5] = new Case(4, 5, enemyPiece);
 
         // Act
-        var result = rook.PossibleMoves(caseInitial, chessboard);
+        var result = rook.PossibleMoves(chessboard.Board[4, 4], chessboard);
 
         // Assert
-        Assert.Contains(chessboard.Board[5, 4], result);
+        Assert.Contains(result, c => c.Column == 4 && c.Line == 5);
     }
 
     [Fact]
@@ -133,5 +134,23 @@ public class UnitTestRook
 
         // Assert
         Assert.False(result);
+    }
+    
+    [Fact]
+    public void TestRookPossibleMoves_WithEnemyPiece()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        Rook rook = new Rook(Color.White, 1);
+        Case rookCase = new Case(0, 0, rook);
+        chessboard.AddPiece(rook, 0, 0);
+        Pawn enemyPawn = new Pawn(Color.Black, 2);
+        chessboard.AddPiece(enemyPawn, 0, 3);
+
+        // Act
+        var possibleMoves = rook.PossibleMoves(rookCase, chessboard);
+
+        // Assert
+        Assert.Contains(possibleMoves, c => c!.Column == 0 && c.Line == 3);
     }
 }

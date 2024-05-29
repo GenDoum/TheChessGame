@@ -12,7 +12,6 @@
 
 
             <VerticalStackLayout >
-                
             
                 <FlexLayout Margin="0, 0, 0, 150">
                     <ImageButton
@@ -20,14 +19,15 @@
                         HeightRequest="50"
                         FlexLayout.AlignSelf="Start"
                         Margin="10"
+                        Clicked="OnBackButtonClicked"
                         />
+                    
                 </FlexLayout>
+                
                 <FlexLayout
                     JustifyContent="Center"
                     AlignItems="Center"
                     Direction="Column">
-
-
 
                     <Image 
                         Source="inscription.png" 
@@ -49,10 +49,12 @@
                     
                     <Button Text="Inscription" 
                             Style="{StaticResource buttonSyle}"
+                            Clicked="OnRegisterButtonClicked"
                     />
                     
                     <Button Text="Annuler" 
                             Style="{StaticResource buttonSyle}"
+                            Clicked="OnCancelButtonClicked"
                     />
                     
                 </FlexLayout>

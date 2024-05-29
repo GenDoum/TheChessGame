@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Chess.contentView.connexionModuleButtons">
     <VerticalStackLayout>
-        <Button Text="Connexion" Style="{StaticResource buttonSyle}"/>
-        <Button Text="Annuler" Style="{StaticResource buttonSyle}"/>
+        <Button Text="Connexion" Style="{StaticResource buttonSyle}"
+                Clicked="OnConnexionButtonClicked"/>
+        <Button Text="Annuler" Style="{StaticResource buttonSyle}"
+                Clicked="OnCancelButtonClicked"/>
     </VerticalStackLayout>
 </ContentView>

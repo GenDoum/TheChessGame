@@ -12,4 +12,19 @@ public partial class Register : ContentPage
     {
         InitializeComponent();
     }
+    
+    async void OnRegisterButtonClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//page/LogIn");
+    }
+    
+    async void OnCancelButtonClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//page/MainPage");
+    }
+    
+    async void OnBackButtonClicked(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//page/MainPage");
+    }
 }

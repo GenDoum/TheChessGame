@@ -95,6 +95,8 @@ public class TestData
 
         yield return new object[] { 1, 1, 3, 4 }; // Irregular move
         yield return new object[] { 2, 2, 4, 5 }; // Irregular move
+        
+        yield return new object[] { 0, 0, -1, 0 }; // Move outside the board (left)
     }
 
     public static IEnumerable<object[]> ValidKnightPositionsData()

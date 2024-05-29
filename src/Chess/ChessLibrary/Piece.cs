@@ -16,7 +16,6 @@ namespace ChessLibrary
     {
         private Color _color;
         private int _id;
-        private bool _moved;
         private string? _imagePath;
 
         public Color Color
@@ -40,19 +39,6 @@ namespace ChessLibrary
                 if (_id != value)
                 {
                     _id = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool Moved
-        {
-            get { return _moved; }
-            protected set
-            {
-                if (_moved != value)
-                {
-                    _moved = value;
                     OnPropertyChanged();
                 }
             }

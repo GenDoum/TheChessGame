@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.Serialization;
 
 namespace ChessLibrary;
@@ -15,6 +16,10 @@ public class InvalidMovementException : Exception
     {
     }
 
+    // Constructeur protected pour la sérialisation
+    protected InvalidMovementException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+    }
 
     public override string ToString()
     {

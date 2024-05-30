@@ -1,19 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Gantt_Prévisionnel_IHM" company="" webLink="http://" view-date="2024-05-09" view-index="0" gantt-divider-location="469" resource-divider-location="300" version="3.3.3307" locale="fr_FR">
+<?xml version="1.0" encoding="UTF-8"?><project name="Gantt_Prévisionnel_IHM" company="" webLink="http://" view-date="2024-05-17" view-index="0" gantt-divider-location="454" resource-divider-location="300" version="3.3.3309" locale="fr_FR">
     <description/>
-    <view zooming-state="default:3" id="gantt-chart">
-        <field id="tpd3" name="Nom" width="290" order="0"/>
-        <field id="tpd4" name="Date de début" width="82" order="1"/>
-        <field id="tpd5" name="Date de fin" width="81" order="2"/>
+    <view zooming-state="default:1" id="gantt-chart">
+        <field id="tpd3" name="Nom" width="280" order="0"/>
+        <field id="tpd4" name="Date de début" width="79" order="1"/>
+        <field id="tpd5" name="Date de fin" width="79" order="2"/>
         <field id="tpd15" name="Notes" width="20" order="3"/>
         <option id="filter.completedTasks" value="false"/>
         <option id="filter.dueTodayTasks" value="false"/>
         <option id="filter.overdueTasks" value="false"/>
         <option id="filter.inProgressTodayTasks" value="false"/>
-        <option id="color.recent"><![CDATA[#ffff99 #ff9999 #ccffcc #000000 #f4f4f4 #3333ff #ff0000 #ff3333]]></option>
+        <option id="color.recent"><![CDATA[#ccffcc #ffff99 #ff9999 #000000 #f4f4f4 #3333ff #ff0000 #ff3333]]></option>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nom" width="188" order="0"/>
-        <field id="1" name="Rôle par défaut" width="93" order="1"/>
+        <field id="0" name="Nom" width="195" order="0"/>
+        <field id="1" name="Rôle par défaut" width="101" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -104,7 +104,7 @@
                 <depend id="22" type="2" difference="0" hardness="Strong"/>
             </task>
         </task>
-        <task id="20" uid="6ea453a361914b8387bc9a911773b80a" name="Jalon 2 : Conception + Application console" meeting="false" start="2024-04-08" duration="41" complete="0" expand="true">
+        <task id="20" uid="6ea453a361914b8387bc9a911773b80a" name="Jalon 2 : Conception + Application console" meeting="false" start="2024-04-08" duration="37" complete="0" expand="true">
             <task id="21" uid="8b2693517e1b43cb9629b25939f2a248" name="Création des classes" meeting="false" start="2024-04-08" duration="10" complete="0" expand="true">
                 <depend id="26" type="2" difference="0" hardness="Strong"/>
                 <task id="24" uid="dcd12cae7ea94bb2b6d8bea1672365a1" name="Création des classes pièces" color="#ccffcc" meeting="false" start="2024-04-08" duration="10" complete="0" expand="true">
@@ -142,15 +142,22 @@
                 <depend id="31" type="2" difference="0" hardness="Strong"/>
                 <depend id="34" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="34" uid="ac734b11a3f341ac8a4f4fc3c4bc1cfd" name="Data Binding" color="#ffff99" meeting="false" start="2024-05-27" duration="6" complete="0" expand="true"/>
+            <task id="34" uid="ac734b11a3f341ac8a4f4fc3c4bc1cfd" name="Data Binding" color="#ffff99" meeting="false" start="2024-05-27" duration="2" complete="0" expand="true">
+                <task id="40" uid="adeef0cf6a8f4c69826feb70d193a279" name="Connexion données Users" meeting="false" start="2024-05-27" duration="1" complete="0" expand="true"/>
+                <task id="39" uid="b00c7f7dca6a447088d60a6b1a41c7cf" name="Connexion plateau" color="#ccffcc" meeting="false" start="2024-05-27" duration="1" complete="0" expand="true">
+                    <depend id="37" type="2" difference="0" hardness="Strong"/>
+                </task>
+                <task id="37" uid="67d5d1f12401444187e5c66acfd4b8c2" name="Connexion des pages" color="#ccffcc" meeting="false" start="2024-05-28" duration="1" complete="0" expand="true"/>
+            </task>
         </task>
-        <task id="31" uid="28edb06b613246579062a6ab0208f52a" name="Jalon 3 : Persistance" color="#ffff99" meeting="false" start="2024-05-27" duration="6" complete="0" expand="true">
-            <depend id="32" type="2" difference="0" hardness="Strong"/>
+        <task id="31" uid="28edb06b613246579062a6ab0208f52a" name="Jalon 3 : Persistance" color="#ffff99" meeting="false" start="2024-05-27" duration="5" complete="0" expand="true">
+            <task id="35" uid="d8607d7e80b543a08455db4a43ed0182" name="Enregistrement données XML" meeting="false" start="2024-05-27" duration="5" complete="0" expand="true"/>
+            <task id="36" uid="f9c200b12586421099e0ad6391a59230" name="Enregistrement données JSON" meeting="false" start="2024-05-27" duration="5" complete="0" expand="true"/>
         </task>
-        <task id="32" uid="6d3f7b1e78024ef7b0edc1983d4b30a3" name="Jalon 4 : Finalisation de l'application" color="#ffff99" meeting="false" start="2024-06-04" duration="7" complete="0" expand="true">
+        <task id="32" uid="6d3f7b1e78024ef7b0edc1983d4b30a3" name="Jalon 4 : Finalisation de l'application" color="#ffff99" meeting="false" start="2024-06-03" duration="4" complete="0" expand="true">
             <depend id="33" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="33" uid="ad1b22b6b2bd41e1b9de1fc3010012ab" name="Jalon 5 : Vidéo présentation de l'application" color="#ffff99" meeting="false" start="2024-06-13" duration="1" complete="0" expand="true"/>
+        <task id="33" uid="ad1b22b6b2bd41e1b9de1fc3010012ab" name="Jalon 5 : Vidéo présentation de l'application" color="#ffff99" meeting="false" start="2024-06-07" duration="1" complete="0" expand="true"/>
     </tasks>
     <resources>
         <resource id="0" name="Mathéo Balko" function="Default:0" contacts="" phone="">

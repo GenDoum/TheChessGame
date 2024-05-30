@@ -15,9 +15,6 @@ public class InvalidMovementException : Exception
     {
     }
 
-    protected InvalidMovementException(SerializationInfo info, StreamingContext context) : base(info, context)
-    {
-    }
 
     public override string ToString()
     {

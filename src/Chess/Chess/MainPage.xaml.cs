@@ -1,4 +1,5 @@
-﻿namespace Chess
+﻿
+namespace Chess
 {
     public partial class MainPage : ContentPage
     {
@@ -26,6 +27,11 @@
         async void OnLeaderBoardClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//page/LeaderBoard");
+        }
+
+        async void OnInvitedPlayersCLicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//page/chessBoard");
         }
     }
 

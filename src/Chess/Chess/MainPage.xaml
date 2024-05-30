@@ -36,9 +36,9 @@
                     Style="{StaticResource buttonSyle}"
                     Clicked="OnLeaderBoardClicked"/>
 
-            <Label Text="Jouer en tant qu'invité" 
-                   Style="{StaticResource labelStyleBottom}"
-            />
+            <Button Text="Jouer en tant qu'invité"
+                    Style="{StaticResource animationStyleBottom}"
+                   Clicked="OnInvitedPlayersCLicked"/>
 
             <!-- <Label.GestureRecognizers> <TapGestureRecognizer Tapped="Fonction d'appel"/> </Label.GestureRecognizers> <Label/>  /!/ A faire après les vues /!/ --> 
         </FlexLayout>

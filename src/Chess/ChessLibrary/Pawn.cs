@@ -94,7 +94,7 @@ namespace ChessLibrary
             }
         }
 
-        private bool IsWithinBoard(int line, int column, Chessboard chessboard)
+        private static bool IsWithinBoard(int line, int column, Chessboard chessboard)
         {
             return line >= 0 && line < chessboard.Board.GetLength(1) && column >= 0 && column < chessboard.Board.GetLength(0);
         }

@@ -145,26 +145,6 @@ namespace ChessLibrary
         }
 
         /// <summary>
-        /// Fonction pour ajouter une pièce à une liste
-        /// </summary>
-        /// <param name="list"></param>
-        /// <param name="item"></param>
-        public void AddToList(List<CoPieces> list, CoPieces item)
-        {
-            list.Add(item);
-        }
-
-        /// <summary>
-        /// Fonction pour retirer une pièce d'une liste
-        /// </summary>
-        /// <param name="list"></param>
-        /// <param name="item"></param>
-        public void RemoveFromList(List<CoPieces> list, CoPieces item)
-        {
-            list.Remove(item);
-        }
-
-        /// <summary>
         /// Fonction pour le déplacement d'une pièce
         /// </summary>
         /// <param name="initial"></param>
@@ -220,7 +200,7 @@ namespace ChessLibrary
         }
 
 
-        public void RestorePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board, Piece movedPiece, Piece capturedPiece)
+        public static void RestorePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board, Piece movedPiece, Piece capturedPiece)
         {
             // Rétablir la pièce déplacée dans sa position originale
             var listToUpdate = movedPiece.Color == Color.White ? whitePieces : blackPieces;
@@ -237,7 +217,7 @@ namespace ChessLibrary
         }
 
 
-        public void UpdatePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board)
+        public static void UpdatePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board)
         {
             var movedPiece = initial!.Piece;
             var capturedPiece = final!.Piece;
@@ -258,7 +238,7 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="initial"></param>
         /// <param name="final"></param>
-        private void ProcessPostMove(Case? initial, Case? final)
+        private static void ProcessPostMove(Case? initial, Case? final)
         {
             // Mettre à jour les positions des cases
             final!.Piece = initial!.Piece;

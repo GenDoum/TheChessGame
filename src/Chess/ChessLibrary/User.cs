@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace ChessLibrary
 {
@@ -87,7 +88,7 @@ namespace ChessLibrary
             }
 
             this.pseudo = pseudo;
-            this.Password = password;
+            this.Password = HashPassword(password);
             this.Color = color;
             Score = playerScore;
             IsConnected = connected;
@@ -109,7 +110,7 @@ namespace ChessLibrary
         public User(User user)
         {
             this.pseudo = user.Pseudo;
-            this.Password = user.Password;
+            this.Password = user.Password == null ? null : HashPassword(user.Password);
             this.Color = user.Color;
             this.Score = user.Score;
             this.IsConnected = user.IsConnected;
@@ -124,6 +125,24 @@ namespace ChessLibrary
         {
             pseudo = "Invité";
             Password = null;
+        }
+        public string HashPassword(string password)
+        {
+            if (password == null)
+            {
+                return null; // Dans le cas des joueur invité, qui n'ont pas de mot de passe
+            }
+
+            using (var sha256 = SHA256.Create())
+            {
+                var hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return Convert.ToBase64String(hashBytes);
+            }
+        }
+
+        public bool CheckPassword(string password)
+        {
+            return HashPassword(password) == Password;
         }
     }
 

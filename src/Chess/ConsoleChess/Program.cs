@@ -76,12 +76,14 @@ namespace ConsoleChess
 
             }
 
-            if (Equals(user.Password, null))
+            if (Equals(user.HashPassword(null), user.Password))
             {
                 Console.WriteLine("\nInvited player, no need to check password\n");
                 return true;
             }
-            if (user.Password.Equals(pass.ToString()))
+
+            string? userPassword = user.Password; // pour éviter un code smells
+            if (Equals(user.HashPassword(pass.ToString()), userPassword))
             {
                 Console.WriteLine($"\nGood password, have fun {user.Pseudo}");
                 return true;
@@ -237,6 +239,7 @@ namespace ConsoleChess
             return user;
         }
 
+        // Inutile, à supprimer
         public static bool checkUserConnection(User user)
         {
 
@@ -521,28 +524,11 @@ namespace ConsoleChess
         static void Main()
         {
 
-            var serializer = new DataContractSerializer(typeof(User));
 
-
-            string xmlFile = "user.xml";
-
-            User playerRead;
-            using (Stream s = File.OpenRead(xmlFile))
-            {
-                playerRead = serializer.ReadObject(s) as User;
-            }
-
-
-            User player1 = new User();
-            User player2 = new User();
+            User player1 = new User(Color.White);
+            User player2 = new User(Color.Black);
 
             menuAccueil(player1, player2);
-
-
-            using (Stream s = File.Create(xmlFile))
-            {
-                serializer.WriteObject(s, player1);
-            }
 
 
         }

@@ -9,7 +9,7 @@ using ChessLibrary;
 
 namespace Persistance
 {
-    public class IUserDataManager
+    public abstract class IUserDataManager
     {
         public abstract void writeUsers(List<User> users);
 

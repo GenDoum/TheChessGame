@@ -999,7 +999,7 @@ public class UnitTestBoard
         chessboard.AddPiece(blackQueen, 5, 5);
 
         List<CoPieces> whitePieces = chessboard.CopyWhitePieces();
-        Case kingCase = chessboard.FindCase(whiteKing);
+        Case kingCase = chessboard.FindCase(whiteKing)!;
 
         // Act
         bool result = chessboard.CanDefendKing(whitePieces, kingCase);

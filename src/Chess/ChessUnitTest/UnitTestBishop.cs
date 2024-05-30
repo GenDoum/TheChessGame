@@ -45,8 +45,8 @@ public class UnitTestBishop
         var result = bishop.PossibleMoves(caseInitial, chessboard);
 
         // Assert
-        Assert.Contains(result, c => c.Column == 5 && c.Line == 5);
-        Assert.DoesNotContain(result, c => c.Column == 2 && c.Line == 2);
+        Assert.Contains(result, c => c!.Column == 5 && c.Line == 5);
+        Assert.DoesNotContain(result, c => c!.Column == 2 && c.Line == 2);
     }
     
     [Fact]

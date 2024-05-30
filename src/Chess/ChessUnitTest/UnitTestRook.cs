@@ -90,7 +90,7 @@ public class UnitTestRook
         var result = rook.PossibleMoves(chessboard.Board[4, 4], chessboard);
 
         // Assert
-        Assert.Contains(result, c => c.Column == 4 && c.Line == 5);
+        Assert.Contains(result, c => c!.Column == 4 && c.Line == 5);
     }
 
     [Fact]

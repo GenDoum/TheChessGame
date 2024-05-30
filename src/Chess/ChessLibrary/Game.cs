@@ -16,6 +16,7 @@ namespace ChessLibrary
     /// </summary>
     public class Game : IRules
     {
+
         /// <summary>
         /// Événement déclenché lorsqu'un pion peut évoluer
         /// </summary>
@@ -173,7 +174,8 @@ namespace ChessLibrary
         /// <exception cref="InvalidOperationException"></exception>
         public void MovePiece(Case? initial, Case? final, Chessboard board, User actualPlayer)
         {
-            ArgumentNullException.ThrowIfNull(initial!.Piece, "Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
+            if(initial!.Piece == null)
+                throw new InvalidOperationException("Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
             if (initial.Piece.Color != actualPlayer.Color)
                 throw new InvalidOperationException("Ce n'est pas le tour de ce joueur.");
             var blackPieces = board.CopyBlackPieces();

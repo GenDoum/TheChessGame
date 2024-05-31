@@ -119,7 +119,17 @@ namespace ChessLibrary
             return false;
         }
 
-
+        public void GetActualPlayer(User actualPlayer)
+        {
+            if (actualPlayer.Color == Color.White)
+            {
+                actualPlayer = Player1;
+            }
+            else
+            {
+                actualPlayer = Player2;
+            }
+        }
 
         /// <summary>
         /// Fonction permettant de savoir si la partie est terminée

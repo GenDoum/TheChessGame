@@ -45,7 +45,7 @@ namespace ChessLibrary
             ArgumentNullException.ThrowIfNull(chessboard);
 
             List<Case?> result = new List<Case?>();
-            int direction = this.Color == Color.White ? -1 : 1; // Blanc vers le haut (-1), Noir vers le bas (+1)
+            int direction = this.Color == Color.White ? -1 : +1; // Blanc vers le haut (-1), Noir vers le bas (+1)
 
             // Mouvements normaux (1 ou 2 cases)
             AddNormalMoves(caseInitial, chessboard, direction, result);
@@ -104,7 +104,7 @@ namespace ChessLibrary
         {
             ArgumentNullException.ThrowIfNull(chessboard);
             List<Case?> result = new List<Case?>();
-            int direction = this.Color == Color.White ? -1 : 1; // Blanc vers le haut (-1), Noir vers le bas (+1)
+            int direction = this.Color == Color.White ? -1 : +1; // Blanc vers le haut (-1), Noir vers le bas (+1)
             int[] captureColumns = new int[] { caseInitial!.Column - 1, caseInitial.Column + 1 };
             foreach (int col in captureColumns)
             {

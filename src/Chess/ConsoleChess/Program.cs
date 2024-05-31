@@ -521,12 +521,18 @@ namespace ConsoleChess
         {
 
 
-            User player1 = new User(Color.White);
-            User player2 = new User(Color.Black);
-            
-            menuAccueil(player1, player2);
+            /* User player1 = new User(Color.White);
+             User player2 = new User(Color.Black);
 
-  
+             menuAccueil(player1, player2);*/
+            var pawn = new Pawn(Color.Black, 1);
+            var chessboard = new Chessboard(new Case[8, 8], true);
+            var caseInitial = new Case(4, 4, pawn);
+            var capturablePiece = new Pawn(Color.White, 2);
+            chessboard.AddPiece(capturablePiece, 5, 5);
+            chessboard.AddPiece(pawn, 4, 4);
+            DisplayBoard(chessboard);
+
         }
 
 

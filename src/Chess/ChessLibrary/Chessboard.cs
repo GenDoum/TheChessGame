@@ -361,15 +361,15 @@ namespace ChessLibrary
 
         public void ModifList(Case initial, Case final)
         {
-            var list = initial.Piece!.Color == Color.White ? _whitePieces : _blackPieces;
+            var list = final.Piece!.Color == Color.White ? _whitePieces : _blackPieces;
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].CaseLink.Line == initial.Line && list[i].CaseLink.Column == initial.Column)
+                if (list[i].CaseLink!.Line == initial.Line && list[i].CaseLink!.Column == initial.Column)
                 {
                     // Si CoPieces est une struct, vous devriez créer une nouvelle instance avec les modifications appropriées
                     var updatedCoPiece = new CoPieces
                     {
-                        piece = list[i].piece,
+                        piece = final.Piece,
                         CaseLink = final
                     };
                     list[i] = updatedCoPiece;  // Remplacement de l'instance dans la liste si CoPieces est une struct
@@ -377,5 +377,26 @@ namespace ChessLibrary
                 }
             }
         }
+        public void RemovePieceFromList(Case initial)
+        {
+            var list = initial.Piece!.Color == Color.White ? _blackPieces : _whitePieces;
+            // Trouver l'index de la pièce à supprimer
+            int indexToRemove = -1;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].CaseLink!.Line == initial.Line && list[i].CaseLink!.Column == initial.Column)
+                {
+                    indexToRemove = i;
+                    break;
+                }
+            }
+
+            // Si une pièce correspondante a été trouvée, la supprimer de la liste
+            if (indexToRemove != -1)
+            {
+                list.RemoveAt(indexToRemove);
+            }
+        }
+
     }
 }

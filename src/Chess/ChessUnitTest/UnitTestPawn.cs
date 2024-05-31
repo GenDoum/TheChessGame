@@ -44,12 +44,13 @@ public class UnitTestPawn
         var caseInitial = new Case(4, 4, pawn);
         var capturablePiece = new Pawn(Color.White, 2);
         chessboard.AddPiece(capturablePiece, 5, 5);
+        chessboard.AddPiece(pawn, 4, 4);
 
         // Act
-        var result = pawn.PossibleMoves(caseInitial, chessboard);
+        var result = pawn.CanEat(caseInitial, chessboard);
 
         // Assert
-        Assert.Contains(result, c => c!.Column == 5 && c.Line == 5);
+        Assert.Contains(result, c => c!.Column == 5 && c.Line ==5 );
     }
 
     [Fact]
@@ -87,7 +88,7 @@ public class UnitTestPawn
     public void PossibleMoves_PawnFirstMoveTwoSquares_ReturnsCorrectMoves()
     {
         // Arrange
-        var pawn = new Pawn(Color.White, 1);
+        var pawn = new Pawn(Color.Black, 1);
         var chessboard = new Chessboard(new Case[8, 8], true);
         var caseInitial = new Case(1, 1, pawn);
 
@@ -119,7 +120,7 @@ public class UnitTestPawn
     public void PossibleMoves_FirstMoveTwoSquares_ReturnsCorrectMoves()
     {
         // Arrange
-        var pawn = new Pawn(Color.White, 1);
+        var pawn = new Pawn(Color.Black, 1);
         var chessboard = new Chessboard(new Case[8, 8], true);
         var caseInitial = new Case(1, 1, pawn);
 
@@ -150,7 +151,7 @@ public class UnitTestPawn
     public void PossibleMoves_MoveOneSquareForward_ReturnsCorrectMoves()
     {
         // Arrange
-        var pawn = new Pawn(Color.White, 1);
+        var pawn = new Pawn(Color.Black, 1);
         var chessboard = new Chessboard(new Case[8, 8], true);
         var caseInitial = new Case(1, 1, pawn);
 
@@ -165,7 +166,7 @@ public class UnitTestPawn
     public void PossibleMoves_MoveOneSquareForwardAfterFirstMove_ReturnsCorrectMoves()
     {
         // Arrange
-        var pawn = new Pawn(Color.White, 1);
+        var pawn = new Pawn(Color.Black, 1);
         pawn.FirstMove = false;
         var chessboard = new Chessboard(new Case[8, 8], true);
         var caseInitial = new Case(1, 1, pawn);
@@ -181,7 +182,7 @@ public class UnitTestPawn
     public void PossibleMoves_MoveBackward_ReturnsNoMoves()
     {
         // Arrange
-        var pawn = new Pawn(Color.White, 1);
+        var pawn = new Pawn(Color.Black, 1);
         var chessboard = new Chessboard(new Case[8, 8], true);
         var caseInitial = new Case(1, 1, pawn);
 

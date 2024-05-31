@@ -471,11 +471,11 @@ public class UnitTestBoard
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        Piece piece = new Pawn(Color.White, 1);
+        Piece piece = new Pawn(Color.Black, 1);
         Case initial = new Case(0, 1, piece);
         Case final = new Case(0, 3, null);
         chessboard.AddPiece(piece, 0, 1);
-        Piece king = new King(Color.White, 1);
+        Piece king = new King(Color.Black, 1);
         chessboard.AddPiece(king, 7, 7);
 
         // Act
@@ -509,9 +509,9 @@ public class UnitTestBoard
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        Piece piece = new Pawn(Color.White, 1);
-        Piece opponentPiece = new Pawn(Color.Black, 2);
-        Piece king = new King(Color.White, 1);
+        Piece piece = new Pawn(Color.Black, 1);
+        Piece opponentPiece = new Pawn(Color.White, 2);
+        Piece king = new King(Color.Black, 1);
         Case initial = new Case(0, 1, piece);
         Case final = new Case(1, 2, opponentPiece);
         
@@ -531,11 +531,11 @@ public class UnitTestBoard
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        Piece piece = new Pawn(Color.White, 1);
+        Piece piece = new Pawn(Color.Black, 1);
         Case initial = new Case(0, 1, piece);
         Case final = new Case(0, 0, null); // Backward move
         chessboard.AddPiece(piece, 0, 1);
-        Piece king = new King(Color.White, 1);
+        Piece king = new King(Color.Black, 1);
         chessboard.AddPiece(king, 7, 7);
 
         // Act
@@ -670,8 +670,8 @@ public class UnitTestBoard
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        King king = new King(Color.White, 1);
-        Pawn pawn = new Pawn(Color.Black, 1);
+        King king = new King(Color.Black, 1);
+        Pawn pawn = new Pawn(Color.White, 1);
         Case kingCase = new Case(4, 4, king);
         chessboard.AddPiece(king, 4, 4);
         chessboard.AddPiece(pawn, 3, 5);

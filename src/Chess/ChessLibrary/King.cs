@@ -142,6 +142,29 @@ namespace ChessLibrary
                     }
                 }
             }
+            else
+            {
+                // Vérifier si la tour à la position initiale H1 n'a pas bougé
+                if (chessboard.Board[7, 0].Piece is Rook rook && rook.FirstMove)
+                {
+                    // Vérifier si les cases entre le roi et la tour sont libres
+                    if (chessboard.Board[5, 0].IsCaseEmpty() && chessboard.Board[6, 0].IsCaseEmpty())
+                    {
+                        // Vérifier si les cases que le roi traverse ne sont pas attaquées
+                        if (!chessboard.Echec(this, chessboard.Board[5, 0]) && !chessboard.Echec(this, chessboard.Board[6, 0]))
+                        {
+                            // Effectuer le roque
+                            /*chessboard.*/
+                            chessboard.Board[6, 0].Piece = this;
+                            chessboard.Board[4,0].Piece = null; // Ancienne position du roi
+                            chessboard.Board[5, 0].Piece = rook;
+                            chessboard.Board[7, 0].Piece = null; // Ancienne position de la tour
+                            this.FirstMove = false;
+                            rook.FirstMove = false;
+                        }
+                    }
+                }
+            }
             // Répétez pour le roi noir à partir de la position initiale E8 vers la tour à A8
             // (les conditions doivent être ajustées pour le côté noir du plateau)
         }

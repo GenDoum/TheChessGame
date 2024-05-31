@@ -197,7 +197,6 @@ namespace ChessLibrary
                     final.Piece = capturedPiece;
                     // Vérification si le mouvement est légal et si cela peut résoudre un échec existant
                     // Effectuer le mouvement réel
-                    UpdatePieceLists(blackPieces, whitePieces, initial, final, board);
                     ProcessPostMove(initial, final);
 
                     if (final.Piece is Pawn pawn && (final.Line == 0 || final.Line == 7))
@@ -232,7 +231,6 @@ namespace ChessLibrary
             }
         }
 
-
         public static void UpdatePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board)
         {
             var movedPiece = initial!.Piece;
@@ -256,9 +254,13 @@ namespace ChessLibrary
         /// <param name="final"></param>
         private void ProcessPostMove(Case? initial, Case? final)
         {
-            Board.ModifList(initial,final);
+            if (final!.Piece! != null && final!.Piece!.Color != initial.Piece.Color)
+            {
+                Board.RemovePieceFromList(initial);
+            }
             final!.Piece = initial!.Piece;
             initial.Piece = null;
+            Board.ModifList(initial, final);
             // Marquer les mouvements spéciaux comme le premier mouvement pour les rois, tours et pions
             if (final.Piece is IFirstMove firstMover)
             {

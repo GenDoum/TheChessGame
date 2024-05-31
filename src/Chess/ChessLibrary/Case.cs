@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace ChessLibrary
 {
     /// <summary>
@@ -65,6 +66,7 @@ namespace ChessLibrary
                 }
             }
         }
+        
 
         /// <summary>
         /// Initialise une nouvelle instance de la classe Case avec la colonne, la ligne et la pièce spécifiées.

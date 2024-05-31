@@ -54,17 +54,17 @@ namespace ChessLibrary
             }
             return result;
         }
-        
+
         public int NbRows => Board?.GetLength(0) ?? 0;
         public int NbColumns => Board?.GetLength(1) ?? 0;
-        
+
         public IEnumerable<Case?> FlatBoard
         {
             get
             {
                 List<Case?> flatBoard = new();
 
-                for(int j = 0; j < NbColumns; j++)
+                for (int j = 0; j < NbColumns; j++)
                 {
                     for (int i = 0; i < NbRows; i++)
                     {
@@ -206,7 +206,7 @@ namespace ChessLibrary
 
             var enemyPieces = king!.Color == Color.White ? _blackPieces : _whitePieces;
 
-            foreach (var enemy  in enemyPieces)
+            foreach (var enemy in enemyPieces)
             {
                 List<Case?> possibleMoves;
 
@@ -223,39 +223,21 @@ namespace ChessLibrary
                     possibleMoves = enemy.piece!.PossibleMoves(enemy.CaseLink, this);
                 }
 
-                  if (possibleMoves.Any(move => move!.Column == kingCase!.Column && move.Line == kingCase.Line))
+                if (possibleMoves.Any(move => move!.Column == kingCase!.Column && move.Line == kingCase.Line))
                 {
                     _isCheckingForCheck = false;
                     return true;
                 }
-             }
+            }
 
             _isCheckingForCheck = false;
             return false;
         }
 
-
-
         public bool IsInCheck(Color color)
         {
             King king = FindKing(color);
             return Echec(king, FindCase(king));
-        }
-
-        public bool CanResolveCheck(Case initial, Case final, Color color)
-        {
-            Piece originalFinalPiece = final.Piece!;
-            Piece? movingPiece = initial.Piece;
-
-            final.Piece = initial.Piece;
-            initial.Piece = null;
-
-            bool canResolve = !IsInCheck(color);
-
-            initial.Piece = movingPiece;
-            final.Piece = originalFinalPiece;
-
-            return canResolve;
         }
 
         public King FindKing(Color color)
@@ -341,7 +323,7 @@ namespace ChessLibrary
             foreach (var piece in teamPieces)
             {
                 List<Case?> possibleMoves;
-                
+
                 if (piece.piece is King kingPiece)
                 {
                     possibleMoves = kingPiece.CanEat(piece.CaseLink, this);
@@ -377,5 +359,23 @@ namespace ChessLibrary
             return false;
         }
 
+        public void ModifList(Case initial, Case final)
+        {
+            var list = initial.Piece!.Color == Color.White ? _whitePieces : _blackPieces;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].CaseLink.Line == initial.Line && list[i].CaseLink.Column == initial.Column)
+                {
+                    // Si CoPieces est une struct, vous devriez créer une nouvelle instance avec les modifications appropriées
+                    var updatedCoPiece = new CoPieces
+                    {
+                        piece = list[i].piece,
+                        CaseLink = final
+                    };
+                    list[i] = updatedCoPiece;  // Remplacement de l'instance dans la liste si CoPieces est une struct
+                    break;
+                }
+            }
+        }
     }
 }

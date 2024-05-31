@@ -3,6 +3,8 @@ using ChessLibrary;
 using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
+using Persistance;
+using testPersistance;
 
 namespace ConsoleChess
 {
@@ -348,7 +350,7 @@ namespace ConsoleChess
         /// </summary>
         /// <param name="playerOne"></param>
         /// <param name="playerTwo"></param>
-        public static void menuAccueil(User? playerOne, User? playerTwo)
+        public static void menuAccueil(List<User> users)
         {
             int choix;
 
@@ -357,13 +359,14 @@ namespace ConsoleChess
             Color noir = Color.Black;
             Color blanc = Color.White;
 
-            User balko = new User("MatheoB", "chef", blanc, false, 25);
-            User hersan = new User("MatheoH", "proMac", noir, false, 10);
+            foreach (User user in users)
+            {
+                Console.WriteLine(user.ToString());
+            }
+            Thread.Sleep(2000);
 
-
-            List<User> users = new List<User>();
-            users.Add(hersan);
-            users.Add(balko);
+            User? playerOne = null;
+            User? playerTwo = null;
 
             Console.ResetColor();
             do
@@ -524,12 +527,16 @@ namespace ConsoleChess
         static void Main()
         {
 
+            UserManager userManager = new UserManager();
 
-            User player1 = new User(Color.White);
-            User player2 = new User(Color.Black);
+            List<User> users = userManager.Users.ToList();
 
-            menuAccueil(player1, player2);
-
+            foreach (User user in users)
+            {
+                Console.WriteLine(user.ToString());
+            }
+            Thread.Sleep(2000);
+            menuAccueil(users);
 
         }
 

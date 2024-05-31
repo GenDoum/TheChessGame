@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 using ChessLibrary;
 using System.Xml;
 using System.Security.Cryptography;
-using ConsoleChess;
 using Persistance;
 
 
@@ -111,7 +110,37 @@ static void JsonSerializationDemo()
 
 static void Main()
 {
-    JsonSerializationDemo();
+
+    LoaderJson loader = new LoaderJson();
+    LoaderXML loaderXML = new LoaderXML();
+    loaderXML.readUsers();
+    List<User> xml = loaderXML.readUsers();
+    List<User> json = loader.readUsers();
+
+    if ( Equals(xml, json))
+    {
+        Console.WriteLine("Les deux listes sont égales");
+        Thread.Sleep(2000);
+    }
+    else
+    {
+
+        Console.WriteLine("Les deux listes ne sont pas égales");
+        // Affiche liste des utilisateurs
+        foreach (User user in xml)
+        {
+            Console.WriteLine(user.ToString());
+        }
+
+        // Affiche liste des utilisateurs
+
+        foreach (User user in json)
+        {
+            Console.WriteLine(user.ToString());
+        }
+        Thread.Sleep(2000);
+
+    }
 }
 
 

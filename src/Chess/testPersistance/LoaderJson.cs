@@ -10,7 +10,7 @@ namespace Persistance
 {
     public class LoaderJson : IUserDataManager
     {
-        private const string DataDirectory = "..\\\\..\\\\..\\\\.\\\\donneePersistance";
+        private const string DataDirectory = "..\\..\\..\\..\\.\\testPersistance\\donneePersistance";
         private const string JsonFileName = "testUser.json";
 
         public override void writeUsers(List<User> users)
@@ -25,7 +25,11 @@ namespace Persistance
 
             var serializer = new DataContractJsonSerializer(typeof(List<User>));
 
-            using (var memoryStream = new MemoryStream())
+            MemoryStream memoryStream = new MemoryStream();
+
+            serializer.WriteObject(memoryStream, users);
+
+            using (FileStream stream = File.Create(JsonFileName))
             {
                 using (var writer = JsonReaderWriterFactory.CreateJsonWriter(memoryStream, Encoding.UTF8, ownsStream: false, indent: true, indentChars: "  "))
                 {
@@ -39,15 +43,15 @@ namespace Persistance
 
         public override List<User>? readUsers()
         {
-            string jsonFilePath = Path.Combine(DataDirectory, JsonFileName);
-
-            if (!File.Exists(jsonFilePath))
+            Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\testPersistance\\donneePersistance"));
+            const string jsonFile = "testUser.json";
+            if (!File.Exists(jsonFile))
             {
                 throw new FileNotFoundException("Le fichier JSON spécifié est introuvable.");
             }
 
             var serializer = new DataContractJsonSerializer(typeof(List<User>));
-            string json = File.ReadAllText(jsonFilePath);
+            string json = File.ReadAllText(jsonFile);
 
             using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
             {

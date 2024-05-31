@@ -144,6 +144,11 @@ namespace ChessLibrary
         {
             return HashPassword(password) == Password;
         }
+
+        public override string ToString()
+        {
+            return $"Pseudo: {Pseudo}, Password: {(Password != null ? "Hashed" : "null")}, Color: {Color}, Score: {Score}, IsConnected: {IsConnected}";
+        }
     }
 
 }

@@ -26,4 +26,42 @@ public partial class chessBoard : ContentPage
         await Shell.Current.GoToAsync("//page/MainPage");
     }
     
+    void OnDragStarting(object sender, DragStartingEventArgs e)
+    {
+        var imageButton = sender as ImageButton;
+        if (imageButton != null)
+        {
+            var piece = imageButton.BindingContext as Piece;
+            if (piece != null)
+            {
+                e.Data.Properties.Add("piece", piece);
+            }
+        }
+    }
+    
+    void OnDrop(object sender, DropEventArgs e)
+    {
+        var imageButton = sender as ImageButton;
+        if (imageButton != null)
+        {
+            var piece = e.Data.Properties["piece"] as Piece;
+            if (piece != null)
+            {
+                var finalCase = imageButton.BindingContext as Case;
+                var initialCase = Board.FindCase(piece);
+                if (finalCase != null && initialCase != null)
+                {
+                    try
+                    {
+                        game.MovePiece(initialCase, finalCase, Board, actualPlayer: game.Player1);
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+        }
+    }
+    
 }

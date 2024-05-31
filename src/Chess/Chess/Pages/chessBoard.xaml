@@ -39,7 +39,6 @@
                         Margin="50"/>
 
                 <Label  Text="{Binding game.Player2.Pseudo}"
-                        Style="{StaticResource lblAppli}"
                         FontSize="Large"
                         TextColor="White"
                         Margin="50"/>
@@ -76,9 +75,12 @@
                                 HeightRequest="{StaticResource CellHeight}">
                             <ImageButton Source="{Binding Piece.ImagePath}"
                                          Aspect="AspectFit">
-                                <ImageButton.Behaviors>
-                                    <toolkit:IconTintColorBehavior TintColor="{Binding Piece, Converter={StaticResource EnumToStringConverter}}"/>
-                                </ImageButton.Behaviors>
+                                <ImageButton.GestureRecognizers>
+                                    <DragGestureRecognizer CanDrag="True"
+                                                           DragStarting="OnDragStarting"/>
+                                    <DropGestureRecognizer Drop="OnDrop"/>
+                                    
+                                </ImageButton.GestureRecognizers>
                             </ImageButton>
                         </Border>
                     </DataTemplate>

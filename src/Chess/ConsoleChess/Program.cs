@@ -535,9 +535,12 @@ namespace ConsoleChess
             {
                 Console.WriteLine(user.ToString());
             }
+
             Thread.Sleep(2000);
+
             menuAccueil(users);
 
+            userManager.saveUsers(users);
         }
 
 

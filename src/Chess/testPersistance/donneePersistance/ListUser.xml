@@ -2,7 +2,7 @@
 <ArrayOfPlayers xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/ChessLibrary">
   <Players>
     <Color>White</Color>
-    <Password>9PJj5DnPQJJeakEjh6lHKmdzwlgCEqT7UNIk06gX3hc=</Password>
+    <Password>qdxgL52CvGcgsrS7AW7crPfaSytFOkZrdC2nQ/PLoV0=</Password>
     <Pseudo>Balko</Pseudo>
     <Score>100</Score>
     <pseudo>Balko</pseudo>

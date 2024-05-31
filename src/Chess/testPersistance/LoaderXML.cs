@@ -56,6 +56,7 @@ namespace Persistance
                     {
                         throw new SerializationException("Erreur lors de la désérialisation des utilisateurs.");
                     }
+
                     return users;
                 }
             }

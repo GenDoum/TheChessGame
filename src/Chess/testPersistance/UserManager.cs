@@ -20,26 +20,27 @@ namespace testPersistance
         private readonly LoaderXML loaderXML = new LoaderXML();
         private readonly LoaderJson loaderJson = new LoaderJson();
 
-
+        
         public UserManager()
         {
-            List<User>? xmlUsers = loaderXML.readUsers(); // Nullable car il peux ne pas y aoir de joueur (au début)
-            List<User>? jsonUsers = loaderJson.readUsers();
+            Console.WriteLine("Création du UserManager");
+
+            List<User>? xmlUsers = loaderXML.readUsers(); // Nullable car il peux ne pas y avoir de joueur (au début)
+            //List<User>? jsonUsers = loaderJson.readUsers();
 
             List<User> allUsers = new List<User>();
 
             allUsers.AddRange(xmlUsers);
-            foreach (User user in jsonUsers)
+            /*foreach (User user in jsonUsers)
             {
                 if (!allUsers.Contains(user))
                 {
                     allUsers.Add(user);
                 }
-            }
+            }*/
 
-            Users = new ReadOnlyCollection<User>(users);
-
-
+            Users = new ReadOnlyCollection<User>(allUsers);
+            Console.WriteLine("Fin de la création du UserManager");
         }
 
         public void AddUser(User user)
@@ -51,6 +52,12 @@ namespace testPersistance
         private void OnDeserialized(StreamingContext sc = new StreamingContext())
         {
             Users = new ReadOnlyCollection<User>(users);
+        }
+
+        public void saveUsers (List<User> users)
+        {
+            loaderJson.writeUsers(users);
+            loaderXML.writeUsers(users);
         }
     }
 }

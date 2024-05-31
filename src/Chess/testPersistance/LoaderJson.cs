@@ -23,21 +23,15 @@ namespace Persistance
             Directory.CreateDirectory(DataDirectory);
             string jsonFilePath = Path.Combine(DataDirectory, JsonFileName);
 
-            var serializer = new DataContractJsonSerializer(typeof(List<User>));
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<User>));
 
-            MemoryStream memoryStream = new MemoryStream();
-
-            serializer.WriteObject(memoryStream, users);
 
             using (FileStream stream = File.Create(JsonFileName))
             {
-                using (var writer = JsonReaderWriterFactory.CreateJsonWriter(memoryStream, Encoding.UTF8, ownsStream: false, indent: true, indentChars: "  "))
+                using (var writer = JsonReaderWriterFactory.CreateJsonWriter(stream, Encoding.UTF8, ownsStream: false, indent: true, indentChars: "  "))
                 {
                     serializer.WriteObject(writer, users);
-                    writer.Flush();
                 }
-
-                File.WriteAllText(jsonFilePath, Encoding.UTF8.GetString(memoryStream.ToArray()));
             }
         }
 
@@ -45,6 +39,8 @@ namespace Persistance
         {
             Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\testPersistance\\donneePersistance"));
             const string jsonFile = "testUser.json";
+            Console.WriteLine(Directory.GetCurrentDirectory());
+            Thread.Sleep(1000);
             if (!File.Exists(jsonFile))
             {
                 throw new FileNotFoundException("Le fichier JSON spécifié est introuvable.");

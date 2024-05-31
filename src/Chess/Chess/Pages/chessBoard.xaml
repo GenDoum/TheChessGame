@@ -45,7 +45,7 @@
             </VerticalStackLayout>
 
 
-            <CollectionView ItemsSource="{Binding Board.FlatBoard}" Grid.Column="1"
+            <CollectionView x:Name="collectionView" ItemsSource="{Binding Board.FlatBoard}" Grid.Column="1"
                             BackgroundColor="{StaticResource GoldUsefullColor}"
                             HorizontalOptions="Center"
                             VerticalOptions="Center">
@@ -74,13 +74,8 @@
                         <Border WidthRequest="{StaticResource CellWidth}"
                                 HeightRequest="{StaticResource CellHeight}">
                             <ImageButton Source="{Binding Piece.ImagePath}"
-                                         Aspect="AspectFit">
-                                <ImageButton.GestureRecognizers>
-                                    <DragGestureRecognizer CanDrag="True"
-                                                           DragStarting="OnDragStarting"/>
-                                    <DropGestureRecognizer Drop="OnDrop"/>
-                                    
-                                </ImageButton.GestureRecognizers>
+                                         Aspect="AspectFit"
+                                         Clicked="OnPieceClicked">
                             </ImageButton>
                         </Border>
                     </DataTemplate>

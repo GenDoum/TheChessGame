@@ -26,7 +26,38 @@ public partial class chessBoard : ContentPage
         await Shell.Current.GoToAsync("//page/MainPage");
     }
     
-    void OnDragStarting(object sender, DragStartingEventArgs e)
+    // void OnDragStarting(object sender, DragStartingEventArgs e)
+    // {
+    //     var imageButton = sender as ImageButton;
+    //     if (imageButton != null)
+    //     {
+    //         var piece = imageButton.BindingContext as Piece;
+    //         if (piece != null)
+    //         {
+    //             e.Data.Properties.Add("piece", piece);
+    //         }
+    //     }
+    // }
+    //
+    // void OnDrop(object sender, DropEventArgs e)
+    // {
+    //     var imageButton = sender as ImageButton;
+    //     if (imageButton != null)
+    //     {
+    //         var piece = e.Data.Properties["piece"] as Piece;
+    //         if (piece != null)
+    //         {
+    //             var finalCase = imageButton.BindingContext as Case;
+    //             var initialCase = e.Data.Properties["currentCase"] as Case;
+    //             if (finalCase != null && initialCase != null)
+    //             {
+    //                 game.MovePiece(initialCase, finalCase, Board, actualPlayer: game.Player1);
+    //             }
+    //         }
+    //     }
+    // }
+    
+    void OnPieceClicked(object sender, EventArgs e)
     {
         var imageButton = sender as ImageButton;
         if (imageButton != null)
@@ -34,34 +65,49 @@ public partial class chessBoard : ContentPage
             var piece = imageButton.BindingContext as Piece;
             if (piece != null)
             {
-                e.Data.Properties.Add("piece", piece);
+                var initialCase = imageButton.BindingContext as Case;
+                
+                Console.WriteLine($"Piece: {piece.GetType().Name}");
+                Console.WriteLine($"Color: {piece.Color}");
+                Console.WriteLine($"Position: ({initialCase!.Column}, {initialCase.Line})");
+
+
+                var possibleMoves = piece.PossibleMoves(initialCase, Board);
+
+                HighlightPossibleMoves(possibleMoves);
+            }
+        }
+    }
+
+    void HighlightPossibleMoves(List<Case?> possibleMoves)
+    {
+        foreach (var possibleMove in possibleMoves)
+        {
+            if (possibleMove != null)
+            {
+                var button = GetButtonFromCase(possibleMove);
+                if (button != null)
+                {
+                    button.BackgroundColor = Colors.LightBlue;
+                }
             }
         }
     }
     
-    void OnDrop(object sender, DropEventArgs e)
+    ImageButton? GetButtonFromCase(Case? c)
     {
-        var imageButton = sender as ImageButton;
-        if (imageButton != null)
+        if (c != null)
         {
-            var piece = e.Data.Properties["piece"] as Piece;
-            if (piece != null)
+            foreach (var item in collectionView.ItemsSource)
             {
-                var finalCase = imageButton.BindingContext as Case;
-                var initialCase = Board.FindCase(piece);
-                if (finalCase != null && initialCase != null)
+                if (item is Case caseItem && caseItem == c)
                 {
-                    try
-                    {
-                        game.MovePiece(initialCase, finalCase, Board, actualPlayer: game.Player1);
-                    }
-                    catch (InvalidOperationException ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                    var button = collectionView.ItemTemplate.CreateContent() as ImageButton;
+                    return button;
                 }
             }
         }
+        return null;
     }
     
 }

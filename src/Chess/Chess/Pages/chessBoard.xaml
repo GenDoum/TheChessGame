@@ -74,8 +74,14 @@
                         <Border WidthRequest="{StaticResource CellWidth}"
                                 HeightRequest="{StaticResource CellHeight}">
                             <ImageButton Source="{Binding Piece.ImagePath}"
-                                         Aspect="AspectFit"
+                                         Aspect="AspectFill"
                                          Clicked="OnPieceClicked">
+                                <!-- <ImageButton.GestureRecognizers> -->
+                                <!--     <DragGestureRecognizer CanDrag="True" -->
+                                <!--                            DragStarting="OnDragStarting"/> -->
+                                <!--     <DropGestureRecognizer Drop="OnDrop"/> -->
+                                <!-- -->
+                                <!-- </ImageButton.GestureRecognizers> -->
                             </ImageButton>
                         </Border>
                     </DataTemplate>

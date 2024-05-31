@@ -39,10 +39,10 @@ public class UnitTestPawn
     public void PossibleMoves_CapturablePiece_AddsToResult()
     {
         // Arrange
-        var pawn = new Pawn(Color.White, 1);
+        var pawn = new Pawn(Color.Black, 1);
         var chessboard = new Chessboard(new Case[8, 8], true);
         var caseInitial = new Case(4, 4, pawn);
-        var capturablePiece = new Pawn(Color.Black, 2);
+        var capturablePiece = new Pawn(Color.White, 2);
         chessboard.AddPiece(capturablePiece, 5, 5);
 
         // Act
@@ -79,8 +79,8 @@ public class UnitTestPawn
         var blackMoves = blackPawn.PossibleMoves(blackCase, chessboard);
 
         // Assert
-        Assert.All(whiteMoves, move => Assert.True(move!.Line > 4));
-        Assert.All(blackMoves, move => Assert.True(move!.Line < 5));
+        Assert.All(blackMoves, move => Assert.True(move!.Line > 4));
+        Assert.All(whiteMoves, move => Assert.True(move!.Line < 5));
     }
     
     [Fact]

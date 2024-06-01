@@ -146,7 +146,7 @@ public class UnitTestKing
         var possibleMoves = whiteKing.PossibleMoves(kingCase, chessboard);
 
         // Assert
-        Assert.DoesNotContain(possibleMoves, c => c!.Column == 5 && c.Line == 5);
+        Assert.DoesNotContain(possibleMoves, c => c!.Column == 5 && c.Line == 4);
     }
 
     [Fact]
@@ -197,11 +197,102 @@ public class UnitTestKing
         chessboard.AddPiece(king, 4, 7);
         chessboard.AddPiece(rook, 7, 7);
         chessboard.AddPiece(pawn, 5, 7);
-        // Act
-        king.PetitRoque(chessboard);
 
         // Assert
+        Assert.Throws<ArgumentException>(()=>king.PetitRoque(chessboard));
         Assert.Null(chessboard.Board[6, 7].Piece);  // Le roi ne doit pas être déplacé
         Assert.NotNull(chessboard.Board[5, 7].Piece);  // La case entre doit toujours avoir le pion
+    }
+    [Fact]
+    public void GrandRoque_KingAlreadyMoved_ThrowsArgumentException()
+    {
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        // Arrange
+        var king = new King(Color.White,1);
+        var rook = new Rook(Color.White,2);
+        king.FirstMove = false;  // Le roi a déjà bougé
+        chessboard.Board[4, 7] = new Case(4, 7, king);
+        chessboard.Board[0, 7] = new Case(0, 7, rook);
+
+        // Assert
+        Assert.Throws<ArgumentException>(() => king.GrandRoque(chessboard));
+    }
+
+    [Fact]
+    public void GrandRoque_RookAlreadyMoved_ThrowsArgumentException()
+    {
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        // Arrange
+        var king = new King(Color.White,1);
+        var rook = new Rook(Color.White,2);
+        rook.FirstMove = false;  // La tour a déjà bougé
+        chessboard.Board[4, 7] = new Case(4, 7, king);
+        chessboard.Board[0, 7] = new Case(0, 7, rook);
+
+        // Assert
+        Assert.Throws<ArgumentException>(() => king.GrandRoque(chessboard));
+    }
+
+    [Fact]
+    public void GrandRoque_IntermediateSquaresNotFree_ThrowsArgumentException()
+    {
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        // Arrange
+        var king = new King(Color.White, 1);
+        var rook = new Rook(Color.White, 2);
+        var pawn = new Pawn(Color.White, 3);
+        chessboard.Board[4, 7] = new Case(4, 7, king);
+        chessboard.Board[0, 7] = new Case(0, 7, rook);
+        chessboard.Board[1, 7] = new Case(1, 7, pawn);  // Blocage par un pion
+        chessboard.Board[2, 7] = new Case(2, 7, null);
+        chessboard.Board[3, 7] = new Case(3, 7, null);
+
+        // Assert
+        Assert.Throws<ArgumentException>(() => king.GrandRoque(chessboard));
+    }
+
+    [Fact]
+    public void GrandRoque_PathAttacked_ThrowsArgumentException()
+    {
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        // Arrange
+        var king = new King(Color.White, 1);
+        var rook = new Rook(Color.White, 2);
+        var queen = new Queen(Color.Black, 1);
+        chessboard.Board[4, 7] = new Case(4, 7, king);
+        chessboard.Board[0, 7] = new Case(0, 7, rook);
+        chessboard.Board[1, 7] = new Case(1, 7, null);
+        chessboard.Board[2, 7] = new Case(2, 7, null);
+        chessboard.Board[3, 7] = new Case(3, 7, null);
+
+        chessboard.Board[2,0] = new Case(2, 0, queen);
+        chessboard.AddPiece(queen, 2, 0);
+        chessboard.AddPiece(rook, 0, 7);
+        chessboard.AddPiece(king, 4, 7);
+
+
+        // Assert
+        Assert.Throws<ArgumentException>(() => king.GrandRoque(chessboard));
+    }
+
+    [Fact]
+    public void GrandRoque_ValidConditions_PerformsCastling()
+    {
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        // Arrange
+        var king = new King(Color.White, 1);
+        var rook = new Rook(Color.White, 2);
+        chessboard.Board[4, 7] = new Case(4, 7, king);
+        chessboard.Board[0, 7] = new Case(0, 7, rook);
+
+
+        // Act
+        king.GrandRoque(chessboard);
+
+        // Assert
+        Assert.NotNull(chessboard.Board[2, 7].Piece);
+        Assert.Equal(typeof(King), chessboard.Board[2, 7].Piece.GetType());
+        Assert.NotNull(chessboard.Board[3, 7].Piece);
+        Assert.Equal(typeof(Rook), chessboard.Board[3, 7].Piece.GetType());
     }
 }

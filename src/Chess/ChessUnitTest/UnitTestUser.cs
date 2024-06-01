@@ -65,7 +65,7 @@ public class UnitTestUser
         var user = new User(pseudo, password, color, connected, score);
 
         Assert.Equal(pseudo, user.Pseudo);
-        Assert.Equal(password, user.Password);
+        Assert.Equal(user.HashPassword(password), user.Password);
         Assert.True(Equals(user.Color, Color.White) || Equals(user.Color, Color.Black));
     }
 

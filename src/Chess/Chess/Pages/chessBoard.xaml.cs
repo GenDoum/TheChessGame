@@ -22,11 +22,17 @@ public partial class chessBoard : ContentPage
         BindingContext = this;
         
         Game.InvalidMove += OnInvalidMove;
+        Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
     }
     
     public async void OnInvalidMove(object sender, EventArgs e)
     {
         await DisplayAlert("Erreur", "Mouvement invalide, vérifiez les règles.", "OK");
+    }
+    
+    public async void OnErrorPlayerTurnNotified(object sender, EventArgs e)
+    {
+        await DisplayAlert("Erreur", "Ce n'est pas votre tour de jouer.", "OK");
     }
     
     async void OnBackButtonClicked(object sender, EventArgs e)
@@ -57,7 +63,7 @@ public partial class chessBoard : ContentPage
                     var piece = _selectedCase.Piece;
                     if (piece != null)
                     {
-                        User actualPlayer = piece.Color == Color.White ? Game.Player1 : Game.Player2;
+                        User actualPlayer = Game.ActualPlayer;
                         Game.MovePiece(_selectedCase, clickedCase, Board, actualPlayer);
                         Console.WriteLine($"Calling MovePiece with parameters: currentCase={_selectedCase}, targetCase={clickedCase}, Board={Board}, actualPlayer={actualPlayer}");
                     }

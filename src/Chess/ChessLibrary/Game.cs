@@ -46,6 +46,11 @@ namespace ChessLibrary
         
         protected virtual void OnInvalidMove()
             => InvalidMove?.Invoke(this, EventArgs.Empty);
+        
+        public event EventHandler ErrorPlayerTurnNotified = null!;
+        
+        protected virtual void OnErrorPlayerTurn()
+            => ErrorPlayerTurnNotified?.Invoke(this, EventArgs.Empty);
 
         /// <summary>
         /// Représente le joueur 1
@@ -56,6 +61,8 @@ namespace ChessLibrary
         /// Représente le joueur 2
         /// </summary>
         public User Player2 { get; set; }
+        
+        public User ActualPlayer { get; private set; }
 
         /// <summary>
         /// Représente l'échiquier
@@ -94,7 +101,8 @@ namespace ChessLibrary
 
             Chessboard chessboard = new Chessboard(allcase, false);
             this.Board = chessboard;
-
+            
+            ActualPlayer = Player1;
         }
 
 
@@ -159,6 +167,7 @@ namespace ChessLibrary
             }
             return false;
         }
+        
 
         /// <summary>
         /// Fonction pour le déplacement d'une pièce
@@ -171,6 +180,10 @@ namespace ChessLibrary
         public void MovePiece(Case? initial, Case? final, Chessboard board, User actualPlayer)
         {
 
+            if (actualPlayer.Color != initial!.Piece!.Color)
+            {
+                OnErrorPlayerTurn();
+            }
 
             if (initial!.Piece is King king &&
             ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 6 && final.Line == 7) ||
@@ -217,13 +230,14 @@ namespace ChessLibrary
                     {
                         OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = pawn, Case = final });
                     }
+                    
+                    ActualPlayer = ActualPlayer.Color == Color.White ? Player2 : Player1;
                 }
                 else
                 {
                     // Annuler le mouvement temporaire
                     initial.Piece = movingPiece;
                     final.Piece = capturedPiece;
-                    // throw new InvalidOperationException("Mouvement invalide, vérifiez les règles.");
                     OnInvalidMove();
                 }
             }

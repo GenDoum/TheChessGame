@@ -189,14 +189,6 @@ namespace ChessLibrary
             }
             else
             {
-<<<<<<< HEAD
-=======
-                
-                if (initial!.Piece == null)
-                    throw new InvalidOperationException("Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
-                if (initial.Piece.Color != actualPlayer.Color)
-                    throw new InvalidOperationException("Ce n'est pas le tour de ce joueur.");
->>>>>>> 9508eb01785404cf8af2df52b423bbb4dd2c6161
                 var blackPieces = board.CopyBlackPieces();
                 var whitePieces = board.CopyWhitePieces();
                 var movingPiece = initial.Piece;
@@ -232,7 +224,6 @@ namespace ChessLibrary
                     // Annuler le mouvement temporaire
                     initial.Piece = movingPiece;
                     final.Piece = capturedPiece;
-                    // throw new InvalidOperationException("Mouvement invalide, vérifiez les règles.");
                     OnInvalidMove();
                 }
             }

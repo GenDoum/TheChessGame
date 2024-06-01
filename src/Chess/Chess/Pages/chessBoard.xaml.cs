@@ -23,6 +23,7 @@ public partial class chessBoard : ContentPage
         
         Game.InvalidMove += OnInvalidMove;
         Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
+        Game.EvolveNotified += OnEvolvePiece;
     }
     
     public async void OnInvalidMove(object sender, EventArgs e)
@@ -33,6 +34,22 @@ public partial class chessBoard : ContentPage
     public async void OnErrorPlayerTurnNotified(object sender, EventArgs e)
     {
         await DisplayAlert("Erreur", "Ce n'est pas votre tour de jouer.", "OK");
+    }
+    
+    private async void OnEvolvePiece(object sender, EventArgs e)
+    {
+        string action = await DisplayActionSheet("Choose the piece to evolve to:", "Cancel", null, "Queen", "Rook", "Bishop", "Knight");
+        switch (action)
+        {
+            case "Queen":
+                break;
+            case "Rook":
+                break;
+            case "Bishop":
+                break;
+            case "Knight":
+                break;
+        }
     }
     
     async void OnBackButtonClicked(object sender, EventArgs e)

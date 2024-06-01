@@ -74,7 +74,7 @@
                         <Border WidthRequest="{StaticResource CellWidth}"
                                 HeightRequest="{StaticResource CellHeight}">
                             <ImageButton Source="{Binding Piece.ImagePath}"
-                                         Aspect="AspectFill"
+                                         Aspect="AspectFit"
                                          Clicked="OnPieceClicked">
                             </ImageButton>
                         </Border>

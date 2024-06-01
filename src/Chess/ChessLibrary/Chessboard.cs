@@ -415,6 +415,26 @@ namespace ChessLibrary
                 list.RemoveAt(indexToRemove);
             }
         }
+        /// <summary>
+        /// Fonction pour traiter le déplacement d'une pièce
+        /// </summary>
+        /// <param name="initial"></param>
+        /// <param name="final"></param>
+        public void ProcessPostMove(Case? initial, Case? final)
+        {
+            if (final!.Piece! != null && final!.Piece!.Color != initial!.Piece!.Color)
+            {
+                RemovePieceFromList(initial);
+            }
+            final!.Piece = initial!.Piece;
+            initial.Piece = null;
+            ModifList(initial, final);
+            // Marquer les mouvements spéciaux comme le premier mouvement pour les rois, tours et pions
+            if (final.Piece is IFirstMove firstMover)
+            {
+                firstMover.FirstMove = false;
+            }
+        }
 
     }
 }

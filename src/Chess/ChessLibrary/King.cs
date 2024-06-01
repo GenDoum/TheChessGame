@@ -115,58 +115,35 @@ namespace ChessLibrary
         public void PetitRoque(Chessboard chessboard)
         {
             // Vérifier si le roi a déjà bougé
-            if (!this.FirstMove)
+            if (!FirstMove)
                 return;
+            
+            int row = Color == Color.White ? 7 : 0; // Rangée pour les rois blancs ou noirs
+                                                         // Vérifier si la tour à la position initiale H1/H8 n'a pas bougé
+            if (chessboard.Board[7, row]!.Piece is Rook rook && rook.FirstMove)
+            {
+                // Vérifier si les cases entre le roi et la tour sont libres
+                if (chessboard.Board[5, row]!.IsCaseEmpty() && chessboard.Board[6, row]!.IsCaseEmpty())
+                {
+                    // Vérifier si les cases que le roi traverse ne sont pas attaquées
+                    if (!chessboard.Echec(this, chessboard.Board[5, row]) && !chessboard.Echec(this, chessboard.Board[6, row]))
+                    {
+                        // Effectuer le roque
+                        chessboard.ProcessPostMove(chessboard.Board[4, row], chessboard.Board[6, row]); // Déplacement du roi (E1/E8 -> G1/G8)
+                        chessboard.ProcessPostMove(chessboard.Board[7, row], chessboard.Board[5, row]); // Déplacement de la tour (H1/H8 -> F1/F8)
 
-            // Petit roque pour le roi blanc
-            if (this.Color == Color.White)
-            {
-                // Vérifier si la tour à la position initiale H1 n'a pas bougé
-                if (chessboard.Board[7, 7].Piece is Rook rook && rook.FirstMove)
-                {
-                    // Vérifier si les cases entre le roi et la tour sont libres
-                    if (chessboard.Board[5, 7].IsCaseEmpty() && chessboard.Board[6, 7].IsCaseEmpty())
-                    {
-                        // Vérifier si les cases que le roi traverse ne sont pas attaquées
-                        if (!chessboard.Echec(this, chessboard.Board[5, 7]) && !chessboard.Echec(this, chessboard.Board[6, 7]))
-                        {
-                            // Effectuer le roque
-                            /*chessboard.*/
-                            chessboard.Board[6, 7].Piece = this;
-                            chessboard.Board[4, 7].Piece = null; // Ancienne position du roi
-                            chessboard.Board[5, 7].Piece = rook;
-                            chessboard.Board[7, 7].Piece = null; // Ancienne position de la tour
-                            this.FirstMove = false;
-                            rook.FirstMove = false;
-                        }
+                        // Mettre à jour les positions sur l'échiquier
+                        chessboard.Board[6, row]!.Piece = this;
+                        chessboard.Board[4, row]!.Piece = null; // Ancienne position du roi
+                        chessboard.Board[5, row]!.Piece = rook;
+                        chessboard.Board[7, row]!.Piece = null; // Ancienne position de la tour
+
+                        // Indiquer que le roi et la tour ont bougé
+                        FirstMove = false;
+                        rook.FirstMove = false;
                     }
                 }
             }
-            else
-            {
-                // Vérifier si la tour à la position initiale H1 n'a pas bougé
-                if (chessboard.Board[7, 0].Piece is Rook rook && rook.FirstMove)
-                {
-                    // Vérifier si les cases entre le roi et la tour sont libres
-                    if (chessboard.Board[5, 0].IsCaseEmpty() && chessboard.Board[6, 0].IsCaseEmpty())
-                    {
-                        // Vérifier si les cases que le roi traverse ne sont pas attaquées
-                        if (!chessboard.Echec(this, chessboard.Board[5, 0]) && !chessboard.Echec(this, chessboard.Board[6, 0]))
-                        {
-                            // Effectuer le roque
-                            /*chessboard.*/
-                            chessboard.Board[6, 0].Piece = this;
-                            chessboard.Board[4,0].Piece = null; // Ancienne position du roi
-                            chessboard.Board[5, 0].Piece = rook;
-                            chessboard.Board[7, 0].Piece = null; // Ancienne position de la tour
-                            this.FirstMove = false;
-                            rook.FirstMove = false;
-                        }
-                    }
-                }
-            }
-            // Répétez pour le roi noir à partir de la position initiale E8 vers la tour à A8
-            // (les conditions doivent être ajustées pour le côté noir du plateau)
         }
     }
 }

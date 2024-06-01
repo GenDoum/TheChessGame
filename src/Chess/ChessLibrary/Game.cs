@@ -58,7 +58,7 @@ namespace ChessLibrary
         public User Player2 { get; set; }
 
         /// <summary>
-        /// Représente l'echiquier
+        /// Représente l'échiquier
         /// </summary>
         public Chessboard Board { get; set; }
 
@@ -211,7 +211,7 @@ namespace ChessLibrary
                     final.Piece = capturedPiece;
                     // Vérification si le mouvement est légal et si cela peut résoudre un échec existant
                     // Effectuer le mouvement réel
-                    ProcessPostMove(initial, final);
+                    Board.ProcessPostMove(initial, final);
 
                     if (final.Piece is Pawn pawn && (final.Line == 0 || final.Line == 7))
                     {
@@ -259,27 +259,6 @@ namespace ChessLibrary
             {
                 var listToRemoveFrom = capturedPiece.Color == Color.White ? whitePieces : blackPieces;
                 listToRemoveFrom.RemoveAll(p => p.piece == capturedPiece);
-            }
-        }
-
-        /// <summary>
-        /// Fonction pour traiter le déplacement d'une pièce
-        /// </summary>
-        /// <param name="initial"></param>
-        /// <param name="final"></param>
-        private void ProcessPostMove(Case? initial, Case? final)
-        {
-            if (final!.Piece! != null && final!.Piece!.Color != initial.Piece.Color)
-            {
-                Board.RemovePieceFromList(initial);
-            }
-            final!.Piece = initial!.Piece;
-            initial.Piece = null;
-            Board.ModifList(initial, final);
-            // Marquer les mouvements spéciaux comme le premier mouvement pour les rois, tours et pions
-            if (final.Piece is IFirstMove firstMover)
-            {
-                firstMover.FirstMove = false;
             }
         }
 

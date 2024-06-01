@@ -164,4 +164,44 @@ public class UnitTestKing
         // Assert
         Assert.DoesNotContain(possibleMoves, c => c!.Column == 8 && c.Line == 8);
     }
+    [Fact]
+    public void PetitRoque_WhiteKingPerfectConditions_CastlingPerformed()
+    {
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+
+        // Arrange
+        var king = new King(Color.White,1);
+        var rook = new Rook(Color.White,2);
+        chessboard.AddPiece(king,4, 7);  // Position initiale du roi
+        chessboard.AddPiece(rook, 7, 7);  // Position initiale de la tour
+        // Act
+        king.PetitRoque(chessboard);
+
+        // Assert
+        Assert.Equal(king, chessboard.Board[6, 7]!.Piece);  // Le roi doit être déplacé en G1
+        Assert.Equal(rook, chessboard.Board[5, 7]!.Piece);  // La tour doit être déplacée en F1
+    }
+
+    [Fact]
+    public void PetitRoque_WhiteKingInvalidConditions_CastlingNotPerformed()
+    {
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        // Arrange
+        var king = new King(Color.White,1);
+        var rook = new Rook(Color.White,2);
+        var pawn = new Pawn(Color.White, 3);
+        chessboard.Board[4, 7] = new Case(4, 7, king);  // Position initiale du roi
+        chessboard.Board[7, 7] = new Case(7, 7, rook);  // Position initiale de la tour
+        chessboard.Board[5, 7] = new Case(5, 7, pawn);  // Case entre le roi et la tour bloquée par un pion
+        chessboard.Board[6, 7] = new Case(6, 7, null);
+        chessboard.AddPiece(king, 4, 7);
+        chessboard.AddPiece(rook, 7, 7);
+        chessboard.AddPiece(pawn, 5, 7);
+        // Act
+        king.PetitRoque(chessboard);
+
+        // Assert
+        Assert.Null(chessboard.Board[6, 7].Piece);  // Le roi ne doit pas être déplacé
+        Assert.NotNull(chessboard.Board[5, 7].Piece);  // La case entre doit toujours avoir le pion
+    }
 }

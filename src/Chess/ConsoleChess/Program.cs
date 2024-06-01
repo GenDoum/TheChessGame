@@ -406,14 +406,14 @@ namespace ConsoleChess
                             choix = MultipleChoice("Welcome on The Chess", true, "Connection", "Inscription", "Start a game", "Learderboard", "Exit application");
                             continue;
                         }
-                        if (playerOne.Color == Color.White)
+                        if (playerOne.Color == blanc)
                         {
-                            playerTwo.Color = Color.Black;
+                            playerTwo.Color = noir;
                         }
-                        if(playerOne.Color == Color.Black)
+                        if(playerOne.Color == noir)
                         {
-                            playerOne.Color = Color.White;
-                            playerTwo.Color = Color.Black;
+                            playerOne.Color = blanc;
+                            playerTwo.Color = noir;
                         }
                         Jeu(playerOne, playerTwo);
                         break;

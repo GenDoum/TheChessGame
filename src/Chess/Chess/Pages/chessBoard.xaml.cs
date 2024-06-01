@@ -13,13 +13,20 @@ namespace Chess.Pages;
 
 public partial class chessBoard : ContentPage
 {
-    public Game game { get; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black));
+    public Game Game { get; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black));
     public Chessboard Board { get; } = new Chessboard(new Case[8, 8], false);
     
     public chessBoard()
     {
         InitializeComponent();
         BindingContext = this;
+        
+        Game.InvalidMove += OnInvalidMove;
+    }
+    
+    public async void OnInvalidMove(object sender, EventArgs e)
+    {
+        await DisplayAlert("Erreur", "Mouvement invalide, vérifiez les règles.", "OK");
     }
     
     async void OnBackButtonClicked(object sender, EventArgs e)
@@ -27,49 +34,11 @@ public partial class chessBoard : ContentPage
         await Shell.Current.GoToAsync("//page/MainPage");
     }
     
-    // void OnDragStarting(object sender, DragStartingEventArgs e)
-    // {
-    //     var imageButton = sender as ImageButton;
-    //     if (imageButton != null)
-    //     {
-    //         var piece = imageButton.BindingContext as Case;
-    //         if (piece != null)
-    //         {
-    //             e.Data.Properties.Add("piece", piece.Piece);
-    //             e.Data.Properties.Add("currentCase", piece);
-    //         }
-    //     }
-    // }
-    //
-    // void OnDrop(object sender, DropEventArgs e)
-    // {
-    //     var imageButton = sender as ImageButton;
-    //     if (imageButton != null)
-    //     {
-    //         var targetCase = imageButton.BindingContext as Case;
-    //         if (targetCase != null)
-    //         {
-    //             var piece = e.Data.Properties["piece"] as Piece;
-    //             var currentCase = e.Data.Properties["currentCase"] as Case;
-    //             
-    //             if (piece != null && currentCase != null)
-    //             {
-    //                 var possibleMoves = piece.PossibleMoves(currentCase, Board);
-    //                 
-    //                 if (possibleMoves.Contains(targetCase))
-    //                 {
-    //                     User actualPlayer = piece.Color == Color.White ? game.Player1 : game.Player2;
-    //                     game.MovePiece(currentCase, targetCase, Board, actualPlayer);
-    //                     Console.WriteLine($"Calling MovePiece with parameters: currentCase={currentCase}, targetCase={targetCase}, Board={Board}, actualPlayer={actualPlayer}");
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
     
-    private Case? selectedCase;
+    private Case? _selectedCase;
+    
 
-    void OnPieceClicked(object sender, EventArgs e)
+    async void OnPieceClicked(object sender, EventArgs e)
     {
         var imageButton = sender as ImageButton;
         if (imageButton != null)
@@ -77,27 +46,23 @@ public partial class chessBoard : ContentPage
             var clickedCase = imageButton.BindingContext as Case;
             if (clickedCase != null)
             {
-                if (selectedCase == null)
+                if (_selectedCase == null)
                 {
-                    // Si aucune pièce n'est sélectionnée, sélectionnez la pièce sur laquelle nous avons cliqué
-                    selectedCase = clickedCase;
+                    // Si aucune pièce n'est sélectionnée, sélectionne la pièce sur laquelle nous avons cliqué
+                    _selectedCase = clickedCase;
                 }
                 else
                 {
-                    // Si une pièce est déjà sélectionnée, essayez de la déplacer vers la case sur laquelle nous avons cliqué
-                    var piece = selectedCase.Piece;
+                    // Si une pièce est déjà sélectionnée, la déplacer vers la case sur laquelle nous avons cliqué
+                    var piece = _selectedCase.Piece;
                     if (piece != null)
                     {
-                        var possibleMoves = piece.PossibleMoves(selectedCase, Board);
-                        if (possibleMoves.Contains(clickedCase))
-                        {
-                            User actualPlayer = piece.Color == Color.White ? game.Player1 : game.Player2;
-                            game.MovePiece(selectedCase, clickedCase, Board, actualPlayer);
-                            Console.WriteLine($"Calling MovePiece with parameters: currentCase={selectedCase}, targetCase={clickedCase}, Board={Board}, actualPlayer={actualPlayer}");
-                        }
+                        User actualPlayer = piece.Color == Color.White ? Game.Player1 : Game.Player2;
+                        Game.MovePiece(_selectedCase, clickedCase, Board, actualPlayer);
+                        Console.WriteLine($"Calling MovePiece with parameters: currentCase={_selectedCase}, targetCase={clickedCase}, Board={Board}, actualPlayer={actualPlayer}");
                     }
 
-                    selectedCase = null;
+                    _selectedCase = null;
                 }
             }
         }

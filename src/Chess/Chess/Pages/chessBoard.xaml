@@ -29,7 +29,7 @@
                         Style="{StaticResource imgAppli}"
                         Margin="100"/>
 
-                <Label  Text="{Binding game.Player1.Pseudo}" 
+                <Label  Text="{Binding Game.Player1.Pseudo}" 
                         FontSize="Large"
                         TextColor="White"
                         Margin="50"/>
@@ -38,7 +38,7 @@
                         Style="{StaticResource imgAppli}"
                         Margin="50"/>
 
-                <Label  Text="{Binding game.Player2.Pseudo}"
+                <Label  Text="{Binding Game.Player2.Pseudo}"
                         FontSize="Large"
                         TextColor="White"
                         Margin="50"/>
@@ -74,14 +74,9 @@
                         <Border WidthRequest="{StaticResource CellWidth}"
                                 HeightRequest="{StaticResource CellHeight}">
                             <ImageButton Source="{Binding Piece.ImagePath}"
-                                         Aspect="AspectFill"
+                                         Aspect="AspectFit"
                                          Clicked="OnPieceClicked">
-                                <!-- <ImageButton.GestureRecognizers> -->
-                                <!--     <DragGestureRecognizer CanDrag="True" -->
-                                <!--                            DragStarting="OnDragStarting"/> -->
-                                <!--     <DropGestureRecognizer Drop="OnDrop"/> -->
-                                <!-- -->
-                                <!-- </ImageButton.GestureRecognizers> -->
+                                
                             </ImageButton>
                         </Border>
                     </DataTemplate>

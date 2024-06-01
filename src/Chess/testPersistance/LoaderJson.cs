@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Text.Json.Serialization;
 using ChessLibrary;
 
 namespace Persistance
@@ -11,7 +12,7 @@ namespace Persistance
     public class LoaderJson : IUserDataManager
     {
         private const string DataDirectory = "..\\..\\..\\..\\.\\testPersistance\\donneePersistance";
-        private const string JsonFileName = "testUser.json";
+        private const string JsonFileName = "User.json";
 
         public override void writeUsers(List<User> users)
         {
@@ -20,11 +21,14 @@ namespace Persistance
                 throw new ArgumentNullException(nameof(users));
             }
 
-            Directory.CreateDirectory(DataDirectory);
-            string jsonFilePath = Path.Combine(DataDirectory, JsonFileName);
+            string jsonFilePath = Path.Combine("..\\..\\.\\testPersistance\\donneePersistance", JsonFileName);
 
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<User>));
 
+            if (File.Exists(jsonFilePath))
+            {
+                File.Delete(jsonFilePath);
+            }
 
             using (FileStream stream = File.Create(JsonFileName))
             {
@@ -37,22 +41,33 @@ namespace Persistance
 
         public override List<User>? readUsers()
         {
-            Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\testPersistance\\donneePersistance"));
-            const string jsonFile = "testUser.json";
+            Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\..\\testPersistance\\donneePersistance"));
+            const string jsonFile = "User.json";
             Console.WriteLine(Directory.GetCurrentDirectory());
+            List<User> users = new List<User>();
             Thread.Sleep(1000);
+
+
             if (!File.Exists(jsonFile))
             {
-                throw new FileNotFoundException("Le fichier JSON spécifié est introuvable.");
+                using (File.Create(jsonFile))
+                {
+                    // Création du fichier et fermeture immédiate pour éviter les erreurs de lecture.
+                }
+                return new List<User>();
             }
-
-            var serializer = new DataContractJsonSerializer(typeof(List<User>));
-            string json = File.ReadAllText(jsonFile);
-
-            using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+            else
             {
-                return serializer.ReadObject(memoryStream) as List<User>;
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(List<User>));
+                
+                using (FileStream memoryStream = File.OpenRead("User.json"))
+                {
+                    users = (List<User>)jsonSerializer.ReadObject(memoryStream);
+                }
             }
+
+            return users;
+
         }
     }
 }

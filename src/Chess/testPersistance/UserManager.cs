@@ -14,33 +14,34 @@ namespace testPersistance
     {
         [DataMember]
         public ReadOnlyCollection<User> Users { get; private set; }
-        
+
         private readonly List<User> users = new List<User>();
 
         private readonly LoaderXML loaderXML = new LoaderXML();
         private readonly LoaderJson loaderJson = new LoaderJson();
 
-        
+
         public UserManager()
         {
-            Console.WriteLine("Création du UserManager");
+            // /!\ Pour activer la lecture du fichier en XML, décommenter la ligne suivante /!\
+            //List<User>? xmlUsers = loaderXML.readUsers(); // Nullable car il peux ne pas y avoir de joueur (au début)
 
-            List<User>? xmlUsers = loaderXML.readUsers(); // Nullable car il peux ne pas y avoir de joueur (au début)
-            //List<User>? jsonUsers = loaderJson.readUsers();
+            List<User>? jsonUsers = loaderJson.readUsers();
 
             List<User> allUsers = new List<User>();
+            // Si on active la lecture des deux fichier (json et xml) décommenter le foreach suivant :  
+            allUsers.AddRange(jsonUsers); 
 
-            allUsers.AddRange(xmlUsers);
-            /*foreach (User user in jsonUsers)
-            {
-                if (!allUsers.Contains(user))
-                {
-                    allUsers.Add(user);
-                }
-            }*/
+            //foreach (User user in xmlUsers)
+            //{
+            //    // Regarde dans la liste si le pseudo existe déjà, si il existe pas on ajoute le joueur, sinon on passe
+            //    if (allUsers.Find(u => u.Pseudo == user.Pseudo) == null)
+            //    {
+            //        allUsers.Add(user);
+            //    }
+            //}
 
             Users = new ReadOnlyCollection<User>(allUsers);
-            Console.WriteLine("Fin de la création du UserManager");
         }
 
         public void AddUser(User user)
@@ -54,7 +55,7 @@ namespace testPersistance
             Users = new ReadOnlyCollection<User>(users);
         }
 
-        public void saveUsers (List<User> users)
+        public void saveUsers(List<User> users)
         {
             loaderJson.writeUsers(users);
             loaderXML.writeUsers(users);

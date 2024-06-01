@@ -359,10 +359,6 @@ namespace ConsoleChess
             Color noir = Color.Black;
             Color blanc = Color.White;
 
-            foreach (User user in users)
-            {
-                Console.WriteLine(user.ToString());
-            }
             Thread.Sleep(2000);
 
             User? playerOne = null;
@@ -530,13 +526,6 @@ namespace ConsoleChess
             UserManager userManager = new UserManager();
 
             List<User> users = userManager.Users.ToList();
-
-            foreach (User user in users)
-            {
-                Console.WriteLine(user.ToString());
-            }
-
-            Thread.Sleep(2000);
 
             menuAccueil(users);
 

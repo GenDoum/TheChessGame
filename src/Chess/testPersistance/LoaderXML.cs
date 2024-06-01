@@ -12,6 +12,8 @@ namespace Persistance
 
         public override void writeUsers(List<User> users)
         {
+            const string xmlFile = "User.xml";
+
             if (users == null)
             {
                 throw new ArgumentNullException(nameof(users));
@@ -20,14 +22,20 @@ namespace Persistance
             var serializer = new DataContractSerializer(typeof(List<User>));
             var settings = new XmlWriterSettings() { Indent = true };
 
-            // Crée un dossier où les données seront stockées
-            Directory.CreateDirectory("..\\..\\..\\.\\..\\testPersistance\\donneePersistance");
-
-            // Change le dossier courant pour le dossier où les données seront stockées
-            Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\..\\testPersistance\\donneePersistance"));
 
 
-            using(TextWriter tw = File.CreateText("User.xml"))
+            //// Crée un dossier où les données seront stockées
+            //Directory.CreateDirectory("..\\..\\../testPersistance/donneePersistance");
+
+            //// Change le dossier courant pour le dossier où les données seront stockées
+            //Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\..\\testPersistance\\donneePersistance"));
+
+            if (File.Exists(xmlFile))
+            {
+                File.Delete(xmlFile);
+            }
+
+            using(TextWriter tw = File.CreateText(xmlFile))
             {
                 using (var writer = XmlWriter.Create(tw, settings))
                 {
@@ -47,7 +55,7 @@ namespace Persistance
 
             var serializer = new DataContractSerializer(typeof(List<User>));
             var settings = new XmlReaderSettings { IgnoreWhitespace = true };
-            using (TextReader tr = File.OpenText("User.xml"))
+            using (TextReader tr = File.OpenText(xmlFile))
             {
                 using (var reader = XmlReader.Create(tr, settings))
                 {

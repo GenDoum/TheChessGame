@@ -14,4 +14,25 @@
     <Score>99</Score>
     <pseudo>Hersan</pseudo>
   </Players>
+  <Players>
+    <Color>White</Color>
+    <Password>BxI+H0gjVsQV9oRAejuHI+ELLLvAuPzWKCxJ03ycGrw=</Password>
+    <Pseudo>lol</Pseudo>
+    <Score>0</Score>
+    <pseudo>lol</pseudo>
+  </Players>
+  <Players>
+    <Color>White</Color>
+    <Password>6u/3K2BVqiU8ZHD0yycvhBxeuNYT1pJvfOn26e6QxUo=</Password>
+    <Pseudo>Genkyy</Pseudo>
+    <Score>0</Score>
+    <pseudo>Genkyy</pseudo>
+  </Players>
+  <Players>
+    <Color>White</Color>
+    <Password>5ZOJ2cgXNSdkdFDMfngdIB6OcSL12FwBdSjqXCrdi/4=</Password>
+    <Pseudo>Lascret</Pseudo>
+    <Score>0</Score>
+    <pseudo>Lascret</pseudo>
+  </Players>
 </ArrayOfPlayers>

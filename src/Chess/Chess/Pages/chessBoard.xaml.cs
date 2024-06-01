@@ -63,7 +63,7 @@ public partial class chessBoard : ContentPage
                     var piece = _selectedCase.Piece;
                     if (piece != null)
                     {
-                        User actualPlayer = Game.ActualPlayer;
+                        User actualPlayer = piece.Color == Color.White ? Game.Player1 : Game.Player2;
                         Game.MovePiece(_selectedCase, clickedCase, Board, actualPlayer);
                         Console.WriteLine($"Calling MovePiece with parameters: currentCase={_selectedCase}, targetCase={clickedCase}, Board={Board}, actualPlayer={actualPlayer}");
                     }
@@ -73,6 +73,5 @@ public partial class chessBoard : ContentPage
             }
         }
     }
-    
     
 }

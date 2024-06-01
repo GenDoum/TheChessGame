@@ -62,7 +62,7 @@ namespace ChessLibrary
         /// </summary>
         public User Player2 { get; set; }
         
-        public User ActualPlayer { get; private set; }
+        public User CurrentPlayer { get; private set; }
 
         /// <summary>
         /// Représente l'échiquier
@@ -102,7 +102,7 @@ namespace ChessLibrary
             Chessboard chessboard = new Chessboard(allcase, false);
             this.Board = chessboard;
             
-            ActualPlayer = Player1;
+            CurrentPlayer = Player1;
         }
 
 
@@ -130,18 +130,6 @@ namespace ChessLibrary
                 }
             }
             return false;
-        }
-
-        public void GetActualPlayer(User actualPlayer)
-        {
-            if (actualPlayer.Color == Color.White)
-            {
-                actualPlayer = Player1;
-            }
-            else
-            {
-                actualPlayer = Player2;
-            }
         }
 
         /// <summary>
@@ -179,11 +167,7 @@ namespace ChessLibrary
         /// <exception cref="InvalidOperationException"></exception>
         public void MovePiece(Case? initial, Case? final, Chessboard board, User actualPlayer)
         {
-
-            if (actualPlayer.Color != initial!.Piece!.Color)
-            {
-                OnErrorPlayerTurn();
-            }
+            
 
             if (initial!.Piece is King king &&
             ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 6 && final.Line == 7) ||
@@ -196,8 +180,13 @@ namespace ChessLibrary
                 
                 if (initial!.Piece == null)
                     throw new InvalidOperationException("Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
-                if (initial.Piece.Color != actualPlayer.Color)
-                    throw new InvalidOperationException("Ce n'est pas le tour de ce joueur.");
+
+                if (actualPlayer != CurrentPlayer)
+                {
+                    OnErrorPlayerTurn();
+                    return;
+                }
+
                 var blackPieces = board.CopyBlackPieces();
                 var whitePieces = board.CopyWhitePieces();
                 var movingPiece = initial.Piece;
@@ -231,7 +220,14 @@ namespace ChessLibrary
                         OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = pawn, Case = final });
                     }
                     
-                    ActualPlayer = ActualPlayer.Color == Color.White ? Player2 : Player1;
+                    if (actualPlayer == Player1)
+                    {
+                        CurrentPlayer = Player2;
+                    }
+                    else
+                    {
+                        CurrentPlayer = Player1;
+                    }
                 }
                 else
                 {

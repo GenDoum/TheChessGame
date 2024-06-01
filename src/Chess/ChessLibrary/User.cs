@@ -80,7 +80,7 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="pseudo"></param>
         /// <param name="password"></param>
-        public User(string pseudo, string? password, Color color, bool connected, int playerScore)
+        public User(string pseudo, string password, Color color, bool connected, int playerScore)
         {
             if (string.IsNullOrWhiteSpace(pseudo))
             {
@@ -126,7 +126,7 @@ namespace ChessLibrary
             pseudo = "Invité";
             Password = null;
         }
-        public string HashPassword(string password)
+        public string? HashPassword(string password)
         {
             if (password == null)
             {

@@ -135,7 +135,7 @@ namespace ChessLibrary
 
             using (var sha256 = SHA256.Create())
             {
-                var hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                var hashBytes = System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(password));
                 return Convert.ToBase64String(hashBytes);
             }
         }

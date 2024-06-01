@@ -85,7 +85,7 @@ namespace ChessLibrary
         /// <param name="connected"></param>
         /// <param name="playerScore"></param>
         /// <exception cref="ArgumentException"></exception>
-        public User(string pseudo, string? password, Color color, bool connected, int playerScore)
+        public User(string pseudo, string password, Color color, bool connected, int playerScore)
         {
             if (string.IsNullOrWhiteSpace(pseudo))
             {

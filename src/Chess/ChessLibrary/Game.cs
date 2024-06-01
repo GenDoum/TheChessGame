@@ -165,22 +165,25 @@ namespace ChessLibrary
         /// <exception cref="InvalidOperationException"></exception>
         public void MovePiece(Case? initial, Case? final, Chessboard board, User actualPlayer)
         {
-
+            if (initial!.Piece == null)
+                throw new InvalidOperationException("Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
+            if (initial.Piece.Color != actualPlayer.Color)
+                throw new InvalidOperationException("Ce n'est pas le tour de ce joueur.");
 
             if (initial!.Piece is King king &&
-            ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 6 && final.Line == 7) ||
-            (king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 6 && final.Line == 0)))
+            ((king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0) ||
+            (king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7)))
             {
                 king.PetitRoque(Board); // Appel de la méthode PetitRoque
             }
+            else if(initial!.Piece is King king2 &&
+            ((king2.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 0 && final.Line == 0) ||
+            (king2.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 0 && final.Line == 7)))
+            {
+                king2.GrandRoque(board); 
+            }
             else
             {
-
-
-                if (initial!.Piece == null)
-                    throw new InvalidOperationException("Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
-                if (initial.Piece.Color != actualPlayer.Color)
-                    throw new InvalidOperationException("Ce n'est pas le tour de ce joueur.");
                 var blackPieces = board.CopyBlackPieces();
                 var whitePieces = board.CopyWhitePieces();
                 var movingPiece = initial.Piece;
@@ -191,8 +194,6 @@ namespace ChessLibrary
                     // Simulation du mouvement pour la vérification
 
                     UpdatePieceLists(blackPieces, whitePieces, initial, final, board); // Met à jour les listes de pièces de manière temporaire
-                    final.Piece = movingPiece;
-                    initial.Piece = null;
                     // Vérification de l'échec après le mouvement temporaire
                     if (board.IsInCheck(actualPlayer.Color))
                     {
@@ -203,8 +204,7 @@ namespace ChessLibrary
                         throw new InvalidOperationException("Vous ne pouvez pas vous mettre en échec.");
                     }
                     RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece!);
-                    initial.Piece = movingPiece;
-                    final.Piece = capturedPiece;
+
                     // Vérification si le mouvement est légal et si cela peut résoudre un échec existant
                     // Effectuer le mouvement réel
                     Board.ProcessPostMove(initial, final);
@@ -230,6 +230,8 @@ namespace ChessLibrary
             // Rétablir la pièce déplacée dans sa position originale
             var listToUpdate = movedPiece.Color == Color.White ? whitePieces : blackPieces;
             // Enlever la pièce de sa nouvelle position dans la liste et la remettre à l'initial
+            initial.Piece = movedPiece;
+            final.Piece = capturedPiece;
             listToUpdate.RemoveAll(p => p.piece == movedPiece && p.CaseLink == final);
             listToUpdate.Add(new CoPieces { CaseLink = initial, piece = movedPiece });
 
@@ -246,7 +248,8 @@ namespace ChessLibrary
             var movedPiece = initial!.Piece;
             var capturedPiece = final!.Piece;
             var listToUpdate = movedPiece!.Color == Color.White ? whitePieces : blackPieces;
-
+            final.Piece = movedPiece;
+            initial.Piece = null;
             listToUpdate.RemoveAll(p => p.piece == movedPiece);
             listToUpdate.Add(new CoPieces { CaseLink = final, piece = movedPiece });
 

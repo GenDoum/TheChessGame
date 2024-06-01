@@ -411,6 +411,7 @@ namespace ChessLibrary
             final!.Piece = initial!.Piece;
             initial.Piece = null;
             ModifList(initial, final);
+
             // Marquer les mouvements spéciaux comme le premier mouvement pour les rois, tours et pions
             if (final.Piece is IFirstMove firstMover)
             {

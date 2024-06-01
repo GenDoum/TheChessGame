@@ -86,7 +86,7 @@ namespace ChessLibrary
         /// Détermine si la case est vide (aucune pièce n'est présente).
         /// </summary>
         /// <returns>true si la case est vide, sinon false</returns>
-        public bool IsCaseEmpty() => Piece == null;
+        public bool IsCaseEmpty() => this.Piece == null;
         
         public event PropertyChangedEventHandler? PropertyChanged;
         

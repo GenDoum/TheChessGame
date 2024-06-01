@@ -78,14 +78,14 @@ namespace ConsoleChess
 
             }
 
-            if (Equals(user.HashPassword(null), user.Password))
+            if (Equals(User.HashPassword(null), user.Password))
             {
                 Console.WriteLine("\nInvited player, no need to check password\n");
                 return true;
             }
 
             string? userPassword = user.Password; // pour éviter un code smells
-            if (Equals(user.HashPassword(pass.ToString()), userPassword))
+            if (Equals(User.HashPassword(pass.ToString()), userPassword))
             {
                 Console.WriteLine($"\nGood password, have fun {user.Pseudo}");
                 return true;

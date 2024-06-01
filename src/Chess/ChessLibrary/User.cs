@@ -88,7 +88,7 @@ namespace ChessLibrary
             }
 
             this.pseudo = pseudo;
-            this.Password = HashPassword(password);
+            this.Password = User.HashPassword(password);
             this.Color = color;
             Score = playerScore;
             IsConnected = connected;
@@ -110,7 +110,7 @@ namespace ChessLibrary
         public User(User user)
         {
             this.pseudo = user.Pseudo;
-            this.Password = user.Password == null ? null : HashPassword(user.Password);
+            this.Password = user.Password == null ? null : User.HashPassword(user.Password);
             this.Color = user.Color;
             this.Score = user.Score;
             this.IsConnected = user.IsConnected;
@@ -126,7 +126,7 @@ namespace ChessLibrary
             pseudo = "Invité";
             Password = null;
         }
-        public string? HashPassword(string password)
+        public static string? HashPassword(string password)
         {
             if (password == null)
             {
@@ -142,7 +142,7 @@ namespace ChessLibrary
 
         public bool CheckPassword(string password)
         {
-            return HashPassword(password) == Password;
+            return User.HashPassword(password) == Password;
         }
 
         public override string ToString()

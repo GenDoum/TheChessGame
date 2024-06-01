@@ -50,7 +50,7 @@ public class UnitTestQueen
         var queen = new Queen(Color.White, 1);
         var chessboard = new Chessboard(new Case[8, 8], true);
         var caseInitial = new Case(4, 4, queen);
-        chessboard.Board[5, 5].Piece = new Pawn(Color.Black, 2); 
+        chessboard.Board[5, 5]!.Piece = new Pawn(Color.Black, 2); 
 
         // Act
         var result = queen.PossibleMoves(caseInitial, chessboard);
@@ -66,12 +66,10 @@ public class UnitTestQueen
     {
         // Arrange
         Chessboard chessboard = new Chessboard(new Case[8, 8], true);
-        King? king = new King(Color.White, 1);
-        Queen? queen = new Queen(Color.Black, 1);
-        Pawn? pawn = new Pawn(Color.White, 2);
-        Case kingCase = new Case(4, 0, king);
+        King king = new King(Color.White, 1);
+        Queen queen = new Queen(Color.Black, 1);
+        Pawn pawn = new Pawn(Color.White, 2);
         Case queenCase = new Case(4, 2, queen);
-        Case pawnCase = new Case(3, 1, pawn);
         chessboard.AddPiece(king, 4, 0);
         chessboard.AddPiece(queen, 4, 2);
         chessboard.AddPiece(pawn, 3, 1);
@@ -90,5 +88,25 @@ public class UnitTestQueen
         Assert.DoesNotContain(chessboard.Board[5, 4], result);
         Assert.DoesNotContain(chessboard.Board[0, 7], result);
         Assert.Equal(24,result.Count);
+    }
+    
+    [Fact]
+    public void TestQueenPossibleMoves_CaptureOpponentPieces()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        Queen queen = new Queen(Color.White, 1);
+        Pawn blackPawn1 = new Pawn(Color.Black, 2);
+        Pawn blackPawn2 = new Pawn(Color.Black, 3);
+        chessboard.AddPiece(queen, 4, 4);
+        chessboard.AddPiece(blackPawn1, 5, 5); // Diagonal
+        chessboard.AddPiece(blackPawn2, 4, 5); // Vertical
+
+        // Act
+        var possibleMoves = queen.PossibleMoves(chessboard.Board[4, 4], chessboard);
+
+        // Assert
+        Assert.Contains(possibleMoves, c => c == chessboard.Board[5, 5]); // Can capture blackPawn1
+        Assert.Contains(possibleMoves, c => c == chessboard.Board[4, 5]); // Can capture blackPawn2
     }
 }

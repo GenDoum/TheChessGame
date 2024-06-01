@@ -18,6 +18,7 @@ namespace ChessLibrary
         /// <param name="id"></param>
         public Knight(Color c, int id) : base(c, id)
         {
+            ImagePath = c == Color.White ? "chavalier.png" : "chavalier_b.png";
         }
 
         public override bool CanMove(int x, int y, int x2, int y2)
@@ -34,11 +35,11 @@ namespace ChessLibrary
         }
 
 
-        public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
+        public override List<Case?> PossibleMoves(Case? caseInitial, Chessboard chessboard)
         {
             ArgumentNullException.ThrowIfNull(chessboard);
 
-            List<Case> result = new List<Case>();
+            List<Case?> result = new List<Case?>();
 
             int[,] offsets = new int[,]
             {
@@ -48,13 +49,13 @@ namespace ChessLibrary
 
             for (int i = 0; i < 8; i++)
             {
-                int newColumn = caseInitial.Column + offsets[i, 0];
+                int newColumn = caseInitial!.Column + offsets[i, 0];
                 int newLine = caseInitial.Line + offsets[i, 1];
 
                 if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                 {
-                    Case potentialCase = chessboard.Board[newColumn, newLine];
-                    if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine) && (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color || potentialCase.IsCaseEmpty()))
+                    Case? potentialCase = chessboard.Board[newColumn, newLine];
+                    if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine) && (!potentialCase!.IsCaseEmpty() && potentialCase.Piece!.Color != this.Color || potentialCase.IsCaseEmpty()))
                         result.Add(potentialCase);
                 }
             }

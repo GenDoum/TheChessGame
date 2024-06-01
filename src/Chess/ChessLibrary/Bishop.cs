@@ -16,9 +16,10 @@ namespace ChessLibrary
         /// Constructeur de la classe Bishop
         /// </summary>
         /// <param name="color"></param>
-        /// <param name="c"></param>
+        /// <param name="id"></param>
         public Bishop(Color color, int id) : base(color, id)
         {
+            ImagePath = color == Color.White ? "fou.png" : "fou_b.png";
         }
 
         public override bool CanMove(int x, int y, int x2, int y2)
@@ -32,12 +33,12 @@ namespace ChessLibrary
             return true;
         }
 
-        public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
+        public override List<Case?> PossibleMoves(Case? caseInitial, Chessboard chessboard)
         {
-            if (chessboard == null || caseInitial == null)
-                throw new ArgumentNullException();
+            ArgumentNullException.ThrowIfNull(caseInitial);
+            ArgumentNullException.ThrowIfNull(chessboard);
 
-            List<Case> result = new List<Case>();
+            List<Case?> result = new List<Case?>();
             (int colInc, int lineInc)[] directions = { (-1, 1), (1, 1), (-1, -1), (1, -1) }; // Top Left, Top Right, Bot Left, Bot Right
 
             foreach (var (colInc, lineInc) in directions)
@@ -48,28 +49,39 @@ namespace ChessLibrary
                     int newLine = caseInitial.Line + (lineInc * i);
                     if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                     {
-                        Case potentialCase = chessboard.Board[newColumn, newLine];
+                        Case? potentialCase = chessboard.Board[newColumn, newLine];
                         if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
                         {
-                            if (potentialCase.IsCaseEmpty())
+                            if (FactPossibleMove(potentialCase))
                             {
                                 result.Add(potentialCase);
-                            }
-                            else if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
-                            {
-                                result.Add(potentialCase);
-                                break;
                             }
                             else
                                 break;
                         }
+                        else
+                            break;
                     }
-                    else
-                        break;
                 }
             }
-
             return result;
+        }
+
+        private bool FactPossibleMove(Case? potentialCase)
+        {
+
+            if (potentialCase!.IsCaseEmpty())
+            {
+                return true;
+            }
+            else if (!potentialCase.IsCaseEmpty() && potentialCase.Piece!.Color != this.Color)
+            {
+                return true;
+            }
+            else
+                return false;
+
         }
     }
 }
+

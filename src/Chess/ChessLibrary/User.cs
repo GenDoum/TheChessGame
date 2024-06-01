@@ -22,10 +22,10 @@ namespace ChessLibrary
         [DataMember]
         public string Pseudo
         {
-            get => pseudo;
+            get => _pseudo;
             set
             {
-                pseudo = value;
+                _pseudo = value;
 
                 if (string.IsNullOrWhiteSpace(Pseudo))
                 {
@@ -35,7 +35,7 @@ namespace ChessLibrary
         }
 
         [DataMember]
-        private string pseudo;
+        private string _pseudo;
 
         /// <summary>
         /// Password of the Player
@@ -76,18 +76,23 @@ namespace ChessLibrary
         }
 
         /// <summary>
-        /// Constructor of Player with parameters
+        /// Constructor of Player with parameters.
         /// </summary>
         /// <param name="pseudo"></param>
         /// <param name="password"></param>
-        public User(string pseudo, string password, Color color, bool connected, int playerScore)
+
+        /// <param name="color"></param>
+        /// <param name="connected"></param>
+        /// <param name="playerScore"></param>
+        /// <exception cref="ArgumentException"></exception>
+        public User(string pseudo, string? password, Color color, bool connected, int playerScore)
         {
             if (string.IsNullOrWhiteSpace(pseudo))
             {
                 throw new ArgumentException("Pseudo or password must be entered and must not be full of white space");
             }
 
-            this.pseudo = pseudo;
+            this._pseudo = pseudo;
             this.Password = User.HashPassword(password);
             this.Color = color;
             Score = playerScore;
@@ -99,7 +104,7 @@ namespace ChessLibrary
         {
             string name = $"{color.ToString()} player";
 
-            this.pseudo = name;
+            this._pseudo = name;
             this.Password = null;
             this.Color = color;
             this.Score = 0;
@@ -109,7 +114,7 @@ namespace ChessLibrary
 
         public User(User user)
         {
-            this.pseudo = user.Pseudo;
+            this._pseudo = user.Pseudo;
             this.Password = user.Password == null ? null : User.HashPassword(user.Password);
             this.Color = user.Color;
             this.Score = user.Score;
@@ -123,7 +128,7 @@ namespace ChessLibrary
         /// </summary>
         public User()
         {
-            pseudo = "Invité";
+            _pseudo = "Invité";
             Password = null;
         }
         public static string? HashPassword(string password)

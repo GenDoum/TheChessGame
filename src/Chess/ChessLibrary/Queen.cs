@@ -18,6 +18,7 @@ namespace ChessLibrary
         /// <param name="ca"></param>
         public Queen(Color color, int id) : base(color, id)
         {
+            ImagePath = color == Color.White ? "dame.png" : "dame_b.png";
         }
 
         public override bool CanMove(int x, int y, int x2, int y2)
@@ -31,30 +32,30 @@ namespace ChessLibrary
             throw new InvalidMovementException("Invalid move for Queen: not diagonal, horizontal or vertical.");
         }
 
-        public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
+        public override List<Case?> PossibleMoves(Case? caseInitial, Chessboard chessboard)
         {
-
+            ArgumentNullException.ThrowIfNull(caseInitial);
             ArgumentNullException.ThrowIfNull(chessboard);
 
-            List<Case> result = new List<Case>();
+            List<Case?> result = new List<Case?>();
             (int, int)[] directions = { (0, 1), (0, -1), (-1, 0), (1, 0), (-1, 1), (1, 1), (-1, -1), (1, -1) };  // Top, Bot, Left, Right ,Top Left, Top Right, Bot Left,Bot Right
 
             foreach (var (colInc, lineInc) in directions)
             {
                 for (int i = 1; i < 8; i++)
                 {
-                    int newColumn = caseInitial.Column + (colInc * i);
+                    int newColumn = caseInitial!.Column + (colInc * i);
                     int newLine = caseInitial.Line + (lineInc * i);
                     if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                     {
-                        Case potentialCase = chessboard.Board[newColumn, newLine];
+                        Case? potentialCase = chessboard.Board[newColumn, newLine];
                         if (CanMove(caseInitial.Column, caseInitial.Line, newColumn, newLine))
                         {
-                            if (potentialCase.IsCaseEmpty())
+                            if (potentialCase!.IsCaseEmpty())
                             {
                                 result.Add(potentialCase);
                             }
-                            else if (!potentialCase.IsCaseEmpty() && potentialCase.Piece.Color != this.Color)
+                            else if (!potentialCase.IsCaseEmpty() && potentialCase.Piece!.Color != this.Color)
                             {
                                 result.Add(potentialCase);
                                 break;

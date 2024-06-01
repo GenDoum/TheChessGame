@@ -20,6 +20,7 @@ namespace ChessLibrary
         public King(Color color, int id) : base(color, id)
         {
             this.FirstMove = true;
+            ImagePath = color == Color.White ? "roi.png" : "roi_b.png";
         }
 
 
@@ -37,25 +38,25 @@ namespace ChessLibrary
             throw new InvalidMovementException("Invalid move for King");
         }
 
- 
-        public override List<Case> PossibleMoves(Case caseInitial, Chessboard chessboard)
+
+        public override List<Case?> PossibleMoves(Case? caseInitial, Chessboard chessboard)
         {
             ArgumentNullException.ThrowIfNull(chessboard);
 
-            List<Case> result = new List<Case>();
+            List<Case?> result = new List<Case?>();
             (int, int)[] directions = { (0, 1), (0, -1), (-1, 0), (1, 0), (-1, 1), (1, 1), (-1, -1), (1, -1) };  // Top, Bot, Left, Right, Top Left, Top Right, Bot Left, Bot Right
 
             foreach (var (colInc, lineInc) in directions)
             {
-                int newColumn = caseInitial.Column + colInc;
+                int newColumn = caseInitial!.Column + colInc;
                 int newLine = caseInitial.Line + lineInc;
 
                 if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                 {
-                    Case potentialCase = chessboard.Board[newColumn, newLine];
+                    Case? potentialCase = chessboard.Board[newColumn, newLine];
 
                     // Vérifiez si la case est vide ou contient une pièce ennemie
-                    if (potentialCase.IsCaseEmpty() || (potentialCase.Piece != null && potentialCase.Piece.Color != this.Color))
+                    if (potentialCase!.IsCaseEmpty() || (potentialCase.Piece != null && potentialCase.Piece.Color != this.Color))
                     {
                         // Trouver la position du roi après le déplacement
                         Case kingNewPosition = new Case(newColumn, newLine, this);
@@ -83,22 +84,22 @@ namespace ChessLibrary
         /// <param name="caseInitial"></param>
         /// <param name="chessboard"></param>
         /// <returns></returns>
-        public List<Case> CanEat(Case caseInitial, Chessboard chessboard)
+        public List<Case?> CanEat(Case? caseInitial, Chessboard chessboard)
         {
-            List<Case> result = new List<Case>();
+            List<Case?> result = new List<Case?>();
             (int, int)[] directions = { (0, 1), (0, -1), (-1, 0), (1, 0), (-1, 1), (1, 1), (-1, -1), (1, -1) };  // Top, Bot, Left, Right, Top Left, Top Right, Bot Left, Bot Right
 
             foreach (var (colInc, lineInc) in directions)
             {
-                int newColumn = caseInitial.Column + colInc;
+                int newColumn = caseInitial!.Column + colInc;
                 int newLine = caseInitial.Line + lineInc;
 
                 if (newColumn >= 0 && newColumn < 8 && newLine >= 0 && newLine < 8)
                 {
-                    Case potentialCase = chessboard.Board[newColumn, newLine];
+                    Case? potentialCase = chessboard.Board[newColumn, newLine];
 
                     // Vérifiez si la case est vide ou contient une pièce ennemie
-                    if (potentialCase.IsCaseEmpty() || (potentialCase.Piece != null && potentialCase.Piece.Color != this.Color))
+                    if (potentialCase!.IsCaseEmpty() || (potentialCase.Piece != null && potentialCase.Piece.Color != this.Color))
                     {
                         // Trouver la position du roi après le déplacement
                         Case kingNewPosition = new Case(newColumn, newLine, this);
@@ -107,6 +108,42 @@ namespace ChessLibrary
                 }
             }
             return result;
+        }
+
+
+
+        public void PetitRoque(Chessboard chessboard)
+        {
+            // Vérifier si le roi a déjà bougé
+            if (!FirstMove)
+                return;
+            
+            int row = Color == Color.White ? 7 : 0; // Rangée pour les rois blancs ou noirs
+                                                         // Vérifier si la tour à la position initiale H1/H8 n'a pas bougé
+            if (chessboard.Board[7, row]!.Piece is Rook rook && rook.FirstMove)
+            {
+                // Vérifier si les cases entre le roi et la tour sont libres
+                if (chessboard.Board[5, row]!.IsCaseEmpty() && chessboard.Board[6, row]!.IsCaseEmpty())
+                {
+                    // Vérifier si les cases que le roi traverse ne sont pas attaquées
+                    if (!chessboard.Echec(this, chessboard.Board[5, row]) && !chessboard.Echec(this, chessboard.Board[6, row]))
+                    {
+                        // Effectuer le roque
+                        chessboard.ProcessPostMove(chessboard.Board[4, row], chessboard.Board[6, row]); // Déplacement du roi (E1/E8 -> G1/G8)
+                        chessboard.ProcessPostMove(chessboard.Board[7, row], chessboard.Board[5, row]); // Déplacement de la tour (H1/H8 -> F1/F8)
+
+                        // Mettre à jour les positions sur l'échiquier
+                        chessboard.Board[6, row]!.Piece = this;
+                        chessboard.Board[4, row]!.Piece = null; // Ancienne position du roi
+                        chessboard.Board[5, row]!.Piece = rook;
+                        chessboard.Board[7, row]!.Piece = null; // Ancienne position de la tour
+
+                        // Indiquer que le roi et la tour ont bougé
+                        FirstMove = false;
+                        rook.FirstMove = false;
+                    }
+                }
+            }
         }
     }
 }

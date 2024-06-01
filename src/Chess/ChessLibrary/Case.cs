@@ -1,29 +1,72 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace ChessLibrary
 {
     /// <summary>
     /// Classe pour une case d'un échiquier
     /// </summary>
-    public class Case
+    public class Case : INotifyPropertyChanged
     {
         /// <summary>
         /// Crée un argument Column
         /// </summary>
-        public int Column { get; private set; }
+        private int _column;
 
         /// <summary>
         /// Crée un argument Line
         /// </summary>
-        public int Line { get; private set; }
+        private int _line;
 
         /// <summary>
         /// Propriété pour la pièce sur cette case
         /// </summary>
-        public Piece? Piece { get; set; }
+        private Piece? _piece;
+        
+        public int Column
+        {
+            get { return _column; }
+            private set
+            {
+                if (_column != value)
+                {
+                    _column = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int Line
+        {
+            get { return _line; }
+            private set
+            {
+                if (_line != value)
+                {
+                    _line = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public Piece? Piece
+        {
+            get { return _piece; }
+            set
+            {
+                if (_piece != value)
+                {
+                    _piece = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        
 
         /// <summary>
         /// Initialise une nouvelle instance de la classe Case avec la colonne, la ligne et la pièce spécifiées.
@@ -45,5 +88,9 @@ namespace ChessLibrary
         /// <returns>true si la case est vide, sinon false</returns>
         public bool IsCaseEmpty() => Piece == null;
         
+        public event PropertyChangedEventHandler? PropertyChanged;
+        
+        void OnPropertyChanged([CallerMemberName]string propertyName = null!)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

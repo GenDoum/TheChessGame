@@ -343,7 +343,6 @@ namespace ConsoleChess
             return defaultUser;
         }
 
-//        public static void
 
         /// <summary>
         /// Fonction qui gère l'accueil de l'application et la gestion des joueurs
@@ -474,8 +473,8 @@ namespace ConsoleChess
                         (int startColumn, int startRow) = GetMoveCoordinates("Enter the position of the piece you want to move (a1, f7 ...):");
                         (int endColumn, int endRow) = GetMoveCoordinates("Enter the destination position (a1, f7 ...):");
 
-                        Case startCase = game.Board.Board[startColumn, startRow];
-                        Case endCase = game.Board.Board[endColumn, endRow];
+                        Case? startCase = game.Board.Board[startColumn, startRow];
+                        Case? endCase = game.Board.Board[endColumn, endRow];
                         Piece? piece = startCase.Piece;
 
                         if (piece == null || piece.Color != actualPlayer.Color)
@@ -524,10 +523,11 @@ namespace ConsoleChess
         {
 
             UserManager userManager = new UserManager();
-
             List<User> users = userManager.Users.ToList();
 
             menuAccueil(users);
+
+
 
             userManager.saveUsers(users);
         }
@@ -555,7 +555,7 @@ namespace ConsoleChess
         /// </summary>
         /// <param name="P"></param>
         /// <param name="C"></param>
-        static void Evolve(Game game, Pawn? P, Case C, ChoiceUser choiceUser)
+        static void Evolve(Game game, Pawn? P, Case? C, ChoiceUser choiceUser)
         {
             Queen newQueen;
             Rook newRook;

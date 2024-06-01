@@ -48,10 +48,27 @@ public class UnitTestKnight
     {
         // Arrange
         var knight = new Knight(Color.White, 1);
-        Chessboard chessboard = null;
+        Chessboard chessboard = null!;
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => knight.PossibleMoves(new Case(0, 0, knight), chessboard));
+        Assert.Throws<ArgumentNullException>(() => knight.PossibleMoves(new Case(0, 0, knight), chessboard!));
+    }
+    
+    [Fact]
+    public void PossibleMoves_PotentialCaseNotEmptyAndDifferentColor_AddsToResult()
+    {
+        // Arrange
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var knight = new Knight(Color.White, 1);
+        var enemyPiece = new Pawn(Color.Black, 2);
+        chessboard.Board[4, 4] = new Case(4, 4, knight);
+        chessboard.Board[6, 5] = new Case(6, 5, enemyPiece); // Potential case is not empty and contains a piece of different color
+
+        // Act
+        var result = knight.PossibleMoves(chessboard.Board[4, 4], chessboard);
+
+        // Assert
+        Assert.Contains(chessboard.Board[6, 5], result);
     }
     
 }

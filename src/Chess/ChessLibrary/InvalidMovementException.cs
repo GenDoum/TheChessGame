@@ -1,5 +1,9 @@
+using System;
+using System.Runtime.Serialization;
+
 namespace ChessLibrary;
 
+[Serializable]
 public class InvalidMovementException : Exception
 {
     /// <summary>
@@ -7,7 +11,15 @@ public class InvalidMovementException : Exception
     /// </summary>
     public InvalidMovementException() : base() { }
     public InvalidMovementException(string message) : base(message) { }
-    public InvalidMovementException(string message, Exception inner) : base(message, inner) { }
+
+    public InvalidMovementException(string? message, Exception? innerException) : base(message, innerException)
+    {
+    }
+
+    // Constructeur protected pour la sérialisation
+    protected InvalidMovementException(SerializationInfo info, StreamingContext context) : base(info, context)
+    {
+    }
 
     public override string ToString()
     {

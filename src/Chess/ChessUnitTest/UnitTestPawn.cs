@@ -39,17 +39,18 @@ public class UnitTestPawn
     public void PossibleMoves_CapturablePiece_AddsToResult()
     {
         // Arrange
-        var pawn = new Pawn(Color.White, 1);
+        var pawn = new Pawn(Color.Black, 1);
         var chessboard = new Chessboard(new Case[8, 8], true);
         var caseInitial = new Case(4, 4, pawn);
-        var capturablePiece = new Pawn(Color.Black, 2);
+        var capturablePiece = new Pawn(Color.White, 2);
         chessboard.AddPiece(capturablePiece, 5, 5);
+        chessboard.AddPiece(pawn, 4, 4);
 
         // Act
-        var result = pawn.PossibleMoves(caseInitial, chessboard);
+        var result = pawn.CanEat(caseInitial, chessboard);
 
         // Assert
-        Assert.Contains(result, c => c.Column == 5 && c.Line == 5);
+        Assert.Contains(result, c => c!.Column == 5 && c.Line ==5 );
     }
 
     [Fact]
@@ -60,25 +61,9 @@ public class UnitTestPawn
         var caseInitial = new Case(4, 4, pawn);
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => pawn.PossibleMoves(caseInitial, null));
+        Assert.Throws<ArgumentNullException>(() => pawn.PossibleMoves(caseInitial, null!));
     }
-
-    // [Theory]
-    // [InlineData(Color.White, 1, 2, 3)]
-    // [InlineData(Color.Black, 6, 5, 4)]
-    // public void CanMove_FirstMoveTwoSteps_ReturnsTrue(Color color, int y1, int y2, int y3)
-    // {
-    //     // Arrange
-    //     var pawn = new Pawn(color, 1);
-    //
-    //     // Act
-    //     var result1 = pawn.CanMove(4, y1, 4, y2);
-    //     var result2 = pawn.CanMove(4, y1, 4, y3);
-    //
-    //     // Assert
-    //     Assert.True(result1);
-    //     Assert.False(result2);
-    // }
+    
 
     [Fact]
     public void PossibleMoves_DirectionBasedOnColor_ReturnsCorrectMoves()
@@ -95,7 +80,116 @@ public class UnitTestPawn
         var blackMoves = blackPawn.PossibleMoves(blackCase, chessboard);
 
         // Assert
-        Assert.All(whiteMoves, move => Assert.True(move.Line > 4));
-        Assert.All(blackMoves, move => Assert.True(move.Line < 5));
+        Assert.All(blackMoves, move => Assert.True(move!.Line > 4));
+        Assert.All(whiteMoves, move => Assert.True(move!.Line < 5));
+    }
+    
+    [Fact]
+    public void PossibleMoves_PawnFirstMoveTwoSquares_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var pawn = new Pawn(Color.Black, 1);
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(1, 1, pawn);
+
+        // Act
+        var result = pawn.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.Contains(chessboard.Board[1, 3], result);
+    }
+
+    [Fact]
+    public void PossibleMoves_PawnBlockedByPiece_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var pawn = new Pawn(Color.White, 1);
+        var blockingPiece = new Pawn(Color.Black, 2);
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(1, 1, pawn);
+        chessboard.Board[1, 2] = new Case(1, 2, blockingPiece);
+
+        // Act
+        var result = pawn.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.DoesNotContain(chessboard.Board[1, 2], result);
+    }
+    
+    [Fact]
+    public void PossibleMoves_FirstMoveTwoSquares_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var pawn = new Pawn(Color.Black, 1);
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(1, 1, pawn);
+
+        // Act
+        var result = pawn.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.Contains(chessboard.Board[1, 3], result);
+    }
+
+    [Fact]
+    public void PossibleMoves_FirstMoveTwoSquaresAfterFirstMove_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var pawn = new Pawn(Color.White, 1);
+        pawn.FirstMove = false;
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(1, 1, pawn);
+
+        // Act
+        var result = pawn.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.DoesNotContain(chessboard.Board[1, 3], result);
+    }
+
+    [Fact]
+    public void PossibleMoves_MoveOneSquareForward_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var pawn = new Pawn(Color.Black, 1);
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(1, 1, pawn);
+
+        // Act
+        var result = pawn.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.Contains(chessboard.Board[1, 2], result);
+    }
+
+    [Fact]
+    public void PossibleMoves_MoveOneSquareForwardAfterFirstMove_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var pawn = new Pawn(Color.Black, 1);
+        pawn.FirstMove = false;
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(1, 1, pawn);
+
+        // Act
+        var result = pawn.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.Contains(chessboard.Board[1, 2], result);
+    }
+
+    [Fact]
+    public void PossibleMoves_MoveBackward_ReturnsNoMoves()
+    {
+        // Arrange
+        var pawn = new Pawn(Color.Black, 1);
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(1, 1, pawn);
+
+        // Act
+        var result = pawn.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.DoesNotContain(chessboard.Board[1, 0], result);
     }
 }

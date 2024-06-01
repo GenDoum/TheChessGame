@@ -6,4 +6,9 @@ public partial class LeaderBoard : ContentPage
 	{
 		InitializeComponent();
 	}
+	
+	async void OnBackButtonClicked(object sender, EventArgs e)
+	{
+		await Shell.Current.GoToAsync("//page/MainPage");
+	}
 }

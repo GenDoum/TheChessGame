@@ -21,14 +21,17 @@
                        HeightRequest="200"
                        
                        Source="regletitle.png"
- />
+                       
+                       />
                            
-                     <Image Grid.Column="0"
+                     <ImageButton Grid.Column="0"
                             Style="{StaticResource imgAppli}"
                             HorizontalOptions="StartAndExpand"
                             Margin="100,-50,0,0"
-                         Source="returnarrow.png"
-                         HeightRequest="50" />
+                            Source="returnarrow.png"
+                            HeightRequest="50" 
+                            Clicked="OnBackButtonClicked"
+                            />
                     
                 </Grid>
 

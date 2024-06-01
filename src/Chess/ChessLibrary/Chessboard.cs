@@ -1,22 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 
 namespace ChessLibrary
 {
-    public class Chessboard : IBoard
+    public class Chessboard : IBoard, INotifyPropertyChanged
     {
-        public Case?[,] Board { get; private set; }
+        private Case?[,] _board;
 
+        public Case?[,] Board
+        {
+            get { return _board; }
+            set
+            {
+                if (_board != value)
+                {
+                    _board = value;
+                    OnPropertyChanged(nameof(Board));
+                }
+            }
+        }
 
-
+        
         public ReadOnlyCollection<CoPieces> WhitePieces => _whitePieces.AsReadOnly();
 
         private readonly List<CoPieces> _whitePieces = new List<CoPieces>();
         public ReadOnlyCollection<CoPieces> BlackPieces => _blackPieces.AsReadOnly();
 
         private readonly List<CoPieces> _blackPieces = new List<CoPieces>();
+        
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
 
         private bool _isCheckingForCheck = false;

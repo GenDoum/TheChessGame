@@ -41,6 +41,11 @@ namespace ChessLibrary
         /// <param name="args"></param>
         protected virtual void OnGameOver(GameOverNotifiedEventArgs args)
             => GameOverNotified?.Invoke(this, args);
+        
+        public event EventHandler InvalidMove = null!;
+        
+        protected virtual void OnInvalidMove()
+            => InvalidMove?.Invoke(this, EventArgs.Empty);
 
         /// <summary>
         /// Représente le joueur 1
@@ -175,8 +180,7 @@ namespace ChessLibrary
             }
             else
             {
-
-
+                
                 if (initial!.Piece == null)
                     throw new InvalidOperationException("Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
                 if (initial.Piece.Color != actualPlayer.Color)
@@ -219,7 +223,8 @@ namespace ChessLibrary
                     // Annuler le mouvement temporaire
                     initial.Piece = movingPiece;
                     final.Piece = capturedPiece;
-                    throw new InvalidOperationException("Mouvement invalide, vérifiez les règles.");
+                    // throw new InvalidOperationException("Mouvement invalide, vérifiez les règles.");
+                    OnInvalidMove();
                 }
             }
         }

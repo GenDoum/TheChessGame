@@ -1,4 +1,5 @@
 using System.Globalization;
+using Microsoft.Maui.Graphics;
 
 namespace Chess.Converter;
 
@@ -10,8 +11,8 @@ public class EnumToStringConverter : IValueConverter
         {
             return color switch
             {
-                ChessLibrary.Color.Black => "Black",
-                ChessLibrary.Color.White => "White",
+                ChessLibrary.Color.Black => new Microsoft.Maui.Graphics.Color(0, 0, 0),
+                ChessLibrary.Color.White => new Microsoft.Maui.Graphics.Color(1, 1, 1),
                 _ => throw new NotImplementedException()
             };
         }

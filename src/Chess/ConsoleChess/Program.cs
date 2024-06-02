@@ -468,6 +468,7 @@ namespace ConsoleChess
                 {
                     try
                     {
+                        DisplayBoard(game.Board);
                         (int startColumn, int startRow) = GetMoveCoordinates("Enter the position of the piece you want to move (a1, f7 ...):");
                         (int endColumn, int endRow) = GetMoveCoordinates("Enter the destination position (a1, f7 ...):");
 
@@ -509,7 +510,7 @@ namespace ConsoleChess
                         Console.WriteLine($"Error: {e.Message}");
                     }
                 }
-                game.GameOver(player % 2 == 0 ? player1 : player2);
+                /*game.GameOver(player % 2 == 0 ? player1 : player2);*/
                 player++;
             }
 
@@ -521,17 +522,10 @@ namespace ConsoleChess
         {
 
 
-            /* User player1 = new User(Color.White);
+             User player1 = new User(Color.White);
              User player2 = new User(Color.Black);
 
-             menuAccueil(player1, player2);*/
-            var pawn = new Pawn(Color.Black, 1);
-            var chessboard = new Chessboard(new Case[8, 8], true);
-            var caseInitial = new Case(4, 4, pawn);
-            var capturablePiece = new Pawn(Color.White, 2);
-            chessboard.AddPiece(capturablePiece, 5, 5);
-            chessboard.AddPiece(pawn, 4, 4);
-            DisplayBoard(chessboard);
+             menuAccueil(player1, player2);
 
         }
 

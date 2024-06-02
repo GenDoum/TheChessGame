@@ -64,7 +64,7 @@ namespace ChessLibrary
                     }
                 }
             }
-            if (!chessboard.Echec(this,caseInitial)) {
+            if (!chessboard.Echec(this,caseInitial) && FirstMove) {
                 int row = this.Color == Color.White ? 7 : 0;
                 result.Add(chessboard.Board[7, row]);  // Ajoute G1/G8 comme mouvement de petit roque
                 result.Add(chessboard.Board[0, row]);  // Ajoute C1/C8 comme mouvement de grand roque

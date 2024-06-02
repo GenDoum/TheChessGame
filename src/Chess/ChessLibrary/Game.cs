@@ -170,10 +170,16 @@ namespace ChessLibrary
             
 
             if (initial!.Piece is King king &&
-            ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 6 && final.Line == 7) ||
-            (king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 6 && final.Line == 0)))
+            ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||
+            (king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))
             {
                 king.PetitRoque(Board); // Appel de la méthode PetitRoque
+            }
+            else if (initial!.Piece is King king1 &&
+            ((king1.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 0 && final.Line == 7) ||
+            (king1.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 0 && final.Line == 0)))
+            {
+                king1.GrandRoque(Board); // Appel de la méthode GrandRoque
             }
             else
             {
@@ -220,14 +226,7 @@ namespace ChessLibrary
                         OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = pawn, Case = final });
                     }
                     
-                    if (actualPlayer == Player1)
-                    {
-                        CurrentPlayer = Player2;
-                    }
-                    else
-                    {
-                        CurrentPlayer = Player1;
-                    }
+                    CurrentPlayer = actualPlayer == Player1 ? Player2 : Player1;
                 }
                 else
                 {

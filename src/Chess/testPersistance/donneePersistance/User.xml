@@ -29,10 +29,17 @@
     <_pseudo>Genkyy</_pseudo>
   </Players>
   <Players>
-    <Color>White</Color>
+    <Color>Black</Color>
     <Password>5ZOJ2cgXNSdkdFDMfngdIB6OcSL12FwBdSjqXCrdi/4=</Password>
     <Pseudo>Lascret</Pseudo>
     <Score>0</Score>
     <_pseudo>Lascret</_pseudo>
+  </Players>
+  <Players>
+    <Color>White</Color>
+    <Password>7jTI71fK6OETZ/zmFpQ1qg09OYEthfa11zP3iD6xmMs=</Password>
+    <Pseudo>Vaiana</Pseudo>
+    <Score>1000000</Score>
+    <_pseudo>Vaiana</_pseudo>
   </Players>
 </ArrayOfPlayers>

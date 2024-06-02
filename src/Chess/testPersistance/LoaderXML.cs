@@ -22,14 +22,6 @@ namespace Persistance
             var serializer = new DataContractSerializer(typeof(List<User>));
             var settings = new XmlWriterSettings() { Indent = true };
 
-
-
-            //// Crée un dossier où les données seront stockées
-            //Directory.CreateDirectory("..\\..\\../testPersistance/donneePersistance");
-
-            //// Change le dossier courant pour le dossier où les données seront stockées
-            //Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\..\\testPersistance\\donneePersistance"));
-
             if (File.Exists(xmlFile))
             {
                 File.Delete(xmlFile);

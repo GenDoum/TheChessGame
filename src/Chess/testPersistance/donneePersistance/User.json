@@ -28,10 +28,17 @@
     "_pseudo": "Genkyy"
   },
   {
-    "Color": 0,
+    "Color": 1,
     "Password": "5ZOJ2cgXNSdkdFDMfngdIB6OcSL12FwBdSjqXCrdi\/4=",
     "Pseudo": "Lascret",
     "Score": 0,
     "_pseudo": "Lascret"
+  },
+  {
+    "Color": 0,
+    "Password": "7jTI71fK6OETZ\/zmFpQ1qg09OYEthfa11zP3iD6xmMs=",
+    "Pseudo": "Vaiana",
+    "Score": 1000000,
+    "_pseudo": "Vaiana"
   }
 ]

@@ -43,7 +43,6 @@ namespace Persistance
         {
             Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\..\\testPersistance\\donneePersistance"));
             const string jsonFile = "User.json";
-            Console.WriteLine(Directory.GetCurrentDirectory());
             List<User> users = new List<User>();
             Thread.Sleep(1000);
 

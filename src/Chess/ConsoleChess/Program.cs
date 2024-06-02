@@ -301,6 +301,29 @@ namespace ConsoleChess
             }
         }   
 
+        public static void menuStartGame(User user1, User user2)
+        {
+            Console.Clear();
+            int choix = MultipleChoice("Voulez vous lancer la partie ?", true, "Oui", "Non");
+            if (choix == 0)
+            {
+                Console.Clear();
+                Thread.Sleep(1000);
+                Jeu(user1, user2);
+                Console.Clear();
+            }
+            else 
+            {
+                Console.Clear();
+                Console.WriteLine("Partie annulée");
+                Console.WriteLine("Les joueurs son déconnectés.");
+                Console.WriteLine("Retour au menu principal.");
+                Thread.Sleep(2000);
+                user1.IsConnected = false;
+                user2.IsConnected = false;
+            }
+        }
+
         /// <summary>
         /// Menu de connexion pour le deuxième joueur
         /// </summary>
@@ -360,8 +383,8 @@ namespace ConsoleChess
 
             Thread.Sleep(2000);
 
-            User? playerOne = null;
-            User? playerTwo = null;
+            User? playerOne = new User();
+            User? playerTwo = new User();
 
             Console.ResetColor();
             do
@@ -396,10 +419,8 @@ namespace ConsoleChess
 
                         break;
 
-                    case 2:  // Option pourl ancer une partie
+                    case 2:  // Option pour lancer une partie
                         Console.Clear();
-                        Console.WriteLine("Lancer un partie");
-                        Thread.Sleep(1000);
                         if (playerOne == null || playerTwo == null)
                         {
                             errorMessage("Vous devez être connecté pour lancer une partie");
@@ -415,7 +436,7 @@ namespace ConsoleChess
                             playerOne.Color = blanc;
                             playerTwo.Color = noir;
                         }
-                        Jeu(playerOne, playerTwo);
+                        menuStartGame(playerOne!, playerTwo!);
                         break;
 
                     case 3: // Option pour afficher le leaderboard

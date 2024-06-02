@@ -156,6 +156,32 @@ namespace ChessLibrary
             return false;
         }
         
+        public void Evolve(Pawn pawn, Case finalCase, ChoiceUser choiceUser)
+        {
+            Piece newPiece;
+
+            switch (choiceUser)
+            {
+                case ChoiceUser.Queen:
+                    newPiece = new Queen(pawn.Color, pawn.Id);
+                    break;
+                case ChoiceUser.Rook:
+                    newPiece = new Rook(pawn.Color, pawn.Id);
+                    break;
+                case ChoiceUser.Bishop:
+                    newPiece = new Bishop(pawn.Color, pawn.Id);
+                    break;
+                case ChoiceUser.Knight:
+                    newPiece = new Knight(pawn.Color, pawn.Id);
+                    break;
+                default:
+                    throw new InvalidOperationException("Invalid choice for pawn evolution.");
+            }
+
+            finalCase.Piece = newPiece;
+            Board.ModifPawn(pawn, newPiece, finalCase);
+        }
+        
 
         /// <summary>
         /// Fonction pour le déplacement d'une pièce

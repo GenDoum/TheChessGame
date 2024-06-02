@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ChessLibrary;
+using ChessLibrary.Events;
 using CommunityToolkit.Maui.Behaviors;
 using Microsoft.Maui.Graphics;
 using Color = ChessLibrary.Color;
@@ -36,19 +37,30 @@ public partial class chessBoard : ContentPage
         await DisplayAlert("Erreur", "Ce n'est pas votre tour de jouer.", "OK");
     }
     
-    private async void OnEvolvePiece(object sender, EventArgs e)
+    private async void OnEvolvePiece(object sender, EvolveNotifiedEventArgs e)
     {
         string action = await DisplayActionSheet("Choose the piece to evolve to:", "Cancel", null, "Queen", "Rook", "Bishop", "Knight");
-        switch (action)
+        if (action != null)
         {
-            case "Queen":
-                break;
-            case "Rook":
-                break;
-            case "Bishop":
-                break;
-            case "Knight":
-                break;
+            ChoiceUser choice;
+            switch (action)
+            {
+                case "Queen":
+                    choice = ChoiceUser.Queen;
+                    break;
+                case "Rook":
+                    choice = ChoiceUser.Rook;
+                    break;
+                case "Bishop":
+                    choice = ChoiceUser.Bishop;
+                    break;
+                case "Knight":
+                    choice = ChoiceUser.Knight;
+                    break;
+                default:
+                    return;
+            }
+            Game.Evolve(e.Pawn, e.Case, choice);
         }
     }
     
@@ -82,7 +94,6 @@ public partial class chessBoard : ContentPage
                     {
                         User actualPlayer = piece.Color == Color.White ? Game.Player1 : Game.Player2;
                         Game.MovePiece(_selectedCase, clickedCase, Board, actualPlayer);
-                        Console.WriteLine($"Calling MovePiece with parameters: currentCase={_selectedCase}, targetCase={clickedCase}, Board={Board}, actualPlayer={actualPlayer}");
                     }
 
                     _selectedCase = null;

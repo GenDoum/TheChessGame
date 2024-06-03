@@ -7,10 +7,9 @@ using System.Runtime.Serialization;
 
 namespace ChessLibrary
 {
-    [DataContract]
     public class Chessboard : IBoard, INotifyPropertyChanged
     {
-        [DataMember]
+
         private Case?[,] _board;
 
         public Case?[,] Board

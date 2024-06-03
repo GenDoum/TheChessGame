@@ -12,14 +12,10 @@ namespace ChessLibrary
     /// <summary>
     /// Classe abstraite pour les pièces
     /// </summary>
-    [DataContract, KnownType(typeof(Pawn)), KnownType(typeof(Rook)), KnownType(typeof(Knight)), KnownType(typeof(Bishop)), KnownType(typeof(Queen)), KnownType(typeof(King))]
     public abstract class Piece : INotifyPropertyChanged
     {
-        [DataMember]
         private Color _color;
-        [DataMember]
         private int _id;
-        [DataMember]
         private string? _imagePath;
 
         public Color Color

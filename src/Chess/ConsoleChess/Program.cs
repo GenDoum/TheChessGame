@@ -461,7 +461,7 @@ namespace ConsoleChess
             {
                 Console.WriteLine($"Game over! {args.Winner.Pseudo} wins!");
                 args.Winner.Score += 5;
-                Thread.Sleep(150000);
+                Thread.Sleep(500);
             };
 
             int player = 1;
@@ -505,13 +505,7 @@ namespace ConsoleChess
                         if (game.Board.IsInCheck(actualPlayer.Color == Color.White ? Color.Black : Color.White))
                         {
                             Console.WriteLine("You are in check");
-                            if (game.Board.EchecMat(game.Board.FindKing(actualPlayer.Color), game.Board.FindCase(game.Board.FindKing(actualPlayer.Color))))
-                            {
-                                isGameOver = true;
-                                Console.WriteLine($"Game over! {actualPlayer.Pseudo} loses!");
-                            }
                         }
-
                         validMove = true; // Move was successful, exit the inner loop
                     }
                     catch (Exception e)
@@ -519,10 +513,11 @@ namespace ConsoleChess
                         Console.WriteLine($"Error: {e.Message}");
                     }
                 }
-                game.GameOver(player % 2 == 0 ? player2 : player1);
+                isGameOver = game.GameOver(player % 2 == 0 ? player2 : player1);
                 player++;
             }
-
+            Console.WriteLine("Game over!");
+            Thread.Sleep(1000);
         }
 
 

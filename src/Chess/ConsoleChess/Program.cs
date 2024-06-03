@@ -394,7 +394,7 @@ namespace ConsoleChess
 
                         break;
 
-                    case 2:  // Option pourl ancer une partie
+                    case 2:  // Option pour lancer une partie
                         Console.Clear();
                         Console.WriteLine("Lancer un partie");
                         Thread.Sleep(1000);
@@ -468,7 +468,6 @@ namespace ConsoleChess
                 {
                     try
                     {
-                        DisplayBoard(game.Board);
                         (int startColumn, int startRow) = GetMoveCoordinates("Enter the position of the piece you want to move (a1, f7 ...):");
                         (int endColumn, int endRow) = GetMoveCoordinates("Enter the destination position (a1, f7 ...):");
 
@@ -510,7 +509,7 @@ namespace ConsoleChess
                         Console.WriteLine($"Error: {e.Message}");
                     }
                 }
-                /*game.GameOver(player % 2 == 0 ? player1 : player2);*/
+                game.GameOver(player % 2 == 0 ? player2 : player1);
                 player++;
             }
 

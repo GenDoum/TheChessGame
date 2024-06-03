@@ -39,7 +39,11 @@ public partial class chessBoard : ContentPage
     
     private async void OnEvolvePiece(object sender, EvolveNotifiedEventArgs e)
     {
+<<<<<<< HEAD
         string action = await DisplayActionSheet("Choose the piece to evolve to:", "Cancel", null, "Queen", "Rook", "Bishop", "Knight");
+=======
+        string action = await DisplayActionSheet("Choose the piece to evolve to:", null, null, "Queen", "Rook", "Bishop", "Knight");        
+>>>>>>> f16004b681d7c8c08d8b69d1a943eb176aebe0e5
         if (action != null)
         {
             ChoiceUser choice;

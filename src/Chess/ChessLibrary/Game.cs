@@ -199,7 +199,13 @@ namespace ChessLibrary
             ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||
             (king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))
             {
-                king.PetitRoque(Board); // Appel de la méthode PetitRoque
+                king.PetitRoque(board); // Appel de la méthode PetitRoque
+            }
+            else if (initial!.Piece is King king1 &&
+            ((king1.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 0 && final.Line == 7) ||
+            (king1.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 0 && final.Line == 0)))
+            {
+                king1.GrandRoque(board); // Appel de la méthode GrandRoque
             }
             else if (initial!.Piece is King king1 &&
             ((king1.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 0 && final.Line == 7) ||
@@ -294,7 +300,6 @@ namespace ChessLibrary
                 listToRemoveFrom.RemoveAll(p => p.piece == capturedPiece);
             }
         }
-
     }
 }
 

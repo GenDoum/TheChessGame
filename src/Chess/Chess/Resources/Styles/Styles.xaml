@@ -138,8 +138,6 @@
     <x:Double x:Key="HorizontalSpacing">0</x:Double>
     <toolkit:MultiMathExpressionConverter x:Key="MultiMathExpressionConverter" />
     
-    <converter:EnumToColorsConverter x:Key="EnumToColorsConverter"/>
-
     <Style x:Key="animationStyleBottom" TargetType="Button">
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>

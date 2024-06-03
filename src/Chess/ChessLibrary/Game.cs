@@ -215,7 +215,6 @@ namespace ChessLibrary
 
                 if (actualPlayer != CurrentPlayer)
                 {
-                    OnErrorPlayerTurn();
                     return;
                 }
 
@@ -250,6 +249,12 @@ namespace ChessLibrary
                     if (final.Piece is Pawn pawn && (final.Line == 0 || final.Line == 7))
                         OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = pawn, Case = final });
                     
+                    if (GameOver(CurrentPlayer))
+                    {
+                        OnGameOver(new GameOverNotifiedEventArgs { Winner = CurrentPlayer });
+                        return;
+                    }
+                    
                     CurrentPlayer = (actualPlayer == Player1) ? Player2 : Player1;
                 }
                 else
@@ -261,6 +266,8 @@ namespace ChessLibrary
                 }
             }
         }
+        
+        
 
 
         public static void RestorePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board, Piece movedPiece, Piece capturedPiece)

@@ -13,7 +13,6 @@ public class EnumToColorsConverter : IValueConverter
             {
                 ChessLibrary.Color.Black => Colors.Black,
                 ChessLibrary.Color.White => Colors.White,
-                _ => Colors.Transparent
             };
         }
 

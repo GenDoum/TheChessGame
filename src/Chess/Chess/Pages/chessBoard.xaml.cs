@@ -25,6 +25,7 @@ public partial class chessBoard : ContentPage
         Game.InvalidMove += OnInvalidMove;
         Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
         Game.EvolveNotified += OnEvolvePiece;
+        Game.GameOverNotified += OnGameOver;
     }
     
     public async void OnInvalidMove(object sender, EventArgs e)
@@ -62,6 +63,11 @@ public partial class chessBoard : ContentPage
             }
             Game.Evolve(e.Pawn, e.Case, choice);
         }
+    }
+    
+    private async void OnGameOver(object sender, GameOverNotifiedEventArgs e)
+    {
+        await DisplayAlert("Game Over", e.Winner.Pseudo + " wins the game!", "OK");
     }
     
     async void OnBackButtonClicked(object sender, EventArgs e)

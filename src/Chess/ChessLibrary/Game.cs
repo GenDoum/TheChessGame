@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 using ChessLibrary.Events;
+using ChessLibrary;
 
 namespace ChessLibrary
 {
@@ -42,14 +43,14 @@ namespace ChessLibrary
         /// <param name="args"></param>
         protected virtual void OnGameOver(GameOverNotifiedEventArgs args)
             => GameOverNotified?.Invoke(this, args);
-        
+
         public event EventHandler InvalidMove = null!;
-        
+
         protected virtual void OnInvalidMove()
             => InvalidMove?.Invoke(this, EventArgs.Empty);
-        
+
         public event EventHandler ErrorPlayerTurnNotified = null!;
-        
+
         protected virtual void OnErrorPlayerTurn()
             => ErrorPlayerTurnNotified?.Invoke(this, EventArgs.Empty);
         /// <summary>
@@ -96,7 +97,7 @@ namespace ChessLibrary
 
             Chessboard chessboard = new Chessboard(allcase, false);
             this.Board = chessboard;
-            
+
             CurrentPlayer = Player1;
         }
 
@@ -143,13 +144,13 @@ namespace ChessLibrary
                 }
                 if (pieceInfo.piece is King king && Board.EchecMat(king, pieceInfo.CaseLink))
                 {
-                    OnGameOver(new GameOverNotifiedEventArgs { Winner = winner });
+                    OnGameOver(new GameOverNotifiedEventArgs { Winner = winner , Loser = winner == Player1 ? Player2 : Player1 });
                     return true;
                 }
             }
             return false;
         }
-        
+
         public void Evolve(Pawn pawn, Case finalCase, ChoiceUser choiceUser)
         {
             Piece newPiece;
@@ -175,7 +176,7 @@ namespace ChessLibrary
             finalCase.Piece = newPiece;
             Board.ModifPawn(pawn, newPiece, finalCase);
         }
-        
+
 
         /// <summary>
         /// Fonction pour le déplacement d'une pièce
@@ -187,7 +188,7 @@ namespace ChessLibrary
         /// <exception cref="InvalidOperationException"></exception>
         public void MovePiece(Case? initial, Case? final, Chessboard board, User actualPlayer)
         {
-            
+
 
             if (initial!.Piece is King king &&
             ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||
@@ -203,7 +204,7 @@ namespace ChessLibrary
             }
             else
             {
-                
+
                 if (initial!.Piece == null)
                     throw new InvalidOperationException("Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
 
@@ -242,13 +243,13 @@ namespace ChessLibrary
 
                     if (final.Piece is Pawn pawn && (final.Line == 0 || final.Line == 7))
                         OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = pawn, Case = final });
-                    
+
                     if (GameOver(CurrentPlayer))
                     {
-                        OnGameOver(new GameOverNotifiedEventArgs { Winner = CurrentPlayer });
+                        OnGameOver(new GameOverNotifiedEventArgs { Winner = CurrentPlayer , Loser =actualPlayer == Player1 ? Player2 : Player1 });
                         return;
                     }
-                    
+
                     CurrentPlayer = (actualPlayer == Player1) ? Player2 : Player1;
                 }
                 else
@@ -260,8 +261,80 @@ namespace ChessLibrary
                 }
             }
         }
-        
-        
+        public void MovePieceFront(Case? initial, Case? final, Chessboard board, User actualPlayer)
+        {
+
+
+            if (initial!.Piece is King king &&
+            ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||
+            (king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))
+            {
+                king.PetitRoque(board); // Appel de la méthode PetitRoque
+            }
+            else if (initial!.Piece is King king1 &&
+            ((king1.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 0 && final.Line == 7) ||
+            (king1.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 0 && final.Line == 0)))
+            {
+                king1.GrandRoque(board); // Appel de la méthode GrandRoque
+            }
+            else
+            {
+
+                if (initial!.Piece == null)
+                    throw new InvalidOperationException("Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
+
+                if (actualPlayer != CurrentPlayer)
+                {
+                    return;
+                }
+
+                var blackPieces = board.CopyBlackPieces();
+                var whitePieces = board.CopyWhitePieces();
+                var movingPiece = initial.Piece;
+                var capturedPiece = final!.Piece;
+
+                if (board.CanMovePiece(movingPiece, initial, final))
+                {
+                    // Simulation du mouvement pour la vérification
+
+                    UpdatePieceLists(blackPieces, whitePieces, initial, final, board); // Met à jour les listes de pièces de manière temporaire
+                    final.Piece = movingPiece;
+                    initial.Piece = null;
+                    // Vérification de l'échec après le mouvement temporaire
+                    if (board.IsInCheck(actualPlayer.Color))
+                    {
+                        // Annuler le mouvement temporaire
+                        final.Piece = capturedPiece;
+                        initial.Piece = movingPiece;
+                        RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece!);
+                        throw new InvalidOperationException("Vous ne pouvez pas vous mettre en échec.");
+                    }
+                    RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece!);
+                    initial.Piece = movingPiece;
+                    final.Piece = capturedPiece;
+                    // Vérification si le mouvement est légal et si cela peut résoudre un échec existant
+                    // Effectuer le mouvement réel
+                    Board.ProcessPostMove(initial, final);
+
+                    if (final.Piece is Pawn pawn && (final.Line == 0 || final.Line == 7))
+                        OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = pawn, Case = final });
+
+                    if (GameOver(CurrentPlayer))
+                    {
+                        OnGameOver(new GameOverNotifiedEventArgs { Winner = CurrentPlayer , Loser = actualPlayer == Player1 ? Player2 : Player1 });
+                    }
+                    CurrentPlayer = (actualPlayer == Player1) ? Player2 : Player1;
+                }
+                else
+                {
+                    // Annuler le mouvement temporaire
+                    initial.Piece = movingPiece;
+                    final.Piece = capturedPiece;
+                    OnInvalidMove();
+                }
+            }
+        }
+
 
 
         public static void RestorePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board, Piece movedPiece, Piece capturedPiece)

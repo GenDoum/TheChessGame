@@ -63,7 +63,7 @@ namespace Persistance
 
                 using (FileStream memoryStream = File.OpenRead("User.json"))
                 {
-                    users = (List<User>)jsonSerializer.ReadObject(memoryStream);
+                    users = (List<User>)jsonSerializer.ReadObject(memoryStream)!;
                 }
             }
 

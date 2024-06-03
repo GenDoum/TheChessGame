@@ -25,9 +25,9 @@ namespace Persistance
         public override List<User> ReadUsers()
         {
             // /!\ Pour activer la lecture du fichier en XML, décommenter la ligne suivante /!\
-            List<User>? allUsers = loaderXML.ReadUsers();
+            //List<User>? allUsers = loaderXML.ReadUsers();
 
-            //List<User>? allUsers = loaderJson.ReadUsers();
+            List<User>? allUsers = loaderJson.ReadUsers();
 
             
             return allUsers!;

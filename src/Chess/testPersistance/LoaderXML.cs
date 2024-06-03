@@ -27,7 +27,7 @@ namespace Persistance
                 File.Delete(xmlFile);
             }
 
-            using(TextWriter tw = File.CreateText(xmlFile))
+            using (TextWriter tw = File.CreateText(xmlFile))
             {
                 using (var writer = XmlWriter.Create(tw, settings))
                 {
@@ -41,7 +41,7 @@ namespace Persistance
         public override List<User> ReadUsers()
         {
 
-            Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\..\\testPersistance\\donneePersistance"));
+            Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "testPersistance", "donneePersistance"));
             const string xmlFile = "User.xml";
 
 
@@ -63,3 +63,4 @@ namespace Persistance
         }
     }
 }
+-

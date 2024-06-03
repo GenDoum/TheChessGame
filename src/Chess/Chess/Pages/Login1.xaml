@@ -24,7 +24,7 @@
                                  AbsoluteLayout.LayoutBounds="0, 0, AutoSize, AutoSize"
                                  AbsoluteLayout.LayoutFlags="PositionProportional"
                                  Clicked="OnBackButtonClicked"
-                                 />
+                                 Margin="20, 20, 0, 0"/>
                 </FlexLayout>
 
             </FlexLayout>
@@ -37,18 +37,30 @@
                 <Image  Source="connexion.png"  
                         Style="{StaticResource imgAppli}"/>
 
-                <contentView:connexionModuleEntry/>
+                <VerticalStackLayout>
+                    <Entry Placeholder="Pseudo" x:Name="UsernameEntry" Style="{StaticResource entryStyleDefault}"/>
+                    <Entry Placeholder="Mot de passe" x:Name="PasswordEntry" IsPassword="True" Style="{StaticResource entryStyleDefault}" MaxLength="20"/>
+                </VerticalStackLayout> 
+                
                 <HorizontalStackLayout
                     HorizontalOptions="Center"
                     VerticalOptions="Center">
                     <CheckBox Color="{StaticResource GoldUsefullColor}"
-                    />
+                              />
                     <Label Text="Jouer avec un invité" 
                            TextColor="FloralWhite"
                            Margin="12"/>
                 </HorizontalStackLayout>
-                <contentView:connexionModuleButtons/>
 
+                <VerticalStackLayout>
+                    <Button Text="Connexion" Style="{StaticResource buttonSyle}"
+                        Clicked="OnLoginButtonClicked"
+                            />
+                    <Button Text="Annuler" Style="{StaticResource buttonSyle}"
+                        Clicked="OnCancelButtonClicked"
+                            />
+                </VerticalStackLayout>
+                
             </FlexLayout>
         </VerticalStackLayout>
 

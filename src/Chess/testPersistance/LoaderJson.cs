@@ -21,7 +21,7 @@ namespace Persistance
                 throw new ArgumentNullException(nameof(users));
             }
 
-            string jsonFilePath = Path.Combine("..\\..\\.\\testPersistance\\donneePersistance", JsonFileName);
+            string jsonFilePath = Path.Combine("..", "..", "..", "testPersistance", "donneePersistance", JsonFileName);
 
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<User>));
 
@@ -41,8 +41,8 @@ namespace Persistance
 
         public override List<User>? ReadUsers()
         {
-            Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\..\\testPersistance\\donneePersistance"));
-            const string jsonFile = "User.json";
+
+            Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "..", "testPersistance", "donneePersistance")); const string jsonFile = "User.json";
             List<User> users = new List<User>();
             Thread.Sleep(1000);
 
@@ -58,7 +58,7 @@ namespace Persistance
             else
             {
                 DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(List<User>));
-                
+
                 using (FileStream memoryStream = File.OpenRead("User.json"))
                 {
                     users = (List<User>)jsonSerializer.ReadObject(memoryStream);

@@ -3,7 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Chess.contentView.connexionModuleEntry">
     <VerticalStackLayout>
-        <Entry Placeholder="Pseudo" x:Name="UsernameEntry" Style="{StaticResource entryStyleDefault}"/>
-        <Entry Placeholder="Mot de passe" x:Name="PasswordEntry" IsPassword="True" Style="{StaticResource entryStyleDefault}" MaxLength="20"/>
+        <Entry Placeholder="Pseudo" 
+               x:Name="UsernameEntry" 
+               Style="{StaticResource entryStyleDefault}"/>
+        
+        y<Entry Placeholder="Mot de passe" 
+               x:Name="PasswordEntry" 
+               IsPassword="True" 
+               Style="{StaticResource entryStyleDefault}" 
+               MaxLength="20"/>
     </VerticalStackLayout>
 </ContentView>

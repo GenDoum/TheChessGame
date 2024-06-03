@@ -77,6 +77,8 @@ namespace ChessLibrary
 
         private readonly IUserDataManager _userDataManager;
 
+        public List<User> Users { get; set; }
+
         /// <summary>
         /// Constructeur de la classe Game
         /// </summary>
@@ -103,19 +105,53 @@ namespace ChessLibrary
             this.Board = chessboard;
             
             CurrentPlayer = Player1;
+
+            Users = ReadUsers();
         }
 
-        public void SaveUsers()
+        public Game(IUserDataManager userDataManager)
         {
-            var users = new List<User> {Player1, Player2};
+            _userDataManager = userDataManager;
+
+            WhiteCheck = false;
+            BlackCheck = false;
+
+            Case?[,] allcase = new Case[8, 8];
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    allcase[i, j] = new Case(i, j, null);
+                }
+            }
+
+            Chessboard chessboard = new Chessboard(allcase, false);
+            this.Board = chessboard;
+
+            CurrentPlayer = Player1;
+
+            Users = ReadUsers();
+
+            this.Player1 = Users[0];
+            this.Player2 = Users[1];
+
+            CurrentPlayer = Player1;
+
+
+        }
+
+        public void SaveUsers(List<User> users)
+        {
             _userDataManager.WriteUsers(users);
         }
 
-        public void ReadUsers()
+        public List<User> ReadUsers()
         {
             var users = _userDataManager.ReadUsers();
             Player1 = users[0];
             Player2 = users[1];
+
+            return users;
         }
 
 

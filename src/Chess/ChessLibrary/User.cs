@@ -2,20 +2,24 @@ using ChessLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace ChessLibrary
 {
     /// <summary>
     /// Classe Player
     /// </summary>
+    [DataContract(Name = "Players")] // [DataContract, KnownType(typeof(Type fils))] Pour l'héritage
     public class User
     {
 
         /// <summary>
         /// Pseudo of the Player
         /// </summary>
+        [DataMember]
         public string Pseudo
         {
             get => _pseudo;
@@ -29,17 +33,22 @@ namespace ChessLibrary
                 }
             }
         }
+
+        [DataMember]
         private string _pseudo;
 
         /// <summary>
         /// Password of the Player
         /// </summary>
+        [DataMember]
+
         public string? Password { get; set; }
 
         /// <summary>
         /// Type for know the color of the player
         /// </summary>
         /// 
+        [DataMember]
         public Color Color
         {
             get;
@@ -50,6 +59,7 @@ namespace ChessLibrary
         /// <summary>
         /// Score of the player
         /// </summary>
+        [DataMember]
         public int Score
         {
             get;
@@ -70,11 +80,12 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="pseudo"></param>
         /// <param name="password"></param>
+
         /// <param name="color"></param>
         /// <param name="connected"></param>
         /// <param name="playerScore"></param>
         /// <exception cref="ArgumentException"></exception>
-        public User(string pseudo, string? password, Color color, bool connected, int playerScore)
+        public User(string pseudo, string password, Color color, bool connected, int playerScore)
         {
             if (string.IsNullOrWhiteSpace(pseudo))
             {
@@ -82,7 +93,7 @@ namespace ChessLibrary
             }
 
             this._pseudo = pseudo;
-            this.Password = password;
+            this.Password = User.HashPassword(password);
             this.Color = color;
             Score = playerScore;
             IsConnected = connected;
@@ -101,6 +112,15 @@ namespace ChessLibrary
 
         }
 
+        public User(User user)
+        {
+            this._pseudo = user.Pseudo;
+            this.Password = user.Password == null ? null : User.HashPassword(user.Password);
+            this.Color = user.Color;
+            this.Score = user.Score;
+            this.IsConnected = user.IsConnected;
+        }
+
 
         /// <summary>
         /// Constructor of Player without paramaters.
@@ -110,6 +130,29 @@ namespace ChessLibrary
         {
             _pseudo = "Invité";
             Password = null;
+        }
+        public static string? HashPassword(string password)
+        {
+            if (password == null)
+            {
+                return null; // Dans le cas des joueur invité, qui n'ont pas de mot de passe
+            }
+
+            using (var sha256 = SHA256.Create())
+            {
+                var hashBytes = System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(password));
+                return Convert.ToBase64String(hashBytes);
+            }
+        }
+
+        public bool CheckPassword(string password)
+        {
+            return User.HashPassword(password) == Password;
+        }
+
+        public override string ToString()
+        {
+            return $"Pseudo: {Pseudo}, Password: {(Password != null ? "Hashed" : "null")}, Color: {Color}, Score: {Score}, IsConnected: {IsConnected}";
         }
     }
 

@@ -251,17 +251,18 @@ public class TestData
 
     public static IEnumerable<object[]> InvalidUserScore()
     {
-        yield return new object[] {"pseudo", "password", ChessLibrary.Color.White, true, null!};
-        yield return new object[] {"pseudo", "password", ChessLibrary.Color.White, true, null!};
+        yield return new object[] {"pseudo", "password", ChessLibrary.Color.White, true, null! };
+        yield return new object[] {"pseudo", "password", ChessLibrary.Color.White, true, null! };
 
-        yield return new object[] {"pseudo", "password", ChessLibrary.Color.White, false, null!};
-        yield return new object[] {"pseudo", "password", ChessLibrary.Color.White, false, null!};
+        yield return new object[] {"pseudo", "password", ChessLibrary.Color.White, false, null! };
+        yield return new object[] {"pseudo", "password", ChessLibrary.Color.White, false, null! };
 
-        yield return new object[] { "pseudo", "password", ChessLibrary.Color.Black, true, null!};
-        yield return new object[] { "pseudo", "password", ChessLibrary.Color.Black, true, null!};
+        yield return new object[] { "pseudo", "password", ChessLibrary.Color.Black, true, null! };
+        yield return new object[] { "pseudo", "password", ChessLibrary.Color.Black, true, null! };
 
-        yield return new object[] { "pseudo", "password", ChessLibrary.Color.Black, false, null!};
-        yield return new object[] { "pseudo", "password", ChessLibrary.Color.Black , false, null!};
+        yield return new object[] { "pseudo", "password", ChessLibrary.Color.Black, false, null! };
+        yield return new object[] { "pseudo", "password", ChessLibrary.Color.Black , false, null! };
+
 
         yield return new object[] { "pseudo", "password", ChessLibrary.Color.White, true, ""};
         yield return new object[] { "pseudo", "password", ChessLibrary.Color.White, true, ""};

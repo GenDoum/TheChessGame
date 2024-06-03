@@ -1,4 +1,6 @@
 ﻿
+using System.Diagnostics;
+
 namespace Chess
 {
     public partial class MainPage : ContentPage
@@ -11,9 +13,9 @@ namespace Chess
         
         async void OnConnexionClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("//page/LogIn");
+            await Shell.Current.GoToAsync("//page/Login1");
         }
-        
+
         async void OnInscriptionClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//page/Register");

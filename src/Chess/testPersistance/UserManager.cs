@@ -25,10 +25,11 @@ namespace testPersistance
         public override List<User> ReadUsers()
         {
             // /!\ Pour activer la lecture du fichier en XML, décommenter la ligne suivante /!\
-            // List<User>? allUsers = loaderXML.readUsers();!
+            List<User>? allUsers = loaderXML.ReadUsers();
 
-            List<User>? allUsers = loaderJson.ReadUsers();
+            //List<User>? allUsers = loaderJson.ReadUsers();
 
+            
             return allUsers!;
         }
         public override void WriteUsers(List<User> users)

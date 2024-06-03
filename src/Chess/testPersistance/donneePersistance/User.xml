@@ -4,7 +4,7 @@
     <Color>White</Color>
     <Password>qdxgL52CvGcgsrS7AW7crPfaSytFOkZrdC2nQ/PLoV0=</Password>
     <Pseudo>Balko</Pseudo>
-    <Score>100</Score>
+    <Score>120</Score>
     <_pseudo>Balko</_pseudo>
   </Players>
   <Players>
@@ -41,5 +41,12 @@
     <Pseudo>Vaiana</Pseudo>
     <Score>1000000</Score>
     <_pseudo>Vaiana</_pseudo>
+  </Players>
+  <Players>
+    <Color>White</Color>
+    <Password>n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=</Password>
+    <Pseudo>Test</Pseudo>
+    <Score>0</Score>
+    <_pseudo>Test</_pseudo>
   </Players>
 </ArrayOfPlayers>

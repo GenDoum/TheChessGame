@@ -12,9 +12,9 @@ namespace testPersistance
 {
     public class UserManager : IUserDataManager
     {
+        private readonly LoaderJson loaderJson = new LoaderJson();
 
         private readonly LoaderXML loaderXML = new LoaderXML();
-        private readonly LoaderJson loaderJson = new LoaderJson();
 
 
         public UserManager()

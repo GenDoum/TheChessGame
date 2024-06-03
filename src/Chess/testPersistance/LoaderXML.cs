@@ -42,6 +42,7 @@ namespace Persistance
         {
 
             Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "testPersistance", "donneePersistance"));
+
             const string xmlFile = "User.xml";
 
 

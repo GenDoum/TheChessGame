@@ -42,7 +42,9 @@ namespace Persistance
         public override List<User>? ReadUsers()
         {
 
-            Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "..", "testPersistance", "donneePersistance")); const string jsonFile = "User.json";
+            Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "..", "testPersistance", "donneePersistance")); 
+            const string jsonFile = "User.json";
+            
             List<User> users = new List<User>();
             Thread.Sleep(1000);
 

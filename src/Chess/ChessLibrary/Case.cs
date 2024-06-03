@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,21 +12,25 @@ namespace ChessLibrary
     /// <summary>
     /// Classe pour une case d'un échiquier
     /// </summary>
+    [DataContract]
     public class Case : INotifyPropertyChanged
     {
         /// <summary>
         /// Crée un argument Column
         /// </summary>
+        [DataMember]
         private int _column;
 
         /// <summary>
         /// Crée un argument Line
         /// </summary>
+        [DataMember]
         private int _line;
 
         /// <summary>
         /// Propriété pour la pièce sur cette case
         /// </summary>
+        [DataMember]
         private Piece? _piece;
         
         public int Column

@@ -8,10 +8,12 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 using ChessLibrary.Events;
 
 namespace ChessLibrary
 {
+    [DataContract(Name = "game")]
     /// <summary>
     /// Classe qui représente le point d'entrée du jeu d'échecs
     /// </summary>
@@ -51,29 +53,29 @@ namespace ChessLibrary
         
         protected virtual void OnErrorPlayerTurn()
             => ErrorPlayerTurnNotified?.Invoke(this, EventArgs.Empty);
-
+        [DataMember]
         /// <summary>
         /// Représente le joueur 1
         /// </summary>
         public User Player1 { get; set; }
-
+        [DataMember]
         /// <summary>
         /// Représente le joueur 2
         /// </summary>
         public User Player2 { get; set; }
-        
+        [DataMember]
         public User CurrentPlayer { get; private set; }
-
+        [DataMember]
         /// <summary>
         /// Représente l'échiquier
         /// </summary>
         public Chessboard Board { get; set; }
-
+        [DataMember]
         /// <summary>
         /// Savoir si le joueur blanc est en échec
         /// </summary>
         public bool WhiteCheck { get; set; }
-
+        [DataMember]
         /// <summary>
         /// Savoir si le joueur noir est en échec
         /// </summary>

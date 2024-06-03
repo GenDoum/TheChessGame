@@ -52,27 +52,27 @@
             </VerticalStackLayout>
 
 
-            <CollectionView x:Name="collectionView" ItemsSource="{Binding Board.FlatBoard}" Grid.Column="1"
+            <CollectionView x:Name="collectionView" ItemsSource="{Binding Game.Board.FlatBoard}" Grid.Column="1"
                             BackgroundColor="{StaticResource GoldUsefullColor}"
                             HorizontalOptions="Center"
                             VerticalOptions="Center">
                 <CollectionView.HeightRequest>
                     <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 +(x0 - 1) * x2 ">
-                        <Binding Path="Board.NbRows" />
+                        <Binding Path="Game.Board.NbRows" />
                         <Binding Source="{StaticResource CellHeight}" />
                         <Binding Source="{StaticResource VerticalSpacing}" />
                     </MultiBinding>
                 </CollectionView.HeightRequest>
                 <CollectionView.WidthRequest>
                     <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 +(x0 - 1) * x2 ">
-                        <Binding Path="Board.NbColumns" />
+                        <Binding Path="Game.Board.NbColumns" />
                         <Binding Source="{StaticResource CellWidth}"/>
                         <Binding Source="{StaticResource HorizontalSpacing}" />
                     </MultiBinding>
                 </CollectionView.WidthRequest>
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical"
-                                     Span="{Binding Board.NbColumns}"
+                                     Span="{Binding Game.Board.NbColumns}"
                                      HorizontalItemSpacing="{StaticResource HorizontalSpacing}"
                                      VerticalItemSpacing="{StaticResource VerticalSpacing}"/>
                 </CollectionView.ItemsLayout>

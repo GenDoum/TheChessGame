@@ -87,6 +87,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\ChessLibrary\ChessLibrary.csproj" />
+	  <ProjectReference Include="..\testPersistance\Persistance.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Compile Update="contentView\viewLeaderBoard.xaml.cs">
 			<DependentUpon>viewLeaderBoard.xaml</DependentUpon>
 		</Compile>
@@ -108,11 +113,6 @@
 		<MauiXaml Update="Pages\LoginSecondPlayer.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\ChessLibrary\ChessLibrary.csproj" />
-	  <ProjectReference Include="..\testPersistance\Persistance.csproj" />
 	</ItemGroup>
 
 </Project>

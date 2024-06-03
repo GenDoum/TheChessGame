@@ -1,14 +1,25 @@
-﻿
+﻿using ChessLibrary;
+using Persistance;
 using System.Diagnostics;
 
 namespace Chess
 {
     public partial class MainPage : ContentPage
     {
+        UserManager userManager = new UserManager();
+
+        public Game game;
+
+
 
         public MainPage()
         {
             InitializeComponent();
+            game = new Game(userManager);
+            foreach(User u in game.Users)
+            {
+                Console.WriteLine(u.Pseudo);
+            }
         }
         
         async void OnConnexionClicked(object sender, EventArgs e)

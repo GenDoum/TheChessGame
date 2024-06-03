@@ -5,6 +5,12 @@ namespace ChessLibrary.Events;
 /// </summary>
 public class GameOverNotifiedEventArgs : EventArgs
 {
+    public User? Loser
+    {
+        get;
+        set;
+
+    }
     public User? Winner
     {
         get;

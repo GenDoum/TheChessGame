@@ -17,13 +17,12 @@ public partial class chessBoard : ContentPage
 {
     private static readonly IUserDataManager UserManager = new UserManager();
     public Game Game { get; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black), UserManager);
-    public Chessboard Board { get; } = new Chessboard(new Case[8, 8], false);
     
     public chessBoard()
     {
         InitializeComponent();
         BindingContext = this;
-        
+
         Game.InvalidMove += OnInvalidMove;
         Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
         Game.EvolveNotified += OnEvolvePiece;
@@ -71,6 +70,9 @@ public partial class chessBoard : ContentPage
     private async void OnGameOver(object sender, GameOverNotifiedEventArgs e)
     {
         await DisplayAlert("Game Over", e.Winner.Pseudo + " wins the game!", "OK");
+        e.Winner.Score += 5;
+        e.Loser.Score -= 5;
+        await Shell.Current.GoToAsync("//page/MainPage");
     }
     
     async void OnBackButtonClicked(object sender, EventArgs e)
@@ -84,31 +86,38 @@ public partial class chessBoard : ContentPage
 
     async void OnPieceClicked(object sender, EventArgs e)
     {
-        var imageButton = sender as ImageButton;
-        if (imageButton != null)
+        try
         {
-            var clickedCase = imageButton.BindingContext as Case;
-            if (clickedCase != null)
+            var imageButton = sender as ImageButton;
+            if (imageButton != null)
             {
-                if (_selectedCase == null)
+                var clickedCase = imageButton.BindingContext as Case;
+                if (clickedCase != null)
                 {
-                    // Si aucune pièce n'est sélectionnée, sélectionne la pièce sur laquelle nous avons cliqué
-                    _selectedCase = clickedCase;
-                }
-                else
-                {
-                    // Si une pièce est déjà sélectionnée, la déplacer vers la case sur laquelle nous avons cliqué
-                    var piece = _selectedCase.Piece;
-                    if (piece != null)
+                    if (_selectedCase == null)
                     {
-                        User actualPlayer = piece.Color == Color.White ? Game.Player1 : Game.Player2;
-                        Game.MovePiece(_selectedCase, clickedCase, Board, actualPlayer);
+                        // Si aucune pièce n'est sélectionnée, sélectionne la pièce sur laquelle nous avons cliqué
+                        _selectedCase = clickedCase;
                     }
+                    else
+                    {
+                        // Si une pièce est déjà sélectionnée, la déplacer vers la case sur laquelle nous avons cliqué
+                        var piece = _selectedCase.Piece;
+                        if (piece != null)
+                        {
+                            User actualPlayer = piece.Color == Color.White ? Game.Player1 : Game.Player2;
+                            Game.MovePieceFront(_selectedCase, clickedCase, Game.Board, actualPlayer);
+                        }
 
-                    _selectedCase = null;
+                        _selectedCase = null;
+                    }
                 }
             }
         }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Erreur", ex.Message, "OK");
+        }
     }
-    
+
 }

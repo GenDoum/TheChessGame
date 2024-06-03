@@ -1,4 +1,6 @@
 ﻿
+using System.Diagnostics;
+
 namespace Chess
 {
     public partial class MainPage : ContentPage
@@ -11,9 +13,19 @@ namespace Chess
         
         async void OnConnexionClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("//page/LogIn");
+            try
+            {
+
+            await Shell.Current.GoToAsync("//page/Login1");
+            Debug.WriteLine("Connexion clicked");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($" failed login {ex.Message}");
+            }
+
         }
-        
+
         async void OnInscriptionClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//page/Register");

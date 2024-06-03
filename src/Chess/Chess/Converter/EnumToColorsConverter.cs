@@ -3,7 +3,7 @@ using Microsoft.Maui.Graphics;
 
 namespace Chess.Converter;
 
-public class EnumToStringConverter : IValueConverter
+public class EnumToColorsConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
@@ -11,13 +11,13 @@ public class EnumToStringConverter : IValueConverter
         {
             return color switch
             {
-                ChessLibrary.Color.Black => new Microsoft.Maui.Graphics.Color(0, 0, 0),
-                ChessLibrary.Color.White => new Microsoft.Maui.Graphics.Color(1, 1, 1),
-                _ => throw new NotImplementedException()
+                ChessLibrary.Color.Black => Colors.Black,
+                ChessLibrary.Color.White => Colors.White,
+                _ => Colors.Transparent
             };
         }
 
-        return null;
+        return Colors.Transparent;
     }
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

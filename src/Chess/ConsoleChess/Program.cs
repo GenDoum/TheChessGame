@@ -241,19 +241,6 @@ namespace ConsoleChess
             return user;
         }
 
-        // Inutile, à supprimer
-        public static bool checkUserConnection(User user)
-        {
-
-            if (Equals(user, null))
-            {
-                Console.WriteLine("La connexion n'a pas marché, connecter vous à nouveau");
-                Thread.Sleep(1000);
-                return false;
-            }
-            return true;
-        }
-
 
         public static List<User> inscription(List<User> users)
         {
@@ -491,6 +478,7 @@ namespace ConsoleChess
                 {
                     try
                     {
+                        DisplayBoard(game.Board);
                         (int startColumn, int startRow) = GetMoveCoordinates("Enter the position of the piece you want to move (a1, f7 ...):");
                         (int endColumn, int endRow) = GetMoveCoordinates("Enter the destination position (a1, f7 ...):");
 
@@ -532,7 +520,7 @@ namespace ConsoleChess
                         Console.WriteLine($"Error: {e.Message}");
                     }
                 }
-                game.GameOver(player % 2 == 0 ? player1 : player2);
+                /*game.GameOver(player % 2 == 0 ? player1 : player2);*/
                 player++;
             }
 
@@ -544,13 +532,11 @@ namespace ConsoleChess
         {
 
             UserManager userManager = new UserManager();
-            List<User> users = userManager.Users.ToList();
+            List<User> users = userManager.readUsers().ToList();
 
             menuAccueil(users);
 
-
-
-            userManager.saveUsers(users);
+            userManager.writeUsers(users);
         }
 
 

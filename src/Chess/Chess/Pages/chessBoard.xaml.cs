@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ChessLibrary;
+using ChessLibrary.Events;
 using CommunityToolkit.Maui.Behaviors;
 using Microsoft.Maui.Graphics;
 using Color = ChessLibrary.Color;
@@ -22,11 +23,45 @@ public partial class chessBoard : ContentPage
         BindingContext = this;
         
         Game.InvalidMove += OnInvalidMove;
+        Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
+        Game.EvolveNotified += OnEvolvePiece;
     }
     
     public async void OnInvalidMove(object sender, EventArgs e)
     {
         await DisplayAlert("Erreur", "Mouvement invalide, vérifiez les règles.", "OK");
+    }
+    
+    public async void OnErrorPlayerTurnNotified(object sender, EventArgs e)
+    {
+        await DisplayAlert("Erreur", "Ce n'est pas votre tour de jouer.", "OK");
+    }
+    
+    private async void OnEvolvePiece(object sender, EvolveNotifiedEventArgs e)
+    {
+        string action = await DisplayActionSheet("Choose the piece to evolve to:", "Cancel", null, "Queen", "Rook", "Bishop", "Knight");
+        if (action != null)
+        {
+            ChoiceUser choice;
+            switch (action)
+            {
+                case "Queen":
+                    choice = ChoiceUser.Queen;
+                    break;
+                case "Rook":
+                    choice = ChoiceUser.Rook;
+                    break;
+                case "Bishop":
+                    choice = ChoiceUser.Bishop;
+                    break;
+                case "Knight":
+                    choice = ChoiceUser.Knight;
+                    break;
+                default:
+                    return;
+            }
+            Game.Evolve(e.Pawn, e.Case, choice);
+        }
     }
     
     async void OnBackButtonClicked(object sender, EventArgs e)
@@ -59,7 +94,6 @@ public partial class chessBoard : ContentPage
                     {
                         User actualPlayer = piece.Color == Color.White ? Game.Player1 : Game.Player2;
                         Game.MovePiece(_selectedCase, clickedCase, Board, actualPlayer);
-                        Console.WriteLine($"Calling MovePiece with parameters: currentCase={_selectedCase}, targetCase={clickedCase}, Board={Board}, actualPlayer={actualPlayer}");
                     }
 
                     _selectedCase = null;
@@ -67,6 +101,5 @@ public partial class chessBoard : ContentPage
             }
         }
     }
-    
     
 }

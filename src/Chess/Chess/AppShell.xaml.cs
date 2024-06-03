@@ -11,7 +11,7 @@ namespace Chess
             Routing.RegisterRoute("MainPageDetails", typeof(MainPage));
             Routing.RegisterRoute("chessBoardDetails", typeof(chessBoard));
             Routing.RegisterRoute("RegisterDetails", typeof(Register));
-            Routing.RegisterRoute("LogInDetails", typeof(LogIn));
+            Routing.RegisterRoute("LogInDetails", typeof(Login1));
             Routing.RegisterRoute("pausePageDetails", typeof(pausePage));
             Routing.RegisterRoute("LoginSecondPlayerDetails", typeof(LoginSecondPlayer));
             Routing.RegisterRoute("LeaderBoardDetails", typeof(LeaderBoard));

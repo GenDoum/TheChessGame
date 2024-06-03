@@ -13,8 +13,7 @@
     <TabBar Route="page">
         
         <ShellContent
-            ContentTemplate="{DataTemplate local:MainPage}"
-            Route="MainPage" />
+            ContentTemplate="{DataTemplate local:MainPage}" />
                 
         <ShellContent
             ContentTemplate="{DataTemplate localpages:chessBoard}"
@@ -24,9 +23,9 @@
             ContentTemplate="{DataTemplate localpages:Register}"
             Route="Register" />
         
-        <ShellContent
+        <!--<ShellContent
             ContentTemplate="{DataTemplate localpages:LogIn}"
-            Route="LogIn" />
+            Route="LogIn" />-->
         
         <ShellContent
             ContentTemplate="{DataTemplate localpages:pausePage}"
@@ -44,7 +43,11 @@
         <ShellContent
             ContentTemplate="{DataTemplate localpages:RulesPage}"
             Route="RulesPage" />
-        
+
+        <ShellContent
+            ContentTemplate="{DataTemplate localpages:Login1}"
+            Route="Login1" />
+
     </TabBar>
 
 </Shell>

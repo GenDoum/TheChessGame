@@ -76,7 +76,6 @@
                             <ImageButton Source="{Binding Piece.ImagePath}"
                                          Aspect="AspectFit"
                                          Clicked="OnPieceClicked">
-                                
                             </ImageButton>
                         </Border>
                     </DataTemplate>

@@ -46,6 +46,11 @@ namespace ChessLibrary
         
         protected virtual void OnInvalidMove()
             => InvalidMove?.Invoke(this, EventArgs.Empty);
+        
+        public event EventHandler ErrorPlayerTurnNotified = null!;
+        
+        protected virtual void OnErrorPlayerTurn()
+            => ErrorPlayerTurnNotified?.Invoke(this, EventArgs.Empty);
 
         /// <summary>
         /// Représente le joueur 1
@@ -56,6 +61,8 @@ namespace ChessLibrary
         /// Représente le joueur 2
         /// </summary>
         public User Player2 { get; set; }
+        
+        public User CurrentPlayer { get; private set; }
 
         /// <summary>
         /// Représente l'échiquier
@@ -94,7 +101,8 @@ namespace ChessLibrary
 
             Chessboard chessboard = new Chessboard(allcase, false);
             this.Board = chessboard;
-
+            
+            CurrentPlayer = Player1;
         }
 
 
@@ -124,18 +132,6 @@ namespace ChessLibrary
             return false;
         }
 
-        public void GetActualPlayer(User actualPlayer)
-        {
-            if (actualPlayer.Color == Color.White)
-            {
-                actualPlayer = Player1;
-            }
-            else
-            {
-                actualPlayer = Player2;
-            }
-        }
-
         /// <summary>
         /// Fonction permettant de savoir si la partie est terminée
         /// </summary>
@@ -159,6 +155,33 @@ namespace ChessLibrary
             }
             return false;
         }
+        
+        public void Evolve(Pawn pawn, Case finalCase, ChoiceUser choiceUser)
+        {
+            Piece newPiece;
+
+            switch (choiceUser)
+            {
+                case ChoiceUser.Queen:
+                    newPiece = new Queen(pawn.Color, pawn.Id);
+                    break;
+                case ChoiceUser.Rook:
+                    newPiece = new Rook(pawn.Color, pawn.Id);
+                    break;
+                case ChoiceUser.Bishop:
+                    newPiece = new Bishop(pawn.Color, pawn.Id);
+                    break;
+                case ChoiceUser.Knight:
+                    newPiece = new Knight(pawn.Color, pawn.Id);
+                    break;
+                default:
+                    throw new InvalidOperationException("Invalid choice for pawn evolution.");
+            }
+
+            finalCase.Piece = newPiece;
+            Board.ModifPawn(pawn, newPiece, finalCase);
+        }
+        
 
         /// <summary>
         /// Fonction pour le déplacement d'une pièce
@@ -170,21 +193,32 @@ namespace ChessLibrary
         /// <exception cref="InvalidOperationException"></exception>
         public void MovePiece(Case? initial, Case? final, Chessboard board, User actualPlayer)
         {
-
+            
 
             if (initial!.Piece is King king &&
-            ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 6 && final.Line == 7) ||
-            (king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 6 && final.Line == 0)))
+            ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||
+            (king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))
             {
                 king.PetitRoque(Board); // Appel de la méthode PetitRoque
+            }
+            else if (initial!.Piece is King king1 &&
+            ((king1.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 0 && final.Line == 7) ||
+            (king1.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 0 && final.Line == 0)))
+            {
+                king1.GrandRoque(Board); // Appel de la méthode GrandRoque
             }
             else
             {
                 
                 if (initial!.Piece == null)
                     throw new InvalidOperationException("Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
-                if (initial.Piece.Color != actualPlayer.Color)
-                    throw new InvalidOperationException("Ce n'est pas le tour de ce joueur.");
+
+                if (actualPlayer != CurrentPlayer)
+                {
+                    OnErrorPlayerTurn();
+                    return;
+                }
+
                 var blackPieces = board.CopyBlackPieces();
                 var whitePieces = board.CopyWhitePieces();
                 var movingPiece = initial.Piece;
@@ -214,16 +248,15 @@ namespace ChessLibrary
                     Board.ProcessPostMove(initial, final);
 
                     if (final.Piece is Pawn pawn && (final.Line == 0 || final.Line == 7))
-                    {
                         OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = pawn, Case = final });
-                    }
+                    
+                    CurrentPlayer = (actualPlayer == Player1) ? Player2 : Player1;
                 }
                 else
                 {
                     // Annuler le mouvement temporaire
                     initial.Piece = movingPiece;
                     final.Piece = capturedPiece;
-                    // throw new InvalidOperationException("Mouvement invalide, vérifiez les règles.");
                     OnInvalidMove();
                 }
             }

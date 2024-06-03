@@ -207,12 +207,6 @@ namespace ChessLibrary
             {
                 king1.GrandRoque(board); // Appel de la méthode GrandRoque
             }
-            else if (initial!.Piece is King king1 &&
-            ((king1.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 0 && final.Line == 7) ||
-            (king1.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 0 && final.Line == 0)))
-            {
-                king1.GrandRoque(Board); // Appel de la méthode GrandRoque
-            }
             else
             {
                 

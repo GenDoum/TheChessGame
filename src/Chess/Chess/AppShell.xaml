@@ -13,7 +13,8 @@
     <TabBar Route="page">
         
         <ShellContent
-            ContentTemplate="{DataTemplate local:MainPage}" />
+            ContentTemplate="{DataTemplate local:MainPage}"
+            Route="MainPage"/>
                 
         <ShellContent
             ContentTemplate="{DataTemplate localpages:chessBoard}"

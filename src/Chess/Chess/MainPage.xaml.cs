@@ -1,7 +1,6 @@
 ﻿using ChessLibrary;
 using Persistance;
 using System.Diagnostics;
-using Windows.Media.Playback;
 
 namespace Chess
 {

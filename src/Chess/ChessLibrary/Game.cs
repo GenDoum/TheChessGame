@@ -142,14 +142,13 @@ namespace ChessLibrary
             var pieces = (Player1.Color == Color.White) ? Board.CopyBlackPieces() : Board.CopyWhitePieces();
             foreach (var pieceInfo in pieces)
             {
+                if (Board.CanDefendKing(pieces, pieceInfo.CaseLink))
+                {
+                    return false;
+                }
                 if (pieceInfo.piece is King king && Board.EchecMat(king, pieceInfo.CaseLink))
                 {
                     OnGameOver(new GameOverNotifiedEventArgs { Winner = winner });
-                    if (Board.CanDefendKing(pieces, pieceInfo.CaseLink))
-                    {
-                        return false;
-                    }
-
                     return true;
                 }
             }

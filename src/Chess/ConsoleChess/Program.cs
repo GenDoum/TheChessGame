@@ -460,6 +460,7 @@ namespace ConsoleChess
             {
                 Console.WriteLine($"Game over! {args.Winner.Pseudo} wins!");
                 args.Winner.Score += 5;
+                args.Loser.Score -= 5;
                 Thread.Sleep(500);
             };
 

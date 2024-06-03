@@ -105,17 +105,24 @@ namespace ChessLibrary
             CurrentPlayer = Player1;
         }
 
-        public void SaveUsers()
+        public void SaveUsers(List<User> users)
         {
-            var users = new List<User> {Player1, Player2};
             _userDataManager.WriteUsers(users);
         }
 
-        public void ReadUsers()
+        public List<User> ReadUsers()
         {
             var users = _userDataManager.ReadUsers();
-            Player1 = users[0];
-            Player2 = users[1];
+            if (users.Count >= 2)
+            {
+                Player1 = users[0];
+                Player2 = users[1];
+            }
+            else
+            {
+                throw new Exception("Not enough users in the list.");
+            }
+            return users;
         }
 
 

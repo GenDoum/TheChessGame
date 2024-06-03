@@ -10,7 +10,7 @@ namespace Persistance
     public class LoaderXML : IUserDataManager
     {
 
-        public override void WriteUsers(List<User> users)
+        public void WriteUsers(List<User> users)
         {
             const string xmlFile = "User.xml";
 
@@ -38,7 +38,7 @@ namespace Persistance
 
         }
 
-        public override List<User> ReadUsers()
+        public List<User> ReadUsers()
         {
 
             Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "testPersistance", "donneePersistance"));            

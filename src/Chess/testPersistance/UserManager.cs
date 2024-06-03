@@ -22,7 +22,7 @@ namespace Persistance
 
         }
 
-        public override List<User> ReadUsers()
+        public List<User> ReadUsers()
         {
             // /!\ Pour activer la lecture du fichier en XML, décommenter la ligne suivante /!\
             //List<User>? allUsers = loaderXML.ReadUsers();
@@ -32,7 +32,7 @@ namespace Persistance
             
             return allUsers!;
         }
-        public override void WriteUsers(List<User> users)
+        public void WriteUsers(List<User> users)
         {
             loaderJson.WriteUsers(users);
             loaderXML.WriteUsers(users);

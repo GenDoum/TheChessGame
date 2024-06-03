@@ -81,7 +81,7 @@
                         <Border WidthRequest="{StaticResource CellWidth}"
                                 HeightRequest="{StaticResource CellHeight}">
                             <ImageButton Source="{Binding Piece.ImagePath}"
-                                         Aspect="AspectFit"
+                                         Aspect="AspectFill"
                                          Clicked="OnPieceClicked">
                                 <ImageButton.Behaviors>
                                     <toolkit:IconTintColorBehavior TintColor="{Binding Piece.Color, Converter={StaticResource EnumToColorsConverter}}"/>

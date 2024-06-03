@@ -9,10 +9,10 @@ using ChessLibrary;
 
 namespace Persistance
 {
-    public abstract class IUserDataManager
+    public interface IUserDataManager
     {
-        public abstract void WriteUsers(List<User> users);
+        public void WriteUsers(List<User> users);
 
-        public abstract List<User> ReadUsers();
+        public List<User> ReadUsers();
     }
 }

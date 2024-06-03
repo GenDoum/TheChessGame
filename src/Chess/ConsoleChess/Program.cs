@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using Persistance;
-using testPersistance;
 
 namespace ConsoleChess
 {
@@ -359,7 +358,7 @@ namespace ConsoleChess
         /// </summary>
         /// <param name="playerOne"></param>
         /// <param name="playerTwo"></param>
-        public static void menuAccueil(List<User> users)
+        public static void menuAccueil(List<User> users, IUserDataManager userManager)
         {
             int choix;
 
@@ -447,9 +446,9 @@ namespace ConsoleChess
 
         }
 
-        static void Jeu(User? player1, User? player2)
+        static void Jeu(User? player1, User? player2, IUserDataManager userDataManager = null)
         {
-            Game game = new Game(player1, player2);
+            Game game = new Game(player1, player2, userDataManager);
 
             game.EvolveNotified += (sender, args) =>
             {
@@ -526,10 +525,10 @@ namespace ConsoleChess
         static void Main()
         {
 
-            UserManager userManager = new UserManager();
+            IUserDataManager userManager = new LoaderJson();
             List<User> users = userManager.ReadUsers().ToList();
 
-            menuAccueil(users);
+            menuAccueil(users, userManager);
 
             userManager.WriteUsers(users);
         }

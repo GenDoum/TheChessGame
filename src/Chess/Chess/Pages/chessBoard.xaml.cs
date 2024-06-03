@@ -8,13 +8,15 @@ using ChessLibrary;
 using ChessLibrary.Events;
 using CommunityToolkit.Maui.Behaviors;
 using Microsoft.Maui.Graphics;
+using Persistance;
 using Color = ChessLibrary.Color;
 
 namespace Chess.Pages;
 
 public partial class chessBoard : ContentPage
 {
-    public Game Game { get; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black));
+    private static readonly IUserDataManager UserManager = new UserManager();
+    public Game Game { get; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black), UserManager);
     
     public chessBoard()
     {

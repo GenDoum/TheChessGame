@@ -13,7 +13,7 @@ using ChessLibrary.Events;
 
 namespace ChessLibrary
 {
-    [DataContract(Name = "game")]
+    [DataContract]
     /// <summary>
     /// Classe qui représente le point d'entrée du jeu d'échecs
     /// </summary>
@@ -53,29 +53,29 @@ namespace ChessLibrary
         
         protected virtual void OnErrorPlayerTurn()
             => ErrorPlayerTurnNotified?.Invoke(this, EventArgs.Empty);
-        [DataMember]
+        [DataMember(Order = 1)]
         /// <summary>
         /// Représente le joueur 1
         /// </summary>
         public User Player1 { get; set; }
-        [DataMember]
+        [DataMember(Order = 2)]
         /// <summary>
         /// Représente le joueur 2
         /// </summary>
         public User Player2 { get; set; }
-        [DataMember]
+        [DataMember(Order = 3)]
         public User CurrentPlayer { get; private set; }
-        [DataMember]
+        [DataMember(Order = 6)]
         /// <summary>
         /// Représente l'échiquier
         /// </summary>
         public Chessboard Board { get; set; }
-        [DataMember]
+        [DataMember(Order = 5)]
         /// <summary>
         /// Savoir si le joueur blanc est en échec
         /// </summary>
         public bool WhiteCheck { get; set; }
-        [DataMember]
+        [DataMember(Order = 4)]
         /// <summary>
         /// Savoir si le joueur noir est en échec
         /// </summary>

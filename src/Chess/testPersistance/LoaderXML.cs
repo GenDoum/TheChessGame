@@ -41,7 +41,7 @@ namespace Persistance
         public override List<User> ReadUsers()
         {
 
-            Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\..\\testPersistance\\donneePersistance"));
+            Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "testPersistance", "donneePersistance"));            
             const string xmlFile = "User.xml";
 
 

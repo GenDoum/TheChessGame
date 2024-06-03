@@ -42,4 +42,11 @@
     <Score>1000000</Score>
     <_pseudo>Vaiana</_pseudo>
   </Players>
+  <Players>
+    <Color>White</Color>
+    <Password>n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=</Password>
+    <Pseudo>Test</Pseudo>
+    <Score>0</Score>
+    <_pseudo>Test</_pseudo>
+  </Players>
 </ArrayOfPlayers>

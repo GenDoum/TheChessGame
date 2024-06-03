@@ -13,10 +13,10 @@ static void XML()
     XmlWriterSettings settings = new XmlWriterSettings() { Indent = true };
 
     // Crée un dossier où les données seront stockées
-    Directory.CreateDirectory("..\\..\\..\\.\\donneePersistance");
+    Directory.CreateDirectory(Path.Combine("..", "..", "..", ".", "donneePersistance"));
 
     // Change le dossier courant pour le dossier où les données seront stockées
-    Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\.", "donneePersistance"));
+    Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", ".", "donneePersistance"));    
 
     // Variavle qui contient le nom du fichier xml
     string xmlFile = "User.xml";

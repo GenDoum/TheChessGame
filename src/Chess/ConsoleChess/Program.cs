@@ -2,6 +2,9 @@ using System;
 using ChessLibrary;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
+using Persistance;
+using testPersistance;
 
 namespace ConsoleChess
 {
@@ -75,12 +78,14 @@ namespace ConsoleChess
 
             }
 
-            if (Equals(user.Password, null))
+            if (Equals(User.HashPassword(null), user.Password))
             {
                 Console.WriteLine("\nInvited player, no need to check password\n");
                 return true;
             }
-            if (user.Password.Equals(pass.ToString()))
+
+            string? userPassword = user.Password; // pour éviter un code smells
+            if (Equals(User.HashPassword(pass.ToString()), userPassword))
             {
                 Console.WriteLine($"\nGood password, have fun {user.Pseudo}");
                 return true;
@@ -236,18 +241,6 @@ namespace ConsoleChess
             return user;
         }
 
-        public static bool checkUserConnection(User user)
-        {
-
-            if (Equals(user, null))
-            {
-                Console.WriteLine("La connexion n'a pas marché, connecter vous à nouveau");
-                Thread.Sleep(1000);
-                return false;
-            }
-            return true;
-        }
-
 
         public static List<User> inscription(List<User> users)
         {
@@ -295,6 +288,29 @@ namespace ConsoleChess
             }
         }   
 
+        public static void menuStartGame(User user1, User user2)
+        {
+            Console.Clear();
+            int choix = MultipleChoice("Voulez vous lancer la partie ?", true, "Oui", "Non");
+            if (choix == 0)
+            {
+                Console.Clear();
+                Thread.Sleep(1000);
+                Jeu(user1, user2);
+                Console.Clear();
+            }
+            else 
+            {
+                Console.Clear();
+                Console.WriteLine("Partie annulée");
+                Console.WriteLine("Les joueurs son déconnectés.");
+                Console.WriteLine("Retour au menu principal.");
+                Thread.Sleep(2000);
+                user1.IsConnected = false;
+                user2.IsConnected = false;
+            }
+        }
+
         /// <summary>
         /// Menu de connexion pour le deuxième joueur
         /// </summary>
@@ -337,14 +353,13 @@ namespace ConsoleChess
             return defaultUser;
         }
 
-//        public static void
 
         /// <summary>
         /// Fonction qui gère l'accueil de l'application et la gestion des joueurs
         /// </summary>
         /// <param name="playerOne"></param>
         /// <param name="playerTwo"></param>
-        public static void menuAccueil(User? playerOne, User? playerTwo)
+        public static void menuAccueil(List<User> users)
         {
             int choix;
 
@@ -353,13 +368,10 @@ namespace ConsoleChess
             Color noir = Color.Black;
             Color blanc = Color.White;
 
-            User balko = new User("MatheoB", "chef", blanc, false, 25);
-            User hersan = new User("MatheoH", "proMac", noir, false, 10);
+            Thread.Sleep(2000);
 
-
-            List<User> users = new List<User>();
-            users.Add(hersan);
-            users.Add(balko);
+            User? playerOne = new User();
+            User? playerTwo = new User();
 
             Console.ResetColor();
             do
@@ -396,24 +408,22 @@ namespace ConsoleChess
 
                     case 2:  // Option pour lancer une partie
                         Console.Clear();
-                        Console.WriteLine("Lancer un partie");
-                        Thread.Sleep(1000);
                         if (playerOne == null || playerTwo == null)
                         {
                             errorMessage("Vous devez être connecté pour lancer une partie");
                             choix = MultipleChoice("Welcome on The Chess", true, "Connection", "Inscription", "Start a game", "Learderboard", "Exit application");
                             continue;
                         }
-                        if (playerOne.Color == Color.White)
+                        if (playerOne.Color == blanc)
                         {
-                            playerTwo.Color = Color.Black;
+                            playerTwo.Color = noir;
                         }
-                        if(playerOne.Color == Color.Black)
+                        if(playerOne.Color == noir)
                         {
-                            playerOne.Color = Color.White;
-                            playerTwo.Color = Color.Black;
+                            playerOne.Color = blanc;
+                            playerTwo.Color = noir;
                         }
-                        Jeu(playerOne, playerTwo);
+                        menuStartGame(playerOne!, playerTwo!);
                         break;
 
                     case 3: // Option pour afficher le leaderboard
@@ -520,12 +530,12 @@ namespace ConsoleChess
         static void Main()
         {
 
+            UserManager userManager = new UserManager();
+            List<User> users = userManager.readUsers().ToList();
 
-             User player1 = new User(Color.White);
-             User player2 = new User(Color.Black);
+            menuAccueil(users);
 
-             menuAccueil(player1, player2);
-
+            userManager.writeUsers(users);
         }
 
 

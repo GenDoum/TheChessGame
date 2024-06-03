@@ -1,3 +1,5 @@
+using Persistance;
+
 namespace ChessUnitTest;
 
 using ChessLibrary;
@@ -10,7 +12,9 @@ public class UnitTestGame
         // Arrange
         User player1 = new User("Player1", "password", Color.White, true, 0);
         User player2 = new User("Player2", "password", Color.Black, true, 0);
-        Game game = new Game(player1, player2);
+        IUserDataManager userDataManager = new LoaderJson(); // Créez une instance de LoaderJson
+
+        Game game = new Game(player1, player2, userDataManager);
 
         // Act & Assert
         // Check that the game was properly initialized

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 using ChessLibrary.Events;
+using Persistance;
 
 namespace ChessLibrary
 {
@@ -81,13 +82,17 @@ namespace ChessLibrary
         /// </summary>
         public bool BlackCheck { get; set; }
 
+        private readonly IUserDataManager _userDataManager;
+
         /// <summary>
         /// Constructeur de la classe Game
         /// </summary>
         /// <param name="player1"></param>
         /// <param name="player2"></param>
-        public Game(User player1, User player2)
+        /// <param name="userDataManager"></param>
+        public Game(User player1, User player2, IUserDataManager userDataManager)
         {
+            _userDataManager = userDataManager;
             WhiteCheck = false;
             BlackCheck = false;
             this.Player1 = player1;
@@ -105,6 +110,19 @@ namespace ChessLibrary
             this.Board = chessboard;
             
             CurrentPlayer = Player1;
+        }
+
+        public void SaveUsers()
+        {
+            var users = new List<User> {Player1, Player2};
+            _userDataManager.WriteUsers(users);
+        }
+
+        public void ReadUsers()
+        {
+            var users = _userDataManager.ReadUsers();
+            Player1 = users[0];
+            Player2 = users[1];
         }
 
 
@@ -268,9 +286,6 @@ namespace ChessLibrary
             }
         }
         
-        
-
-
         public static void RestorePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board, Piece movedPiece, Piece capturedPiece)
         {
             // Rétablir la pièce déplacée dans sa position originale

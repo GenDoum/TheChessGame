@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace ChessLibrary
 {
+    [DataContract]
     public class Chessboard : IBoard, INotifyPropertyChanged
     {
+        [DataMember]
         private Case?[,] _board;
 
         public Case?[,] Board
@@ -23,10 +26,11 @@ namespace ChessLibrary
             }
         }
 
-        
+        [DataMember]
         public ReadOnlyCollection<CoPieces> WhitePieces => _whitePieces.AsReadOnly();
 
         private readonly List<CoPieces> _whitePieces = new List<CoPieces>();
+        [DataMember]
         public ReadOnlyCollection<CoPieces> BlackPieces => _blackPieces.AsReadOnly();
 
         private readonly List<CoPieces> _blackPieces = new List<CoPieces>();

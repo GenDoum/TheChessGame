@@ -83,7 +83,7 @@ static void JsonSerializationDemo()
     // Écriture des utilisateurs dans un fichier JSON
     try
     {
-        loader.writeUsers(users);
+        loader.WriteUsers(users);
         Console.WriteLine("Les utilisateurs ont été écrits dans le fichier JSON avec succès.");
     }
     catch (Exception ex)
@@ -94,7 +94,7 @@ static void JsonSerializationDemo()
     // Lecture des utilisateurs depuis le fichier JSON
     try
     {
-        List<User> loadedUsers = loader.readUsers();
+        List<User> loadedUsers = loader.ReadUsers();
         Console.WriteLine("Les utilisateurs ont été lus depuis le fichier JSON avec succès.");
         foreach (User user in loadedUsers)
         {
@@ -112,9 +112,9 @@ static void Main()
 {
     LoaderJson loader = new LoaderJson();
     LoaderXML loaderXML = new LoaderXML();
-    loaderXML.readUsers();
-    List<User> xml = loaderXML.readUsers();
-    List<User> json = loader.readUsers();
+    loaderXML.ReadUsers();
+    List<User> xml = loaderXML.ReadUsers();
+    List<User> json = loader.ReadUsers();
 }
 
 

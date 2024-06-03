@@ -22,19 +22,19 @@ namespace testPersistance
 
         }
 
-        public override List<User> readUsers()
+        public override List<User> ReadUsers()
         {
             // /!\ Pour activer la lecture du fichier en XML, décommenter la ligne suivante /!\
             // List<User>? allUsers = loaderXML.readUsers();!
 
-            List<User>? allUsers = loaderJson.readUsers();
+            List<User>? allUsers = loaderJson.ReadUsers();
 
             return allUsers!;
         }
-        public override void writeUsers(List<User> users)
+        public override void WriteUsers(List<User> users)
         {
-            loaderJson.writeUsers(users);
-            loaderXML.writeUsers(users);
+            loaderJson.WriteUsers(users);
+            loaderXML.WriteUsers(users);
         }
     }
 }

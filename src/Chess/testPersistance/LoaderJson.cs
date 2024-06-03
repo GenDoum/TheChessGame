@@ -14,7 +14,7 @@ namespace Persistance
         private const string DataDirectory = "..\\..\\..\\..\\.\\testPersistance\\donneePersistance";
         private const string JsonFileName = "User.json";
 
-        public override void writeUsers(List<User> users)
+        public override void WriteUsers(List<User> users)
         {
             if (users == null)
             {
@@ -39,7 +39,7 @@ namespace Persistance
             }
         }
 
-        public override List<User>? readUsers()
+        public override List<User>? ReadUsers()
         {
             Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..\\..\\..\\..\\testPersistance\\donneePersistance"));
             const string jsonFile = "User.json";

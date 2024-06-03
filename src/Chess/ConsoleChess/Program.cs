@@ -531,11 +531,11 @@ namespace ConsoleChess
         {
 
             UserManager userManager = new UserManager();
-            List<User> users = userManager.readUsers().ToList();
+            List<User> users = userManager.ReadUsers().ToList();
 
             menuAccueil(users);
 
-            userManager.writeUsers(users);
+            userManager.WriteUsers(users);
         }
 
 

@@ -11,8 +11,8 @@ namespace Persistance
 {
     public abstract class IUserDataManager
     {
-        public abstract void writeUsers(List<User> users);
+        public abstract void WriteUsers(List<User> users);
 
-        public abstract List<User> readUsers();
+        public abstract List<User> ReadUsers();
     }
 }

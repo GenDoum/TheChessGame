@@ -10,70 +10,29 @@ namespace Persistance
 {
     public class LoaderJson : IUserDataManager
     {
-        private readonly string _dataDirectory;
-        private const string JsonFileName = "User.json";
-
-        public LoaderJson()
-        {
-            _dataDirectory = Path.Combine(AppContext.BaseDirectory, "donneePersistance");
-            if (!Directory.Exists(_dataDirectory))
-            {
-                Directory.CreateDirectory(_dataDirectory);
-            }
-        }
-
         public void WriteUsers(List<User> users)
         {
-            if (users == null)
-            {
-                throw new ArgumentNullException(nameof(users));
-            }
-
-            string jsonFilePath = Path.Combine(_dataDirectory, JsonFileName);
-
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<User>));
-
-            if (File.Exists(jsonFilePath))
+            
+            MemoryStream stream = new MemoryStream();
+            
+            serializer.WriteObject(stream, users);
+            using(FileStream MemStream = File.Create("User.json"))
             {
-                File.Delete(jsonFilePath);
-            }
-
-            using (FileStream stream = File.Create(jsonFilePath))
-            {
-                using (var writer = JsonReaderWriterFactory.CreateJsonWriter(stream, Encoding.UTF8, ownsStream: false, indent: true, indentChars: "  "))
-                {
-                    serializer.WriteObject(writer, users);
-                }
+                stream.WriteTo(stream);
             }
         }
 
-        public List<User>? ReadUsers()
+        public List<User> ReadUsers()
         {
-            string jsonFilePath = JsonFileName;
-
-#if IOS || MACCATALYST
-            Directory.SetCurrentDirectory(Path.Combine(_dataDirectory, "..\\..\\..\\..\\..\\..\\..\\..\\", ".\\testPersistance\\donneePersistance\\"));
-#else
-            Directory.SetCurrentDirectory(Path.Combine(_dataDirectory, "..\\..\\..\\..\\..\\..\\..\\", ".\\testPersistance\\donneePersistance\\"));
-#endif
-            List<User> users = new List<User>();
-
-            if (!File.Exists(jsonFilePath))
+            Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "..", "testPersistance", "donneePersistance"));
+            Console.WriteLine();
+            
+            List<User> users;
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<User>));
+            using(FileStream MemStream = File.OpenRead("User.json"))
             {
-                using (File.Create(jsonFilePath))
-                {
-                    // Création du fichier et fermeture immédiate pour éviter les erreurs de lecture.
-                }
-                return new List<User>();
-            }
-            else
-            {
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(List<User>));
-
-                using (FileStream memoryStream = File.OpenRead(jsonFilePath))
-                {
-                    users = (List<User>)jsonSerializer.ReadObject(memoryStream)!;
-                }
+                users = serializer.ReadObject(MemStream) as List<User>;
             }
 
             return users;

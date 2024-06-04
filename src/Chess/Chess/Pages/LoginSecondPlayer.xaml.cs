@@ -37,7 +37,7 @@ public partial class LoginSecondPlayer : ContentPage
                 {
                         game.Player2 = existingUser;
                         existingUser.IsConnected = true;
-                        Navigation.PushAsync(new chessBoard(game));
+                        Navigation.PushAsync(new chessBoard());
                 }
                 else
                 {

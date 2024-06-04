@@ -1,6 +1,7 @@
 using ChessLibrary;
 using Persistance;
 using System.Linq;
+using Color = ChessLibrary.Color;
 
 namespace Chess.Pages;
 public partial class Login1 : ContentPage
@@ -39,9 +40,9 @@ public partial class Login1 : ContentPage
                 {
                     if(checkInvitedPlayer.IsChecked)
                     {
-                        game.Player1 = existingUser;
-                        existingUser.IsConnected = true;    
-                        Navigation.PushAsync(new chessBoard());
+                        game.Player1.IsConnected = true;
+                        game.Player2 = new User(Color.Black);
+                        Navigation.PushAsync(new chessBoard(game));
                     }
                     else
                     {

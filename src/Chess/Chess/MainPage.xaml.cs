@@ -40,7 +40,7 @@ namespace Chess
 
         async void OnInvitedPlayersCLicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("//page/chessBoard");
+            await Navigation.PushAsync(new chessBoard(new User(), new User(), game));
         }
     }
 

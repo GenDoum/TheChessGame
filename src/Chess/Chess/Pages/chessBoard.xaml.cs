@@ -41,6 +41,22 @@ public partial class chessBoard : ContentPage
         Game = game;
     }
 
+    public chessBoard(User player1, User player2, Game game)
+    {
+        InitializeComponent();
+        BindingContext = this;
+
+        game.Player1 = player1;
+        game.Player2 = player2;
+        
+        game.InvalidMove += OnInvalidMove!;
+        game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified!;
+        game.EvolveNotified += OnEvolvePiece!;
+        game.GameOverNotified += OnGameOver!;
+
+        Game = game;
+    }
+
     public async void OnInvalidMove(object sender, EventArgs e)
     {
         await DisplayAlert("Erreur", "Mouvement invalide, vérifiez les règles.", "OK");
@@ -89,7 +105,7 @@ public partial class chessBoard : ContentPage
 
     async void OnBackButtonClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("//page/MainPage");
+        await Navigation.PopToRootAsync();
     }
 
 

@@ -130,6 +130,7 @@ namespace ChessLibrary
         {
             _pseudo = "Invité";
             Password = null;
+            
         }
         public static string? HashPassword(string password)
         {

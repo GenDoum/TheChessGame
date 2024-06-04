@@ -338,7 +338,7 @@ namespace ChessLibrary
                 if (initial!.Piece == null)
                     throw new InvalidOperationException("Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
 
-                if (actualPlayer != CurrentPlayer)
+                if (actualPlayer.Color != CurrentPlayer.Color)
                 {
                     return;
                 }

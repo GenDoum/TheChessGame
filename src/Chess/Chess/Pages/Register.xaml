@@ -35,19 +35,19 @@
                     
                     <Entry Placeholder="Entrez votre pseudo" 
                            Style="{StaticResource entryStyleDefault}"
-                           x:Name="pseudoEntry"
+                           x:Name="PseudoEntry"
                     />
                     
                     <Entry Placeholder="Entrez votre mot de passe" 
                            IsPassword="True" 
                            Style="{StaticResource entryStyleDefault}"
-                            x:Name="passwordEntry"
+                            x:Name="PasswordEntry"
                     />
                     
                     <Entry Placeholder="Entrez a nouveau votre mot de passe" 
                            IsPassword="True"  
                            Style="{StaticResource entryStyleDefault}"
-                            x:Name="confirmPasswordEntry"
+                            x:Name="ConfirmPasswordEntry"
                     />
                     
                     <Button Text="Inscription" 

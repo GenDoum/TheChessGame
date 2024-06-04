@@ -389,8 +389,6 @@ namespace ChessLibrary
                 }
             }
         }
-
-
         public static void RestorePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board, Piece movedPiece, Piece capturedPiece)
         {
             // Rétablir la pièce déplacée dans sa position originale

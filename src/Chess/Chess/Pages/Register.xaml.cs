@@ -19,6 +19,13 @@ public partial class Register : ContentPage
     {
         InitializeComponent();
     }
+
+    public Register(Game game)
+    {
+        InitializeComponent();
+        BindingContext = this;
+        Game = game;
+    }
     
     async void OnRegisterButtonClicked(object sender, EventArgs e)
     {
@@ -26,11 +33,6 @@ public partial class Register : ContentPage
     }
     
     async void OnCancelButtonClicked(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("//page/MainPage");
-    }
-    
-    async void OnBackButtonClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("//page/MainPage");
     }

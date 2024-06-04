@@ -1,22 +1,28 @@
 using ChessLibrary;
 using Persistance;
+using System.Linq;
 
 namespace Chess.Pages;
 public partial class Login1 : ContentPage
 {
-    public List<User> users;
+    Game game;
 
     public Login1()
     {
         InitializeComponent();
     }
 
+    public Login1(Game game)
+    {
+        InitializeComponent();
+        BindingContext = game;
+        this.game = game;
+    }
+
     void OnLoginButtonClicked(object sender, EventArgs e)
     {
-        // Récupère les champs des entry et vérifie s'ils sont vides
         string entryPseudo = UsernameEntry.Text;
         string entryPassword = PasswordEntry.Text;
-
 
         if (string.IsNullOrWhiteSpace(entryPseudo) || string.IsNullOrWhiteSpace(entryPassword))
         {
@@ -24,38 +30,42 @@ public partial class Login1 : ContentPage
         }
         else
         {
-            // Vérifie si le mot de passe est correct
-
-            if (entryPassword == "1234")
+            // Check if the user with the  pseeudo exists
+            var existingUser = game.Users.Find(u => u.Pseudo == entryPseudo);
+            if (existingUser != null)
             {
-                // Redirige vers la page de connexion
-
-                Shell.Current.GoToAsync("//page/LoginSecondPlayer");
+                // Verify if the password is correct
+                if (User.HashPassword(entryPassword) == existingUser.Password)
+                {
+                    if(checkInvitedPlayer.IsChecked)
+                    {
+                        game.Player1 = existingUser;
+                        existingUser.IsConnected = true;    
+                        Navigation.PushAsync(new chessBoard());
+                    }
+                    else
+                    {
+                        Navigation.PushAsync(new LoginSecondPlayer(game));
+                    }
+                }
+                else
+                {
+                    DisplayAlert("Erreur", "Pseudo ou Mot de passe incorrect", "OK");
+                }
             }
             else
             {
-                DisplayAlert("Erreur", "Mot de passe incorrect", "OK");
+                DisplayAlert("Erreur", "Utilisateur introuvable", "OK");
             }
         }
     }
 
-    async void OnBackButtonClicked(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("//page/MainPage");
-    }
-
-    async void OnConnexionButtonClicked(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("//page/LoginSecondPlayer");
-    }
 
     async void OnCancelButtonClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync("//page/MainPage");
+        game.Player2.IsConnected = false;
+        await Navigation.PopAsync();
     }
 
-    private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
-    {
 
-    }
 }

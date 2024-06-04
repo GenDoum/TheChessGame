@@ -12,14 +12,17 @@
             
         
             <FlexLayout>
-                <ImageButton
-                     Source="returnarrow.png"
-                     HeightRequest="50"
-                     FlexLayout.AlignSelf="Start"
-                     Margin="10"
-                        Clicked="OnBackButtonClicked"
-                     />
-                
+
+                <Image  Margin="10"
+                        Source="returnarrow.png"
+                        HeightRequest="50"
+                        FlexLayout.AlignSelf="Start">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackButtonClicked"/>
+                    </Image.GestureRecognizers>
+                </Image>
+
+
             </FlexLayout>
             <VerticalStackLayout
                 Margin="0, 100, 0, 0">

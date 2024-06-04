@@ -52,7 +52,7 @@ namespace Persistance
             string jsonFilePath = JsonFileName;
 
 #if IOS || MACCATALYST
-            Directory.SetCurrentDirectory(Path.Combine(_dataDirectory, "..\\..\\..\\..\\..\\..\\..\\..\\", ".\\testPersistance\\donneePersistance\\"));
+            Directory.SetCurrentDirectory(Path.Combine(_dataDirectory, "..", "..", "..", "..", "..", "..", "..", "..", ".\\testPersistance\\donneePersistance\\"));
 #else
             Directory.SetCurrentDirectory(Path.Combine(_dataDirectory, "..\\..\\..\\..\\..\\..\\..\\", ".\\testPersistance\\donneePersistance\\"));
 #endif

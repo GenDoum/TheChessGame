@@ -318,8 +318,6 @@ namespace ChessLibrary
 
         public void MovePieceFront(Case? initial, Case? final, Chessboard board, User actualPlayer)
         {
-
-
             if (initial!.Piece is King king &&
             ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||
             (king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))
@@ -339,9 +337,9 @@ namespace ChessLibrary
                     throw new InvalidOperationException("Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
 
                 if (actualPlayer.Color != CurrentPlayer.Color)
-                {
-                    return;
-                }
+                    throw new ArgumentException("Ce n'es pas a vous de jouer");
+                
+
 
                 var blackPieces = board.CopyBlackPieces();
                 var whitePieces = board.CopyWhitePieces();

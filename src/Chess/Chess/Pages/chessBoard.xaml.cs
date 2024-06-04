@@ -16,8 +16,8 @@ namespace Chess.Pages;
 public partial class chessBoard : ContentPage
 {
     private static readonly IUserDataManager UserManager = new UserManager();
-    public Game Game { get; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black), UserManager);
-
+    public Game Game { get; set; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black), UserManager);
+    
     public chessBoard()
     {
         InitializeComponent();
@@ -56,7 +56,7 @@ public partial class chessBoard : ContentPage
 
         Game = game;
     }
-
+    
     public async void OnInvalidMove(object sender, EventArgs e)
     {
         await DisplayAlert("Erreur", "Mouvement invalide, vérifiez les règles.", "OK");

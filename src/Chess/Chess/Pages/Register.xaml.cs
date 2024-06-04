@@ -12,9 +12,8 @@ namespace Chess.Pages;
 public partial class Register : ContentPage
 {
 
-    private static readonly IUserDataManager UserManager = new UserManager();
-    Game Game = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black), UserManager);
-    
+    Game game;
+
     public Register()
     {
         InitializeComponent();
@@ -23,8 +22,8 @@ public partial class Register : ContentPage
     public Register(Game game)
     {
         InitializeComponent();
-        BindingContext = this;
-        Game = game;
+        BindingContext = game;
+        this.game = game;
     }
     
     async void OnRegisterButtonClicked(object sender, EventArgs e)
@@ -33,34 +32,34 @@ public partial class Register : ContentPage
         string password = PasswordEntry.Text;
         string confirmPassword = ConfirmPasswordEntry.Text;
 
-        if (string.IsNullOrWhiteSpace(pseudo) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(confirmPassword))
+        if (string.IsNullOrEmpty(pseudo) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
         {
-            await DisplayAlert("Erreur", "Veuillez remplir tous les champs.", "OK");
+            await DisplayAlert("Erreur", "Veuillez remplir tous les champs", "OK");
             return;
         }
 
         if (password != confirmPassword)
         {
-            await DisplayAlert("Erreur", "Les mots de passe ne correspondent pas.", "OK");
+            await DisplayAlert("Erreur", "Les mots de passe ne correspondent pas", "OK");
             return;
         }
 
-        User newUser = new User(pseudo, password, ChessLibrary.Color.White, true, 0);
-        try
+        var existingUsers = game._userDataManager.ReadUsers();
+        if (existingUsers.Any(u => u.Pseudo == pseudo))
         {
-            List<User> users = Game.ReadUsers();
-            users.Add(newUser);
-            Game.SaveUsers(users);
-        }
-        catch (Exception ex)
-        {
-            // Affichez l'exception pour comprendre ce qui ne va pas
-            await DisplayAlert("Erreur", $"Une erreur s'est produite lors de la lecture des utilisateurs : {ex.Message}", "OK");
+            await DisplayAlert("Erreur", "Ce pseudo est déjà utilisé", "OK");
             return;
         }
 
-        await DisplayAlert("Succès", "Inscription réussie.", "OK");
+        User newUser = new User { Pseudo = pseudo, Password = password };
+        existingUsers.Add(newUser);
+
+        game._userDataManager.WriteUsers(existingUsers);
+
+        await DisplayAlert("Succès", "Votre compte a bien été créé", "OK");
+
         await Shell.Current.GoToAsync("//page/MainPage");
+        
     }
     
     async void OnCancelButtonClicked(object sender, EventArgs e)

@@ -5,7 +5,6 @@
              x:Class="Chess.MainPage"
              BackgroundImageSource="test.jpg">
 
-
     <ScrollView>
         <FlexLayout
             JustifyContent="Center"

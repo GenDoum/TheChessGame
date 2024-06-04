@@ -49,4 +49,18 @@
     <Score>0</Score>
     <_pseudo>Test</_pseudo>
   </Players>
+  <Players>
+    <Color>White</Color>
+    <Password>Wt3pGLozoi+661n4O+79+I7UbNqACoYLrJDM3Tn+W48=</Password>
+    <Pseudo>jeu</Pseudo>
+    <Score>0</Score>
+    <_pseudo>jeu</_pseudo>
+  </Players>
+  <Players>
+    <Color>White</Color>
+    <Password>yaya</Password>
+    <Pseudo>Yannis</Pseudo>
+    <Score>0</Score>
+    <_pseudo>Yannis</_pseudo>
+  </Players>
 </ArrayOfPlayers>

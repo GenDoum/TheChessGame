@@ -17,7 +17,7 @@ public partial class chessBoard : ContentPage
 {
     private static readonly IUserDataManager UserManager = new UserManager();
     public Game Game { get; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black), UserManager);
-    
+
     public chessBoard()
     {
         InitializeComponent();
@@ -40,21 +40,21 @@ public partial class chessBoard : ContentPage
         game.GameOverNotified += OnGameOver!;
         Game = game;
     }
-    
+
     public async void OnInvalidMove(object sender, EventArgs e)
     {
         await DisplayAlert("Erreur", "Mouvement invalide, vérifiez les règles.", "OK");
     }
-    
+
     public async void OnErrorPlayerTurnNotified(object sender, EventArgs e)
     {
         await DisplayAlert("Erreur", "Ce n'est pas votre tour de jouer.", "OK");
     }
-    
+
     private async void OnEvolvePiece(object sender, EvolveNotifiedEventArgs e)
     {
 
-        string action = await DisplayActionSheet("Choose the piece to evolve to:", null, null, "Queen", "Rook", "Bishop", "Knight");        
+        string action = await DisplayActionSheet("Choose the piece to evolve to:", null, null, "Queen", "Rook", "Bishop", "Knight");
         if (action != null)
         {
             ChoiceUser choice;
@@ -78,7 +78,7 @@ public partial class chessBoard : ContentPage
             Game.Evolve(e.Pawn, e.Case, choice);
         }
     }
-    
+
     private async void OnGameOver(object sender, GameOverNotifiedEventArgs e)
     {
         await DisplayAlert("Game Over", e.Winner.Pseudo + " wins the game!", "OK");
@@ -86,15 +86,15 @@ public partial class chessBoard : ContentPage
         e.Loser.Score -= 5;
         await Shell.Current.GoToAsync("//page/MainPage");
     }
-    
+
     async void OnBackButtonClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("//page/MainPage");
     }
-    
-    
+
+
     private Case? _selectedCase;
-    
+
 
     async void OnPieceClicked(object sender, EventArgs e)
     {

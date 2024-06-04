@@ -17,7 +17,7 @@ namespace Chess
             game = new Game(userManager);
 
         }
-        
+
         async void OnConnexionClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new Login1(this.game));
@@ -27,12 +27,12 @@ namespace Chess
         {
             await Navigation.PushAsync(new Register(this.game));
         }
-        
+
         async void OnRulesClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//page/RulesPage");
         }
-        
+
         async void OnLeaderBoardClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//page/LeaderBoard");

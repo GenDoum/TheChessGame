@@ -337,7 +337,10 @@ namespace ChessLibrary
                     throw new InvalidOperationException("Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
 
                 if (actualPlayer.Color != CurrentPlayer.Color)
-                    throw new ArgumentException("Ce n'es pas a vous de jouer");
+                {
+                    OnErrorPlayerTurn();
+                    return;
+                }
                 
 
 

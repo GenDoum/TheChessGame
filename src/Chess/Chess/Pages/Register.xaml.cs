@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Persistance;
 using ChessLibrary;
-using Persistance;
 
 namespace Chess.Pages;
 
@@ -51,15 +50,17 @@ public partial class Register : ContentPage
             return;
         }
 
-        User newUser = new User { Pseudo = pseudo, Password = password };
-        existingUsers.Add(newUser);
+        if (password == confirmPassword)
+        {
+            User user = new User(pseudo, password, ChessLibrary.Color.White, true, 0);
+            existingUsers.Add(user);
+            game._userDataManager.WriteUsers(existingUsers);
+            // Met a jour la liste des utilisateurs
+            game.Users = game._userDataManager.ReadUsers();
+            await DisplayAlert("Succès", "Inscription réussie", "OK");
+            await Shell.Current.GoToAsync("//page/MainPage");
 
-        game._userDataManager.WriteUsers(existingUsers);
-
-        await DisplayAlert("Succès", "Votre compte a bien été créé", "OK");
-
-        await Shell.Current.GoToAsync("//page/MainPage");
-        
+        }
     }
     
     async void OnCancelButtonClicked(object sender, EventArgs e)

@@ -23,7 +23,7 @@
                                  HeightRequest="50"
                                  AbsoluteLayout.LayoutBounds="0, 0, AutoSize, AutoSize"
                                  AbsoluteLayout.LayoutFlags="PositionProportional"
-                                 Clicked="OnBackButtonClicked"
+                                 Clicked="OnCancelButtonClicked"
                                  Margin="20, 20, 0, 0"/>
                 </FlexLayout>
 
@@ -46,6 +46,7 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center">
                     <CheckBox Color="{StaticResource GoldUsefullColor}"
+                              x:Name="checkInvitedPlayer"
                               />
                     
                     <Label Text="Jouer avec un invité" 

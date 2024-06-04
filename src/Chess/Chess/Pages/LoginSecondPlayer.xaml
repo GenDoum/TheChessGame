@@ -25,12 +25,16 @@
 
             <Image  Source="connexionjdeux.png"  
                         Style="{StaticResource imgAppli}"/>
+
+            <VerticalStackLayout>
+                <Entry Placeholder="Pseudo" x:Name="UsernameEntry" Style="{StaticResource entryStyleDefault}"/>
+                <Entry Placeholder="Mot de passe" x:Name="PasswordEntry" IsPassword="True" Style="{StaticResource entryStyleDefault}" MaxLength="20"/>
+            </VerticalStackLayout>
             
-            <contentView:connexionModuleEntry/>
             <Button Text="Connexion" Style="{StaticResource buttonSyle}"
                     Clicked="OnConnexionButtonClicked"/>
             <Button Text="Annuler" Style="{StaticResource buttonSyle}"
-                    Clicked="OnCancelButtonClicked"/>
+                    Clicked="OnBackButtonClicked"/>
 
 
         </FlexLayout>

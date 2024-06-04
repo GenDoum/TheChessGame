@@ -19,7 +19,7 @@
                         HeightRequest="50"
                         FlexLayout.AlignSelf="Start"
                         Margin="10"
-                        Clicked="OnBackButtonClicked"
+                        Clicked="OnCancelButtonClicked"
                         />
                     
                 </FlexLayout>

@@ -29,15 +29,16 @@ public partial class chessBoard : ContentPage
         Game.GameOverNotified += OnGameOver;
     }
 
-    public chessBoard(Game Game)
+    public chessBoard(Game game)
     {
         InitializeComponent();
         BindingContext = this;
 
-        Game.InvalidMove += OnInvalidMove;
-        Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
-        Game.EvolveNotified += OnEvolvePiece;
-        Game.GameOverNotified += OnGameOver;
+        game.InvalidMove += OnInvalidMove!;
+        game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified!;
+        game.EvolveNotified += OnEvolvePiece!;
+        game.GameOverNotified += OnGameOver!;
+        Game = game;
     }
     
     public async void OnInvalidMove(object sender, EventArgs e)

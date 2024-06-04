@@ -76,7 +76,7 @@ namespace ChessLibrary
         /// </summary>
         public bool BlackCheck { get; set; }
 
-        private readonly IUserDataManager _userDataManager;
+        public IUserDataManager _userDataManager;
 
         public List<User> Users { get; set; }
 

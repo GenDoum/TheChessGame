@@ -10,29 +10,67 @@ namespace Persistance
 {
     public class LoaderJson : IUserDataManager
     {
-        public void WriteUsers(List<User> users)
+        private readonly string _dataDirectory;
+        private const string JsonFileName = "User.json";
+
+        public LoaderJson()
         {
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<User>));
-            
-            MemoryStream stream = new MemoryStream();
-            
-            serializer.WriteObject(stream, users);
-            using(FileStream MemStream = File.Create("User.json"))
+            _dataDirectory = Path.Combine(AppContext.BaseDirectory, "donneePersistance");
+            if (!Directory.Exists(_dataDirectory))
             {
-                stream.WriteTo(stream);
+                Directory.CreateDirectory(_dataDirectory);
             }
         }
 
-        public List<User> ReadUsers()
+        public  void WriteUsers(List<User> users)
         {
-            Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "..", "testPersistance", "donneePersistance"));
-            Console.WriteLine();
-            
-            List<User> users;
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<User>));
-            using(FileStream MemStream = File.OpenRead("User.json"))
+            if (users == null)
             {
-                users = serializer.ReadObject(MemStream) as List<User>;
+                throw new ArgumentNullException(nameof(users));
+            }
+
+            string jsonFilePath = Path.Combine(_dataDirectory, JsonFileName);
+
+            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<User>));
+
+            if (File.Exists(jsonFilePath))
+            {
+                File.Delete(jsonFilePath);
+            }
+
+            using (FileStream stream = File.Create(jsonFilePath))
+            {
+                using (var writer = JsonReaderWriterFactory.CreateJsonWriter(stream, Encoding.UTF8, ownsStream: false, indent: true, indentChars: "  "))
+                {
+                    serializer.WriteObject(writer, users);
+                }
+            }
+        }
+
+        public  List<User>? ReadUsers()
+        {
+            string jsonFilePath = JsonFileName;
+
+            Directory.SetCurrentDirectory(Path.Combine(_dataDirectory, "..\\..\\..\\..\\..\\..\\..\\", ".\\testPersistance\\donneePersistance\\"));
+
+            List<User> users = new List<User>();
+
+            if (!File.Exists(jsonFilePath))
+            {
+                using (File.Create(jsonFilePath))
+                {
+                    // Création du fichier et fermeture immédiate pour éviter les erreurs de lecture.
+                }
+                return new List<User>();
+            }
+            else
+            {
+                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(List<User>));
+
+                using (FileStream memoryStream = File.OpenRead(jsonFilePath))
+                {
+                    users = (List<User>)jsonSerializer.ReadObject(memoryStream)!;
+                }
             }
 
             return users;

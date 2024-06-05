@@ -253,7 +253,7 @@ namespace ConsoleChess
                 if (!string.IsNullOrEmpty(pseudo))
                 {
                     psswd = enterStringCheck("Mot de passe");
-                    User user = new User(pseudo, psswd, Color.White, false, 0);
+                    User user = new User(pseudo, psswd, ChessLibrary.Color.White, false, 0);
                     users.Add(user);
                 }
 
@@ -364,8 +364,8 @@ namespace ConsoleChess
 
             string? pseudo = null;
 
-            Color noir = Color.Black;
-            Color blanc = Color.White;
+            ChessLibrary.Color noir = ChessLibrary.Color.Black;
+            ChessLibrary.Color blanc = ChessLibrary.Color.White;
 
             Thread.Sleep(2000);
 
@@ -502,7 +502,7 @@ namespace ConsoleChess
                         game.MovePiece(startCase, endCase, game.Board, actualPlayer);
                         DisplayBoard(game.Board);
 
-                        if (game.Board.IsInCheck(actualPlayer.Color == Color.White ? Color.Black : Color.White))
+                        if (game.Board.IsInCheck(actualPlayer.Color == ChessLibrary.Color.White ? ChessLibrary.Color.Black : ChessLibrary.Color.White))
                         {
                             Console.WriteLine("You are in check");
                         }
@@ -623,7 +623,7 @@ namespace ConsoleChess
                     var square = chessboard.Board[column, row];
                     string pieceSymbol = square?.Piece != null ? GetPieceSymbol(square.Piece) : " ";
                     ConsoleColor originalColor = Console.ForegroundColor;
-                    if (square?.Piece != null && square.Piece.Color != Color.White)
+                    if (square?.Piece != null && square.Piece.Color != ChessLibrary.Color.White)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkMagenta;
                     }

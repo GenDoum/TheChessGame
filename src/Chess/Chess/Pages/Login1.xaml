@@ -18,15 +18,6 @@
                         AlignItems="Center"
                         Margin="0, 0, 0, 200">
 
-                <FlexLayout>
-                    <ImageButton Source="returnarrow.png"
-                                 HeightRequest="50"
-                                 AbsoluteLayout.LayoutBounds="0, 0, AutoSize, AutoSize"
-                                 AbsoluteLayout.LayoutFlags="PositionProportional"
-                                 Clicked="OnCancelButtonClicked"
-                                 Margin="20, 20, 0, 0"/>
-                </FlexLayout>
-
             </FlexLayout>
 
             <FlexLayout JustifyContent="Center"

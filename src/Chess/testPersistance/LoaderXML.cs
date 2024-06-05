@@ -23,6 +23,10 @@ namespace Persistance
             var serializer = new DataContractSerializer(typeof(List<User>));
             var settings = new XmlWriterSettings() { Indent = true };
 
+            if(File.Exists(xmlFile))
+            {
+                File.Delete(xmlFile);
+            }
       
 
             using (TextWriter tw = File.CreateText(xmlFile))

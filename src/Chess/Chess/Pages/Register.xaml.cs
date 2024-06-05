@@ -55,7 +55,7 @@ public partial class Register : ContentPage
             User user = new User(pseudo, password, ChessLibrary.Color.White, true, 0);
             existingUser.Add(user);
             game._userDataManager.WriteUsers(existingUser);
-            game._userDataManager.ReadUsers();
+            game.Users = game._userDataManager.ReadUsers();
             await DisplayAlert("Succès", "Inscription réussie", "OK");
             await Shell.Current.GoToAsync("//page/MainPage");
         }

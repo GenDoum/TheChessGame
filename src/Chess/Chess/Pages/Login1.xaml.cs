@@ -26,6 +26,8 @@ public partial class Login1 : ContentPage
         string entryPseudo = UsernameEntry.Text;
         string entryPassword = PasswordEntry.Text;
 
+        game.Users = game._userDataManager.ReadUsers();
+
         if (string.IsNullOrWhiteSpace(entryPseudo) || string.IsNullOrWhiteSpace(entryPassword))
         {
             DisplayAlert("Erreur", "Veuillez remplir tous les champs", "OK");
@@ -43,6 +45,8 @@ public partial class Login1 : ContentPage
                     game.Player1.IsConnected = true;
                     if (checkInvitedPlayer.IsChecked)
                     {
+                        game._userDataManager.WriteUsers(game.Users);
+                            
                         game.Player2 = new User(Color.Black);
                         Navigation.PushAsync(new chessBoard(game));
                     }

@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Maui; 
+﻿using Chess.Pages;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Plugin.Maui.Audio;
 
 namespace Chess
 {
@@ -17,6 +19,11 @@ namespace Chess
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                     fonts.AddFont("Pacifico.ttf", "Pacifico");
                 });
+
+
+            builder.Services.AddSingleton(AudioManager.Current);
+            builder.Services.AddTransient<chessBoard>();
+
 
 #if DEBUG
     		builder.Logging.AddDebug();

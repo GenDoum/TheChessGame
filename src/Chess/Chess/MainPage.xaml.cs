@@ -1,6 +1,7 @@
 ﻿using Chess.Pages;
 using ChessLibrary;
 using Persistance;
+using Plugin.Maui.Audio;
 using System.Diagnostics;
 
 namespace Chess

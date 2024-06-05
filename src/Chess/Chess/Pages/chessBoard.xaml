@@ -24,7 +24,7 @@
             <VerticalStackLayout>
 
                 <AbsoluteLayout>
-                    <Image Source="returnarrow.png"
+                    <ImageButton Source="returnarrow.png"
                                  HeightRequest="50"
                                  AbsoluteLayout.LayoutBounds="0, 0, AutoSize, AutoSize"
                                  AbsoluteLayout.LayoutFlags="PositionProportional"
@@ -33,7 +33,7 @@
                             <TapGestureRecognizer Tapped="OnBackButtonClicked"/>
                         </Image.GestureRecognizers>
                         
-                    </Image>
+                    </ImageButton>
                 </AbsoluteLayout>
 
                 <Image  Source="title.png" 
@@ -97,15 +97,16 @@
             </CollectionView>
 
 
-            <Image Grid.Column="2"
+            <ImageButton Grid.Column="2"
                    Source="pause.png"
                    Style="{StaticResource imgAppli}"
                    VerticalOptions="Start"
-                   Margin="-30,50,20,0">
-                <Image.GestureRecognizers>
-                    <!--<TapGestureRecognizer Tapped="OnBackButtonClicked"/>-->
-                </Image.GestureRecognizers>
-            </Image>
+                   Margin="-30,50,20,0"
+                   Clicked="OnPauseButtonClicked">
+                <!--<Image.GestureRecognizers>
+                    --><!--<TapGestureRecognizer Tapped="OnBackButtonClicked"/>--><!--
+                </Image.GestureRecognizers>-->
+            </ImageButton>
         </Grid>
 
 

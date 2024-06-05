@@ -43,8 +43,8 @@ public partial class Register : ContentPage
             return;
         }
 
-        var existingUsers = game._userDataManager.ReadUsers();
-        if (existingUsers.Any(u => u.Pseudo == pseudo))
+        var existingUser = game._userDataManager.ReadUsers();
+        if (existingUser.Any(u => u.Pseudo == pseudo))
         {
             await DisplayAlert("Erreur", "Ce pseudo est déjà utilisé", "OK");
             return;
@@ -53,13 +53,11 @@ public partial class Register : ContentPage
         if (password == confirmPassword)
         {
             User user = new User(pseudo, password, ChessLibrary.Color.White, true, 0);
-            existingUsers.Add(user);
-            game._userDataManager.WriteUsers(existingUsers);
-            // Met a jour la liste des utilisateurs
-            game.Users = game._userDataManager.ReadUsers();
+            existingUser.Add(user);
+            game._userDataManager.WriteUsers(existingUser);
+            game._userDataManager.ReadUsers();
             await DisplayAlert("Succès", "Inscription réussie", "OK");
             await Shell.Current.GoToAsync("//page/MainPage");
-
         }
     }
     

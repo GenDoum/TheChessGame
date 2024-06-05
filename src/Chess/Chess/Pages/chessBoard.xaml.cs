@@ -7,9 +7,11 @@ using System.Windows.Input;
 using ChessLibrary;
 using ChessLibrary.Events;
 using CommunityToolkit.Maui.Behaviors;
+using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Graphics;
 using Persistance;
 using Color = ChessLibrary.Color;
+using Plugin.Maui.Audio;
 
 namespace Chess.Pages;
 
@@ -17,7 +19,8 @@ public partial class chessBoard : ContentPage
 {
     private static readonly IUserDataManager UserManager = new UserManager();
     public Game Game { get; set; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black), UserManager);
-    
+
+
     public chessBoard()
     {
         InitializeComponent();
@@ -39,6 +42,7 @@ public partial class chessBoard : ContentPage
         game.EvolveNotified += OnEvolvePiece!;
         game.GameOverNotified += OnGameOver!;
         Game = game;
+
     }
 
     public chessBoard(User player1, User player2, Game game)
@@ -55,6 +59,7 @@ public partial class chessBoard : ContentPage
         game.GameOverNotified += OnGameOver!;
 
         Game = game;
+
     }
     
     public async void OnInvalidMove(object sender, EventArgs e)
@@ -146,6 +151,11 @@ public partial class chessBoard : ContentPage
         {
             await DisplayAlert("Erreur", ex.Message, "OK");
         }
+    }
+
+    private void OnPauseButtonClicked(object sender, EventArgs e)
+    {
+        this.ShowPopup(new pausePage());
     }
 
 }

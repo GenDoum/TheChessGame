@@ -11,7 +11,7 @@
     Shell.TabBarIsVisible="False">
     
     <TabBar Route="page">
-        
+
         <ShellContent
             ContentTemplate="{DataTemplate local:MainPage}"
             Route="MainPage"/>

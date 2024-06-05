@@ -12,6 +12,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:EnumToColorsConverter x:Key="EnumToColorsConverter"/>
+            <converter:ChessboardColorConverter x:Key="ChessboardColorConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -40,7 +41,7 @@
                         Style="{StaticResource imgAppli}"
                         Margin="100"/>
 
-                <Label  Text="{Binding Game.Player1.Pseudo}" 
+                <Label  Text="{Binding Game.Player1.Pseudo}"
                         FontSize="Large"
                         TextColor="White"
                         Margin="50"/>
@@ -86,7 +87,8 @@
                                 HeightRequest="{StaticResource CellHeight}">
                             <ImageButton Source="{Binding Piece.ImagePath}"
                                          Aspect="AspectFill"
-                                         Clicked="OnPieceClicked">
+                                         Clicked="OnPieceClicked"
+                                         BackgroundColor="{Binding ., Converter = {StaticResource ChessboardColorConverter}}">
                                 <ImageButton.Behaviors>
                                     <toolkit:IconTintColorBehavior TintColor="{Binding Piece.Color, Converter={StaticResource EnumToColorsConverter}}"/>
                                 </ImageButton.Behaviors>

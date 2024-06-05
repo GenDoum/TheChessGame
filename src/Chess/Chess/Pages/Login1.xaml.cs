@@ -39,9 +39,10 @@ public partial class Login1 : ContentPage
                 // Verify if the password is correct
                 if (User.HashPassword(entryPassword) == existingUser.Password)
                 {
-                    if(checkInvitedPlayer.IsChecked)
+                    game.Player1 = existingUser;
+                    game.Player1.IsConnected = true;
+                    if (checkInvitedPlayer.IsChecked)
                     {
-                        game.Player1.IsConnected = true;
                         game.Player2 = new User(Color.Black);
                         Navigation.PushAsync(new chessBoard(game));
                     }

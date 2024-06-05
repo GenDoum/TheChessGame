@@ -63,6 +63,7 @@ public partial class Register : ContentPage
     
     async void OnCancelButtonClicked(object sender, EventArgs e)
     {
+        game.Player1.IsConnected = false;
         await Shell.Current.GoToAsync("//page/MainPage");
     }
 }

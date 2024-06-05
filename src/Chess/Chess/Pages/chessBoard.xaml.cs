@@ -116,7 +116,6 @@ public partial class chessBoard : ContentPage
 
     private Case? _selectedCase;
 
-
     async void OnPieceClicked(object sender, EventArgs e)
     {
         try

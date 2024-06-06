@@ -198,7 +198,7 @@ namespace ChessLibrary
                 }
                 if (pieceInfo.piece is King king && Board.EchecMat(king, pieceInfo.CaseLink))
                 {
-                    OnGameOver(new GameOverNotifiedEventArgs { Winner = winner , Loser = winner == Player1 ? Player2 : Player1 });
+                    OnGameOver(new GameOverNotifiedEventArgs { Winner = winner, Loser = winner == Player1 ? Player2 : Player1 });
                     return true;
                 }
             }
@@ -300,7 +300,7 @@ namespace ChessLibrary
 
                     if (GameOver(CurrentPlayer))
                     {
-                        OnGameOver(new GameOverNotifiedEventArgs { Winner = CurrentPlayer , Loser =actualPlayer == Player1 ? Player2 : Player1 });
+                        OnGameOver(new GameOverNotifiedEventArgs { Winner = CurrentPlayer, Loser = actualPlayer == Player1 ? Player2 : Player1 });
                         return;
                     }
 
@@ -311,6 +311,7 @@ namespace ChessLibrary
                     // Annuler le mouvement temporaire
                     initial.Piece = movingPiece;
                     final.Piece = capturedPiece;
+                    Board.ResetPossibleMoves();
                     OnInvalidMove();
                 }
             }
@@ -338,10 +339,11 @@ namespace ChessLibrary
 
                 if (actualPlayer.Color != CurrentPlayer.Color)
                 {
+                    Board.ResetPossibleMoves();
                     OnErrorPlayerTurn();
                     return;
                 }
-                
+
 
 
                 var blackPieces = board.CopyBlackPieces();
@@ -377,7 +379,7 @@ namespace ChessLibrary
 
                     if (GameOver(CurrentPlayer))
                     {
-                        OnGameOver(new GameOverNotifiedEventArgs { Winner = CurrentPlayer , Loser = actualPlayer == Player1 ? Player2 : Player1 });
+                        OnGameOver(new GameOverNotifiedEventArgs { Winner = CurrentPlayer, Loser = actualPlayer == Player1 ? Player2 : Player1 });
                     }
                     CurrentPlayer = (actualPlayer == Player1) ? Player2 : Player1;
                 }
@@ -386,6 +388,7 @@ namespace ChessLibrary
                     // Annuler le mouvement temporaire
                     initial.Piece = movingPiece;
                     final.Piece = capturedPiece;
+                    Board.ResetPossibleMoves();
                     OnInvalidMove();
                 }
             }
@@ -423,4 +426,3 @@ namespace ChessLibrary
         }
     }
 }
-

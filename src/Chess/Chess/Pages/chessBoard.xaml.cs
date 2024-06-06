@@ -128,8 +128,17 @@ public partial class chessBoard : ContentPage
                 {
                     if (_selectedCase == null)
                     {
+                        var piece = clickedCase.Piece;
                         // Si aucune pièce n'est sélectionnée, sélectionne la pièce sur laquelle nous avons cliqué
                         _selectedCase = clickedCase;
+                        // Récupérer les mouvements possibles de la pièce
+                        var possibleMoves = piece.PossibleMoves(_selectedCase, Game.Board);
+                        var possibleCoordinates = possibleMoves.Select(c => $"({c.Column}, {c.Line})");
+
+                        foreach (var move in possibleMoves)
+                        {
+                            move.IsPossibleMove = true;
+                        }
                     }
                     else
                     {
@@ -139,6 +148,7 @@ public partial class chessBoard : ContentPage
                         {
                             User actualPlayer = piece.Color == Color.White ? Game.Player1 : Game.Player2;
                             Game.MovePieceFront(_selectedCase, clickedCase, Game.Board, actualPlayer);
+                            Game.Board.ResetPossibleMoves();
                         }
 
                         _selectedCase = null;

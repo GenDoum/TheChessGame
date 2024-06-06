@@ -13,6 +13,7 @@
         <ResourceDictionary>
             <converter:EnumToColorsConverter x:Key="EnumToColorsConverter"/>
             <converter:ChessboardColorConverter x:Key="ChessboardColorConverter"/>
+            <converter:BoolToColorConverter x:Key="BoolToColorConverter"/>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -86,9 +87,11 @@
                         <Border WidthRequest="{StaticResource CellWidth}"
                                 HeightRequest="{StaticResource CellHeight}">
                             <ImageButton Source="{Binding Piece.ImagePath}"
+                                         BorderColor="{Binding IsPossibleMove, Converter={StaticResource BoolToColorConverter}}"
+                                         BorderWidth="3"
                                          Aspect="AspectFill"
                                          Clicked="OnPieceClicked"
-                                         BackgroundColor="{Binding ., Converter = {StaticResource ChessboardColorConverter}}">
+                                         BackgroundColor="{Binding ., Converter = {StaticResource ChessboardColorConverter}}">        
                                 <ImageButton.Behaviors>
                                     <toolkit:IconTintColorBehavior TintColor="{Binding Piece.Color, Converter={StaticResource EnumToColorsConverter}}"/>
                                 </ImageButton.Behaviors>

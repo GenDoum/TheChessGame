@@ -440,5 +440,17 @@ namespace ChessLibrary
             }
         }
 
+        /// <summary>
+        /// Fonction qui remet à false tout les mouvements possible
+        /// </summary>
+        public void ResetPossibleMoves()
+        {
+            foreach (var c in Board)
+            {
+                if (!c.IsPossibleMove) continue;
+                c.IsPossibleMove = false;
+            }
+        }
+
     }
 }

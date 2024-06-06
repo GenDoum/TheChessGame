@@ -28,7 +28,18 @@ namespace ChessLibrary
         /// Propriété pour la pièce sur cette case
         /// </summary>
         private Piece? _piece;
-        
+
+        private bool _isPossibleMove;
+        public bool IsPossibleMove
+        {
+            get => _isPossibleMove;
+            set
+            {
+                _isPossibleMove = value;
+                OnPropertyChanged();
+            }
+        }
+
         public int Column
         {
             get { return _column; }

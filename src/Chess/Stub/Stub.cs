@@ -5,10 +5,11 @@ namespace Stub
 {
     public class Stub : IPersistanceManager
     {
-        public (ObservableCollection<Game>, ObservableCollection<User>) LoadData()
+        public (ObservableCollection<Game>, ObservableCollection<User>, ObservableCollection<Chessboard>) LoadData()
         {
             ObservableCollection<Game> games = new ObservableCollection<Game>();
             ObservableCollection<User> players = new ObservableCollection<User>();
+            ObservableCollection<Chessboard> chessboards = new ObservableCollection<Chessboard>();
 
             Game TheGame = new Game();
 
@@ -19,16 +20,20 @@ namespace Stub
             User user5 = new User("Yannis", "mdp", ChessLibrary.Color.White, false, 5000);
             User user6 = new User("Yannis", "mdp", ChessLibrary.Color.White, false, 6000);
 
+            Chessboard board = new Chessboard();
+
 
             players.Add(user1); players.Add(user2); players.Add(user3); players.Add(user4); players.Add(user5); players.Add(user6);
 
             games.Add(TheGame);
 
-            return (games, players);
+            chessboards.Add(board);
+
+            return (games, players, chessboards);
 
         }
 
-        public void SaveData(ObservableCollection<Game> games, ObservableCollection<User> players)
+        public void SaveData(ObservableCollection<Game> games, ObservableCollection<User> players, ObservableCollection<Chessboard> chessboards)
         {
             throw new NotImplementedException();
         }

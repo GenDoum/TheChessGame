@@ -5,9 +5,9 @@ namespace Chess
 {
     public partial class App : Application
     {
-        public string FileName { get; set; } = "data.json";
+        public string FileName { get; set; } = "data.xml";
 
-        public string FilePath { get; set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+        public string FilePath { get; set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ChessData");
 
         public Manager MyManager { get; private set; } = new Manager(new Stub.Stub());
 
@@ -15,18 +15,18 @@ namespace Chess
         {
             InitializeComponent();
 
-            if(File.Exists(Path.Combine(FilePath, FileName)))
+            if (File.Exists(Path.Combine(FilePath, FileName)))
             {
-                MyManager = new Manager(new Persistance.LoaderJson());
+                MyManager = new Manager(new Persistance.LoaderXML());
             }
 
             MyManager.LoadData();
 
             MainPage = new AppShell();
 
-            if(!File.Exists(Path.Combine(FilePath, FileName)))
+            if (!File.Exists(Path.Combine(FilePath, FileName)))
             {
-                MyManager.persistanceManager = new Persistance.LoaderJson();
+                MyManager.persistanceManager = new Persistance.LoaderXML();
             }
 
             MyManager.SaveData();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,8 +10,10 @@ namespace ChessLibrary
     /// <summary>
     /// Classe représentant le roi
     /// </summary>
+    [DataContract(Name = "King")]
     public class King : Piece, IFirstMove
     {
+        [DataMember]
         public bool FirstMove { get; set; }
         /// <summary>
         /// Constructeur de la classe King

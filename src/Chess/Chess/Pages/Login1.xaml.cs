@@ -7,6 +7,7 @@ using Color = ChessLibrary.Color;
 namespace Chess.Pages;
 public partial class Login1 : ContentPage
 {
+    public Manager MyMmanager => (App.Current as App).MyManager;
 
     public Login1()
     {
@@ -15,18 +16,46 @@ public partial class Login1 : ContentPage
 
     async void OnLoginButtonClicked(object sender, EventArgs e)
     {
+
         string entryPseudo = UsernameEntry.Text;
         string entryPassword = PasswordEntry.Text;
-
 
         if (string.IsNullOrWhiteSpace(entryPseudo) || string.IsNullOrWhiteSpace(entryPassword))
         {
             DisplayAlert("Erreur", "Veuillez remplir tous les champs", "OK");
-            return;
         }
 
-        await Shell.Current.GoToAsync("//page/LoginSecondPlayer");
-        
+        else
+        {
+            var existingUser = MyMmanager.Users.FirstOrDefault(u => u.Pseudo == entryPseudo);
+
+            if (existingUser != null)
+            {
+                if (User.HashPassword(entryPassword) == existingUser.Password)
+                {
+                    MyMmanager.CurrentGame.Player1 = existingUser;
+                    if (checkInvitedPlayer.IsChecked)
+                    {
+                        // Le joueur 1 est connecté mais pas le joueur 2
+                        Shell.Current.GoToAsync("//page/chessBoard");
+                    }
+                    else
+                    {
+                        Shell.Current.GoToAsync("//page/LoginSecondPlayer");
+                    }
+                }
+                else
+                {
+
+                    await DisplayAlert("Erreur", "Mot de passe incorrect", "OK");
+                }
+            }
+            else
+            {
+                await DisplayAlert("Erreur", "Utilisateur introuvable", "OK");
+            }
+        }
+
     }
 
 

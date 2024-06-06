@@ -17,6 +17,10 @@ namespace ChessLibrary
 
         public ObservableCollection<User>? Users;
 
+        public ObservableCollection<Chessboard>? Chessboards;
+
+        public Game CurrentGame { get; set; }
+
         public ObservableCollection<Game> GamesList
         {
             get
@@ -39,6 +43,7 @@ namespace ChessLibrary
         {
             Users = new ObservableCollection<User>();
             Games = new ObservableCollection<Game>();
+            Chessboards = new ObservableCollection<Chessboard>();
 
             this.persistanceManager = persistanceManager;
         }
@@ -47,6 +52,7 @@ namespace ChessLibrary
         {
             Users = new ObservableCollection<User>();
             Games = new ObservableCollection<Game>();
+            Chessboards = new ObservableCollection<Chessboard>();
         }
 
         public void LoadData()
@@ -64,12 +70,19 @@ namespace ChessLibrary
                 {
                     Users.Add(user);
                 }
+
+                foreach (var chessboard in data.Item3)
+                {
+                    Chessboards.Add(chessboard);
+                }
+
+                CurrentGame = data.Item1.FirstOrDefault();
             }
         }
 
         public void SaveData()
         {
-            persistanceManager?.SaveData(GamesList, Users);
+            persistanceManager?.SaveData(GamesList, Users, Chessboards);
         }
     }
 }

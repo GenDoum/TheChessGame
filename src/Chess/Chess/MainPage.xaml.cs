@@ -24,7 +24,7 @@ namespace Chess
 
         async void OnInscriptionClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("//page/chessBoard");
+            await Shell.Current.GoToAsync("//page/Register");
         }
 
         async void OnRulesClicked(object sender, EventArgs e)

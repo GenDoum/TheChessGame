@@ -13,10 +13,10 @@ namespace Persistance
     {
         public string FileName { get; set; } = "data.xml";
 
-        public string FilePath { get; set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+        public string FilePath { get; set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ChessData");
 
 
-        public (ObservableCollection<Game>, ObservableCollection<User>) LoadData()
+        public (ObservableCollection<Game>, ObservableCollection<User>, ObservableCollection<Chessboard>) LoadData()
         {
             var serializer = new DataContractSerializer(typeof(DataToPersist));
             DataToPersist? data;
@@ -33,10 +33,10 @@ namespace Persistance
                 data= new DataToPersist();
             }
 
-            return (data!.games, data!.players);
+            return (data!.games, data!.players, data!.chessboards);
         }
 
-        public void SaveData(ObservableCollection<Game> games, ObservableCollection<User> players)
+        public void SaveData(ObservableCollection<Game> games, ObservableCollection<User> players, ObservableCollection<Chessboard> chessboards)
         {
             var serializer = new DataContractSerializer(typeof(DataToPersist));
 
@@ -48,6 +48,7 @@ namespace Persistance
             DataToPersist data = new DataToPersist();
             data.games = games;
             data.players = players;
+            data.chessboards = chessboards;
 
             var settings = new XmlWriterSettings
             {

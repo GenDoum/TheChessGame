@@ -13,5 +13,7 @@ namespace Persistance
         public ObservableCollection<Game> games { get; set; } = new ObservableCollection<Game>();
 
         public ObservableCollection<User> players { get; set; } = new ObservableCollection<User>();
+
+        public ObservableCollection<Chessboard> chessboards { get; set; } = new ObservableCollection<Chessboard>();
     }
 }

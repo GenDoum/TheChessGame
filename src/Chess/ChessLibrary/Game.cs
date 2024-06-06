@@ -12,6 +12,7 @@ using System.Runtime.Serialization;
 using ChessLibrary.Events;
 using ChessLibrary;
 using Persistance;
+using System.ComponentModel;
 
 namespace ChessLibrary
 {
@@ -19,7 +20,8 @@ namespace ChessLibrary
     /// Classe qui représente le point d'entrée du jeu d'échecs
     /// </summary>
     [DataContract]
-    public class Game : IRules
+    [KnownType(typeof(CoPieces))]
+    public class Game : IRules, INotifyPropertyChanged
     {
 
         /// <summary>
@@ -56,17 +58,42 @@ namespace ChessLibrary
         protected virtual void OnErrorPlayerTurn()
             => ErrorPlayerTurnNotified?.Invoke(this, EventArgs.Empty);
 
-        /// <summary>
-        /// Représente le joueur 1
-        /// </summary>
+        private User _player1;
         [DataMember]
-        public User Player1 { get; set; }
+        public User Player1
+        {
+            get { return _player1; }
+            set
+            {
+                if (_player1 != value)
+                {
+                    _player1 = value;
+                    OnPropertyChanged(nameof(Player1));
+                }
+            }
+        }
 
-        /// <summary>
-        /// Représente le joueur 2
-        /// </summary>
+        private User _player2;
         [DataMember]
-        public User Player2 { get; set; }
+        public User Player2
+        {
+            get { return _player2; }
+            set
+            {
+                if (_player2 != value)
+                {
+                    _player2 = value;
+                    OnPropertyChanged(nameof(Player2));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         /// <summary>
         /// Représente le joueur actuel

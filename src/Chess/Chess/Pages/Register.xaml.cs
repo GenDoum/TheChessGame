@@ -11,19 +11,13 @@ namespace Chess.Pages;
 public partial class Register : ContentPage
 {
 
-    Game game;
+    public Manager MyManager => (App.Current as App).MyManager;
 
     public Register()
     {
         InitializeComponent();
     }
 
-    public Register(Game game)
-    {
-        InitializeComponent();
-        BindingContext = game;
-        this.game = game;
-    }
     
     async void OnRegisterButtonClicked(object sender, EventArgs e)
     {
@@ -31,30 +25,36 @@ public partial class Register : ContentPage
         string password = PasswordEntry.Text;
         string confirmPassword = ConfirmPasswordEntry.Text;
 
-        if (string.IsNullOrEmpty(pseudo) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(confirmPassword))
+        foreach(User user in MyManager.Users)
+        {
+            if(user.Pseudo == pseudo)
+            {
+                await DisplayAlert("Erreur", "Ce pseudo est déjà utilisé", "OK");
+                return;
+            }
+        }
+
+        if (string.IsNullOrWhiteSpace(pseudo) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(confirmPassword))
         {
             await DisplayAlert("Erreur", "Veuillez remplir tous les champs", "OK");
-            return;
         }
-
-        if (password != confirmPassword)
+        else if (password != confirmPassword)
         {
             await DisplayAlert("Erreur", "Les mots de passe ne correspondent pas", "OK");
-            return;
         }
-
-
-        if (password == confirmPassword)
+        else
         {
-            User user = new User(pseudo, password, ChessLibrary.Color.White, true, 0);
+            User newUser = new User(pseudo, password, ChessLibrary.Color.White, false, 0);
+            MyManager.Users.Add(newUser);
+            MyManager.SaveData();
             await DisplayAlert("Succès", "Inscription réussie", "OK");
             await Shell.Current.GoToAsync("//page/MainPage");
         }
+        
     }
     
     async void OnCancelButtonClicked(object sender, EventArgs e)
     {
-        game.Player1.IsConnected = false;
         await Shell.Current.GoToAsync("//page/MainPage");
     }
 }

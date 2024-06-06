@@ -6,32 +6,50 @@ namespace Chess.Pages;
 public partial class LoginSecondPlayer : ContentPage
 {
 
+    public Manager MyMmanager => (App.Current as App).MyManager;
+
     public LoginSecondPlayer()
 	{
 		InitializeComponent();
 	}
 
     async void OnConnexionButtonClicked(object sender, EventArgs e)
-	{
+    {
         string entryPseudo = UsernameEntry.Text;
         string entryPassword = PasswordEntry.Text;
         if (string.IsNullOrWhiteSpace(entryPseudo) || string.IsNullOrWhiteSpace(entryPassword))
         {
-            DisplayAlert("Erreur", "Veuillez remplir tous les champs", "OK");
-            return;
+            await DisplayAlert("Erreur", "Veuillez remplir tous les champs", "OK");
         }
-        
-        await Shell.Current.GoToAsync("//page/chessBoard");
-
+        else
+        {
+            var existingUser = MyMmanager.Users.FirstOrDefault(u => u.Pseudo == entryPseudo);
+            if (existingUser != null)
+            {
+                if (User.HashPassword(entryPassword) == existingUser.Password)
+                {
+                    MyMmanager.CurrentGame.Player2 = existingUser;
+                    await Shell.Current.GoToAsync("//page/chessBoard");
+                }
+                else
+                {
+                    await DisplayAlert("Erreur", "Mot de passe incorrect", "OK");
+                }
+            }
+            else
+            {
+                await DisplayAlert("Erreur", "Utilisateur introuvable", "OK");
+            }
+        }
     }
 
     async void OnBackButtonClicked(object sender, EventArgs e)
     {
-        await Navigation.PopToRootAsync();
+        await Shell.Current.GoToAsync("//page/Login1");
     }
 
     async void OnCancelButtonClicked(object sender, EventArgs e)
 	{
-        await Navigation.PopAsync();
+        await Shell.Current.GoToAsync("//page/MainPage");
     }
 }

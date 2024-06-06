@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace ChessLibrary
     /// <summary>
     /// Classe représentant le chavalier
     /// </summary>
+    [DataContract(Name = "Knight")]
     public class Knight : Piece
     {
         /// <summary>

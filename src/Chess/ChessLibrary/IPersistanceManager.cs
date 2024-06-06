@@ -12,8 +12,8 @@ namespace ChessLibrary
     /// </summary>
     public interface IPersistanceManager
     {
-        (ObservableCollection<Game>, ObservableCollection<User>) LoadData();
+        (ObservableCollection<Game>, ObservableCollection<User>, ObservableCollection<Chessboard>) LoadData();
 
-        void SaveData(ObservableCollection<Game> games, ObservableCollection<User> players);
+        void SaveData(ObservableCollection<Game> games, ObservableCollection<User> players, ObservableCollection<Chessboard> chessboards);
     }
 }

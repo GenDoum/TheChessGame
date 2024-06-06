@@ -15,11 +15,11 @@ namespace Persistance
 
         public string FilePath { get; set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ChessData");
 
-        public (ObservableCollection<Game>, ObservableCollection<User>) LoadData()
+        public (ObservableCollection<Game>, ObservableCollection<User>, ObservableCollection<Chessboard>) LoadData()
         {
             if ( !File.Exists(Path.Combine(FilePath, FileName)) )
             {
-                return (new ObservableCollection<Game>(), new ObservableCollection<User>());
+                return (new ObservableCollection<Game>(), new ObservableCollection<User>(), new ObservableCollection<Chessboard>());
             }
 
             DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(DataToPersist));
@@ -31,14 +31,15 @@ namespace Persistance
                 data = jsonSerializer.ReadObject(fs) as DataToPersist;
             }
 
-            return (data!.games, data!.players);
+            return (data!.games, data!.players, data!.chessboards);
         }
 
-        public void SaveData(ObservableCollection<Game> games, ObservableCollection<User> players)
+        public void SaveData(ObservableCollection<Game> games, ObservableCollection<User> players, ObservableCollection<Chessboard> chessboards)
         {
             DataToPersist data = new DataToPersist();
             data.games = games;
             data.players = players;
+            data.chessboards = chessboards;
 
             if(!Directory.Exists(FilePath))
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Xml;
@@ -8,58 +9,56 @@ using ChessLibrary;
 
 namespace Persistance
 {
-    public class LoaderXML : IUserDataManager
+    public class LoaderXML : IPersistanceManager
     {
+        public string FileName { get; set; } = "data.xml";
 
-        public void WriteUsers(List<User> users)
+        public string FilePath { get; set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+
+
+        public (ObservableCollection<Game>, ObservableCollection<User>) LoadData()
         {
-            const string xmlFile = "User.xml";
+            var serializer = new DataContractSerializer(typeof(DataToPersist));
+            DataToPersist? data;
 
-            if (users == null)
+            if (File.Exists(Path.Combine(FilePath, FileName)))
             {
-                throw new ArgumentNullException(nameof(users));
-            }
-
-            var serializer = new DataContractSerializer(typeof(List<User>));
-            var settings = new XmlWriterSettings() { Indent = true };
-
-            if(File.Exists(xmlFile))
-            {
-                File.Delete(xmlFile);
-            }
-      
-
-            using (TextWriter tw = File.CreateText(xmlFile))
-            {
-                using (var writer = XmlWriter.Create(tw, settings))
+                using (Stream s = File.OpenRead(Path.Combine(FilePath, FileName)))
                 {
-                    serializer.WriteObject(writer, users);
+                    data = serializer.ReadObject(s) as DataToPersist;
                 }
             }
+            else
+            {
+                data= new DataToPersist();
+            }
 
+            return (data!.games, data!.players);
         }
 
-        public List<User> ReadUsers()
+        public void SaveData(ObservableCollection<Game> games, ObservableCollection<User> players)
         {
+            var serializer = new DataContractSerializer(typeof(DataToPersist));
 
-            Directory.SetCurrentDirectory(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "testPersistance", "donneePersistance"));
-
-            const string xmlFile = "User.xml";
-
-
-            var serializer = new DataContractSerializer(typeof(List<User>));
-            var settings = new XmlReaderSettings { IgnoreWhitespace = true };
-            using (TextReader tr = File.OpenText(xmlFile))
+            if(!Directory.Exists(FilePath))
             {
-                using (var reader = XmlReader.Create(tr, settings))
-                {
-                    var users = serializer.ReadObject(reader) as List<User>;
-                    if (users == null)
-                    {
-                        throw new SerializationException("Erreur lors de la désérialisation des utilisateurs.");
-                    }
+                Directory.CreateDirectory(FilePath);
+            }
 
-                    return users;
+            DataToPersist data = new DataToPersist();
+            data.games = games;
+            data.players = players;
+
+            var settings = new XmlWriterSettings
+            {
+                Indent = true,
+            };
+
+            using(TextWriter w = File.CreateText(Path.Combine(FilePath, FileName)))
+            {
+                using(XmlWriter writer = XmlWriter.Create(w, settings))
+                {
+                    serializer.WriteObject(writer, data);
                 }
             }
         }

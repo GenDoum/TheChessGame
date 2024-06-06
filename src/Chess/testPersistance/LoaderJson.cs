@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
@@ -8,72 +9,52 @@ using ChessLibrary;
 
 namespace Persistance
 {
-    public class LoaderJson : IUserDataManager
+    public class LoaderJson : IPersistanceManager
     {
-        private readonly string _dataDirectory;
-        private const string JsonFileName = "User.json";
+        public string FileName { get; set; } = "data.json";
 
-        public LoaderJson()
+        public string FilePath { get; set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ChessData");
+
+        public (ObservableCollection<Game>, ObservableCollection<User>) LoadData()
         {
-            _dataDirectory = Path.Combine(AppContext.BaseDirectory, "donneePersistance");
-            if (!Directory.Exists(_dataDirectory))
+            if ( !File.Exists(Path.Combine(FilePath, FileName)) )
             {
-                Directory.CreateDirectory(_dataDirectory);
+                return (new ObservableCollection<Game>(), new ObservableCollection<User>());
             }
+
+            DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(DataToPersist));
+
+            DataToPersist? data;
+
+            using (FileStream fs = File.OpenRead(Path.Combine(FilePath, FileName)))
+            {
+                data = jsonSerializer.ReadObject(fs) as DataToPersist;
+            }
+
+            return (data!.games, data!.players);
         }
 
-        public  void WriteUsers(List<User> users)
+        public void SaveData(ObservableCollection<Game> games, ObservableCollection<User> players)
         {
-            if (users == null)
+            DataToPersist data = new DataToPersist();
+            data.games = games;
+            data.players = players;
+
+            if(!Directory.Exists(FilePath))
             {
-                throw new ArgumentNullException(nameof(users));
+                Directory.CreateDirectory(FilePath);
             }
 
-            string jsonFilePath = Path.Combine(_dataDirectory, JsonFileName);
-
-            DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(List<User>));
-
-            if (File.Exists(jsonFilePath))
+            DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(DataToPersist));
+            using (FileStream fs = File.Create(Path.Combine(FilePath, FileName)))
             {
-                File.Delete(jsonFilePath);
-            }
-
-            using (FileStream stream = File.Create(jsonFilePath))
-            {
-                using (var writer = JsonReaderWriterFactory.CreateJsonWriter(stream, Encoding.UTF8, ownsStream: false, indent: true, indentChars: "  "))
+                using (var writter = JsonReaderWriterFactory.CreateJsonWriter(
+                    fs, Encoding.UTF8, false, true))
                 {
-                    serializer.WriteObject(writer, users);
+                    jsonSerializer.WriteObject(writter, data);
+                    writter.Flush();
                 }
             }
-        }
-
-        public  List<User>? ReadUsers()
-        {
-            string jsonFilePath = JsonFileName;
-
-            Directory.SetCurrentDirectory(Path.Combine(_dataDirectory, "..\\..\\..\\..\\..\\..\\..\\", ".\\testPersistance\\donneePersistance\\"));
-
-            List<User> users = new List<User>();
-
-            if (!File.Exists(jsonFilePath))
-            {
-                using (File.Create(jsonFilePath))
-                {
-                    // Création du fichier et fermeture immédiate pour éviter les erreurs de lecture.
-                }
-                return new List<User>();
-            }
-            else
-            {
-                DataContractJsonSerializer jsonSerializer = new DataContractJsonSerializer(typeof(List<User>));
-
-                using (FileStream memoryStream = File.OpenRead(jsonFilePath))
-                {
-                    users = (List<User>)jsonSerializer.ReadObject(memoryStream)!;
-                }
-            }
-
-            return users;
         }
     }
 }

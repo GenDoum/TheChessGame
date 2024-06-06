@@ -7,11 +7,13 @@ using System.Runtime.Serialization;
 
 namespace ChessLibrary
 {
+    [DataContract]
     public class Chessboard : IBoard, INotifyPropertyChanged
     {
 
         private Case?[,] _board;
 
+        [DataMember]
         public Case?[,] Board
         {
             get { return _board; }
@@ -29,11 +31,13 @@ namespace ChessLibrary
         public ReadOnlyCollection<CoPieces> WhitePieces => _whitePieces.AsReadOnly();
 
         private readonly List<CoPieces> _whitePieces = new List<CoPieces>();
+
         [DataMember]
         public ReadOnlyCollection<CoPieces> BlackPieces => _blackPieces.AsReadOnly();
 
         private readonly List<CoPieces> _blackPieces = new List<CoPieces>();
         
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)

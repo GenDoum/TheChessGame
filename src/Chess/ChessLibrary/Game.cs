@@ -58,6 +58,7 @@ namespace ChessLibrary
         protected virtual void OnErrorPlayerTurn()
             => ErrorPlayerTurnNotified?.Invoke(this, EventArgs.Empty);
 
+
         private User _player1;
         [DataMember]
         public User Player1

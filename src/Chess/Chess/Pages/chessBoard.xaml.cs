@@ -17,7 +17,7 @@ namespace Chess.Pages;
 
 public partial class chessBoard : ContentPage
 {
-    public Game Game { get; set; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black));
+    public Game Game { get; set; } 
 
     public Manager MyManager => (App.Current as App).MyManager;
 
@@ -25,14 +25,13 @@ public partial class chessBoard : ContentPage
     {
         InitializeComponent();
         BindingContext = this;
+        Game = MyManager.Games.First();
 
         Game.InvalidMove += OnInvalidMove;
         Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
         Game.EvolveNotified += OnEvolvePiece;
         Game.GameOverNotified += OnGameOver;
 
-
-        MyManager.CurrentGame = Game;
     }
     
     public async void OnInvalidMove(object sender, EventArgs e)

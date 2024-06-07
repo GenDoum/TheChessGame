@@ -7,70 +7,60 @@ using Color = ChessLibrary.Color;
 namespace Chess.Pages;
 public partial class Login1 : ContentPage
 {
-    Game game;
+    public Manager MyMmanager => (App.Current as App).MyManager;
 
     public Login1()
     {
         InitializeComponent();
     }
 
-    public Login1(Game game)
+    async void OnLoginButtonClicked(object sender, EventArgs e)
     {
-        InitializeComponent();
-        BindingContext = game;
-        this.game = game;
-    }
 
-    void OnLoginButtonClicked(object sender, EventArgs e)
-    {
         string entryPseudo = UsernameEntry.Text;
         string entryPassword = PasswordEntry.Text;
-
-        game.Users = game._userDataManager.ReadUsers();
 
         if (string.IsNullOrWhiteSpace(entryPseudo) || string.IsNullOrWhiteSpace(entryPassword))
         {
             DisplayAlert("Erreur", "Veuillez remplir tous les champs", "OK");
         }
+
         else
         {
-            // Check if the user with the  pseeudo exists
-            var existingUser = game.Users.Find(u => u.Pseudo == entryPseudo);
+            var existingUser = MyMmanager.Users.FirstOrDefault(u => u.Pseudo == entryPseudo);
+
             if (existingUser != null)
             {
-                // Verify if the password is correct
                 if (User.HashPassword(entryPassword) == existingUser.Password)
                 {
-                    game.Player1 = existingUser;
-                    game.Player1.IsConnected = true;
+                    MyMmanager.CurrentGame.Player1 = existingUser;
                     if (checkInvitedPlayer.IsChecked)
                     {
-                        game._userDataManager.WriteUsers(game.Users);
-                            
-                        game.Player2 = new User(Color.Black);
-                        Navigation.PushAsync(new chessBoard(game));
+                        // Le joueur 1 est connecté mais pas le joueur 2
+                        Shell.Current.GoToAsync("//page/chessBoard");
                     }
                     else
                     {
-                        Navigation.PushAsync(new LoginSecondPlayer(game));
+                        Shell.Current.GoToAsync("//page/LoginSecondPlayer");
                     }
                 }
                 else
                 {
-                    DisplayAlert("Erreur", "Pseudo ou Mot de passe incorrect", "OK");
+
+                    await DisplayAlert("Erreur", "Mot de passe incorrect", "OK");
                 }
             }
             else
             {
-                DisplayAlert("Erreur", "Utilisateur introuvable", "OK");
+                await DisplayAlert("Erreur", "Utilisateur introuvable", "OK");
             }
         }
+
     }
 
 
     async void OnCancelButtonClicked(object sender, EventArgs e)
     {
-        game.Player2.IsConnected = false;
         await Navigation.PopAsync();
     }
 

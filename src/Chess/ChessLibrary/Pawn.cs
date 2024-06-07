@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,9 +11,12 @@ namespace ChessLibrary
     /// <summary>
     /// Classe représentant le pion
     /// </summary>
+    [DataContract(Name = "Pawn")]
     public class Pawn : Piece, IFirstMove
     {
+        [DataMember]
         virtual public bool FirstMove { get; set; }
+
         /// <summary>
         /// Constructeur de la classe Pawn
         /// </summary>

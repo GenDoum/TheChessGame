@@ -8,25 +8,23 @@ namespace Chess
 {
     public partial class MainPage : ContentPage
     {
-        UserManager userManager = new UserManager();
 
         public Game game;
 
         public MainPage()
         {
             InitializeComponent();
-            game = new Game(userManager);
 
         }
 
         async void OnConnexionClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Login1(this.game));
+            await Shell.Current.GoToAsync("//page/Login1");
         }
 
         async void OnInscriptionClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new Register(this.game));
+            await Shell.Current.GoToAsync("//page/Register");
         }
 
         async void OnRulesClicked(object sender, EventArgs e)
@@ -41,7 +39,7 @@ namespace Chess
 
         async void OnInvitedPlayersCLicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new chessBoard(new User(), new User(), game));
+            await Shell.Current.GoToAsync("//page/chessBoard");
         }
     }
 

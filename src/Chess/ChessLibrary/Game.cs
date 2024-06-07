@@ -12,13 +12,16 @@ using System.Runtime.Serialization;
 using ChessLibrary.Events;
 using ChessLibrary;
 using Persistance;
+using System.ComponentModel;
 
 namespace ChessLibrary
 {
     /// <summary>
     /// Classe qui représente le point d'entrée du jeu d'échecs
     /// </summary>
-    public class Game : IRules
+    [DataContract]
+    [KnownType(typeof(CoPieces))]
+    public class Game : IRules, INotifyPropertyChanged
     {
 
         /// <summary>
@@ -54,31 +57,90 @@ namespace ChessLibrary
 
         protected virtual void OnErrorPlayerTurn()
             => ErrorPlayerTurnNotified?.Invoke(this, EventArgs.Empty);
+
+        private User _player1;
+        [DataMember]
+        public User Player1
+        {
+            get { return _player1; }
+            set
+            {
+                if (_player1 != value)
+                {
+                    _player1 = value;
+                    OnPropertyChanged(nameof(Player1));
+                }
+            }
+        }
+
+        private User _player2;
+        [DataMember]
+        public User Player2
+        {
+            get { return _player2; }
+            set
+            {
+                if (_player2 != value)
+                {
+                    _player2 = value;
+                    OnPropertyChanged(nameof(Player2));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         /// <summary>
-        /// Représente le joueur 1
+        /// Représente le joueur actuel
         /// </summary>
-        public User Player1 { get; set; }
-        /// <summary>
-        /// Représente le joueur 2
-        /// </summary>
-        public User Player2 { get; set; }
+        [DataMember]
         public User CurrentPlayer { get; private set; }
+
         /// <summary>
         /// Représente l'échiquier
         /// </summary>
+        [DataMember]
         public Chessboard Board { get; set; }
+
         /// <summary>
         /// Savoir si le joueur blanc est en échec
         /// </summary>
+        [DataMember]
         public bool WhiteCheck { get; set; }
+
         /// <summary>
         /// Savoir si le joueur noir est en échec
         /// </summary>
+        [DataMember]
         public bool BlackCheck { get; set; }
 
-        public IUserDataManager _userDataManager;
+        public Game()
+        {
+            Player1 = new User(ChessLibrary.Color.White);
+            Player2 = new User(ChessLibrary.Color.Black);
 
-        public List<User> Users { get; set; }
+            WhiteCheck = false;
+            BlackCheck = false;
+
+            Case?[,] allcase = new Case[8, 8];
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    allcase[i, j] = new Case(i, j, null);
+                }
+            }
+
+            Chessboard chessboard = new Chessboard(allcase, false);
+            this.Board = chessboard;
+
+            CurrentPlayer = Player1;
+        }
 
         /// <summary>
         /// Constructeur de la classe Game
@@ -86,9 +148,8 @@ namespace ChessLibrary
         /// <param name="player1"></param>
         /// <param name="player2"></param>
         /// <param name="userDataManager"></param>
-        public Game(User player1, User player2, IUserDataManager userDataManager)
+        public Game(User player1, User player2)
         {
-            _userDataManager = userDataManager;
             WhiteCheck = false;
             BlackCheck = false;
             this.Player1 = player1;
@@ -107,52 +168,6 @@ namespace ChessLibrary
 
             CurrentPlayer = Player1;
 
-            Users = ReadUsers();
-        }
-
-        public Game(IUserDataManager userDataManager)
-        {
-            _userDataManager = userDataManager;
-
-            WhiteCheck = false;
-            BlackCheck = false;
-
-            Case?[,] allcase = new Case[8, 8];
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    allcase[i, j] = new Case(i, j, null);
-                }
-            }
-
-            Chessboard chessboard = new Chessboard(allcase, false);
-            this.Board = chessboard;
-
-            CurrentPlayer = Player1;
-
-            Users = ReadUsers();
-
-            this.Player1 = Users[0];
-            this.Player2 = Users[1];
-
-            CurrentPlayer = Player1;
-
-
-        }
-
-        public void SaveUsers(List<User> users)
-        {
-            _userDataManager.WriteUsers(users);
-        }
-
-        public List<User> ReadUsers()
-        {
-            var users = _userDataManager.ReadUsers();
-            Player1 = users[0];
-            Player2 = users[1];
-
-            return users;
         }
 
 

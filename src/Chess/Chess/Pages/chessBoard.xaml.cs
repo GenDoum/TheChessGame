@@ -17,9 +17,9 @@ namespace Chess.Pages;
 
 public partial class chessBoard : ContentPage
 {
-    private static readonly IUserDataManager UserManager = new UserManager();
-    public Game Game { get; set; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black), UserManager);
+    public Game Game { get; set; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black));
 
+    public Manager MyManager => (App.Current as App).MyManager;
 
     public chessBoard()
     {
@@ -30,36 +30,9 @@ public partial class chessBoard : ContentPage
         Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
         Game.EvolveNotified += OnEvolvePiece;
         Game.GameOverNotified += OnGameOver;
-    }
 
-    public chessBoard(Game game)
-    {
-        InitializeComponent();
-        BindingContext = this;
 
-        game.InvalidMove += OnInvalidMove!;
-        game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified!;
-        game.EvolveNotified += OnEvolvePiece!;
-        game.GameOverNotified += OnGameOver!;
-        Game = game;
-
-    }
-
-    public chessBoard(User player1, User player2, Game game)
-    {
-        InitializeComponent();
-        BindingContext = this;
-
-        game.Player1 = player1;
-        game.Player2 = player2;
-        
-        game.InvalidMove += OnInvalidMove!;
-        game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified!;
-        game.EvolveNotified += OnEvolvePiece!;
-        game.GameOverNotified += OnGameOver!;
-
-        Game = game;
-
+        MyManager.CurrentGame = Game;
     }
     
     public async void OnInvalidMove(object sender, EventArgs e)

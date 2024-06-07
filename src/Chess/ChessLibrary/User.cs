@@ -41,20 +41,17 @@ namespace ChessLibrary
         /// Password of the Player
         /// </summary>
         [DataMember]
-
         public string? Password { get; set; }
 
         /// <summary>
         /// Type for know the color of the player
         /// </summary>
-        /// 
         [DataMember]
         public Color Color
         {
             get;
             set;
         }
-
 
         /// <summary>
         /// Score of the player
@@ -69,6 +66,7 @@ namespace ChessLibrary
         /// <summary>
         /// Public boolean to know if the User is connected
         /// </summary>
+        [DataMember]
         public bool IsConnected
         {
             get;

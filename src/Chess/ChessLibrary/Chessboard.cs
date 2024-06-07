@@ -7,8 +7,18 @@ using System.Runtime.Serialization;
 
 namespace ChessLibrary
 {
+    [DataContract]
+    [KnownType(typeof(CoPieces))]
     public class Chessboard : IBoard, INotifyPropertyChanged
     {
+
+        [DataMember]
+        public List<Case?> SerializableBoard
+        {
+            get { return FlatBoard.ToList(); }
+            set { Board = ConvertListToBoard(value); }
+        }
+
 
         private Case?[,] _board;
 
@@ -25,15 +35,18 @@ namespace ChessLibrary
             }
         }
 
-        [DataMember]
         public ReadOnlyCollection<CoPieces> WhitePieces => _whitePieces.AsReadOnly();
 
-        private readonly List<CoPieces> _whitePieces = new List<CoPieces>();
         [DataMember]
+        private readonly List<CoPieces> _whitePieces = new List<CoPieces>();
+
+
         public ReadOnlyCollection<CoPieces> BlackPieces => _blackPieces.AsReadOnly();
 
+        [DataMember]
         private readonly List<CoPieces> _blackPieces = new List<CoPieces>();
-        
+
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -41,6 +54,8 @@ namespace ChessLibrary
 
 
         private bool _isCheckingForCheck = false;
+
+        
 
         public Chessboard(Case?[,] tcase, bool isEmpty)
         {
@@ -55,6 +70,13 @@ namespace ChessLibrary
             {
                 InitializeEmptyBoard();
             }
+        }
+
+        //Same consctructor but without parameter
+        public Chessboard()
+        {
+            Board = new Case[8, 8];
+            InitializeChessboard();
         }
 
         public List<CoPieces> CopyWhitePieces()
@@ -95,6 +117,21 @@ namespace ChessLibrary
 
                 return flatBoard;
             }
+        }
+
+        public Case?[,] ConvertListToBoard(List<Case?> list)
+        {
+            var array = new Case?[NbRows, NbColumns];
+
+            for (int i = 0; i < NbRows; i++)
+            {
+                for (int j = 0; j < NbColumns; j++)
+                {
+                    array[i, j] = list[i * NbColumns + j];
+                }
+            }
+
+            return array;
         }
 
         public void InitializeEmptyBoard()
@@ -169,7 +206,7 @@ namespace ChessLibrary
             {
                 _whitePieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
-            else
+            if(piece != null && piece.Color == Color.Black)
             {
                 _blackPieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }

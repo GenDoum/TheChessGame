@@ -12,12 +12,20 @@ namespace ChessLibrary
     /// <summary>
     /// Classe abstraite pour les pièces
     /// </summary>
+    [DataContract(Name = "Piece")]
+    [KnownType(typeof(Rook))]
+    [KnownType(typeof(Pawn))]
+    [KnownType(typeof(Knight))]
+    [KnownType(typeof(King))]
+    [KnownType(typeof(Queen))]
+    [KnownType(typeof(Bishop))]
     public abstract class Piece : INotifyPropertyChanged
     {
         private Color _color;
         private int _id;
         private string? _imagePath;
 
+        [DataMember]
         public Color Color
         {
             get { return _color; }
@@ -31,6 +39,7 @@ namespace ChessLibrary
             }
         }
 
+        [DataMember]
         public int Id
         {
             get { return _id; }
@@ -44,6 +53,7 @@ namespace ChessLibrary
             }
         }
 
+        [DataMember]
         public string? ImagePath
         {
             get { return _imagePath; }

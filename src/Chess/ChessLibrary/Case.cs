@@ -12,6 +12,7 @@ namespace ChessLibrary
     /// <summary>
     /// Classe pour une case d'un échiquier
     /// </summary>
+    [DataContract(Name = "Case")]
     public class Case : INotifyPropertyChanged
     {
         /// <summary>
@@ -30,6 +31,8 @@ namespace ChessLibrary
         private Piece? _piece;
 
         private bool _isPossibleMove;
+
+        [DataMember]
         public bool IsPossibleMove
         {
             get => _isPossibleMove;
@@ -40,6 +43,7 @@ namespace ChessLibrary
             }
         }
 
+        [DataMember]
         public int Column
         {
             get { return _column; }
@@ -53,6 +57,7 @@ namespace ChessLibrary
             }
         }
 
+        [DataMember]
         public int Line
         {
             get { return _line; }
@@ -66,6 +71,7 @@ namespace ChessLibrary
             }
         }
 
+        [DataMember]
         public Piece? Piece
         {
             get { return _piece; }

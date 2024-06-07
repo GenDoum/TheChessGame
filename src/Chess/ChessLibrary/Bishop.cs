@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,7 @@ namespace ChessLibrary
     /// <summary>
     /// Classe Bishop (fou) qui hérite de la classe Piece
     /// </summary>
+    [DataContract(Name = "Bishop")]
     public class Bishop : Piece
     {
         /// <summary>

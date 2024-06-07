@@ -44,14 +44,14 @@ public partial class chessBoard : ContentPage
 
     }
 
-    public chessBoard(User u1 , User u2 )
+    public chessBoard(User u1, User u2)
     {
         this.Game = MyManager.Games.First();
         this.Game.InvalidMove += OnInvalidMove;
         this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
         this.Game.EvolveNotified += OnEvolvePiece;
         this.Game.GameOverNotified += OnGameOver;
-        this.Game = new Game (u1,u2 );
+        this.Game = new Game(u1, u2);
         BindingContext = this;
         InitializeComponent();
     }
@@ -123,15 +123,18 @@ public partial class chessBoard : ContentPage
                     if (_selectedCase == null)
                     {
                         var piece = clickedCase.Piece;
-                        // Si aucune pièce n'est sélectionnée, sélectionne la pièce sur laquelle nous avons cliqué
-                        _selectedCase = clickedCase;
-                        // Récupérer les mouvements possibles de la pièce
-                        var possibleMoves = piece.PossibleMoves(_selectedCase, Game.Board);
-                        var possibleCoordinates = possibleMoves.Select(c => $"({c.Column}, {c.Line})");
-
-                        foreach (var move in possibleMoves)
+                        if (piece != null)
                         {
-                            move.IsPossibleMove = true;
+                            // Si aucune pièce n'est sélectionnée, sélectionne la pièce sur laquelle nous avons cliqué
+                            _selectedCase = clickedCase;
+                            // Récupérer les mouvements possibles de la pièce
+                            var possibleMoves = piece.PossibleMoves(_selectedCase, Game.Board);
+                            var possibleCoordinates = possibleMoves.Select(c => $"({c.Column}, {c.Line})");
+
+                            foreach (var move in possibleMoves)
+                            {
+                                move.IsPossibleMove = true;
+                            }
                         }
                     }
                     else

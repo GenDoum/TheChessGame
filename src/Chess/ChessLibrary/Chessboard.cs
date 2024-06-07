@@ -15,7 +15,7 @@ namespace ChessLibrary
         [DataMember]
         public List<Case?> SerializableBoard
         {
-            get { return FlatBoard.ToList(); }
+            get => FlatBoard.ToList();
             set { Board = ConvertListToBoard(value); }
         }
 

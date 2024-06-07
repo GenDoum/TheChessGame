@@ -46,12 +46,13 @@ public partial class chessBoard : ContentPage
 
     public chessBoard(User u1, User u2)
     {
-        this.Game = MyManager.Games.First();
+        this.Game = new Game(u1, u2);
         this.Game.InvalidMove += OnInvalidMove;
         this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
         this.Game.EvolveNotified += OnEvolvePiece;
         this.Game.GameOverNotified += OnGameOver;
-        this.Game = new Game(u1, u2);
+
+        
         BindingContext = this;
         InitializeComponent();
     }

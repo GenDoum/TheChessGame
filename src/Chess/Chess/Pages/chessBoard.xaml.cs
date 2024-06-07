@@ -25,6 +25,7 @@ public partial class chessBoard : ContentPage
     {
         InitializeComponent();
         BindingContext = this;
+        Game = MyManager.Games.First();
 
         Game.InvalidMove += OnInvalidMove;
         Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;

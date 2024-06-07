@@ -9,7 +9,7 @@
     <!-- Page LeaderBoard -->
 
     <ScrollView>
-        <VerticalStackLayout>
+        <VerticalStackLayout HorizontalOptions="Center" WidthRequest="700">
 
             <FlexLayout>
 
@@ -25,19 +25,34 @@
 
             </FlexLayout>
 
+            <Label Text="Leaderboard" 
+                   FontSize="Large" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   TextColor="{StaticResource GoldUsefullColor}"
+                   FontFamily="Pacifico"
+                   Margin="0,10"/>
+
             <CollectionView ItemsSource="{Binding Users}">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical"/>
+                    <LinearItemsLayout Orientation="Vertical"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Label Text="{Binding Pseudo}" />
-  
+                        <Frame Margin="5" Padding="10" CornerRadius="10" HasShadow="True" BackgroundColor="White">
+                            <Grid ColumnDefinitions="*,Auto" RowSpacing="0">
+                                <Label Text="{Binding Pseudo}" Grid.Column="0" TextColor="Black" 
+                                       VerticalOptions="Center" HorizontalOptions="Start" 
+                                       FontSize="Medium" FontAttributes="Bold" Margin="0,0,10,0"/>
+                                <Label Text="{Binding Score}" Grid.Column="1" TextColor="Black" 
+                                       VerticalOptions="Center" HorizontalOptions="End" 
+                                       FontSize="Medium" FontAttributes="Bold" Margin="10,0,0,0"/>
+                            </Grid>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            
-            
+
         </VerticalStackLayout>
     </ScrollView>
 

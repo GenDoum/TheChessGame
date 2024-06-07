@@ -9,25 +9,28 @@ using System.Threading.Tasks;
 namespace ChessLibrary
 {
     /// <summary>
-    /// Classe pour une case d'un échiquier
+    /// Represents a square on a chessboard.
     /// </summary>
     public class Case : INotifyPropertyChanged
     {
         /// <summary>
-        /// Crée un argument Column
+        /// The column index of the square.
         /// </summary>
         private int _column;
 
         /// <summary>
-        /// Crée un argument Line
+        /// The row index of the square.
         /// </summary>
         private int _line;
 
         /// <summary>
-        /// Propriété pour la pièce sur cette case
+        /// The piece currently on the square.
         /// </summary>
         private Piece? _piece;
-        
+
+        /// <summary>
+        /// Gets or sets the column index of the square.
+        /// </summary>
         public int Column
         {
             get { return _column; }
@@ -41,6 +44,9 @@ namespace ChessLibrary
             }
         }
 
+        /// <summary>
+        /// Gets or sets the row index of the square.
+        /// </summary>
         public int Line
         {
             get { return _line; }
@@ -54,6 +60,9 @@ namespace ChessLibrary
             }
         }
 
+        /// <summary>
+        /// Gets or sets the piece on the square.
+        /// </summary>
         public Piece? Piece
         {
             get { return _piece; }
@@ -66,14 +75,13 @@ namespace ChessLibrary
                 }
             }
         }
-        
 
         /// <summary>
-        /// Initialise une nouvelle instance de la classe Case avec la colonne, la ligne et la pièce spécifiées.
+        /// Initializes a new instance of the <see cref="Case"/> class with the specified column, line, and piece.
         /// </summary>
-        /// <param name="column">La colonne de la case</param>
-        /// <param name="line">La ligne de la case</param>
-        /// <param name="piece">La pièce sur la case</param>
+        /// <param name="column">The column index of the square.</param>
+        /// <param name="line">The row index of the square.</param>
+        /// <param name="piece">The piece on the square.</param>
         public Case(int column, int line, Piece? piece)
         {
             Column = column;
@@ -81,16 +89,24 @@ namespace ChessLibrary
             Piece = piece;
         }
 
+        /// <summary>
+        /// Determines whether the square is empty (no piece is present).
+        /// </summary>
+        /// <returns>true if the square is empty; otherwise, false.</returns>
+        public bool IsCaseEmpty() => this.Piece == null;
 
         /// <summary>
-        /// Détermine si la case est vide (aucune pièce n'est présente).
+        /// Occurs when a property value changes.
         /// </summary>
-        /// <returns>true si la case est vide, sinon false</returns>
-        public bool IsCaseEmpty() => this.Piece == null;
-        
         public event PropertyChangedEventHandler? PropertyChanged;
-        
-        void OnPropertyChanged([CallerMemberName]string propertyName = null!)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        /// <summary>
+        /// Raises the <see cref="PropertyChanged"/> event.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that changed.</param>
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null!)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

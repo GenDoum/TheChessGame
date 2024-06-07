@@ -1,10 +1,11 @@
-namespace ChessLibrary;
-
-/// <summary>
-/// Énumération des couleurs des pièces d'échecs.
-/// </summary>
-public enum Color
+namespace ChessLibrary
 {
-    White,
-    Black
+    /// <summary>
+    /// Enumeration for chess piece colors.
+    /// </summary>
+    public enum Color
+    {
+        White,
+        Black
+    }
 }

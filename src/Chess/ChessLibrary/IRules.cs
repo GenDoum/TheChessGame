@@ -1,31 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
     /// <summary>
-    /// Interface pour les règles du jeu
+    /// Interface for the game rules.
     /// </summary>
     internal interface IRules
     {
         /// <summary>
-        /// Déplacer une pièce
+        /// Moves a piece on the chessboard.
         /// </summary>
-        /// <param name="initial"></param>
-        /// <param name="final"></param>
-        /// <param name="board"></param>
-        /// <param name="actualPlayer"></param>
-        void MovePiece(Case? initial,Case? final,Chessboard board,User actualPlayer);
-        
+        /// <param name="initial">The initial case of the piece.</param>
+        /// <param name="final">The final case of the piece.</param>
+        /// <param name="board">The chessboard on which the move is performed.</param>
+        /// <param name="actualPlayer">The player making the move.</param>
+        void MovePiece(Case? initial, Case? final, Chessboard board, User actualPlayer);
+
         /// <summary>
-        /// Vérifier si le mouvement est valide
+        /// Checks if the game is over.
         /// </summary>
-        /// <param name="winner"></param>
-        /// <returns></returns>
+        /// <param name="winner">The player who won the game.</param>
+        /// <returns>True if the game is over; otherwise, false.</returns>
         bool GameOver(User winner);
-        //appel a evenement
     }
 }

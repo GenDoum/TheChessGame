@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Numerics;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using ChessLibrary.Events;
-using ChessLibrary;
-using Persistance;
 using System.ComponentModel;
 
 namespace ChessLibrary

@@ -13,7 +13,7 @@ namespace ChessLibrary
     {
         public IPersistanceManager? persistanceManager { get; set; }
 
-        public ObservableCollection<Game>? Games;
+        public ObservableCollection<Game>? games;
 
         public ObservableCollection<User>? Users;
 
@@ -21,15 +21,15 @@ namespace ChessLibrary
 
         public Game CurrentGame { get; set; }
 
-        public ObservableCollection<Game> GamesList
+        public ObservableCollection<Game> Games
         {
             get
             {
-                return Games ??= new ObservableCollection<Game>();
+                return games ??= new ObservableCollection<Game>();
             }
             set
             {
-                Games = value;
+                games = value;
                 OnPropertyChanged();
             }
         }
@@ -63,7 +63,7 @@ namespace ChessLibrary
 
                 foreach (var game in data.Item1)
                 {
-                    GamesList.Add(game);
+                    Games.Add(game);
                 }
 
                 foreach (var user in data.Item2)
@@ -82,7 +82,7 @@ namespace ChessLibrary
 
         public void SaveData()
         {
-            persistanceManager?.SaveData(GamesList, Users, Chessboards);
+            persistanceManager?.SaveData(Games, Users, Chessboards);
         }
     }
 }

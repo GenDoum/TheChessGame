@@ -58,8 +58,9 @@
             </VerticalStackLayout>
 
 
-            <CollectionView x:Name="collectionView" ItemsSource="{Binding Game.Board.FlatBoard}" Grid.Column="1"
-                            BackgroundColor="{StaticResource GoldUsefullColor}"
+            <CollectionView x:Name="collectionView" 
+                            ItemsSource="{Binding Game.Board.FlatBoard}"
+                            Grid.Column="1"
                             HorizontalOptions="Center"
                             VerticalOptions="Center">
                 <CollectionView.HeightRequest>

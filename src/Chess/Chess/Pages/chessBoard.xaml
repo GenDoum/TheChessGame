@@ -5,67 +5,66 @@
              x:Class="Chess.Pages.chessBoard"
              xmlns:Library="clr-namespace:ChessLibrary;assembly=ChessLibrary"
              xmlns:contentView="clr-namespace:Chess.contentView"
+             xmlns:converter="clr-namespace:Chess.Converter"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              BackgroundImageSource="test.jpg">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:EnumToColorsConverter x:Key="EnumToColorsConverter"/>
+            <converter:ChessboardColorConverter x:Key="ChessboardColorConverter"/>
+            <converter:BoolToColorConverter x:Key="BoolToColorConverter"/>
+            <!-- Ajoutez cette ligne si MultiMathExpressionConverter n'est pas déjà défini -->
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.Content>
 
         <Grid RowDefinitions="*"
               ColumnDefinitions="3*, 5*, 0.5*">
 
-
             <VerticalStackLayout>
-
-                <AbsoluteLayout>
-                    <ImageButton Source="returnarrow.png"
-                                 HeightRequest="50"
-                                 AbsoluteLayout.LayoutBounds="0, 0, AutoSize, AutoSize"
-                                 AbsoluteLayout.LayoutFlags="PositionProportional"
-                                 Clicked="OnBackButtonClicked"
-                                 Margin="20, 20, 0, 0"/>
-                </AbsoluteLayout>
 
                 <Image  Source="title.png" 
                         Style="{StaticResource imgAppli}"
                         Margin="100"/>
 
-                <Label  Text="{Binding Game.Player1.Pseudo}" 
-                        FontSize="Large"
+                <Label  Text="{Binding Game.Player2.Pseudo}"
+                        Style="{StaticResource textPacifico}"
                         TextColor="White"
-                        Margin="50"/>
+                       />
 
                 <Image  Source="vs.png" 
                         Style="{StaticResource imgAppli}"
                         Margin="50"/>
 
-                <Label  Text="{Binding Game.Player2.Pseudo}"
-                        FontSize="Large"
+                <Label  Text="{Binding Game.Player1.Pseudo}"
                         TextColor="White"
-                        Margin="50"/>
+                        Style="{StaticResource textPacifico}"
+                        />
             </VerticalStackLayout>
 
-
-            <CollectionView x:Name="collectionView" ItemsSource="{Binding Board.FlatBoard}" Grid.Column="1"
+            <CollectionView x:Name="collectionView" ItemsSource="{Binding Game.Board.FlatBoard}" Grid.Column="1"
                             BackgroundColor="{StaticResource GoldUsefullColor}"
                             HorizontalOptions="Center"
                             VerticalOptions="Center">
                 <CollectionView.HeightRequest>
-                    <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 +(x0 - 1) * x2 ">
-                        <Binding Path="Board.NbRows" />
+                    <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 + (x0 - 1) * x2">
+                        <Binding Path="Game.Board.NbRows" />
                         <Binding Source="{StaticResource CellHeight}" />
                         <Binding Source="{StaticResource VerticalSpacing}" />
                     </MultiBinding>
                 </CollectionView.HeightRequest>
                 <CollectionView.WidthRequest>
-                    <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 +(x0 - 1) * x2 ">
-                        <Binding Path="Board.NbColumns" />
+                    <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 + (x0 - 1) * x2">
+                        <Binding Path="Game.Board.NbColumns" />
                         <Binding Source="{StaticResource CellWidth}"/>
                         <Binding Source="{StaticResource HorizontalSpacing}" />
                     </MultiBinding>
                 </CollectionView.WidthRequest>
                 <CollectionView.ItemsLayout>
                     <GridItemsLayout Orientation="Vertical"
-                                     Span="{Binding Board.NbColumns}"
+                                     Span="{Binding Game.Board.NbColumns}"
                                      HorizontalItemSpacing="{StaticResource HorizontalSpacing}"
                                      VerticalItemSpacing="{StaticResource VerticalSpacing}"/>
                 </CollectionView.ItemsLayout>
@@ -74,21 +73,27 @@
                         <Border WidthRequest="{StaticResource CellWidth}"
                                 HeightRequest="{StaticResource CellHeight}">
                             <ImageButton Source="{Binding Piece.ImagePath}"
-                                         Aspect="AspectFit"
-                                         Clicked="OnPieceClicked">
+                                         BorderColor="{Binding IsPossibleMove, Converter={StaticResource BoolToColorConverter}}"
+                                         BorderWidth="3"
+                                         Aspect="AspectFill"
+                                         Clicked="OnPieceClicked"
+                                         BackgroundColor="{Binding ., Converter={StaticResource ChessboardColorConverter}}">
                             </ImageButton>
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <ImageButton Grid.Column="2" 
-                   Source="pause.png" 
+            <Image Grid.Column="2"
+                   Source="pause.png"
                    Style="{StaticResource imgAppli}"
                    VerticalOptions="Start"
-                   Margin="-30,50,20,0"/>
+                   Margin="-30,50,20,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnPauseButtonClicked"/>
+                </Image.GestureRecognizers>
+            </Image>
         </Grid>
-
 
     </ContentPage.Content>
 </ContentPage>

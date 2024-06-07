@@ -3,11 +3,39 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace ChessLibrary
 {
+    [DataContract]
+    [KnownType(typeof(CoPieces))]
     public class Chessboard : IBoard, INotifyPropertyChanged
     {
+
+        [DataMember]
+        public List<Case?> SerializableBoard
+        {
+            get { return FlatBoard.ToList(); }
+            set { Board = ConvertListToBoard(value, 8, 8); }
+        }
+
+        public Case?[,] ConvertListToBoard(List<Case?> list, int rows, int columns)
+        {
+            var array = new Case?[rows, columns];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    array[j, i] = list[i * columns + j];
+                }
+            }
+
+            return array;
+
+        }
+
+
         private Case?[,] _board;
 
         public Case?[,] Board
@@ -23,14 +51,18 @@ namespace ChessLibrary
             }
         }
 
-        
         public ReadOnlyCollection<CoPieces> WhitePieces => _whitePieces.AsReadOnly();
 
+        [DataMember]
         private readonly List<CoPieces> _whitePieces = new List<CoPieces>();
+
+
         public ReadOnlyCollection<CoPieces> BlackPieces => _blackPieces.AsReadOnly();
 
+        [DataMember]
         private readonly List<CoPieces> _blackPieces = new List<CoPieces>();
-        
+
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -38,6 +70,8 @@ namespace ChessLibrary
 
 
         private bool _isCheckingForCheck = false;
+
+        
 
         public Chessboard(Case?[,] tcase, bool isEmpty)
         {
@@ -52,6 +86,13 @@ namespace ChessLibrary
             {
                 InitializeEmptyBoard();
             }
+        }
+
+        //Same consctructor but without parameter
+        public Chessboard()
+        {
+            Board = new Case?[8, 8];
+            InitializeChessboard();
         }
 
         public List<CoPieces> CopyWhitePieces()
@@ -166,7 +207,7 @@ namespace ChessLibrary
             {
                 _whitePieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
-            else
+            if(piece != null && piece.Color == Color.Black)
             {
                 _blackPieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
@@ -434,6 +475,18 @@ namespace ChessLibrary
             if (final.Piece is IFirstMove firstMover)
             {
                 firstMover.FirstMove = false;
+            }
+        }
+
+        /// <summary>
+        /// Fonction qui remet à false tout les mouvements possible
+        /// </summary>
+        public void ResetPossibleMoves()
+        {
+            foreach (var c in Board)
+            {
+                if (!c.IsPossibleMove) continue;
+                c.IsPossibleMove = false;
             }
         }
 

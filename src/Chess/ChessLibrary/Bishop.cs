@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
     /// <summary>
     /// Represents the bishop piece in chess.
     /// </summary>
+    [DataContract(Name = "Bishop")]
     public class Bishop : Piece
     {
         /// <summary>

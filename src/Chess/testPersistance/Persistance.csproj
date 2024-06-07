@@ -10,4 +10,12 @@
     <PackageReference Include="Plugin.Maui.Audio" Version="3.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChessLibrary\ChessLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="donneePersistance\" />
+  </ItemGroup>
+
 </Project>

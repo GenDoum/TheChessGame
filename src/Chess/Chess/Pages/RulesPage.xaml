@@ -23,16 +23,19 @@
                        Source="regletitle.png"
                        
                        />
-                           
-                     <ImageButton Grid.Column="0"
-                            Style="{StaticResource imgAppli}"
-                            HorizontalOptions="StartAndExpand"
-                            Margin="100,-50,0,0"
-                            Source="returnarrow.png"
-                            HeightRequest="50" 
-                            Clicked="OnBackButtonClicked"
-                            />
-                    
+
+
+                    <Image Grid.Column="0"
+                        Style="{StaticResource imgAppli}"
+                        HorizontalOptions="StartAndExpand"
+                        Margin="100,-50,0,0"
+                        Source="returnarrow.png"
+                        HeightRequest="50">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBackButtonClicked"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+
                 </Grid>
 
                 <toolkit:DockLayout Grid.Row="1">

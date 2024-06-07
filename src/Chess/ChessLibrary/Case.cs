@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace ChessLibrary
     /// <summary>
     /// Represents a square on a chessboard.
     /// </summary>
+    [DataContract(Name = "Case")]
     public class Case : INotifyPropertyChanged
     {
         /// <summary>
@@ -27,6 +29,21 @@ namespace ChessLibrary
         /// The piece currently on the square.
         /// </summary>
         private Piece? _piece;
+
+        private bool _isPossibleMove;
+
+        [DataMember]
+        public bool IsPossibleMove
+        {
+            get => _isPossibleMove;
+            set
+            {
+                _isPossibleMove = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DataMember]
 
         /// <summary>
         /// Gets or sets the column index of the square.
@@ -47,6 +64,7 @@ namespace ChessLibrary
         /// <summary>
         /// Gets or sets the row index of the square.
         /// </summary>
+        [DataMember]
         public int Line
         {
             get { return _line; }
@@ -60,6 +78,7 @@ namespace ChessLibrary
             }
         }
 
+        [DataMember]
         /// <summary>
         /// Gets or sets the piece on the square.
         /// </summary>

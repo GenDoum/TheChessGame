@@ -1,21 +1,17 @@
-using System.Globalization;
+﻿using System.Globalization;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 
 namespace Chess.Converter;
 
-public class EnumToColorsConverter : IValueConverter
+public class BoolToColorConverter : IValueConverter
 {
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is ChessLibrary.Color color)
+        if (value is bool boolValue)
         {
-            return color switch
-            {
-                ChessLibrary.Color.Black => Colors.Black,
-                ChessLibrary.Color.White => Colors.White,
-            };
+            return boolValue ? Colors.IndianRed : Colors.Transparent;
         }
-
         return Colors.Transparent;
     }
 

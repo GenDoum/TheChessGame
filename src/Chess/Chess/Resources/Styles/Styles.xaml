@@ -138,8 +138,6 @@
     <x:Double x:Key="HorizontalSpacing">0</x:Double>
     <toolkit:MultiMathExpressionConverter x:Key="MultiMathExpressionConverter" />
     
-    <converter:EnumToColorsConverter x:Key="EnumToColorsConverter"/>
-
     <Style x:Key="animationStyleBottom" TargetType="Button">
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
@@ -164,6 +162,16 @@
         <Setter Property="TextColor" Value="Gray"/>
         <Setter Property="Background" Value="Transparent"/>
     </Style>
+
+    <Style TargetType="Label" x:Key="textPacifico">
+        <Setter Property="FontFamily" Value="Pacifico"/>
+        <Setter Property="FontSize" Value="50"/>
+        <Setter Property="Margin" Value="50"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="TextColor" Value="{StaticResource GoldUsefullColor}"/>
+    </Style>
+    
+    
 
 
     <!-- Fin ajout perso -->

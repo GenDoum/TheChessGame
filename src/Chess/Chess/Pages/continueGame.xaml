@@ -1,12 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+<?xml version="1.0" encoding="utf-8" ?>
 <mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Chess.Pages.pausePage"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+             x:Class="Chess.Pages.continueGame"
              Color="#A58056"
              CanBeDismissedByTappingOutsideOfPopup="False">
-
     <FlexLayout
             JustifyContent="Center"
             AlignItems="Center"
@@ -16,8 +14,7 @@
                     Style="{StaticResource imgAppli}"/>
 
         <Button Text="Reprendre" Style="{StaticResource buttonSyle}" WidthRequest="300" Clicked="OnContinueGame"/>
-        <Button Text="Quitter" Style="{StaticResource buttonSyle}" WidthRequest="300" Clicked="OnQuitGame"/>
+        <Button Text="Recommencer une partie" Style="{StaticResource buttonSyle}" WidthRequest="300" Clicked="OnRestartGame"/>
 
     </FlexLayout>
-
 </mct:Popup>

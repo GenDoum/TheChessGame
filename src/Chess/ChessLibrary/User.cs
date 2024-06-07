@@ -68,7 +68,6 @@ namespace ChessLibrary
         /// Score of the player
         /// </summary>
         [DataMember]
-
         public int Score
         {
             get { return _score; }  // Retourne la valeur de la variable privée

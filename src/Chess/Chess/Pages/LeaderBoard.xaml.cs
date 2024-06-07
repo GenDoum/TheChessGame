@@ -1,15 +1,7 @@
-<<<<<<< HEAD
 namespace Chess.Pages;
-=======
->>>>>>> fe8b817ef431fca219f0b5fb28b2914e0f1e6835
 using ChessLibrary;
 using System.Collections.ObjectModel;
 using System.Linq;
-
-<<<<<<< HEAD
-=======
-namespace Chess.Pages;
->>>>>>> fe8b817ef431fca219f0b5fb28b2914e0f1e6835
 public partial class LeaderBoard : ContentPage
 {
     public LeaderBoard()

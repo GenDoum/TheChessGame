@@ -25,6 +25,7 @@
 
             <VerticalStackLayout>
 
+
                 <AbsoluteLayout>
                     <Image Source="returnarrow.png"
                                  HeightRequest="50"
@@ -92,10 +93,7 @@
                                          BorderWidth="3"
                                          Aspect="AspectFill"
                                          Clicked="OnPieceClicked"
-                                         BackgroundColor="{Binding ., Converter = {StaticResource ChessboardColorConverter}}">        
-                                <ImageButton.Behaviors>
-                                    <toolkit:IconTintColorBehavior TintColor="{Binding Piece.Color, Converter={StaticResource EnumToColorsConverter}}"/>
-                                </ImageButton.Behaviors>
+                                         BackgroundColor="{Binding ., Converter = {StaticResource ChessboardColorConverter}}">
                             </ImageButton>
                         </Border>
                     </DataTemplate>

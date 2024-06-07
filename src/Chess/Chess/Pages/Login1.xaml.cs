@@ -37,10 +37,16 @@ public partial class Login1 : ContentPage
                     if (checkInvitedPlayer.IsChecked)
                     {
                         // Le joueur 1 est connecté mais pas le joueur 2
+                        UsernameEntry.Text = string.Empty;
+                        PasswordEntry.Text = string.Empty;
+
                         Shell.Current.GoToAsync("//page/chessBoard");
+
                     }
                     else
                     {
+                        UsernameEntry.Text = string.Empty;
+                        PasswordEntry.Text = string.Empty;
                         MyMmanager.Games.First().Player1 = existingUser;
                         Shell.Current.GoToAsync("//page/LoginSecondPlayer");
                     }

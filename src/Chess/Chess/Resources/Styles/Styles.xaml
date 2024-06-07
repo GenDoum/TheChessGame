@@ -163,6 +163,12 @@
         <Setter Property="Background" Value="Transparent"/>
     </Style>
 
+    <Style TargetType="Label" x:Key="textPacifico">
+        <Setter Property="FontFamily" Value="Pacifico"/>
+        <Setter Property="FontSize" Value="50"/>
+        <Setter Property="Margin" Value="100"/>
+    </Style>
+
 
     <!-- Fin ajout perso -->
 

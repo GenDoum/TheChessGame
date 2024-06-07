@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using Persistance;
+using System.Collections.ObjectModel;
 
 namespace ConsoleChess
 {
@@ -358,7 +359,7 @@ namespace ConsoleChess
         /// </summary>
         /// <param name="playerOne"></param>
         /// <param name="playerTwo"></param>
-        public static void menuAccueil(List<User> users, IUserDataManager userManager)
+        public static void menuAccueil(List<User> users, IPersistanceManager persistanceManager)
         {
             int choix;
 
@@ -446,9 +447,9 @@ namespace ConsoleChess
 
         }
 
-        static void Jeu(User? player1, User? player2, IUserDataManager userDataManager = null)
+        static void Jeu(User? player1, User? player2)
         {
-            Game game = new Game(player1, player2, userDataManager);
+            Game game = new Game(player1, player2);
 
             game.EvolveNotified += (sender, args) =>
             {
@@ -525,12 +526,14 @@ namespace ConsoleChess
         static void Main()
         {
 
-            IUserDataManager userManager = new LoaderJson();
-            List<User> users = userManager.ReadUsers().ToList();
+            IPersistanceManager persistanceManager = new Stub.Stub();
+            (ObservableCollection<Game> games, ObservableCollection<User> users, ObservableCollection<Chessboard> chessboards) = persistanceManager.LoadData();
 
-            menuAccueil(users, userManager);
+            menuAccueil(users.ToList(), persistanceManager);
 
-            userManager.WriteUsers(users);
+            persistanceManager.SaveData(games, users, chessboards);
+
+
         }
 
 

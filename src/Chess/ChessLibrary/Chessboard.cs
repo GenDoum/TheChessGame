@@ -35,15 +35,15 @@ namespace ChessLibrary
             }
         }
 
-
-        [DataMember]
         public ReadOnlyCollection<CoPieces> WhitePieces => _whitePieces.AsReadOnly();
 
+        [DataMember]
         private readonly List<CoPieces> _whitePieces = new List<CoPieces>();
 
-        [DataMember]
+
         public ReadOnlyCollection<CoPieces> BlackPieces => _blackPieces.AsReadOnly();
 
+        [DataMember]
         private readonly List<CoPieces> _blackPieces = new List<CoPieces>();
 
 
@@ -206,7 +206,7 @@ namespace ChessLibrary
             {
                 _whitePieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
-            else
+            if(piece != null && piece.Color == Color.Black)
             {
                 _blackPieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }

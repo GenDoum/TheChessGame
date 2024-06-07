@@ -30,6 +30,8 @@ public partial class LoginSecondPlayer : ContentPage
                 {
                     MyManager.Games.First().Player2 = existingUser;
 
+                    MyManager.Games.Add(new Game(MyManager.Games.First().Player1, MyManager.Games.First().Player2));
+
                     await Shell.Current.GoToAsync("//page/chessBoard");
                 }
                 else

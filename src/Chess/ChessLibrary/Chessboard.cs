@@ -76,7 +76,7 @@ namespace ChessLibrary
         public Chessboard()
         {
             Board = new Case[8, 8];
-            InitializeChessboard();
+            InitializeEmptyBoard();
         }
 
         public List<CoPieces> CopyWhitePieces()

@@ -137,7 +137,7 @@ namespace ChessLibrary
                 }
             }
 
-            Chessboard chessboard = new Chessboard(allcase, false);
+            Chessboard chessboard = new Chessboard();
             this.Board = chessboard;
 
             CurrentPlayer = Player1;

@@ -19,7 +19,6 @@ namespace ChessLibrary
 
         public ObservableCollection<Chessboard>? Chessboards;
 
-        public Game CurrentGame { get; set; }
 
         public ObservableCollection<Game> Games
         {
@@ -76,7 +75,6 @@ namespace ChessLibrary
                     Chessboards.Add(chessboard);
                 }
 
-                CurrentGame = data.Item1.FirstOrDefault();
             }
         }
 

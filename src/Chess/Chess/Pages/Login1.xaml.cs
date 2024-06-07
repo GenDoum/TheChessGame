@@ -9,6 +9,7 @@ public partial class Login1 : ContentPage
 {
     public Manager MyMmanager => (App.Current as App).MyManager;
 
+
     public Login1()
     {
         InitializeComponent();
@@ -27,13 +28,12 @@ public partial class Login1 : ContentPage
 
         else
         {
-            var existingUser = MyMmanager.Users.FirstOrDefault(u => u.Pseudo == entryPseudo);
+            User existingUser = MyMmanager.Users.FirstOrDefault(u => u.Pseudo == entryPseudo);
 
             if (existingUser != null)
             {
                 if (User.HashPassword(entryPassword) == existingUser.Password)
                 {
-                    MyMmanager.CurrentGame.Player1 = existingUser;
                     if (checkInvitedPlayer.IsChecked)
                     {
                         // Le joueur 1 est connecté mais pas le joueur 2
@@ -41,6 +41,7 @@ public partial class Login1 : ContentPage
                     }
                     else
                     {
+                        MyMmanager.Games.First().Player1 = existingUser;
                         Shell.Current.GoToAsync("//page/LoginSecondPlayer");
                     }
                 }

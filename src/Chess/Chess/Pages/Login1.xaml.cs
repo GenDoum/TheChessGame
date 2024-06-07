@@ -61,7 +61,7 @@ public partial class Login1 : ContentPage
 
     async void OnCancelButtonClicked(object sender, EventArgs e)
     {
-        await Navigation.PopAsync();
+        await Shell.Current.GoToAsync("//page/MainPage");
     }
 
 

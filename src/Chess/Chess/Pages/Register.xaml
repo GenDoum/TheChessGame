@@ -14,13 +14,15 @@
             <VerticalStackLayout >
             
                 <FlexLayout Margin="0, 0, 0, 150">
-                    <ImageButton
+                    <Image
                         Source="returnarrow.png"
                         HeightRequest="50"
                         FlexLayout.AlignSelf="Start"
-                        Margin="10"
-                        Clicked="OnCancelButtonClicked"
-                        />
+                        Margin="10">
+                        <Image.GestureRecognizer>
+                            <TapGestureRecognizer Tapped="OnCancelButtonClicked"/>
+                        </Image.GestureRecognizer
+                    </Image>
                     
                 </FlexLayout>
                 

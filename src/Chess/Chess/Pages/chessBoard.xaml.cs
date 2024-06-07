@@ -17,23 +17,35 @@ namespace Chess.Pages;
 
 public partial class chessBoard : ContentPage
 {
-    public Game Game { get; set; } 
+    public Game Game { get; set; }
+
 
     public Manager MyManager => (App.Current as App).MyManager;
 
     public chessBoard()
     {
         InitializeComponent();
+
+        foreach (Game game in MyManager.Games)
+        {
+            if ((Equals(game.Player1, MyManager.Games.First().Player1) || Equals(game.Player1, MyManager.Games.First().Player2)) && (Equals(game.Player2, MyManager.Games.First().Player1) || Equals(game.Player2, MyManager.Games.First().Player2)))
+            {
+                this.Game = game;
+            }
+        }
+
+        this.Game = MyManager.Games.First();
+        this.Game.InvalidMove += OnInvalidMove;
+        this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
+        this.Game.EvolveNotified += OnEvolvePiece;
+        this.Game.GameOverNotified += OnGameOver;
+
         BindingContext = this;
         Game = MyManager.Games.First();
 
-        Game.InvalidMove += OnInvalidMove;
-        Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
-        Game.EvolveNotified += OnEvolvePiece;
-        Game.GameOverNotified += OnGameOver;
 
     }
-    
+
     public async void OnInvalidMove(object sender, EventArgs e)
     {
         await DisplayAlert("Erreur", "Mouvement invalide, vérifiez les règles.", "OK");

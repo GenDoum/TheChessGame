@@ -23,11 +23,11 @@ namespace ChessLibrary
         {
             var array = new Case?[rows, columns];
 
-            for (int j = 0; j < columns; j++)
+            for (int i = 0; i < rows; i++)
             {
-                for (int i = 0; i < rows; i++)
+                for (int j = 0; j < columns; j++)
                 {
-                    array[i, j] = list[i * columns + j];
+                    array[j, i] = list[i * columns + j];
                 }
             }
 

@@ -8,12 +8,13 @@
              xmlns:converter="clr-namespace:Chess.Converter"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              BackgroundImageSource="test.jpg">
-    
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:EnumToColorsConverter x:Key="EnumToColorsConverter"/>
             <converter:ChessboardColorConverter x:Key="ChessboardColorConverter"/>
             <converter:BoolToColorConverter x:Key="BoolToColorConverter"/>
+            <!-- Ajoutez cette ligne si MultiMathExpressionConverter n'est pas déjà défini -->
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -22,19 +23,17 @@
         <Grid RowDefinitions="*"
               ColumnDefinitions="3*, 5*, 0.5*">
 
-
             <VerticalStackLayout>
 
                 <AbsoluteLayout>
                     <Image Source="returnarrow.png"
-                                 HeightRequest="50"
-                                 AbsoluteLayout.LayoutBounds="0, 0, AutoSize, AutoSize"
-                                 AbsoluteLayout.LayoutFlags="PositionProportional"
-                                 Margin="20, 20, 0, 0">
+                           HeightRequest="50"
+                           AbsoluteLayout.LayoutBounds="0, 0, AutoSize, AutoSize"
+                           AbsoluteLayout.LayoutFlags="PositionProportional"
+                           Margin="20, 20, 0, 0">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnBackButtonClicked"/>
                         </Image.GestureRecognizers>
-                        
                     </Image>
                 </AbsoluteLayout>
 
@@ -57,28 +56,42 @@
                         Margin="50"/>
             </VerticalStackLayout>
 
-
-            <CollectionView ItemsSource="{Binding Users}" MaximumWidthRequest="1000">
+            <CollectionView x:Name="collectionView" ItemsSource="{Binding Game.Board.FlatBoard}" Grid.Column="1"
+                            BackgroundColor="{StaticResource GoldUsefullColor}"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                <CollectionView.HeightRequest>
+                    <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 + (x0 - 1) * x2">
+                        <Binding Path="Game.Board.NbRows" />
+                        <Binding Source="{StaticResource CellHeight}" />
+                        <Binding Source="{StaticResource VerticalSpacing}" />
+                    </MultiBinding>
+                </CollectionView.HeightRequest>
+                <CollectionView.WidthRequest>
+                    <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 + (x0 - 1) * x2">
+                        <Binding Path="Game.Board.NbColumns" />
+                        <Binding Source="{StaticResource CellWidth}"/>
+                        <Binding Source="{StaticResource HorizontalSpacing}" />
+                    </MultiBinding>
+                </CollectionView.WidthRequest>
                 <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical"/>
+                    <GridItemsLayout Orientation="Vertical"
+                                     Span="{Binding Game.Board.NbColumns}"
+                                     HorizontalItemSpacing="{StaticResource HorizontalSpacing}"
+                                     VerticalItemSpacing="{StaticResource VerticalSpacing}"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Margin="5" Padding="10" CornerRadius="10" HasShadow="True" BackgroundColor="White">
-                            <Grid ColumnDefinitions="0.15*,0.15*,0.7*" RowSpacing="0">
-                                <Label Text="{Binding Pseudo}" Grid.Column="0" TextColor="Black" 
-                           VerticalOptions="Center" HorizontalOptions="Start" 
-                           FontSize="Medium" FontAttributes="Bold" Margin="0,0,10,0"/>
-                                <Label Text="{Binding ScoreWithSuffix}" Grid.Column="2" TextColor="Black" 
-                           VerticalOptions="Center" HorizontalOptions="End" 
-                           FontSize="Medium" FontAttributes="Bold" Margin="10,0,0,0"/>
-                                <Image Source="certif.png"
-                           Grid.Column="1"
-                           HeightRequest="30"
-                           WidthRequest="30"
-                           Margin="8, 8, 0, 0"/>
-                            </Grid>
-                        </Frame>
+                        <Border WidthRequest="{StaticResource CellWidth}"
+                                HeightRequest="{StaticResource CellHeight}">
+                            <ImageButton Source="{Binding Piece.ImagePath}"
+                                         BorderColor="{Binding IsPossibleMove, Converter={StaticResource BoolToColorConverter}}"
+                                         BorderWidth="3"
+                                         Aspect="AspectFill"
+                                         Clicked="OnPieceClicked"
+                                         BackgroundColor="{Binding ., Converter={StaticResource ChessboardColorConverter}}">
+                            </ImageButton>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -93,7 +106,6 @@
                 </Image.GestureRecognizers>
             </Image>
         </Grid>
-
 
     </ContentPage.Content>
 </ContentPage>

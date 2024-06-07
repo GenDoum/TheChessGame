@@ -40,7 +40,7 @@ public partial class Login1 : ContentPage
                         UsernameEntry.Text = string.Empty;
                         PasswordEntry.Text = string.Empty;
 
-                        Shell.Current.GoToAsync("//page/chessBoard");
+                        await Navigation.PushAsync(new chessBoard(existingUser, new User(ChessLibrary.Color.Black)));
 
                     }
                     else

@@ -8,12 +8,13 @@
              xmlns:converter="clr-namespace:Chess.Converter"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              BackgroundImageSource="test.jpg">
-    
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:EnumToColorsConverter x:Key="EnumToColorsConverter"/>
             <converter:ChessboardColorConverter x:Key="ChessboardColorConverter"/>
             <converter:BoolToColorConverter x:Key="BoolToColorConverter"/>
+            <!-- Ajoutez cette ligne si MultiMathExpressionConverter n'est pas déjà défini -->
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -22,20 +23,17 @@
         <Grid RowDefinitions="*"
               ColumnDefinitions="3*, 5*, 0.5*">
 
-
             <VerticalStackLayout>
-
 
                 <AbsoluteLayout>
                     <Image Source="returnarrow.png"
-                                 HeightRequest="50"
-                                 AbsoluteLayout.LayoutBounds="0, 0, AutoSize, AutoSize"
-                                 AbsoluteLayout.LayoutFlags="PositionProportional"
-                                 Margin="20, 20, 0, 0">
+                           HeightRequest="50"
+                           AbsoluteLayout.LayoutBounds="0, 0, AutoSize, AutoSize"
+                           AbsoluteLayout.LayoutFlags="PositionProportional"
+                           Margin="20, 20, 0, 0">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnBackButtonClicked"/>
                         </Image.GestureRecognizers>
-                        
                     </Image>
                 </AbsoluteLayout>
 
@@ -58,21 +56,19 @@
                         Margin="50"/>
             </VerticalStackLayout>
 
-
-            <CollectionView x:Name="collectionView" 
-                            ItemsSource="{Binding Game.Board.FlatBoard}"
-                            Grid.Column="1"
+            <CollectionView x:Name="collectionView" ItemsSource="{Binding Game.Board.FlatBoard}" Grid.Column="1"
+                            BackgroundColor="{StaticResource GoldUsefullColor}"
                             HorizontalOptions="Center"
                             VerticalOptions="Center">
                 <CollectionView.HeightRequest>
-                    <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 +(x0 - 1) * x2 ">
+                    <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 + (x0 - 1) * x2">
                         <Binding Path="Game.Board.NbRows" />
                         <Binding Source="{StaticResource CellHeight}" />
                         <Binding Source="{StaticResource VerticalSpacing}" />
                     </MultiBinding>
                 </CollectionView.HeightRequest>
                 <CollectionView.WidthRequest>
-                    <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 +(x0 - 1) * x2 ">
+                    <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="x0 * x1 + (x0 - 1) * x2">
                         <Binding Path="Game.Board.NbColumns" />
                         <Binding Source="{StaticResource CellWidth}"/>
                         <Binding Source="{StaticResource HorizontalSpacing}" />
@@ -93,13 +89,12 @@
                                          BorderWidth="3"
                                          Aspect="AspectFill"
                                          Clicked="OnPieceClicked"
-                                         BackgroundColor="{Binding ., Converter = {StaticResource ChessboardColorConverter}}">
+                                         BackgroundColor="{Binding ., Converter={StaticResource ChessboardColorConverter}}">
                             </ImageButton>
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
 
             <Image Grid.Column="2"
                    Source="pause.png"
@@ -111,7 +106,6 @@
                 </Image.GestureRecognizers>
             </Image>
         </Grid>
-
 
     </ContentPage.Content>
 </ContentPage>

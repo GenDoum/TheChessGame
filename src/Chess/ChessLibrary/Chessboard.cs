@@ -32,6 +32,7 @@ namespace ChessLibrary
             }
 
             return array;
+
         }
 
 

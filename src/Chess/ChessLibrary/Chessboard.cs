@@ -27,7 +27,7 @@ namespace ChessLibrary
             {
                 for (int i = 0; i < rows; i++)
                 {
-                    array[i, j] = list[i * columns + j];
+                    array[j, i] = list[i * columns + j];
                 }
             }
 

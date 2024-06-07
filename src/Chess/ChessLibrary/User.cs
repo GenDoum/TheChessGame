@@ -41,7 +41,6 @@ namespace ChessLibrary
 
         [DataMember]
         private string _pseudo;
-
         public event PropertyChangedEventHandler? PropertyChanged;
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -78,10 +77,12 @@ namespace ChessLibrary
                 {
                     _score = value;  // Met à jour la valeur de la variable privée
                     OnPropertyChanged(nameof(Score));  // Notifie que la propriété Score a changé
+                    OnPropertyChanged(nameof(ScoreWithSuffix));
                 }
             }
         }
-
+        public string ScoreWithSuffix => $"{Score} Élo";
+        
         private int _score;  // Variable privée pour stocker la valeur de Score
         /// <summary>
         /// Public boolean to know if the User is connected
@@ -148,7 +149,7 @@ namespace ChessLibrary
         {
             _pseudo = "Invité";
             Password = null;
-            
+
         }
         public static string? HashPassword(string password)
         {

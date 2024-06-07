@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using System.ComponentModel;
 
 namespace ChessLibrary
 {
@@ -13,7 +14,9 @@ namespace ChessLibrary
     /// Classe Player
     /// </summary>
     [DataContract(Name = "Players")] // [DataContract, KnownType(typeof(Type fils))] Pour l'héritage
-    public class User
+
+
+    public class User : INotifyPropertyChanged
     {
 
         /// <summary>
@@ -31,11 +34,19 @@ namespace ChessLibrary
                 {
                     throw new ArgumentException("Pseudo or password must be entered and must not be full of white space", nameof(Pseudo));
                 }
+                OnPropertyChanged(nameof(_pseudo));
+
             }
         }
 
         [DataMember]
         private string _pseudo;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         /// <summary>
         /// Password of the Player
@@ -57,12 +68,21 @@ namespace ChessLibrary
         /// Score of the player
         /// </summary>
         [DataMember]
+
         public int Score
         {
-            get;
-            set;
+            get { return _score; }  // Retourne la valeur de la variable privée
+            set
+            {
+                if (_score != value)  // Vérifie si la valeur est différente pour éviter des notifications inutiles
+                {
+                    _score = value;  // Met à jour la valeur de la variable privée
+                    OnPropertyChanged(nameof(Score));  // Notifie que la propriété Score a changé
+                }
+            }
         }
 
+        private int _score;  // Variable privée pour stocker la valeur de Score
         /// <summary>
         /// Public boolean to know if the User is connected
         /// </summary>

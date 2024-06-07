@@ -42,7 +42,7 @@
                         Style="{StaticResource imgAppli}"
                         Margin="100"/>
 
-                <Label  Text="{Binding Player1.Pseudo}"
+                <Label  Text="{Binding Game.Player1.Pseudo}"
                         FontSize="Large"
                         TextColor="White"
                         Margin="50"/>
@@ -51,15 +51,16 @@
                         Style="{StaticResource imgAppli}"
                         Margin="50"/>
 
-                <Label  Text="{Binding Player2.Pseudo}"
+                <Label  Text="{Binding Game.Player2.Pseudo}"
                         FontSize="Large"
                         TextColor="White"
                         Margin="50"/>
             </VerticalStackLayout>
 
 
-            <CollectionView x:Name="collectionView" ItemsSource="{Binding Game.Board.FlatBoard}" Grid.Column="1"
-                            BackgroundColor="{StaticResource GoldUsefullColor}"
+            <CollectionView x:Name="collectionView" 
+                            ItemsSource="{Binding Game.Board.FlatBoard}"
+                            Grid.Column="1"
                             HorizontalOptions="Center"
                             VerticalOptions="Center">
                 <CollectionView.HeightRequest>

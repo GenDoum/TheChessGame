@@ -19,6 +19,7 @@ public partial class chessBoard : ContentPage
 {
     public Game Game { get; set; }
 
+
     public Manager MyManager => (App.Current as App).MyManager;
 
     public chessBoard()
@@ -40,6 +41,7 @@ public partial class chessBoard : ContentPage
         this.Game.GameOverNotified += OnGameOver;
 
         BindingContext = this;
+        Game = MyManager.Games.First();
 
 
     }

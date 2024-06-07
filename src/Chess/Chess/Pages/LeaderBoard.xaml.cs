@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 namespace Chess.Pages;
+=======
+>>>>>>> fe8b817ef431fca219f0b5fb28b2914e0f1e6835
 using ChessLibrary;
 using System.Collections.ObjectModel;
+using System.Linq;
 
+<<<<<<< HEAD
+=======
+namespace Chess.Pages;
+>>>>>>> fe8b817ef431fca219f0b5fb28b2914e0f1e6835
 public partial class LeaderBoard : ContentPage
 {
     public LeaderBoard()
@@ -24,11 +32,11 @@ public partial class LeaderBoard : ContentPage
         MyManager.LoadData();
         if (MyManager.Users != null)
         {
-            foreach (User user in MyManager.Users)
+            var sortedUsers = MyManager.Users.OrderByDescending(u => u.Score).ToList();
+            foreach (User user in sortedUsers)
             {
                 Users.Add(user);
             }
         }
     }
-
 }

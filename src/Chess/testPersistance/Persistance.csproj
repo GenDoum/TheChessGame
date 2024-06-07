@@ -14,4 +14,8 @@
     <ProjectReference Include="..\ChessLibrary\ChessLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="donneePersistance\" />
+  </ItemGroup>
+
 </Project>

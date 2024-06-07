@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChessUnitTest", "ChessUnitT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistance", "testPersistance\Persistance.csproj", "{8017FC91-1BAF-4BB2-8B56-42BB46511D48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stub", "Stub\Stub.csproj", "{A7B1A848-FD1D-4FEC-8E3E-572B7BFCD6FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stub", "Stub\Stub.csproj", "{0B8D8DFF-AAD4-47E1-86AF-6010147CCBCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +43,10 @@ Global
 		{8017FC91-1BAF-4BB2-8B56-42BB46511D48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8017FC91-1BAF-4BB2-8B56-42BB46511D48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8017FC91-1BAF-4BB2-8B56-42BB46511D48}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7B1A848-FD1D-4FEC-8E3E-572B7BFCD6FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7B1A848-FD1D-4FEC-8E3E-572B7BFCD6FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7B1A848-FD1D-4FEC-8E3E-572B7BFCD6FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7B1A848-FD1D-4FEC-8E3E-572B7BFCD6FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B8D8DFF-AAD4-47E1-86AF-6010147CCBCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B8D8DFF-AAD4-47E1-86AF-6010147CCBCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B8D8DFF-AAD4-47E1-86AF-6010147CCBCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B8D8DFF-AAD4-47E1-86AF-6010147CCBCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -39,7 +39,7 @@ namespace Chess
 
         async void OnInvitedPlayersCLicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new chessBoard(new User(ChessLibrary.Color.White),new User(ChessLibrary.Color.Black)));
+            await Navigation.PushAsync(new chessBoard(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black)));
         }
     }
 

@@ -7,9 +7,8 @@
              BackgroundImageSource="test.jpg">
 
     <!-- Page LeaderBoard -->
-
     <ScrollView>
-        <VerticalStackLayout HorizontalOptions="Center" WidthRequest="700">
+        <VerticalStackLayout HorizontalOptions="Center" >
 
             <FlexLayout>
 
@@ -24,7 +23,6 @@
 
 
             </FlexLayout>
-
             <Label Text="Leaderboard" 
                    FontSize="Large" 
                    FontAttributes="Bold" 
@@ -33,7 +31,7 @@
                    FontFamily="Pacifico"
                    Margin="0,10"/>
 
-            <CollectionView ItemsSource="{Binding Users}">
+            <CollectionView ItemsSource="{Binding Users}" MaximumWidthRequest="1000">
                 <CollectionView.ItemsLayout>
                     <LinearItemsLayout Orientation="Vertical"/>
                 </CollectionView.ItemsLayout>

@@ -6,7 +6,7 @@ namespace Chess.Pages;
 public partial class LoginSecondPlayer : ContentPage
 {
 
-    public Manager MyMmanager => (App.Current as App).MyManager;
+    public Manager MyManager => (App.Current as App).MyManager;
 
     public LoginSecondPlayer()
 	{
@@ -23,12 +23,14 @@ public partial class LoginSecondPlayer : ContentPage
         }
         else
         {
-            var existingUser = MyMmanager.Users.FirstOrDefault(u => u.Pseudo == entryPseudo);
+            var existingUser = MyManager.Users!.FirstOrDefault(u => u.Pseudo == entryPseudo);
             if (existingUser != null)
             {
                 if (User.HashPassword(entryPassword) == existingUser.Password)
                 {
-                    MyMmanager.CurrentGame.Player2 = existingUser;
+                    MyManager.Games.First().Player2 = existingUser;
+                    UsernameEntry.Text = string.Empty;
+                    PasswordEntry.Text = string.Empty;
                     await Shell.Current.GoToAsync("//page/chessBoard");
                 }
                 else

@@ -11,7 +11,7 @@ namespace Chess.Pages;
 public partial class Register : ContentPage
 {
 
-    public Manager MyManager => (App.Current as App).MyManager;
+    public Manager MyManager => (App.Current as App)!.MyManager;
 
     public Register()
     {
@@ -25,7 +25,7 @@ public partial class Register : ContentPage
         string password = PasswordEntry.Text;
         string confirmPassword = ConfirmPasswordEntry.Text;
 
-        foreach(User user in MyManager.Users)
+        foreach(User user in MyManager.Users!)
         {
             if(user.Pseudo == pseudo)
             {
@@ -48,6 +48,10 @@ public partial class Register : ContentPage
             MyManager.Users.Add(newUser);
             MyManager.SaveData();
             await DisplayAlert("Succès", "Inscription réussie", "OK");
+
+            PseudoEntry.Text = string.Empty;
+            PasswordEntry.Text = string.Empty;
+            ConfirmPasswordEntry.Text = string.Empty;
             await Shell.Current.GoToAsync("//page/MainPage");
         }
         
@@ -57,4 +61,6 @@ public partial class Register : ContentPage
     {
         await Shell.Current.GoToAsync("//page/MainPage");
     }
+
+
 }

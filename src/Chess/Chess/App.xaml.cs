@@ -11,6 +11,7 @@ namespace Chess
 
         public Manager MyManager { get; private set; } = new Manager(new Stub.Stub());
 
+
         public App()
         {
             InitializeComponent();
@@ -29,6 +30,12 @@ namespace Chess
                 MyManager.persistanceManager = new Persistance.LoaderXML();
             }
 
+            MyManager.SaveData();
+        }
+
+        public override void CloseWindow(Window window)
+        {
+            base.CloseWindow(window);
             MyManager.SaveData();
         }
     }

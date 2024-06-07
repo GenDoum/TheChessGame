@@ -16,7 +16,23 @@ namespace ChessLibrary
         public List<Case?> SerializableBoard
         {
             get { return FlatBoard.ToList(); }
-            set { Board = ConvertListToBoard(value); }
+            set { Board = ConvertListToBoard(value, 8, 8); }
+        }
+
+        public Case?[,] ConvertListToBoard(List<Case?> list, int rows, int columns)
+        {
+            var array = new Case?[rows, columns];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    array[j, i] = list[i * columns + j];
+                }
+            }
+
+            return array;
+
         }
 
 
@@ -75,7 +91,7 @@ namespace ChessLibrary
         //Same consctructor but without parameter
         public Chessboard()
         {
-            Board = new Case[8, 8];
+            Board = new Case?[8, 8];
             InitializeChessboard();
         }
 
@@ -117,21 +133,6 @@ namespace ChessLibrary
 
                 return flatBoard;
             }
-        }
-
-        public Case?[,] ConvertListToBoard(List<Case?> list)
-        {
-            var array = new Case?[NbRows, NbColumns];
-
-            for (int i = 0; i < NbRows; i++)
-            {
-                for (int j = 0; j < NbColumns; j++)
-                {
-                    array[i, j] = list[i * NbColumns + j];
-                }
-            }
-
-            return array;
         }
 
         public void InitializeEmptyBoard()

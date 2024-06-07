@@ -17,24 +17,46 @@ namespace Chess.Pages;
 
 public partial class chessBoard : ContentPage
 {
-    public Game Game { get; set; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black));
+    public Game Game { get; set; }
+
 
     public Manager MyManager => (App.Current as App).MyManager;
 
     public chessBoard()
     {
-        InitializeComponent();
+        foreach (Game game in MyManager.Games)
+        {
+            if ((Equals(game.Player1, MyManager.Games.First().Player1) || Equals(game.Player1, MyManager.Games.First().Player2)) && (Equals(game.Player2, MyManager.Games.First().Player1) || Equals(game.Player2, MyManager.Games.First().Player2)))
+            {
+                this.Game = game;
+            }
+        }
+
+        this.Game = MyManager.Games.First();
+        this.Game.InvalidMove += OnInvalidMove;
+        this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
+        this.Game.EvolveNotified += OnEvolvePiece;
+        this.Game.GameOverNotified += OnGameOver;
+
         BindingContext = this;
+        Game = MyManager.Games.First();
+        InitializeComponent();
 
-        Game.InvalidMove += OnInvalidMove;
-        Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
-        Game.EvolveNotified += OnEvolvePiece;
-        Game.GameOverNotified += OnGameOver;
-
-
-        MyManager.CurrentGame = Game;
     }
-    
+
+    public chessBoard(User u1, User u2)
+    {
+        this.Game = new Game(u1, u2);
+        this.Game.InvalidMove += OnInvalidMove;
+        this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
+        this.Game.EvolveNotified += OnEvolvePiece;
+        this.Game.GameOverNotified += OnGameOver;
+
+        
+        BindingContext = this;
+        InitializeComponent();
+    }
+
     public async void OnInvalidMove(object sender, EventArgs e)
     {
         await DisplayAlert("Erreur", "Mouvement invalide, vérifiez les règles.", "OK");
@@ -81,11 +103,6 @@ public partial class chessBoard : ContentPage
         await Shell.Current.GoToAsync("//page/MainPage");
     }
 
-    async void OnBackButtonClicked(object sender, EventArgs e)
-    {
-        await Navigation.PopToRootAsync();
-    }
-
 
     private Case? _selectedCase;
 
@@ -102,15 +119,18 @@ public partial class chessBoard : ContentPage
                     if (_selectedCase == null)
                     {
                         var piece = clickedCase.Piece;
-                        // Si aucune pièce n'est sélectionnée, sélectionne la pièce sur laquelle nous avons cliqué
-                        _selectedCase = clickedCase;
-                        // Récupérer les mouvements possibles de la pièce
-                        var possibleMoves = piece.PossibleMoves(_selectedCase, Game.Board);
-                        var possibleCoordinates = possibleMoves.Select(c => $"({c.Column}, {c.Line})");
-
-                        foreach (var move in possibleMoves)
+                        if (piece != null)
                         {
-                            move.IsPossibleMove = true;
+                            // Si aucune pièce n'est sélectionnée, sélectionne la pièce sur laquelle nous avons cliqué
+                            _selectedCase = clickedCase;
+                            // Récupérer les mouvements possibles de la pièce
+                            var possibleMoves = piece.PossibleMoves(_selectedCase, Game.Board);
+                            var possibleCoordinates = possibleMoves.Select(c => $"({c.Column}, {c.Line})");
+
+                            foreach (var move in possibleMoves)
+                            {
+                                move.IsPossibleMove = true;
+                            }
                         }
                     }
                     else

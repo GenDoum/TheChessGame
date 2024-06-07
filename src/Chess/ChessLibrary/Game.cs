@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Numerics;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using ChessLibrary.Events;
-using ChessLibrary;
-using Persistance;
 using System.ComponentModel;
 
 namespace ChessLibrary
@@ -58,6 +46,7 @@ namespace ChessLibrary
         protected virtual void OnErrorPlayerTurn()
             => ErrorPlayerTurnNotified?.Invoke(this, EventArgs.Empty);
 
+
         private User _player1;
         [DataMember]
         public User Player1
@@ -101,23 +90,67 @@ namespace ChessLibrary
         [DataMember]
         public User CurrentPlayer { get; private set; }
 
+
+        private Chessboard _board;
         /// <summary>
         /// Représente l'échiquier
         /// </summary>
         [DataMember]
-        public Chessboard Board { get; set; }
+        public Chessboard Board
+        {
+            get
+            {
+                return _board;
+            }
+            set
+            {
+                if (value != _board)
+                {
+                    _board = value;
+                    OnPropertyChanged(nameof(Board));
+                }
+            }
+        }
 
+
+
+        private bool _whiteCheck;
         /// <summary>
         /// Savoir si le joueur blanc est en échec
         /// </summary>
         [DataMember]
-        public bool WhiteCheck { get; set; }
+        public bool WhiteCheck
+        {
 
+           get { return _whiteCheck; }
+            set
+            {
+                if (_whiteCheck != value)
+                {
+                    _whiteCheck = value;
+                    OnPropertyChanged(nameof(WhiteCheck));
+                }
+            }
+        }
+
+
+        private bool _blackCheck;
         /// <summary>
         /// Savoir si le joueur noir est en échec
         /// </summary>
         [DataMember]
-        public bool BlackCheck { get; set; }
+        public bool BlackCheck
+        {
+            get { return _blackCheck; }
+            set
+            {
+                if (_blackCheck != value)
+                {
+                    _blackCheck = value;
+                    OnPropertyChanged(nameof(BlackCheck));
+                }
+            }
+        }
 
         public Game()
         {
@@ -136,7 +169,7 @@ namespace ChessLibrary
                 }
             }
 
-            Chessboard chessboard = new Chessboard(allcase, false);
+            Chessboard chessboard = new Chessboard();
             this.Board = chessboard;
 
             CurrentPlayer = Player1;

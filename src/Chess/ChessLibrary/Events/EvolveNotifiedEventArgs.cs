@@ -1,10 +1,18 @@
-namespace ChessLibrary.Events;
-
-/// <summary>
-/// Arguments pour l'événement de notification d'évolution
-/// </summary>
-public class EvolveNotifiedEventArgs : EventArgs
+namespace ChessLibrary.Events
 {
-    public Pawn? Pawn { get; set; }
-    public Case? Case { get; set; }
+    /// <summary>
+    /// Arguments for the evolve notification event.
+    /// </summary>
+    public class EvolveNotifiedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Gets or sets the pawn that is evolving.
+        /// </summary>
+        public Pawn? Pawn { get; set; }
+
+        /// <summary>
+        /// Gets or sets the case where the evolution is taking place.
+        /// </summary>
+        public Case? Case { get; set; }
+    }
 }

@@ -89,23 +89,67 @@ namespace ChessLibrary
         [DataMember]
         public User CurrentPlayer { get; private set; }
 
+
+        private Chessboard _board;
         /// <summary>
         /// Représente l'échiquier
         /// </summary>
         [DataMember]
-        public Chessboard Board { get; set; }
+        public Chessboard Board
+        {
+            get
+            {
+                return _board;
+            }
+            set
+            {
+                if (value != _board)
+                {
+                    _board = value;
+                    OnPropertyChanged(nameof(Board));
+                }
+            }
+        }
 
+
+
+        private bool _whiteCheck;
         /// <summary>
         /// Savoir si le joueur blanc est en échec
         /// </summary>
         [DataMember]
-        public bool WhiteCheck { get; set; }
+        public bool WhiteCheck
+        {
 
+           get { return _whiteCheck; }
+            set
+            {
+                if (_whiteCheck != value)
+                {
+                    _whiteCheck = value;
+                    OnPropertyChanged(nameof(WhiteCheck));
+                }
+            }
+        }
+
+
+        private bool _blackCheck;
         /// <summary>
         /// Savoir si le joueur noir est en échec
         /// </summary>
         [DataMember]
-        public bool BlackCheck { get; set; }
+        public bool BlackCheck
+        {
+            get { return _blackCheck; }
+            set
+            {
+                if (_blackCheck != value)
+                {
+                    _blackCheck = value;
+                    OnPropertyChanged(nameof(BlackCheck));
+                }
+            }
+        }
 
         public Game()
         {

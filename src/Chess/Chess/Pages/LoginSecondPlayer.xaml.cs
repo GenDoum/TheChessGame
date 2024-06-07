@@ -29,8 +29,8 @@ public partial class LoginSecondPlayer : ContentPage
                 if (User.HashPassword(entryPassword) == existingUser.Password)
                 {
                     MyManager.Games.First().Player2 = existingUser;
-
-
+                    UsernameEntry.Text = string.Empty;
+                    PasswordEntry.Text = string.Empty;
                     await Shell.Current.GoToAsync("//page/chessBoard");
                 }
                 else

@@ -42,6 +42,7 @@
                         Margin="100"/>
 
                 <Label  Text="{Binding Game.Player1.Pseudo}"
+                        Style="{StaticResource textPacifico}"
                         FontSize="Large"
                         TextColor="White"
                         Margin="50"/>
@@ -53,6 +54,7 @@
                 <Label  Text="{Binding Game.Player2.Pseudo}"
                         FontSize="Large"
                         TextColor="White"
+                        Style="{StaticResource textPacifico}"
                         Margin="50"/>
             </VerticalStackLayout>
 

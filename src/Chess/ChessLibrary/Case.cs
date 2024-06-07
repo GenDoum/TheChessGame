@@ -30,14 +30,21 @@ namespace ChessLibrary
         /// </summary>
         private Piece? _piece;
 
+        /// <summary>
+        /// Backing field for the IsPossibleMove property.
+        /// </summary>
         private bool _isPossibleMove;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the move is possible.
+        /// </summary>
         [DataMember]
         public bool IsPossibleMove
         {
             get => _isPossibleMove;
             set
             {
+                // Set the backing field and notify any listeners that the property has changed.
                 _isPossibleMove = value;
                 OnPropertyChanged();
             }

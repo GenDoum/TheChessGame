@@ -166,8 +166,12 @@
     <Style TargetType="Label" x:Key="textPacifico">
         <Setter Property="FontFamily" Value="Pacifico"/>
         <Setter Property="FontSize" Value="50"/>
-        <Setter Property="Margin" Value="100"/>
+        <Setter Property="Margin" Value="50"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="TextColor" Value="{StaticResource GoldUsefullColor}"/>
     </Style>
+    
+    
 
 
     <!-- Fin ajout perso -->

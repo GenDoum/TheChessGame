@@ -103,11 +103,6 @@ public partial class chessBoard : ContentPage
         await Shell.Current.GoToAsync("//page/MainPage");
     }
 
-    async void OnBackButtonClicked(object sender, EventArgs e)
-    {
-        await Navigation.PopToRootAsync();
-    }
-
 
     private Case? _selectedCase;
 

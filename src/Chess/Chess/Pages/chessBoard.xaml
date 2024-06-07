@@ -25,37 +25,23 @@
 
             <VerticalStackLayout>
 
-                <AbsoluteLayout>
-                    <Image Source="returnarrow.png"
-                           HeightRequest="50"
-                           AbsoluteLayout.LayoutBounds="0, 0, AutoSize, AutoSize"
-                           AbsoluteLayout.LayoutFlags="PositionProportional"
-                           Margin="20, 20, 0, 0">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnBackButtonClicked"/>
-                        </Image.GestureRecognizers>
-                    </Image>
-                </AbsoluteLayout>
-
                 <Image  Source="title.png" 
                         Style="{StaticResource imgAppli}"
                         Margin="100"/>
 
-                <Label  Text="{Binding Game.Player1.Pseudo}"
+                <Label  Text="{Binding Game.Player2.Pseudo}"
                         Style="{StaticResource textPacifico}"
-                        FontSize="Large"
                         TextColor="White"
-                        Margin="50"/>
+                       />
 
                 <Image  Source="vs.png" 
                         Style="{StaticResource imgAppli}"
                         Margin="50"/>
 
-                <Label  Text="{Binding Game.Player2.Pseudo}"
-                        FontSize="Large"
+                <Label  Text="{Binding Game.Player1.Pseudo}"
                         TextColor="White"
                         Style="{StaticResource textPacifico}"
-                        Margin="50"/>
+                        />
             </VerticalStackLayout>
 
             <CollectionView x:Name="collectionView" ItemsSource="{Binding Game.Board.FlatBoard}" Grid.Column="1"

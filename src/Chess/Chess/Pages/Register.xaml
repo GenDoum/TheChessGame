@@ -11,25 +11,15 @@
         <ScrollView>
 
 
-            <VerticalStackLayout >
-            
-                <FlexLayout Margin="0, 0, 0, 150">
-                    <Image
-                        Source="returnarrow.png"
-                        HeightRequest="50"
-                        FlexLayout.AlignSelf="Start"
-                        Margin="10">
-                        <Image.GestureRecognizer>
-                            <TapGestureRecognizer Tapped="OnCancelButtonClicked"/>
-                        </Image.GestureRecognizer
-                    </Image>
-                    
-                </FlexLayout>
-                
+            <VerticalStackLayout 
+                    VerticalOptions="Center"
+                >
+
                 <FlexLayout
                     JustifyContent="Center"
                     AlignItems="Center"
-                    Direction="Column">
+                    Direction="Column"
+                    >
 
                     <Image 
                         Source="inscription.png" 

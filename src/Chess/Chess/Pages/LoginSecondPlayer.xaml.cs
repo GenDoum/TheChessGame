@@ -23,7 +23,7 @@ public partial class LoginSecondPlayer : ContentPage
         }
         else
         {
-            var existingUser = MyManager.Users.FirstOrDefault(u => u.Pseudo == entryPseudo);
+            var existingUser = MyManager.Users!.FirstOrDefault(u => u.Pseudo == entryPseudo);
             if (existingUser != null)
             {
                 if (User.HashPassword(entryPassword) == existingUser.Password)

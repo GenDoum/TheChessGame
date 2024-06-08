@@ -113,7 +113,7 @@ namespace ChessLibrary
         [DataMember]
         public User CurrentPlayer { get; private set; }
 
-        private Chessboard _board;
+        private Chessboard _board = new Chessboard();
         /// <summary>
         /// Gets or sets the chessboard.
         /// </summary>
@@ -364,7 +364,7 @@ namespace ChessLibrary
                 OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = pawn, Case = final });
             }
         }
-        private bool TryPerformCastling(Case initial, Case final, Chessboard board)
+        private static bool TryPerformCastling(Case initial, Case final, Chessboard board)
         {
             if (roque1(initial, final, board) || roque2(initial, final, board))
             {

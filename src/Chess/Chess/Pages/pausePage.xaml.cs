@@ -6,26 +6,48 @@ using System.Threading.Tasks;
 using ChessLibrary;
 using CommunityToolkit.Maui.Views;
 
-namespace Chess.Pages;
-
-public partial class pausePage : Popup
+namespace Chess.Pages
 {
-    Manager Mymanager = (App.Current as App).MyManager;
-
-    public pausePage()
+    /// <summary>
+    /// Represents the pause page popup.
+    /// </summary>
+    public partial class pausePage : Popup
     {
-        InitializeComponent();
-    }
+        /// <summary>
+        /// Gets the manager instance from the application.
+        /// </summary>
+        Manager Mymanager = (App.Current as App).MyManager;
 
-    private void OnContinueGame(object sender, EventArgs e)
-    {
-        Close();
-    }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="pausePage"/> class.
+        /// </summary>
+        public pausePage()
+        {
+            InitializeComponent();
+        }
 
-    private async void OnQuitGame(object sender, EventArgs e)
-    {
-        Mymanager.SaveData();
-        await Shell.Current.GoToAsync("//MainPage");
-        Close();
+        /// <summary>
+        /// Handles the event to continue the game.
+        /// Closes the pause popup.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        private void OnContinueGame(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        /// <summary>
+        /// Handles the event to quit the game.
+        /// Saves the game data and navigates to the main page.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        private async void OnQuitGame(object sender, EventArgs e)
+        {
+            Mymanager.SaveData();
+            await Shell.Current.GoToAsync("//MainPage");
+            Close();
+        }
     }
 }

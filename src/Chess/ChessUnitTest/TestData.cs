@@ -333,4 +333,6 @@ public class TestData
         yield return new object[] { chessboard, new List<Case> { new Case(-1, 2, null) }, new Case(-1, 2, null), false };
     }
 
+    
+
 }

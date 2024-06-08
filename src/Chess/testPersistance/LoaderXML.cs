@@ -31,7 +31,6 @@ namespace Persistance
             {
                 data= new DataToPersist();
             }
-            Console.WriteLine(FilePath);
 
             return (data!.games, data!.players, data!.chessboards);
         }

@@ -14,9 +14,9 @@ namespace Chess.Pages
         /// </summary>
         public LeaderBoard()
         {
-            InitializeComponent();  // Ensure all XAML elements are loaded
             BindingContext = this;  // Assign the BindingContext
             Ondisplay();  // Load data
+            InitializeComponent();  // Ensure all XAML elements are loaded
         }
 
         /// <summary>
@@ -45,7 +45,6 @@ namespace Chess.Pages
         /// </summary>
         private void Ondisplay()
         {
-            MyManager.LoadData();
             if (MyManager.Users != null)
             {
                 var sortedUsers = MyManager.Users.OrderByDescending(u => u.Score).ToList();

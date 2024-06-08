@@ -65,7 +65,7 @@ namespace Chess
         /// <param name="e">The event data.</param>
         async void OnLeaderBoardClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("//page/LeaderBoard");
+            await Navigation.PushAsync(new LeaderBoard());
         }
 
         /// <summary>

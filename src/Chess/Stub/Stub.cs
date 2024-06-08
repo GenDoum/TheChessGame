@@ -23,7 +23,7 @@ namespace Stub
             Chessboard board = new Chessboard();
 
 
-            players.Add(user1); players.Add(user2); players.Add(user3); players.Add(user4); players.Add(user5); players.Add(user6);
+            players.Add(user1); players.Add(user2); 
 
             games.Add(TheGame);
 

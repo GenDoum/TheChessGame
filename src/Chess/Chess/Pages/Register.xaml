@@ -19,9 +19,9 @@
                         HeightRequest="50"
                         FlexLayout.AlignSelf="Start"
                         Margin="10">
-                        <Image.GestureRecognizer>
+                        <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnCancelButtonClicked"/>
-                        </Image.GestureRecognizer
+                        </Image.GestureRecognizers>
                     </Image>
                     
                 </FlexLayout>

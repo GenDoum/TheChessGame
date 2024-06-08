@@ -9,6 +9,12 @@ public partial class endGame : Popup
 		InitializeComponent();
 	}
 
+    public endGame(string winner)
+    {
+        InitializeComponent();
+        WinnerLabel.Text = winner;
+    }
+
     private async void OnQuitGame(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("//MainPage");

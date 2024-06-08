@@ -75,9 +75,9 @@ public partial class chessBoard : ContentPage
 
     private async void OnGameOver(object sender, GameOverNotifiedEventArgs e)
     {
-        await DisplayAlert("Game Over", e.Winner.Pseudo + " wins the game!", "OK");
+        this.ShowPopup(new endGame($"{e.Winner!.Pseudo} is the winner !"));
         e.Winner.Score += 5;
-        e.Loser.Score -= 5;
+        e.Loser!.Score -= 1;
         await Shell.Current.GoToAsync("//page/MainPage");
     }
 

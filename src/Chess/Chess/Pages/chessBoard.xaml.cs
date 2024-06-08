@@ -69,7 +69,7 @@ public partial class chessBoard : ContentPage
         {
             if (game.Player1.Pseudo == playerOne.Pseudo && game.Player2.Pseudo == playerTwo.Pseudo || game.Player2.Pseudo == playerOne.Pseudo && game.Player1.Pseudo == playerTwo.Pseudo)
             {
-                bool continueGameExisting = await DisplayAlert("Warning", "A game already exist with you two. Did you want to continu this game ?", "Yes", "No");
+                bool continueGameExisting = await DisplayAlert("Warning", "If a game already exist with you two. Did you want to continu this game ?", "Yes", "No");
 
                 if (continueGameExisting)
                 {

@@ -430,7 +430,6 @@ namespace ChessLibrary
 
             if (GameOver(CurrentPlayer))
             {
-                OnGameOver(new GameOverNotifiedEventArgs { Winner = CurrentPlayer, Loser = actualPlayer == Player1 ? Player2 : Player1 });
                 return;
             }
 

@@ -29,7 +29,7 @@ namespace ChessLibrary
         /// <param name="rows">The number of rows in the board.</param>
         /// <param name="columns">The number of columns in the board.</param>
         /// <returns>A 2D array representing the board.</returns>
-        public Case?[,] ConvertListToBoard(List<Case?> list, int rows, int columns)
+        public static Case?[,] ConvertListToBoard(List<Case?> list, int rows, int columns)
         {
             var array = new Case?[rows, columns];
 

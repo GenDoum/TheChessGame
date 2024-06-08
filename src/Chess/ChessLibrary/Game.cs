@@ -426,83 +426,91 @@ namespace ChessLibrary
         /// <exception cref="InvalidOperationException">Thrown when the move is invalid.</exception>
         public void MovePieceFront(Case? initial, Case? final, Chessboard board, User actualPlayer)
         {
-            if (roque1(initial, final, board)) 
+            if (initial == null || final == null || initial.Piece == null)
+            {
+                throw new InvalidOperationException("Invalid move.");
+            }
+
+            if (actualPlayer.Color != CurrentPlayer.Color)
+            {
+                Board.ResetPossibleMoves();
+                OnErrorPlayerTurn();
+                return;
+            }
+
+            if (TryPerformCastling(initial, final, board))
             {
                 return;
             }
-            else if( roque2(initial,final, board) )
+
+            TryMovePiece(initial, final, board, actualPlayer);
+        }
+
+        private bool TryPerformCastling(Case initial, Case final, Chessboard board)
+        {
+            if (roque1(initial, final, board) || roque2(initial, final, board))
             {
-                return;
+                return true;
+            }
+            return false;
+        }
+
+        private void TryMovePiece(Case initial, Case final, Chessboard board, User actualPlayer)
+        {
+            var blackPieces = board.CopyBlackPieces();
+            var whitePieces = board.CopyWhitePieces();
+            var movingPiece = initial.Piece;
+            var capturedPiece = final.Piece;
+
+            if (board.CanMovePiece(movingPiece, initial, final))
+            {
+                SimulateMove(initial, final);
+
+                if (board.IsInCheck(actualPlayer.Color))
+                {
+                    UndoMove(initial, final, movingPiece, capturedPiece);
+                    throw new InvalidOperationException("You cannot put yourself in check.");
+                }
+
+                CompleteMove(initial, final, movingPiece, capturedPiece, board, actualPlayer);
             }
             else
             {
-                if (initial!.Piece == null)
-                    throw new InvalidOperationException("You cannot move a piece that does not exist.");
-
-                if (actualPlayer.Color != CurrentPlayer.Color)
-                {
-                    Board.ResetPossibleMoves();
-                    OnErrorPlayerTurn();
-                    return;
-                }
-
-                var blackPieces = board.CopyBlackPieces();
-                var whitePieces = board.CopyWhitePieces();
-                var movingPiece = initial.Piece;
-                var capturedPiece = final!.Piece;
-
-                if (board.CanMovePiece(movingPiece, initial, final))
-                {
-                    // Simulate the move for check verification
-                    UpdatePieceLists(blackPieces, whitePieces, initial, final, board); // Temporarily update piece lists
-                    final.Piece = movingPiece;
-                    initial.Piece = null;
-
-                    // Check for check after temporary move
-                    if (board.IsInCheck(actualPlayer.Color))
-                    {
-                        // Undo the temporary move
-                        final.Piece = capturedPiece;
-                        initial.Piece = movingPiece;
-                        RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece!);
-                        throw new InvalidOperationException("You cannot put yourself in check.");
-                    }
-                    RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece!);
-                    initial.Piece = movingPiece;
-                    final.Piece = capturedPiece;
-
-                    // Check if the move is legal and if it can resolve an existing check
-                    // Perform the actual move
-                    Board.ProcessPostMove(initial, final);
-                    evolve(final);
-
-                    if (GameOver(CurrentPlayer))
-                    {
-                        OnGameOver(new GameOverNotifiedEventArgs { Winner = CurrentPlayer, Loser = actualPlayer == Player1 ? Player2 : Player1 });
-                    }
-                    CurrentPlayer = (actualPlayer == Player1) ? Player2 : Player1;
-                }
-                else
-                {
-                    // Undo the temporary move
-                    initial.Piece = movingPiece;
-                    final.Piece = capturedPiece;
-                    Board.ResetPossibleMoves();
-                    OnInvalidMove();
-                }
+                OnInvalidMove();
             }
+        }
+
+        private void SimulateMove(Case initial, Case final)
+        {
+            final.Piece = initial.Piece;
+            initial.Piece = null;
+        }
+
+        private void UndoMove(Case initial, Case final, Piece movingPiece, Piece capturedPiece)
+        {
+            final.Piece = capturedPiece;
+            initial.Piece = movingPiece;
+        }
+
+        private void CompleteMove(Case initial, Case final, Piece movingPiece, Piece capturedPiece, Chessboard board, User actualPlayer)
+        {
+
+            board.ProcessPostMove(initial, final);
+            evolve(final);
+
+            if (GameOver(CurrentPlayer))
+            {
+                OnGameOver(new GameOverNotifiedEventArgs { Winner = CurrentPlayer, Loser = actualPlayer == Player1 ? Player2 : Player1 });
+                return;
+            }
+
+            CurrentPlayer = (actualPlayer == Player1) ? Player2 : Player1;
+            board.ResetPossibleMoves();
         }
 
         /// <summary>
         /// Restores the piece lists to their original state after a move has been undone.
         /// </summary>
-        /// <param name="blackPieces">The list of black pieces.</param>
-        /// <param name="whitePieces">The list of white pieces.</param>
-        /// <param name="initial">The initial case of the piece.</param>
-        /// <param name="final">The final case of the piece.</param>
-        /// <param name="board">The chessboard.</param>
-        /// <param name="movedPiece">The piece that was moved.</param>
-        /// <param name="capturedPiece">The piece that was captured.</param>
         public static void RestorePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board, Piece movedPiece, Piece capturedPiece)
         {
             // Restore the moved piece to its original position
@@ -521,11 +529,6 @@ namespace ChessLibrary
         /// <summary>
         /// Updates the piece lists after a move has been made.
         /// </summary>
-        /// <param name="blackPieces">The list of black pieces.</param>
-        /// <param name="whitePieces">The list of white pieces.</param>
-        /// <param name="initial">The initial case of the piece.</param>
-        /// <param name="final">The final case of the piece.</param>
-        /// <param name="board">The chessboard.</param>
         public static void UpdatePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board)
         {
             var movedPiece = initial!.Piece;

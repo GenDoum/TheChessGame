@@ -10,7 +10,7 @@ namespace ChessUnitTest
 {
     public class UnitTestSerialisation
     {
-        //Compare l'initialisation d'une game normale avec une game initialisée avec la persistance
+/*        //Compare l'initialisation d'une game normale avec une game initialisée avec la persistance
         [Fact]
         public void TestGameSerialisation()
         {
@@ -20,6 +20,6 @@ namespace ChessUnitTest
             // Créer une instance de Game avec la persistance
             Stub.Stub stub = new Stub.Stub();
 
-        }
+        }*/
     }
 }

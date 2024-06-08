@@ -44,24 +44,6 @@ namespace ChessLibrary
             return array;
         }
 
-        private Case?[,] _board;
-
-        /// <summary>
-        /// Gets or sets the 2D array representing the board.
-        /// </summary>
-        public Case?[,] Board
-        {
-            get { return _board; }
-            set
-            {
-                if (_board != value)
-                {
-                    _board = value;
-                    OnPropertyChanged(nameof(Board));
-                }
-            }
-        }
-
         /// <summary>
         /// Gets a read-only collection of white pieces.
         /// </summary>
@@ -92,6 +74,10 @@ namespace ChessLibrary
 
         private bool _isCheckingForCheck = false;
 
+
+
+
+        private Case?[,] _board = new Case?[8, 8];
         /// <summary>
         /// Initializes a new instance of the <see cref="Chessboard"/> class.
         /// </summary>
@@ -111,6 +97,7 @@ namespace ChessLibrary
             }
         }
 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Chessboard"/> class without parameters.
         /// </summary>
@@ -119,6 +106,24 @@ namespace ChessLibrary
             Board = new Case?[8, 8];
             InitializeChessboard();
         }
+
+
+        /// <summary>
+        /// Gets or sets the 2D array representing the board.
+        /// </summary>
+        public Case?[,] Board
+        {
+            get { return _board; }
+            set
+            {
+                if (_board != value)
+                {
+                    _board = value;
+                    OnPropertyChanged(nameof(Board));
+                }
+            }
+        }
+   
 
 
         /// <summary>

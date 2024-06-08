@@ -97,7 +97,7 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="tcase">The initial state of the board.</param>
         /// <param name="isEmpty">Indicates whether the board should be initialized as empty.</param>
-        public Chessboard(Case?[,] tcase, bool isEmpty)
+        public Chessboard(Case[,] tcase, bool isEmpty)
         {
             Board = tcase;
 

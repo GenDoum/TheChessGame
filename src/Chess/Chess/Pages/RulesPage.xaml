@@ -52,13 +52,14 @@
                                     />
 
 
-                        <!-- Première grille des règles -->
+                        <!-- Première grille des règles --> 
                         <Frame Style="{StaticResource FrameRules}"
                                Grid.Row="0"
                                MaximumHeightRequest="250">
                             <VerticalStackLayout BackgroundColor="#a58056">
                                 <Label Style="{StaticResource TitleRule}"
-                                       Text="Les règles du jeu - Le plateau :"/>
+                                       Text="Les règles du jeu - Le plateau :"
+                                       TextColor="White"/>
                                 <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales.&#x0a;Les colonnes sont repérées par les huit premières lettres de l’alphabet tandis que pour les rangées, on utilise les chiffres. Cela permet de donner les coordonnées des cases de l’échiquier.&#x0a;&#x0a;Par exemple, vous pouvez voir sur cette image que le rond rouge est sur la case C4 :"
                                        Margin="10,10,10,0" />
                             </VerticalStackLayout>

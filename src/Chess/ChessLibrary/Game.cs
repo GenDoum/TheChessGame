@@ -317,78 +317,26 @@ namespace ChessLibrary
         /// <exception cref="InvalidOperationException">Thrown when the move is invalid.</exception>
         public void MovePiece(Case? initial, Case? final, Chessboard board, User actualPlayer)
         {
-            if (initial!.Piece is King king &&
-                ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||
-                 (king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))
+            if (initial == null || final == null || initial.Piece == null)
             {
-                king.PetitRoque(board); // Call the PetitRoque method
+                throw new InvalidOperationException("Invalid move.");
             }
-            else if (initial!.Piece is King king1 &&
-                     ((king1.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 0 && final.Line == 7) ||
-                      (king1.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 0 && final.Line == 0)))
+
+            if (actualPlayer.Color != CurrentPlayer.Color)
             {
-                king1.GrandRoque(board); // Call the GrandRoque method
+                Board.ResetPossibleMoves();
+                OnErrorPlayerTurn();
+                return;
             }
-            else
+
+            if (TryPerformCastling(initial, final, board))
             {
-                if (initial!.Piece == null)
-                    throw new InvalidOperationException("You cannot move a piece that does not exist.");
-
-                if (actualPlayer != CurrentPlayer)
-                {
-                    return;
-                }
-
-                var blackPieces = board.CopyBlackPieces();
-                var whitePieces = board.CopyWhitePieces();
-                var movingPiece = initial.Piece;
-                var capturedPiece = final!.Piece;
-
-                if (board.CanMovePiece(movingPiece, initial, final))
-                {
-                    // Simulate the move for check verification
-                    UpdatePieceLists(blackPieces, whitePieces, initial, final, board); // Temporarily update piece lists
-                    final.Piece = movingPiece;
-                    initial.Piece = null;
-
-                    // Check for check after temporary move
-                    if (board.IsInCheck(actualPlayer.Color))
-                    {
-                        // Undo the temporary move
-                        final.Piece = capturedPiece;
-                        initial.Piece = movingPiece;
-                        RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece!);
-                        throw new InvalidOperationException("You cannot put yourself in check.");
-                    }
-                    RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece!);
-                    initial.Piece = movingPiece;
-                    final.Piece = capturedPiece;
-
-                    // Check if the move is legal and if it can resolve an existing check
-                    // Perform the actual move
-                    Board.ProcessPostMove(initial, final);
-
-                    if (final.Piece is Pawn pawn && (final.Line == 0 || final.Line == 7))
-                        OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = pawn, Case = final });
-
-                    if (GameOver(CurrentPlayer))
-                    {
-                        OnGameOver(new GameOverNotifiedEventArgs { Winner = CurrentPlayer, Loser = actualPlayer == Player1 ? Player2 : Player1 });
-                        return;
-                    }
-
-                    CurrentPlayer = (actualPlayer == Player1) ? Player2 : Player1;
-                }
-                else
-                {
-                    // Undo the temporary move
-                    initial.Piece = movingPiece;
-                    final.Piece = capturedPiece;
-                    Board.ResetPossibleMoves();
-                    OnInvalidMove();
-                }
+                return;
             }
+
+            TryMovePiece(initial, final, board, actualPlayer);
         }
+
         private bool roque1(Case initial, Case final, Chessboard board)
         {
             if (initial!.Piece is King king &&((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||(king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))

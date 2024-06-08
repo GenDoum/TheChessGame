@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,18 +23,40 @@ public partial class chessBoard : ContentPage
 
     public chessBoard()
     {
-        InitializeComponent();
+        foreach (Game game in MyManager.Games)
+        {
+            if ((Equals(game.Player1, MyManager.Games.First().Player1) || Equals(game.Player1, MyManager.Games.First().Player2)) && (Equals(game.Player2, MyManager.Games.First().Player1) || Equals(game.Player2, MyManager.Games.First().Player2)))
+            {
+                this.Game = game;
+            }
+        }
+
+        this.Game = MyManager.Games.First();
+        this.Game.InvalidMove += OnInvalidMove;
+        this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
+        this.Game.EvolveNotified += OnEvolvePiece;
+        this.Game.GameOverNotified += OnGameOver;
+        Game = MyManager.Games.First();
         BindingContext = this;
+        
+        InitializeComponent();
 
-        Game.InvalidMove += OnInvalidMove;
-        Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
-        Game.EvolveNotified += OnEvolvePiece;
-        Game.GameOverNotified += OnGameOver;
-
-
-        MyManager.CurrentGame = Game;
     }
-    
+
+    public chessBoard(User u1, User u2)
+    {
+        this.Game = new Game(u1, u2);
+        this.Game.InvalidMove += OnInvalidMove;
+        this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
+        this.Game.EvolveNotified += OnEvolvePiece;
+        this.Game.GameOverNotified += OnGameOver;
+
+
+        BindingContext = this;
+        InitializeComponent();
+    }
+
+
     public async void OnInvalidMove(object sender, EventArgs e)
     {
         await DisplayAlert("Erreur", "Mouvement invalide, vérifiez les règles.", "OK");
@@ -76,7 +97,7 @@ public partial class chessBoard : ContentPage
 
     private async void OnGameOver(object sender, GameOverNotifiedEventArgs e)
     {
-        this.ShowPopup(new endGame($"{e.Winner!.Pseudo} is the Winner !"));
+        this.ShowPopup(new endGame(/*$"{e.Winner!.Pseudo} is the Winner !"*/));
         e.Winner.Score += 5;
         e.Loser!.Score -= 5;
         await Shell.Current.GoToAsync("//page/MainPage");

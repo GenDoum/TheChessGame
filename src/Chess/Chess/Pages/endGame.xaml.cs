@@ -15,6 +15,13 @@ namespace Chess.Pages
             InitializeComponent();
         }
 
+        public endGame(string name)
+        {
+            InitializeComponent();
+            WinnerLabel.Text = $"The winner is {name}";
+        }
+
+
         /// <summary>
         /// Handles the event to quit the game.
         /// Navigates to the main page and closes the popup.

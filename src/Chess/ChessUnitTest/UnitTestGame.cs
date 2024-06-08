@@ -6,23 +6,35 @@ using ChessLibrary;
 
 public class UnitTestGame
 {
-    //[Fact]
-    //public void TestGameConstructorAndCheckMethods()
-    //{
-    //    // Arrange
-    //    User player1 = new User("Player1", "password", Color.White, true, 0);
-    //    User player2 = new User("Player2", "password", Color.Black, true, 0);
-    //    IUserDataManager userDataManager = new UserManager();
+    [Theory]
+    [MemberData(nameof(TestData.InvalidBishopPositionsData), MemberType = typeof(TestData))]
+    public void CanMove_InvalidMove_ThrowsException(int x1, int y1, int x2, int y2)
+    {
+        // Arrange
+        var bishop = new Bishop(Color.White, 1);
 
-    //    Game game = new Game(player1, player2, userDataManager);
+        // Act & Assert
+        Assert.Throws<InvalidMovementException>(() => bishop.CanMove(x1, y1, x2, y2));
+    }
 
-    //    // Act & Assert
-    //    // Check that the game was properly initialized
-    //    Assert.False(game.WhiteCheck);
-    //    Assert.False(game.BlackCheck);
-    //    Assert.Equal(player1, game.Player1);
-    //    Assert.Equal(player2, game.Player2);
-    //    Assert.NotNull(game.Board);
+    [Fact]
+    public void PossibleMoves_BoardWithOtherPieces_ReturnsCorrectMoves()
+    {
+        // Arrange
+        var bishop = new Bishop(Color.White, 1);
+        var chessboard = new Chessboard(new Case[8, 8], true);
+        var caseInitial = new Case(4, 4, bishop);
+        chessboard.Board[4, 4] = caseInitial;
 
-    //}
+        chessboard.Board[5, 5] = new Case(5, 5, new Pawn(Color.Black, 2));
+
+        chessboard.Board[3, 3] = new Case(3, 3, new Pawn(Color.White, 3));
+
+        // Act
+        var result = bishop.PossibleMoves(caseInitial, chessboard);
+
+        // Assert
+        Assert.Contains(result, c => c!.Column == 5 && c.Line == 5);
+        Assert.DoesNotContain(result, c => c!.Column == 2 && c.Line == 2);
+    }
 }

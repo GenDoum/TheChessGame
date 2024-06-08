@@ -10,9 +10,9 @@
             AlignItems="Center"
             Direction="Column">
 
-        <Label  Text="The winner is Yannis"
+        <Label  x:Name="WinnerLabel"
                 FontFamily="Pacifico"
-                Style="{StaticResource imgAppli}"/>
+                Style="{StaticResource textPacifico}"/>
 
         <Button Text="Quitter" Style="{StaticResource buttonSyle}" WidthRequest="300" Clicked="OnQuitGame"/>
 

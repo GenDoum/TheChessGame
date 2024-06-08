@@ -9,8 +9,6 @@
         
         <!-- Page d'incription -->
         <ScrollView>
-
-
             <VerticalStackLayout 
                     VerticalOptions="Center"
                 >

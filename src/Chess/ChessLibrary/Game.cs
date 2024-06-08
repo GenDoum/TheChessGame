@@ -57,6 +57,7 @@ namespace ChessLibrary
         protected virtual void OnErrorPlayerTurn()
             => ErrorPlayerTurnNotified?.Invoke(this, EventArgs.Empty);
 
+
         private User _player1 = new User();
         /// <summary>
         /// Gets or sets Player1.
@@ -107,12 +108,23 @@ namespace ChessLibrary
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private User _currentPlayer;
         /// <summary>
         /// Gets the current player.
         /// </summary>
         [DataMember]
-        public User CurrentPlayer { get; private set; }
-
+        public User CurrentPlayer
+        {
+            get { return _currentPlayer; }
+            private set
+            {
+                if (_currentPlayer != value)
+                {
+                    _currentPlayer = value;
+                    OnPropertyChanged(nameof(CurrentPlayer));
+                }
+            }
+        }
         private Chessboard _board = new Chessboard();
         /// <summary>
         /// Gets or sets the chessboard.
@@ -181,6 +193,8 @@ namespace ChessLibrary
 
             WhiteCheck = false;
             BlackCheck = false;
+            
+            _currentPlayer = Player1;
 
             Case?[,] allcase = new Case[8, 8];
             for (int i = 0; i < 8; i++)
@@ -193,8 +207,6 @@ namespace ChessLibrary
 
             Chessboard chessboard = new Chessboard();
             this.Board = chessboard;
-
-            CurrentPlayer = Player1;
         }
 
         /// <summary>
@@ -208,6 +220,8 @@ namespace ChessLibrary
             BlackCheck = false;
             this.Player1 = player1;
             this.Player2 = player2;
+            
+            _currentPlayer = player1;
 
             Case?[,] allcase = new Case[8, 8];
             for (int i = 0; i < 8; i++)
@@ -220,8 +234,7 @@ namespace ChessLibrary
 
             Chessboard chessboard = new Chessboard(allcase, false);
             this.Board = chessboard;
-
-            CurrentPlayer = Player1;
+            
         }
 
         /// <summary>
@@ -395,6 +408,7 @@ namespace ChessLibrary
                 OnInvalidMove();
             }
         }
+
 
         private static void SimulateMove(Case initial, Case final)
         {

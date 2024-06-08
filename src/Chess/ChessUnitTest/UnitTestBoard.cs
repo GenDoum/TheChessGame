@@ -971,20 +971,37 @@ public class UnitTestBoard
     }
 
     [Fact]
-    public void TestFindCase()
+    public void FindCase_ReturnsCorrectCase()
     {
         // Arrange
-        var chessboard = new Chessboard(new Case[8, 8], true);
-        var king = new King(Color.White, 1);
-        chessboard.Board[0, 0] = new Case(0, 0, king);
+        var chessboard = new Chessboard();
+        var piece = new Pawn(Color.White, 1);
+        chessboard.AddPiece(piece, 3, 3);
 
         // Act
-        var result = chessboard.FindCase(king);
+        var result = chessboard.FindCase(piece);
 
         // Assert
-        Assert.Equal(chessboard.Board[0, 0], result);
+        Assert.NotNull(result);
+        Assert.Equal(3, result.Column);
+        Assert.Equal(3, result.Line);
+        Assert.Equal(piece, result.Piece);
     }
-    
+
+    [Fact]
+    public void FindCase_ReturnsNullForNonexistentPiece()
+    {
+        // Arrange
+        var chessboard = new Chessboard();
+        var piece = new Pawn(Color.White, 1);
+
+        // Act
+        var result = chessboard.FindCase(piece);
+
+        // Assert
+        Assert.Null(result);
+    }
+
     [Fact]
     public void TestCanDefendKing()
     {
@@ -1006,6 +1023,43 @@ public class UnitTestBoard
 
         // Assert
         Assert.False(result); // The pawn should be able to capture the queen and defend the king
+    }
+    
+    [Theory]
+    [InlineData(4, 4, new int[] { 0, 0, 0, 1, 0, 2, 0, 3, 1, 0, 1, 1, 1, 2, 1, 3, 2, 0, 2, 1, 2, 2, 2, 3, 3, 0, 3, 1, 3, 2, 3, 3 })]
+    public void ConvertListToBoard_ValidList_CreatesCorrectBoard(int rows, int columns, int[] indices)
+    {
+        // Arrange
+        var list = new List<Case?>();
+        for (int i = 0; i < indices.Length; i += 2)
+        {
+            list.Add(new Case(indices[i], indices[i + 1], null));
+        }
+
+        // Act
+        Case?[,] board = Chessboard.ConvertListToBoard(list, rows, columns);
+
+        // Assert
+        Assert.Equal(list[0], board[0, 0]);
+        Assert.Equal(list[1], board[1, 0]);
+        Assert.Equal(list[4], board[0, 1]);
+        Assert.Equal(list[5], board[1, 1]);
+    }
+
+    [Fact]
+    public void ConvertListToBoard_InvalidDimensions_ThrowsException()
+    {
+        // Arrange
+        var list = new List<Case?>
+        {
+            new Case(0, 0, null), new Case(0, 1, null)
+            // This list is too short for a 3x3 board
+        };
+        int rows = 3;
+        int columns = 3;
+
+        // Act & Assert
+        Assert.Throws<ArgumentOutOfRangeException>(() => Chessboard.ConvertListToBoard(list, rows, columns));
     }
 
 }

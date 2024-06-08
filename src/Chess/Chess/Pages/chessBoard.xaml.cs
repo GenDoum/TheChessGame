@@ -18,15 +18,19 @@ namespace Chess.Pages;
 
 public partial class chessBoard : ContentPage
 {
-    public Game Game { get; set; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black));
+    private Case? _selectedCase;
 
+    public Game Game { get; set; }
     public Manager MyManager => (App.Current as App).MyManager;
 
     public chessBoard()
     {
-        CheckGameIfExists(this.Game.Player1, this.Game.Player2);
 
         this.Game = MyManager.Games.First();
+
+        CheckGameIfExists(this.Game.Player1, this.Game.Player2);
+
+
         this.Game.InvalidMove += OnInvalidMove;
         this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
         this.Game.EvolveNotified += OnEvolvePiece;
@@ -35,7 +39,6 @@ public partial class chessBoard : ContentPage
         BindingContext = this;
         
         InitializeComponent();
-
     }
 
     public chessBoard(User u1, User u2)
@@ -80,9 +83,6 @@ public partial class chessBoard : ContentPage
             this.Game = new Game(playerOne, playerTwo);
         }
     }
-
-
-
 
     public async void OnInvalidMove(object sender, EventArgs e)
     {
@@ -135,9 +135,6 @@ public partial class chessBoard : ContentPage
         await Navigation.PopToRootAsync();
     }
 
-
-    private Case? _selectedCase;
-
     async void OnPieceClicked(object sender, EventArgs e)
     {
         try
@@ -150,30 +147,11 @@ public partial class chessBoard : ContentPage
                 {
                     if (_selectedCase == null)
                     {
-                        var piece = clickedCase.Piece;
-                        // Si aucune pièce n'est sélectionnée, sélectionne la pièce sur laquelle nous avons cliqué
-                        _selectedCase = clickedCase;
-                        // Récupérer les mouvements possibles de la pièce
-                        var possibleMoves = piece.PossibleMoves(_selectedCase, Game.Board);
-                        var possibleCoordinates = possibleMoves.Select(c => $"({c.Column}, {c.Line})");
-
-                        foreach (var move in possibleMoves)
-                        {
-                            move.IsPossibleMove = true;
-                        }
+                        SelectPiece(clickedCase);
                     }
                     else
                     {
-                        // Si une pièce est déjà sélectionnée, la déplacer vers la case sur laquelle nous avons cliqué
-                        var piece = _selectedCase.Piece;
-                        if (piece != null)
-                        {
-                            User actualPlayer = piece.Color == Color.White ? Game.Player1 : Game.Player2;
-                            Game.MovePiece(_selectedCase, clickedCase, Game.Board, actualPlayer);
-                            Game.Board.ResetPossibleMoves();
-                        }
-
-                        _selectedCase = null;
+                        MovePiece(clickedCase);
                     }
                 }
             }
@@ -183,6 +161,39 @@ public partial class chessBoard : ContentPage
             await DisplayAlert("Erreur", ex.Message, "OK");
         }
     }
+
+    private void SelectPiece(Case clickedCase)
+    {
+        var piece = clickedCase.Piece;
+        // Si aucune pièce n'est sélectionnée, sélectionne la pièce sur laquelle nous avons cliqué
+        if (piece != null)
+        {
+            _selectedCase = clickedCase;
+            // Récupérer les mouvements possibles de la pièce
+            var possibleMoves = piece.PossibleMoves(_selectedCase, Game.Board);
+            var possibleCoordinates = possibleMoves.Select(c => $"({c.Column}, {c.Line})");
+
+            foreach (var move in possibleMoves)
+            {
+                move.IsPossibleMove = true;
+            }
+        }
+    }
+
+    private void MovePiece(Case clickedCase)
+    {
+        // Si une pièce est déjà sélectionnée, la déplacer vers la case sur laquelle nous avons cliqué
+        var piece = _selectedCase.Piece;
+        if (piece != null)
+        {
+            var actualPlayer = piece.Color == Color.White ? Game.Player1 : Game.Player2;
+            Game.MovePiece(_selectedCase, clickedCase, Game.Board, actualPlayer);
+            Game.Board.ResetPossibleMoves();
+        }
+
+        _selectedCase = null;
+    }
+
 
     private void OnPauseButtonClicked(object sender, EventArgs e)
     {

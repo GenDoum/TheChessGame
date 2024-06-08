@@ -53,7 +53,7 @@ namespace Chess.Pages
                             UsernameEntry.Text = string.Empty;
                             PasswordEntry.Text = string.Empty;
 
-                            await Navigation.PushAsync(new chessBoard(existingUser, new User(ChessLibrary.Color.Black)));
+                            await Navigation.PushAsync(new chessBoard(existingUser, new User(ChessLibrary.Color.Black))); // On utilise Navigation pour ne pas crée une game qui sera supprimé après
                         }
                         else
                         {

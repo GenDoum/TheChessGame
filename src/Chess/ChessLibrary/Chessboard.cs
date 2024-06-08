@@ -15,35 +15,6 @@ namespace ChessLibrary
     public class Chessboard : IBoard, INotifyPropertyChanged
     {
 
-        [DataMember]
-        public List<Case?> SerializableBoard
-        {
-            get => FlatBoard.ToList();
-            set { Board = ConvertListToBoard(value, 8, 8); }
-        }
-
-        /// <summary>
-        /// Converts a list of cases to a 2D array representing the board.
-        /// </summary>
-        /// <param name="list">The list of cases to convert.</param>
-        /// <param name="rows">The number of rows in the board.</param>
-        /// <param name="columns">The number of columns in the board.</param>
-        /// <returns>A 2D array representing the board.</returns>
-        public static Case?[,] ConvertListToBoard(List<Case?> list, int rows, int columns)
-        {
-            var array = new Case?[rows, columns];
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    array[j, i] = list[i * columns + j];
-                }
-            }
-
-            return array;
-        }
-
         /// <summary>
         /// Gets a read-only collection of white pieces.
         /// </summary>
@@ -165,9 +136,32 @@ namespace ChessLibrary
         public int NbColumns => Board?.GetLength(1) ?? 0;
 
         /// <summary>
+        /// Converts a list of cases to a 2D array representing the board.
+        /// </summary>
+        /// <param name="list">The list of cases to convert.</param>
+        /// <param name="rows">The number of rows in the board.</param>
+        /// <param name="columns">The number of columns in the board.</param>
+        /// <returns>A 2D array representing the board.</returns>
+        public static Case?[,] ConvertListToBoard(List<Case?> list, int rows, int columns)
+        {
+            var array = new Case?[rows, columns];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    array[j, i] = list[i * columns + j];
+                }
+            }
+
+            return array;
+        }
+
+        /// <summary>
         /// Flattens the board into a list.
         /// </summary>
-        public IEnumerable<Case?> FlatBoard
+        [DataMember]
+        public List<Case?> FlatBoard
         {
             get
             {
@@ -182,6 +176,11 @@ namespace ChessLibrary
                 }
 
                 return flatBoard;
+            }
+            set
+            {
+                // Convertir la liste en tableau 2D et l'affecter à Board
+                Board = ConvertListToBoard(value, 8, 8);
             }
         }
 
@@ -416,16 +415,9 @@ namespace ChessLibrary
         /// <returns>The case where the piece is located.</returns>
         public Case? FindCase(Piece piece)
         {
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 8; j++)
-                {
-                    if (Board[i, j]!.Piece == piece)
-                        return Board[i, j];
-                }
-            }
-            throw new ArgumentException("Piece not found on the board.");
+            return piece.Color == Color.White ? _whitePieces.Find(x => x.piece == piece).CaseLink : _blackPieces.Find(x => x.piece == piece).CaseLink;
         }
+
 
         /// <summary>
         /// Checks if the specified king is in checkmate.

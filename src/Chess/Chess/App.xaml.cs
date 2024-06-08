@@ -9,9 +9,14 @@ namespace Chess
     public partial class App : Application
     {
         /// <summary>
-        /// Gets or sets the name of the data file.
+        /// Gets or sets the name of the data file in XML format.
         /// </summary>
-        public string FileName { get; set; } = "data.xml";
+        public string FileNameXml { get; set; } = "data.xml";
+        
+        /// <summary>
+        /// Gets or sets the name of the data file in JSON format.
+        /// </summary>
+        public string FileNameJson { get; set; } = "data.json";
 
         /// <summary>
         /// Gets or sets the file path where data will be stored.
@@ -31,9 +36,9 @@ namespace Chess
             InitializeComponent();
 
             // Check if the data file exists and use the appropriate persistence manager
-            if (File.Exists(Path.Combine(FilePath, FileName)))
+            if (File.Exists(Path.Combine(FilePath, FileNameJson)))
             {
-                MyManager = new Manager(new Persistance.LoaderXML());
+                MyManager = new Manager(new Persistance.LoaderJson());
             }
 
             // Load data from the persistence manager
@@ -43,9 +48,9 @@ namespace Chess
             MainPage = new AppShell();
 
             // Set the persistence manager to XML loader if the data file does not exist
-            if (!File.Exists(Path.Combine(FilePath, FileName)))
+            if (!File.Exists(Path.Combine(FilePath, FileNameJson)))
             {
-                MyManager.persistanceManager = new Persistance.LoaderXML();
+                MyManager.PersistanceManager = new Persistance.LoaderJson();
             }
 
             // Save the current state of the application data

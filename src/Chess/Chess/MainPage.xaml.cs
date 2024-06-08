@@ -76,7 +76,7 @@ namespace Chess
         /// <param name="e">The event data.</param>
         async void OnInvitedPlayersCLicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new chessBoard(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black)));
+            await Navigation.PushAsync(new chessBoard(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black)));  // Envoi une game en navigation pour ne pas en ajouter dans la persistance pour rien
         }
     }
 }

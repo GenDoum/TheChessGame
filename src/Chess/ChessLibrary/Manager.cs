@@ -93,7 +93,11 @@ namespace ChessLibrary
 
                 foreach (var game in data.Item1)
                 {
-                    Games.Add(game);
+                    if (game.Player2.Pseudo != "Black player")
+                    {
+                        Games.Add(game);
+                        data.Item1.Remove(game);
+                    }
                 }
 
                 foreach (var user in data.Item2)

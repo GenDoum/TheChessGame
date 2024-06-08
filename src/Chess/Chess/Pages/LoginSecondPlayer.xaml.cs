@@ -42,19 +42,21 @@ namespace Chess.Pages
                 {
                     if (User.HashPassword(entryPassword) == existingUser.Password)
                     {
-                        MyManager.Games.First().Player2 = existingUser;
+
+                        MyManager.Games.First().Player2 = existingUser; // Ajoute le player 2 à la nouvelle game crée dans Login1
+
                         UsernameEntry.Text = string.Empty;
                         PasswordEntry.Text = string.Empty;
                         await Shell.Current.GoToAsync("//page/chessBoard");
                     }
                     else
                     {
-                        await DisplayAlert("Erreur", "Mot de passe incorrect", "OK");
+                        await DisplayAlert("Erreur", "Mot de passe ou Utilisateur incorrect", "OK");
                     }
                 }
                 else
                 {
-                    await DisplayAlert("Erreur", "Utilisateur introuvable", "OK");
+                    await DisplayAlert("Erreur", "Mot de passe ou Utilisateur incorrect", "OK");
                 }
             }
         }

@@ -12,6 +12,7 @@ using Microsoft.Maui.Graphics;
 using Persistance;
 using Color = ChessLibrary.Color;
 using Plugin.Maui.Audio;
+using System.Runtime.CompilerServices;
 
 namespace Chess.Pages;
 
@@ -23,20 +24,14 @@ public partial class chessBoard : ContentPage
 
     public chessBoard()
     {
-        foreach (Game game in MyManager.Games)
-        {
-            if ((Equals(game.Player1, MyManager.Games.First().Player1) || Equals(game.Player1, MyManager.Games.First().Player2)) && (Equals(game.Player2, MyManager.Games.First().Player1) || Equals(game.Player2, MyManager.Games.First().Player2)))
-            {
-                this.Game = game;
-            }
-        }
+        CheckGameIfExists(this.Game.Player1, this.Game.Player2);
 
         this.Game = MyManager.Games.First();
         this.Game.InvalidMove += OnInvalidMove;
         this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
         this.Game.EvolveNotified += OnEvolvePiece;
         this.Game.GameOverNotified += OnGameOver;
-        Game = MyManager.Games.First();
+        
         BindingContext = this;
         
         InitializeComponent();
@@ -45,6 +40,8 @@ public partial class chessBoard : ContentPage
 
     public chessBoard(User u1, User u2)
     {
+        CheckGameIfExists(u1, u2);
+
         this.Game = new Game(u1, u2);
         this.Game.InvalidMove += OnInvalidMove;
         this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
@@ -55,6 +52,36 @@ public partial class chessBoard : ContentPage
         BindingContext = this;
         InitializeComponent();
     }
+
+    /// <summary>
+    /// This function search in all the game is MyManager.Games if already have a game with the connected player.
+    /// If the game exist, they can continue it, it it doesn't a new game starting.
+    /// </summary>
+    /// <param name="playerOne"></param>
+    /// <param name="playerTwo"></param>
+    /// <returns></returns>
+    public async void CheckGameIfExists(User playerOne, User playerTwo)
+    {
+        foreach (Game game in MyManager.Games)
+        {
+            if (game.Player1.Pseudo == playerOne.Pseudo && game.Player2.Pseudo == playerTwo.Pseudo || game.Player2.Pseudo == playerOne.Pseudo && game.Player1.Pseudo == playerTwo.Pseudo)
+            {
+                bool continueGameExisting = await DisplayAlert("Warning", "A game already exist with you two. Did you want to continu this game ?", "Yes", "No");
+
+                if (continueGameExisting)
+                {
+                    this.Game = game;
+                }
+                else
+                {
+                    this.Game = new Game(playerOne, playerTwo);
+                }
+            }
+            this.Game = new Game(playerOne, playerTwo);
+        }
+    }
+
+
 
 
     public async void OnInvalidMove(object sender, EventArgs e)

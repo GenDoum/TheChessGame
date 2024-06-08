@@ -41,7 +41,7 @@ namespace Chess.Pages
             }
             else
             {
-                User existingUser = MyManager.Users.FirstOrDefault(u => u.Pseudo == entryPseudo);
+                User existingUser = MyManager.Users!.FirstOrDefault(u => u.Pseudo == entryPseudo)!;
 
                 if (existingUser != null)
                 {
@@ -59,8 +59,8 @@ namespace Chess.Pages
                         {
                             UsernameEntry.Text = string.Empty;
                             PasswordEntry.Text = string.Empty;
-                            MyManager.Games.First().Player1 = existingUser;
-                            Shell.Current.GoToAsync("//page/LoginSecondPlayer");
+                            MyManager.Games.Insert(0, new Game(existingUser, new User(ChessLibrary.Color.Black))); // Ajoute la nouvelle game en début de la collection pour la retrouver dans la page suivante
+                            await Shell.Current.GoToAsync("//page/LoginSecondPlayer");
                         }
                     }
                     else

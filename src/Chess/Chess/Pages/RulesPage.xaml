@@ -302,6 +302,7 @@ Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à
 
                                     <Label HorizontalOptions="CenterAndExpand"
                                            Text="Position initiale et finale"
+                                           TextColor="White"
                                            Style="{StaticResource TitleRule}" 
                                            Grid.Row="0"
                                            Margin="0,30,0,0"/>
@@ -318,6 +319,7 @@ Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à
 
                                     <Label Text="Coup Précédent :"
                                            Grid.Row="0"
+                                           TextColor="White"
                                            HorizontalOptions="CenterAndExpand"
                                            Style="{StaticResource TitleRule}" 
                                            Margin="0,30,0,0"/>
@@ -355,6 +357,7 @@ Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à
 
                                     <Label HorizontalOptions="CenterAndExpand"
                                            Text="Position initiale et finale"
+                                           TextColor="White"
                                            Style="{StaticResource TitleRule}" 
                                            Grid.Row="0"
                                            Margin="0,30,0,0"/>
@@ -371,6 +374,7 @@ Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à
 
                                     <Label Text="Coup Précédent :"
                                            Grid.Row="0"
+                                           TextColor="White"
                                            HorizontalOptions="CenterAndExpand"
                                            Style="{StaticResource TitleRule}" 
                                            Margin="0,30,0,0"/>

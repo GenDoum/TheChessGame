@@ -1,23 +1,30 @@
 using CommunityToolkit.Maui.Views;
 
-namespace Chess.Pages;
-
-public partial class endGame : Popup
+namespace Chess.Pages
 {
-	public endGame()
-	{
-		InitializeComponent();
-	}
-
-    public endGame(string winner)
+    /// <summary>
+    /// Represents the popup that appears at the end of the game.
+    /// </summary>
+    public partial class endGame : Popup
     {
-        InitializeComponent();
-        WinnerLabel.Text = winner;
-    }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="endGame"/> class.
+        /// </summary>
+        public endGame()
+        {
+            InitializeComponent();
+        }
 
-    private async void OnQuitGame(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("//MainPage");
-        Close();
+        /// <summary>
+        /// Handles the event to quit the game.
+        /// Navigates to the main page and closes the popup.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        private async void OnQuitGame(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//MainPage");
+            Close();
+        }
     }
 }

@@ -1,20 +1,26 @@
-namespace ChessLibrary.Events;
-
-/// <summary>
-/// Arguments pour l'événement de notification de fin de partie
-/// </summary>
-public class GameOverNotifiedEventArgs : EventArgs
+namespace ChessLibrary.Events
 {
-    public User? Loser
+    /// <summary>
+    /// Arguments for the game over notification event.
+    /// </summary>
+    public class GameOverNotifiedEventArgs : EventArgs
     {
-        get;
-        set;
+        /// <summary>
+        /// Gets or sets the user who lost the game.
+        /// </summary>
+        public User? Loser
+        {
+            get;
+            set;
+        }
 
-    }
-    public User? Winner
-    {
-        get;
-        set;
-        
+        /// <summary>
+        /// Gets or sets the user who won the game.
+        /// </summary>
+        public User? Winner
+        {
+            get;
+            set;
+        }
     }
 }

@@ -1,64 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Numerics;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using ChessLibrary.Events;
-using ChessLibrary;
-using Persistance;
 using System.ComponentModel;
 
 namespace ChessLibrary
 {
     /// <summary>
-    /// Classe qui représente le point d'entrée du jeu d'échecs
+    /// Represents the entry point of the chess game.
     /// </summary>
     [DataContract]
     [KnownType(typeof(CoPieces))]
     public class Game : IRules, INotifyPropertyChanged
     {
-
         /// <summary>
-        /// Événement déclenché lorsqu'un pion peut évoluer
+        /// Event triggered when a pawn can evolve.
         /// </summary>
         public event EventHandler<EvolveNotifiedEventArgs> EvolveNotified = null!;
 
         /// <summary>
-        /// Événement déclenché lorsqu'un pion peut évoluer
+        /// Invokes the EvolveNotified event.
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">Event arguments for evolution.</param>
         protected virtual void OnEvolvePiece(EvolveNotifiedEventArgs args)
             => EvolveNotified?.Invoke(this, args);
 
         /// <summary>
-        /// Événement déclenché lorsqu'un joueur gagne la partie
+        /// Event triggered when a player wins the game.
         /// </summary>
         public event EventHandler<GameOverNotifiedEventArgs> GameOverNotified = null!;
 
         /// <summary>
-        /// Événement déclenché lorsqu'un joueur gagne la partie
+        /// Invokes the GameOverNotified event.
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args">Event arguments for game over.</param>
         protected virtual void OnGameOver(GameOverNotifiedEventArgs args)
             => GameOverNotified?.Invoke(this, args);
 
+        /// <summary>
+        /// Event triggered when an invalid move is made.
+        /// </summary>
         public event EventHandler InvalidMove = null!;
 
+        /// <summary>
+        /// Invokes the InvalidMove event.
+        /// </summary>
         protected virtual void OnInvalidMove()
             => InvalidMove?.Invoke(this, EventArgs.Empty);
 
+        /// <summary>
+        /// Event triggered when an error occurs with the player's turn.
+        /// </summary>
         public event EventHandler ErrorPlayerTurnNotified = null!;
 
+        /// <summary>
+        /// Invokes the ErrorPlayerTurnNotified event.
+        /// </summary>
         protected virtual void OnErrorPlayerTurn()
             => ErrorPlayerTurnNotified?.Invoke(this, EventArgs.Empty);
 
         private User _player1;
+        /// <summary>
+        /// Gets or sets Player1.
+        /// </summary>
         [DataMember]
         public User Player1
         {
@@ -74,6 +76,9 @@ namespace ChessLibrary
         }
 
         private User _player2;
+        /// <summary>
+        /// Gets or sets Player2.
+        /// </summary>
         [DataMember]
         public User Player2
         {
@@ -88,37 +93,87 @@ namespace ChessLibrary
             }
         }
 
+        /// <summary>
+        /// Event triggered when a property value changes.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Raises the PropertyChanged event.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that changed.</param>
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
-        /// Représente le joueur actuel
+        /// Gets the current player.
         /// </summary>
         [DataMember]
         public User CurrentPlayer { get; private set; }
 
+        private Chessboard _board;
         /// <summary>
-        /// Représente l'échiquier
+        /// Gets or sets the chessboard.
         /// </summary>
         [DataMember]
-        public Chessboard Board { get; set; }
+        public Chessboard Board
+        {
+            get
+            {
+                return _board;
+            }
+            set
+            {
+                if (value != _board)
+                {
+                    _board = value;
+                    OnPropertyChanged(nameof(Board));
+                }
+            }
+        }
 
+        private bool _whiteCheck;
         /// <summary>
-        /// Savoir si le joueur blanc est en échec
+        /// Indicates whether the white player is in check.
         /// </summary>
         [DataMember]
-        public bool WhiteCheck { get; set; }
+        public bool WhiteCheck
+        {
+            get { return _whiteCheck; }
+            set
+            {
+                if (_whiteCheck != value)
+                {
+                    _whiteCheck = value;
+                    OnPropertyChanged(nameof(WhiteCheck));
+                }
+            }
+        }
+
+        private bool _blackCheck;
 
         /// <summary>
-        /// Savoir si le joueur noir est en échec
+        /// Indicates whether the black player is in check.
         /// </summary>
         [DataMember]
-        public bool BlackCheck { get; set; }
+        public bool BlackCheck
+        {
+            get { return _blackCheck; }
+            set
+            {
+                if (_blackCheck != value)
+                {
+                    _blackCheck = value;
+                    OnPropertyChanged(nameof(BlackCheck));
+                }
+            }
+        }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Game"/> class.
+        /// </summary>
         public Game()
         {
             Player1 = new User(ChessLibrary.Color.White);
@@ -136,24 +191,24 @@ namespace ChessLibrary
                 }
             }
 
-            Chessboard chessboard = new Chessboard(allcase, false);
+            Chessboard chessboard = new Chessboard();
             this.Board = chessboard;
 
             CurrentPlayer = Player1;
         }
 
         /// <summary>
-        /// Constructeur de la classe Game
+        /// Initializes a new instance of the <see cref="Game"/> class with specified players.
         /// </summary>
-        /// <param name="player1"></param>
-        /// <param name="player2"></param>
-        /// <param name="userDataManager"></param>
+        /// <param name="player1">The first player.</param>
+        /// <param name="player2">The second player.</param>
         public Game(User player1, User player2)
         {
             WhiteCheck = false;
             BlackCheck = false;
             this.Player1 = player1;
             this.Player2 = player2;
+
             Case?[,] allcase = new Case[8, 8];
             for (int i = 0; i < 8; i++)
             {
@@ -167,15 +222,13 @@ namespace ChessLibrary
             this.Board = chessboard;
 
             CurrentPlayer = Player1;
-
         }
 
-
         /// <summary>
-        /// Fonction qui vérifie si un joueur est en échec
+        /// Checks if the specified player is in check.
         /// </summary>
-        /// <param name="actualPlayer"></param>
-        /// <returns></returns>
+        /// <param name="actualPlayer">The player to check.</param>
+        /// <returns>True if the player is in check, otherwise false.</returns>
         public bool IsCheck(User actualPlayer)
         {
             var pieces = (actualPlayer.Color == Color.White) ? Board.BlackPieces : Board.WhitePieces;
@@ -198,10 +251,10 @@ namespace ChessLibrary
         }
 
         /// <summary>
-        /// Fonction permettant de savoir si la partie est terminée
+        /// Determines if the game is over.
         /// </summary>
-        /// <param name="winner"></param>
-        /// <returns></returns>
+        /// <param name="winner">The player who potentially won.</param>
+        /// <returns>True if the game is over, otherwise false.</returns>
         public bool GameOver(User winner)
         {
             var pieces = (Player1.Color == Color.White) ? Board.CopyBlackPieces() : Board.CopyWhitePieces();
@@ -220,6 +273,13 @@ namespace ChessLibrary
             return false;
         }
 
+        /// <summary>
+        /// Evolves a pawn to a specified piece.
+        /// </summary>
+        /// <param name="pawn">The pawn to evolve.</param>
+        /// <param name="finalCase">The case where the evolution occurs.</param>
+        /// <param name="choiceUser">The choice of piece for evolution.</param>
+        /// <exception cref="InvalidOperationException">Thrown when the choice for evolution is invalid.</exception>
         public void Evolve(Pawn pawn, Case finalCase, ChoiceUser choiceUser)
         {
             Piece newPiece;
@@ -248,34 +308,31 @@ namespace ChessLibrary
 
 
         /// <summary>
-        /// Fonction pour le déplacement d'une pièce
+        /// Moves a piece from the initial position to the final position, handling special moves like castling.
         /// </summary>
-        /// <param name="initial"></param>
-        /// <param name="final"></param>
-        /// <param name="board"></param>
-        /// <param name="actualPlayer"></param>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <param name="initial">The initial case of the piece.</param>
+        /// <param name="final">The final case of the piece.</param>
+        /// <param name="board">The chessboard.</param>
+        /// <param name="actualPlayer">The player making the move.</param>
+        /// <exception cref="InvalidOperationException">Thrown when the move is invalid.</exception>
         public void MovePiece(Case? initial, Case? final, Chessboard board, User actualPlayer)
         {
-
-
             if (initial!.Piece is King king &&
-            ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||
-            (king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))
+                ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||
+                 (king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))
             {
-                king.PetitRoque(board); // Appel de la méthode PetitRoque
+                king.PetitRoque(board); // Call the PetitRoque method
             }
             else if (initial!.Piece is King king1 &&
-            ((king1.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 0 && final.Line == 7) ||
-            (king1.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 0 && final.Line == 0)))
+                     ((king1.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 0 && final.Line == 7) ||
+                      (king1.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 0 && final.Line == 0)))
             {
-                king1.GrandRoque(board); // Appel de la méthode GrandRoque
+                king1.GrandRoque(board); // Call the GrandRoque method
             }
             else
             {
-
                 if (initial!.Piece == null)
-                    throw new InvalidOperationException("Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
+                    throw new InvalidOperationException("You cannot move a piece that does not exist.");
 
                 if (actualPlayer != CurrentPlayer)
                 {
@@ -289,25 +346,26 @@ namespace ChessLibrary
 
                 if (board.CanMovePiece(movingPiece, initial, final))
                 {
-                    // Simulation du mouvement pour la vérification
-
-                    UpdatePieceLists(blackPieces, whitePieces, initial, final, board); // Met à jour les listes de pièces de manière temporaire
+                    // Simulate the move for check verification
+                    UpdatePieceLists(blackPieces, whitePieces, initial, final, board); // Temporarily update piece lists
                     final.Piece = movingPiece;
                     initial.Piece = null;
-                    // Vérification de l'échec après le mouvement temporaire
+
+                    // Check for check after temporary move
                     if (board.IsInCheck(actualPlayer.Color))
                     {
-                        // Annuler le mouvement temporaire
+                        // Undo the temporary move
                         final.Piece = capturedPiece;
                         initial.Piece = movingPiece;
                         RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece!);
-                        throw new InvalidOperationException("Vous ne pouvez pas vous mettre en échec.");
+                        throw new InvalidOperationException("You cannot put yourself in check.");
                     }
                     RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece!);
                     initial.Piece = movingPiece;
                     final.Piece = capturedPiece;
-                    // Vérification si le mouvement est légal et si cela peut résoudre un échec existant
-                    // Effectuer le mouvement réel
+
+                    // Check if the move is legal and if it can resolve an existing check
+                    // Perform the actual move
                     Board.ProcessPostMove(initial, final);
 
                     if (final.Piece is Pawn pawn && (final.Line == 0 || final.Line == 7))
@@ -323,7 +381,7 @@ namespace ChessLibrary
                 }
                 else
                 {
-                    // Annuler le mouvement temporaire
+                    // Undo the temporary move
                     initial.Piece = movingPiece;
                     final.Piece = capturedPiece;
                     Board.ResetPossibleMoves();
@@ -331,26 +389,55 @@ namespace ChessLibrary
                 }
             }
         }
-
+        private bool roque1(Case initial, Case final, Chessboard board)
+        {
+            if (initial!.Piece is King king &&((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||(king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))
+            {
+                king.PetitRoque(board); // Call the PetitRoque method
+                return true;
+            }
+            return false;
+        }
+        private bool roque2(Case initial,Case final,Chessboard board)
+        {
+            if (initial!.Piece is King king1 &&
+                     ((king1.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 0 && final.Line == 7) ||
+                      (king1.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 0 && final.Line == 0)))
+            {
+                king1.GrandRoque(board); // Call the GrandRoque method
+                return true;
+            }
+            return false;
+        }
+        private void evolve(Case final)
+        {
+            if (final.Piece is Pawn pawn && (final.Line == 0 || final.Line == 7)) 
+            { 
+                OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = pawn, Case = final });
+            }
+        }
+        /// <summary>
+        /// Moves a piece forward, handling special moves like castling.
+        /// </summary>
+        /// <param name="initial">The initial case of the piece.</param>
+        /// <param name="final">The final case of the piece.</param>
+        /// <param name="board">The chessboard.</param>
+        /// <param name="actualPlayer">The player making the move.</param>
+        /// <exception cref="InvalidOperationException">Thrown when the move is invalid.</exception>
         public void MovePieceFront(Case? initial, Case? final, Chessboard board, User actualPlayer)
         {
-            if (initial!.Piece is King king &&
-            ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||
-            (king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))
+            if (roque1(initial, final, board)) 
             {
-                king.PetitRoque(board); // Appel de la méthode PetitRoque
+                return;
             }
-            else if (initial!.Piece is King king1 &&
-            ((king1.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 0 && final.Line == 7) ||
-            (king1.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 0 && final.Line == 0)))
+            else if( roque2(initial,final, board) )
             {
-                king1.GrandRoque(board); // Appel de la méthode GrandRoque
+                return;
             }
             else
             {
-
                 if (initial!.Piece == null)
-                    throw new InvalidOperationException("Vous ne pouvez pas déplacer une pièce qui n'existe pas.");
+                    throw new InvalidOperationException("You cannot move a piece that does not exist.");
 
                 if (actualPlayer.Color != CurrentPlayer.Color)
                 {
@@ -359,8 +446,6 @@ namespace ChessLibrary
                     return;
                 }
 
-
-
                 var blackPieces = board.CopyBlackPieces();
                 var whitePieces = board.CopyWhitePieces();
                 var movingPiece = initial.Piece;
@@ -368,29 +453,28 @@ namespace ChessLibrary
 
                 if (board.CanMovePiece(movingPiece, initial, final))
                 {
-                    // Simulation du mouvement pour la vérification
-
-                    UpdatePieceLists(blackPieces, whitePieces, initial, final, board); // Met à jour les listes de pièces de manière temporaire
+                    // Simulate the move for check verification
+                    UpdatePieceLists(blackPieces, whitePieces, initial, final, board); // Temporarily update piece lists
                     final.Piece = movingPiece;
                     initial.Piece = null;
-                    // Vérification de l'échec après le mouvement temporaire
+
+                    // Check for check after temporary move
                     if (board.IsInCheck(actualPlayer.Color))
                     {
-                        // Annuler le mouvement temporaire
+                        // Undo the temporary move
                         final.Piece = capturedPiece;
                         initial.Piece = movingPiece;
                         RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece!);
-                        throw new InvalidOperationException("Vous ne pouvez pas vous mettre en échec.");
+                        throw new InvalidOperationException("You cannot put yourself in check.");
                     }
                     RestorePieceLists(blackPieces, whitePieces, initial, final, board, movingPiece, capturedPiece!);
                     initial.Piece = movingPiece;
                     final.Piece = capturedPiece;
-                    // Vérification si le mouvement est légal et si cela peut résoudre un échec existant
-                    // Effectuer le mouvement réel
-                    Board.ProcessPostMove(initial, final);
 
-                    if (final.Piece is Pawn pawn && (final.Line == 0 || final.Line == 7))
-                        OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = pawn, Case = final });
+                    // Check if the move is legal and if it can resolve an existing check
+                    // Perform the actual move
+                    Board.ProcessPostMove(initial, final);
+                    evolve(final);
 
                     if (GameOver(CurrentPlayer))
                     {
@@ -400,7 +484,7 @@ namespace ChessLibrary
                 }
                 else
                 {
-                    // Annuler le mouvement temporaire
+                    // Undo the temporary move
                     initial.Piece = movingPiece;
                     final.Piece = capturedPiece;
                     Board.ResetPossibleMoves();
@@ -408,15 +492,25 @@ namespace ChessLibrary
                 }
             }
         }
+
+        /// <summary>
+        /// Restores the piece lists to their original state after a move has been undone.
+        /// </summary>
+        /// <param name="blackPieces">The list of black pieces.</param>
+        /// <param name="whitePieces">The list of white pieces.</param>
+        /// <param name="initial">The initial case of the piece.</param>
+        /// <param name="final">The final case of the piece.</param>
+        /// <param name="board">The chessboard.</param>
+        /// <param name="movedPiece">The piece that was moved.</param>
+        /// <param name="capturedPiece">The piece that was captured.</param>
         public static void RestorePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board, Piece movedPiece, Piece capturedPiece)
         {
-            // Rétablir la pièce déplacée dans sa position originale
+            // Restore the moved piece to its original position
             var listToUpdate = movedPiece.Color == Color.White ? whitePieces : blackPieces;
-            // Enlever la pièce de sa nouvelle position dans la liste et la remettre à l'initial
             listToUpdate.RemoveAll(p => p.piece == movedPiece && p.CaseLink == final);
             listToUpdate.Add(new CoPieces { CaseLink = initial, piece = movedPiece });
 
-            // Si une pièce a été capturée, la remettre dans sa liste respective
+            // Restore the captured piece to its list if it was captured
             if (capturedPiece != null)
             {
                 var listToRestore = capturedPiece.Color == Color.White ? whitePieces : blackPieces;
@@ -424,6 +518,14 @@ namespace ChessLibrary
             }
         }
 
+        /// <summary>
+        /// Updates the piece lists after a move has been made.
+        /// </summary>
+        /// <param name="blackPieces">The list of black pieces.</param>
+        /// <param name="whitePieces">The list of white pieces.</param>
+        /// <param name="initial">The initial case of the piece.</param>
+        /// <param name="final">The final case of the piece.</param>
+        /// <param name="board">The chessboard.</param>
         public static void UpdatePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board)
         {
             var movedPiece = initial!.Piece;
@@ -439,5 +541,6 @@ namespace ChessLibrary
                 listToRemoveFrom.RemoveAll(p => p.piece == capturedPiece);
             }
         }
+
     }
 }

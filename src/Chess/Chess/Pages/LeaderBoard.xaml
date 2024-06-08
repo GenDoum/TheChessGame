@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:contentV="clr-namespace:Chess.contentView"
              x:Class="Chess.Pages.LeaderBoard"
              BackgroundImageSource="test.jpg">
 
     <!-- Page LeaderBoard -->
-    
     <ScrollView>
-        <VerticalStackLayout>
-            
-        
+        <VerticalStackLayout HorizontalOptions="Center" >
+
             <FlexLayout>
 
                 <Image  Margin="10"
@@ -24,20 +24,39 @@
 
 
             </FlexLayout>
-            <VerticalStackLayout
-                Margin="0, 100, 0, 0">
+            <Label Text="Leaderboard" 
+                   FontSize="Large" 
+                   FontAttributes="Bold" 
+                   HorizontalOptions="Center" 
+                   TextColor="{StaticResource GoldUsefullColor}"
+                   FontFamily="Pacifico"
+                   Margin="0,10"/>
 
-                <Image
-                    Source="classement.png"
-                    Style="{StaticResource imgAppli}"
-                />
-                
-                <contentV:viewLeaderBoard/>
-                <contentV:viewLeaderBoard/>
-                <contentV:viewLeaderBoard/>
-                <contentV:viewLeaderBoard/>
-                <contentV:viewLeaderBoard/>
-            </VerticalStackLayout>
+            <CollectionView ItemsSource="{Binding Users}" MaximumWidthRequest="1000">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Margin="5" Padding="10" CornerRadius="10" HasShadow="True" BackgroundColor="White">
+                            <Grid ColumnDefinitions="0.15*,0.15*,0.7*" RowSpacing="0">
+                                <Label Text="{Binding Pseudo}" Grid.Column="0" TextColor="Black" 
+                                       VerticalOptions="Center" HorizontalOptions="Start" 
+                                       FontSize="Medium" FontAttributes="Bold" Margin="0,0,10,0"/>
+                                <Label Text="{Binding ScoreWithSuffix}" Grid.Column="2" TextColor="Black" 
+                                       VerticalOptions="Center" HorizontalOptions="End" 
+                                       FontSize="Medium" FontAttributes="Bold" Margin="10,0,0,0"/>
+                                <Image Source="certif.png"
+                                       Grid.Column="1"
+                                       HeightRequest="30"
+                                       WidthRequest="30"
+                                       Margin="8, 8, 0, 0"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
         </VerticalStackLayout>
     </ScrollView>
 

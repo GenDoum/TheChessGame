@@ -14,7 +14,7 @@
              AbsoluteLayout.LayoutFlags="PositionProportional"
              Margin="20, 20, 0, 0">
                 <Image.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnCancelButtonClicked"/>
+                    <TapGestureRecognizer Tapped="OnBackButtonClicked"/>
                 </Image.GestureRecognizers>
             </Image>
         </FlexLayout>
@@ -36,7 +36,7 @@
             <Button Text="Connexion" Style="{StaticResource buttonSyle}"
                     Clicked="OnConnexionButtonClicked"/>
             <Button Text="Annuler" Style="{StaticResource buttonSyle}"
-                    Clicked="OnBackButtonClicked"/>
+                    Clicked="OnCancelButtonClicked"/>
 
 
         </FlexLayout>

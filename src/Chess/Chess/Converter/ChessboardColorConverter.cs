@@ -18,7 +18,7 @@ namespace Chess.Converter
                 return Colors.Transparent;
             }
 
-            return (caseColor.Line + caseColor.Column) % 2 == 0 ? Colors.White : Colors.DarkGrey;
+            return (caseColor.Line + caseColor.Column) % 2 == 0 ? Colors.DarkGrey : Colors.PaleGoldenrod;
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

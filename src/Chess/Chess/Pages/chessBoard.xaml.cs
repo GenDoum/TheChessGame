@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,9 +76,9 @@ public partial class chessBoard : ContentPage
 
     private async void OnGameOver(object sender, GameOverNotifiedEventArgs e)
     {
-        this.ShowPopup(new endGame($"{e.Winner!.Pseudo} is the winner !"));
+        this.ShowPopup(new endGame($"{e.Winner!.Pseudo} is the Winner !"));
         e.Winner.Score += 5;
-        e.Loser!.Score -= 1;
+        e.Loser!.Score -= 5;
         await Shell.Current.GoToAsync("//page/MainPage");
     }
 

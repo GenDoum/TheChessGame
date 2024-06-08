@@ -9,18 +9,31 @@ using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
+    /// <summary>
+    /// Manages the chess games, users, and chessboards, and handles data persistence.
+    /// </summary>
     public class Manager : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Gets or sets the persistence manager for data storage.
+        /// </summary>
         public IPersistanceManager? persistanceManager { get; set; }
 
-        public ObservableCollection<Game>? games;
+        private ObservableCollection<Game>? games;
 
-        public ObservableCollection<User>? Users;
+        /// <summary>
+        /// Gets or sets the collection of users.
+        /// </summary>
+        public ObservableCollection<User>? Users { get; set; }
 
-        public ObservableCollection<Chessboard>? Chessboards;
+        /// <summary>
+        /// Gets or sets the collection of chessboards.
+        /// </summary>
+        public ObservableCollection<Chessboard>? Chessboards { get; set; }
 
-        public Game CurrentGame { get; set; }
-
+        /// <summary>
+        /// Gets or sets the collection of games.
+        /// </summary>
         public ObservableCollection<Game> Games
         {
             get
@@ -34,11 +47,22 @@ namespace ChessLibrary
             }
         }
 
+        /// <summary>
+        /// Event triggered when a property value changes.
+        /// </summary>
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        /// <summary>
+        /// Method to raise the PropertyChanged event.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that changed.</param>
         void OnPropertyChanged([CallerMemberName] string? propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Manager"/> class with a specified persistence manager.
+        /// </summary>
+        /// <param name="persistanceManager">The persistence manager for data storage.</param>
         public Manager(IPersistanceManager persistanceManager)
         {
             Users = new ObservableCollection<User>();
@@ -48,6 +72,9 @@ namespace ChessLibrary
             this.persistanceManager = persistanceManager;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Manager"/> class.
+        /// </summary>
         public Manager()
         {
             Users = new ObservableCollection<User>();
@@ -55,9 +82,12 @@ namespace ChessLibrary
             Chessboards = new ObservableCollection<Chessboard>();
         }
 
+        /// <summary>
+        /// Loads data from the persistence manager.
+        /// </summary>
         public void LoadData()
         {
-            if(persistanceManager != null)
+            if (persistanceManager != null)
             {
                 var data = persistanceManager.LoadData();
 
@@ -75,11 +105,12 @@ namespace ChessLibrary
                 {
                     Chessboards.Add(chessboard);
                 }
-
-                CurrentGame = data.Item1.FirstOrDefault();
             }
         }
 
+        /// <summary>
+        /// Saves data to the persistence manager.
+        /// </summary>
         public void SaveData()
         {
             persistanceManager?.SaveData(Games, Users, Chessboards);

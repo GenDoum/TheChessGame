@@ -6,18 +6,21 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using System.ComponentModel;
 
 namespace ChessLibrary
 {
     /// <summary>
-    /// Classe Player
+    /// Represents a player in the chess game.
     /// </summary>
-    [DataContract(Name = "Players")] // [DataContract, KnownType(typeof(Type fils))] Pour l'héritage
-    public class User
+    [DataContract(Name = "Players")] // [DataContract, KnownType(typeof(Type fils))] for inheritance
+    public class User : INotifyPropertyChanged
     {
+        private string _pseudo;
+        private int _score;
 
         /// <summary>
-        /// Pseudo of the Player
+        /// Gets or sets the player's pseudo.
         /// </summary>
         [DataMember]
         public string Pseudo
@@ -25,64 +28,65 @@ namespace ChessLibrary
             get => _pseudo;
             set
             {
-                _pseudo = value;
-
-                if (string.IsNullOrWhiteSpace(Pseudo))
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentException("Pseudo or password must be entered and must not be full of white space", nameof(Pseudo));
                 }
+                _pseudo = value;
+                OnPropertyChanged(nameof(Pseudo));
             }
         }
 
-        [DataMember]
-        private string _pseudo;
-
         /// <summary>
-        /// Password of the Player
+        /// Gets or sets the player's password.
         /// </summary>
         [DataMember]
         public string? Password { get; set; }
 
         /// <summary>
-        /// Type for know the color of the player
+        /// Gets or sets the player's color.
         /// </summary>
         [DataMember]
-        public Color Color
-        {
-            get;
-            set;
-        }
+        public Color Color { get; set; }
 
         /// <summary>
-        /// Score of the player
+        /// Gets or sets the player's score.
         /// </summary>
         [DataMember]
         public int Score
         {
-            get;
-            set;
+            get { return _score; }
+            set
+            {
+                if (_score != value)
+                {
+                    _score = value;
+                    OnPropertyChanged(nameof(Score));
+                    OnPropertyChanged(nameof(ScoreWithSuffix));
+                }
+            }
         }
 
         /// <summary>
-        /// Public boolean to know if the User is connected
+        /// Gets the player's score with a suffix.
+        /// </summary>
+        public string ScoreWithSuffix => $"{Score} Élo";
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the player is connected.
         /// </summary>
         [DataMember]
-        public bool IsConnected
-        {
-            get;
-            set;
-        }
+        public bool IsConnected { get; set; }
 
         /// <summary>
-        /// Constructor of Player with parameters.
+        /// Initializes a new instance of the <see cref="User"/> class with parameters.
         /// </summary>
-        /// <param name="pseudo"></param>
-        /// <param name="password"></param>
-
-        /// <param name="color"></param>
-        /// <param name="connected"></param>
-        /// <param name="playerScore"></param>
-        /// <exception cref="ArgumentException"></exception>
+        /// <param name="pseudo">The pseudo of the player.</param>
+        /// <param name="password">The password of the player.</param>
+        /// <param name="color">The color of the player.</param>
+        /// <param name="connected">Indicates if the player is connected.</param>
+        /// <param name="playerScore">The score of the player.</param>
+        /// <exception cref="ArgumentException">Thrown when the pseudo is null or whitespace.</exception>
         public User(string pseudo, string password, Color color, bool connected, int playerScore)
         {
             if (string.IsNullOrWhiteSpace(pseudo))
@@ -93,23 +97,28 @@ namespace ChessLibrary
             this._pseudo = pseudo;
             this.Password = User.HashPassword(password);
             this.Color = color;
-            Score = playerScore;
-            IsConnected = connected;
-
+            this.Score = playerScore;
+            this.IsConnected = connected;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="User"/> class with a specified color.
+        /// </summary>
+        /// <param name="color">The color of the player.</param>
         public User(Color color)
         {
-            string name = $"{color.ToString()} player";
-
+            string name = $"{color} player";
             this._pseudo = name;
             this.Password = null;
             this.Color = color;
             this.Score = 0;
             this.IsConnected = false;
-
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="User"/> class by copying another user.
+        /// </summary>
+        /// <param name="user">The user to copy.</param>
         public User(User user)
         {
             this._pseudo = user.Pseudo;
@@ -119,40 +128,66 @@ namespace ChessLibrary
             this.IsConnected = user.IsConnected;
         }
 
-
         /// <summary>
-        /// Constructor of Player without paramaters.
+        /// Initializes a new instance of the <see cref="User"/> class without parameters.
         /// This constructor will be used for the invited player.
         /// </summary>
         public User()
         {
             _pseudo = "Invité";
             Password = null;
-            
         }
+
+        /// <summary>
+        /// Hashes the specified password using SHA256.
+        /// </summary>
+        /// <param name="password">The password to hash.</param>
+        /// <returns>The hashed password as a base64 string, or null if the password is null.</returns>
         public static string? HashPassword(string password)
         {
             if (password == null)
             {
-                return null; // Dans le cas des joueur invité, qui n'ont pas de mot de passe
+                return null; // For guest players who don't have a password.
             }
 
             using (var sha256 = SHA256.Create())
             {
-                var hashBytes = System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(password));
+                var hashBytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));
                 return Convert.ToBase64String(hashBytes);
             }
         }
 
+        /// <summary>
+        /// Checks if the specified password matches the hashed password.
+        /// </summary>
+        /// <param name="password">The password to check.</param>
+        /// <returns>True if the passwords match; otherwise, false.</returns>
         public bool CheckPassword(string password)
         {
             return User.HashPassword(password) == Password;
         }
 
+        /// <summary>
+        /// Returns a string that represents the current user.
+        /// </summary>
+        /// <returns>A string that represents the current user.</returns>
         public override string ToString()
         {
             return $"Pseudo: {Pseudo}, Password: {(Password != null ? "Hashed" : "null")}, Color: {Color}, Score: {Score}, IsConnected: {IsConnected}";
         }
-    }
 
+        /// <summary>
+        /// Event triggered when a property value changes.
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        /// <summary>
+        /// Raises the PropertyChanged event.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that changed.</param>
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
 }

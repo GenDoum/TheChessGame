@@ -1,14 +1,18 @@
 ﻿using ChessLibrary;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistance
 {
+    /// <summary>
+    /// Interface for managing movement data.
+    /// </summary>
     internal interface IMovementDataManager
     {
-        public abstract void WriteUsers(List<User> users);
+        /// <summary>
+        /// Writes the user data to the persistence layer.
+        /// </summary>
+        /// <param name="users">The list of users to be written.</param>
+        void WriteUsers(List<User> users);
     }
 }

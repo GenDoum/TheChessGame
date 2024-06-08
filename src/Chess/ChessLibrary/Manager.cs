@@ -17,9 +17,9 @@ namespace ChessLibrary
         /// <summary>
         /// Gets or sets the persistence manager for data storage.
         /// </summary>
-        public IPersistanceManager? persistanceManager { get; set; }
+        public IPersistanceManager? PersistanceManager { get; set; }
 
-        private ObservableCollection<Game>? games;
+        private ObservableCollection<Game>? _games;
 
         /// <summary>
         /// Gets or sets the collection of users.
@@ -38,11 +38,11 @@ namespace ChessLibrary
         {
             get
             {
-                return games ??= new ObservableCollection<Game>();
+                return _games ??= new ObservableCollection<Game>();
             }
             set
             {
-                games = value;
+                _games = value;
                 OnPropertyChanged();
             }
         }
@@ -69,7 +69,7 @@ namespace ChessLibrary
             Games = new ObservableCollection<Game>();
             Chessboards = new ObservableCollection<Chessboard>();
 
-            this.persistanceManager = persistanceManager;
+            this.PersistanceManager = persistanceManager;
         }
 
         /// <summary>
@@ -87,9 +87,9 @@ namespace ChessLibrary
         /// </summary>
         public void LoadData()
         {
-            if (persistanceManager != null)
+            if (PersistanceManager != null)
             {
-                var data = persistanceManager.LoadData();
+                var data = PersistanceManager.LoadData();
 
                 foreach (var game in data.Item1)
                 {
@@ -113,7 +113,7 @@ namespace ChessLibrary
         /// </summary>
         public void SaveData()
         {
-            persistanceManager?.SaveData(Games, Users!, Chessboards!);
+            PersistanceManager?.SaveData(Games, Users!, Chessboards!);
         }
     }
 }

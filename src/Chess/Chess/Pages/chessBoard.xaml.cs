@@ -45,7 +45,6 @@ public partial class chessBoard : ContentPage
         BindingContext = this;
     }
 
-
     public async void OnInvalidMove(object sender, EventArgs e)
     {
         await DisplayAlert("Erreur", "Mouvement invalide, vérifiez les règles.", "OK");

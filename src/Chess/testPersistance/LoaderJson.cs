@@ -31,7 +31,7 @@ namespace Persistance
                 data = jsonSerializer.ReadObject(fs) as DataToPersist;
             }
 
-            return (data!.games, data!.players, data!.chessboards);
+            return (data!.games, data.players, data.chessboards);
         }
 
         public void SaveData(ObservableCollection<Game> games, ObservableCollection<User> players, ObservableCollection<Chessboard> chessboards)

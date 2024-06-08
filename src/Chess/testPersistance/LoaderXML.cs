@@ -15,7 +15,6 @@ namespace Persistance
 
         public string FilePath { get; set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ChessData");
 
-
         public (ObservableCollection<Game>, ObservableCollection<User>, ObservableCollection<Chessboard>) LoadData()
         {
             var serializer = new DataContractSerializer(typeof(DataToPersist));
@@ -32,6 +31,7 @@ namespace Persistance
             {
                 data= new DataToPersist();
             }
+            Console.WriteLine(FilePath);
 
             return (data!.games, data!.players, data!.chessboards);
         }

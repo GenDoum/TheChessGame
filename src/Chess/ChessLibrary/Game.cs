@@ -193,6 +193,8 @@ namespace ChessLibrary
 
             WhiteCheck = false;
             BlackCheck = false;
+            
+            _currentPlayer = Player1;
 
             Case?[,] allcase = new Case[8, 8];
             for (int i = 0; i < 8; i++)
@@ -205,8 +207,6 @@ namespace ChessLibrary
 
             Chessboard chessboard = new Chessboard();
             this.Board = chessboard;
-
-            CurrentPlayer = Player1;
         }
 
         /// <summary>
@@ -220,6 +220,8 @@ namespace ChessLibrary
             BlackCheck = false;
             this.Player1 = player1;
             this.Player2 = player2;
+            
+            _currentPlayer = player1;
 
             Case?[,] allcase = new Case[8, 8];
             for (int i = 0; i < 8; i++)
@@ -232,8 +234,7 @@ namespace ChessLibrary
 
             Chessboard chessboard = new Chessboard(allcase, false);
             this.Board = chessboard;
-
-            CurrentPlayer = Player1;
+            
         }
 
         /// <summary>

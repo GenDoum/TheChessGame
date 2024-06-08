@@ -142,7 +142,7 @@ public partial class chessBoard : ContentPage
                         if (piece != null)
                         {
                             User actualPlayer = piece.Color == Color.White ? Game.Player1 : Game.Player2;
-                            Game.MovePieceFront(_selectedCase, clickedCase, Game.Board, actualPlayer);
+                            Game.MovePiece(_selectedCase, clickedCase, Game.Board, actualPlayer);
                             Game.Board.ResetPossibleMoves();
                         }
 

@@ -57,7 +57,7 @@ namespace ChessLibrary
         protected virtual void OnErrorPlayerTurn()
             => ErrorPlayerTurnNotified?.Invoke(this, EventArgs.Empty);
 
-        private User _player1;
+        private User _player1 = new User();
         /// <summary>
         /// Gets or sets Player1.
         /// </summary>
@@ -75,7 +75,7 @@ namespace ChessLibrary
             }
         }
 
-        private User _player2;
+        private User _player2 = new User();
         /// <summary>
         /// Gets or sets Player2.
         /// </summary>
@@ -96,7 +96,7 @@ namespace ChessLibrary
         /// <summary>
         /// Event triggered when a property value changes.
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// Raises the PropertyChanged event.
@@ -337,7 +337,7 @@ namespace ChessLibrary
             TryMovePiece(initial, final, board, actualPlayer);
         }
 
-        private bool roque1(Case initial, Case final, Chessboard board)
+        private static bool roque1(Case initial, Case final, Chessboard board)
         {
             if (initial!.Piece is King king &&((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||(king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))
             {
@@ -346,7 +346,7 @@ namespace ChessLibrary
             }
             return false;
         }
-        private bool roque2(Case initial,Case final,Chessboard board)
+        private static bool roque2(Case initial,Case final,Chessboard board)
         {
             if (initial!.Piece is King king1 &&
                      ((king1.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 0 && final.Line == 7) ||
@@ -364,36 +364,6 @@ namespace ChessLibrary
                 OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = pawn, Case = final });
             }
         }
-        /// <summary>
-        /// Moves a piece forward, handling special moves like castling.
-        /// </summary>
-        /// <param name="initial">The initial case of the piece.</param>
-        /// <param name="final">The final case of the piece.</param>
-        /// <param name="board">The chessboard.</param>
-        /// <param name="actualPlayer">The player making the move.</param>
-        /// <exception cref="InvalidOperationException">Thrown when the move is invalid.</exception>
-        public void MovePieceFront(Case? initial, Case? final, Chessboard board, User actualPlayer)
-        {
-            if (initial == null || final == null || initial.Piece == null)
-            {
-                throw new InvalidOperationException("Invalid move.");
-            }
-
-            if (actualPlayer.Color != CurrentPlayer.Color)
-            {
-                Board.ResetPossibleMoves();
-                OnErrorPlayerTurn();
-                return;
-            }
-
-            if (TryPerformCastling(initial, final, board))
-            {
-                return;
-            }
-
-            TryMovePiece(initial, final, board, actualPlayer);
-        }
-
         private bool TryPerformCastling(Case initial, Case final, Chessboard board)
         {
             if (roque1(initial, final, board) || roque2(initial, final, board))
@@ -405,8 +375,6 @@ namespace ChessLibrary
 
         private void TryMovePiece(Case initial, Case final, Chessboard board, User actualPlayer)
         {
-            var blackPieces = board.CopyBlackPieces();
-            var whitePieces = board.CopyWhitePieces();
             var movingPiece = initial.Piece;
             var capturedPiece = final.Piece;
 
@@ -416,11 +384,11 @@ namespace ChessLibrary
 
                 if (board.IsInCheck(actualPlayer.Color))
                 {
-                    UndoMove(initial, final, movingPiece, capturedPiece);
+                    UndoMove(initial, final, movingPiece!, capturedPiece!);
                     throw new InvalidOperationException("You cannot put yourself in check.");
                 }
 
-                CompleteMove(initial, final, movingPiece, capturedPiece, board, actualPlayer);
+                CompleteMove(initial, final, board, actualPlayer);
             }
             else
             {
@@ -428,19 +396,19 @@ namespace ChessLibrary
             }
         }
 
-        private void SimulateMove(Case initial, Case final)
+        private static void SimulateMove(Case initial, Case final)
         {
             final.Piece = initial.Piece;
             initial.Piece = null;
         }
 
-        private void UndoMove(Case initial, Case final, Piece movingPiece, Piece capturedPiece)
+        private static void UndoMove(Case initial, Case final, Piece movingPiece, Piece capturedPiece)
         {
             final.Piece = capturedPiece;
             initial.Piece = movingPiece;
         }
 
-        private void CompleteMove(Case initial, Case final, Piece movingPiece, Piece capturedPiece, Chessboard board, User actualPlayer)
+        private void CompleteMove(Case initial, Case final, Chessboard board, User actualPlayer)
         {
 
             board.ProcessPostMove(initial, final);

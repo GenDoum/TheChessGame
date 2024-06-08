@@ -278,12 +278,14 @@ public class UnitTestKing
     [Fact]
     public void GrandRoque_ValidConditions_PerformsCastling()
     {
-        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        var chessboard = new Chessboard(new Case[8, 8], true);
         // Arrange
         var king = new King(Color.White, 1);
         var rook = new Rook(Color.White, 2);
         chessboard.Board[4, 7] = new Case(4, 7, king);
         chessboard.Board[0, 7] = new Case(0, 7, rook);
+        chessboard.AddPiece(king, 4, 7);
+        chessboard.AddPiece(rook, 0, 7);
 
 
         // Act

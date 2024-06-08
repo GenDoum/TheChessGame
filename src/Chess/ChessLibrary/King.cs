@@ -163,8 +163,8 @@ namespace ChessLibrary
                     if (!chessboard.Echec(this, chessboard.Board[5, row]) && !chessboard.Echec(this, chessboard.Board[6, row]))
                     {
                         // Perform castling.
-                        chessboard.ProcessPostMove(chessboard.Board[4, row], chessboard.Board[6, row]);  // Move king (E1/E8 to G1/G8).
-                        chessboard.ProcessPostMove(chessboard.Board[7, row], chessboard.Board[5, row]);  // Move rook (H1/H8 to F1/F8).
+                        chessboard.ProcessPostMove(chessboard.Board[6, row], chessboard.Board[4, row]);  // Move king (E1/E8 to G1/G8).
+                        chessboard.ProcessPostMove(chessboard.Board[5, row], chessboard.Board[7, row]);  // Move rook (H1/H8 to F1/F8).
 
                         // Update positions on the board.
                         chessboard.Board[6, row]!.Piece = this;
@@ -209,8 +209,8 @@ namespace ChessLibrary
                     if (!chessboard.Echec(this, chessboard.Board[1, row]) && !chessboard.Echec(this, chessboard.Board[2, row]) && !chessboard.Echec(this, chessboard.Board[3, row]))
                     {
                         // Perform castling.
-                        chessboard.ProcessPostMove(chessboard.Board[4, row], chessboard.Board[2, row]);  // Move king (E1/E8 to C1/C8).
-                        chessboard.ProcessPostMove(chessboard.Board[0, row], chessboard.Board[3, row]);  // Move rook (A1/A8 to D1/D8).
+                        chessboard.ProcessPostMove(chessboard.Board[2, row], chessboard.Board[4, row] );  // Move king (E1/E8 to C1/C8).
+                        chessboard.ProcessPostMove(chessboard.Board[3, row],chessboard.Board[0, row]);  // Move rook (A1/A8 to D1/D8).
 
                         // Update positions on the board.
                         chessboard.Board[2, row]!.Piece = this;

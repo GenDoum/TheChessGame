@@ -598,12 +598,10 @@ namespace ChessLibrary
         /// <param name="final">The final case of the piece.</param>
         public void ProcessPostMove(Case? initial, Case? final)
         {
-            if (final!.Piece != null && final.Piece.Color != initial!.Piece!.Color)
+            if (final!.Piece != null && initial.Piece != null && final.Piece.Color != initial!.Piece!.Color)
             {
                 RemovePieceFromList(initial);
             }
-            final.Piece = initial!.Piece;
-            initial.Piece = null;
             ModifList(initial, final);
 
             if (final.Piece is IFirstMove firstMover)

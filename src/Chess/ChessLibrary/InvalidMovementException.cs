@@ -34,20 +34,10 @@ namespace ChessLibrary
         /// </summary>
         /// <param name="info">The SerializationInfo that holds the serialized object data about the exception being thrown.</param>
         /// <param name="context">The StreamingContext that contains contextual information about the source or destination.</param>
+#pragma warning disable SYSLIB0051 // Le type ou le membre est obsolète
         protected InvalidMovementException(SerializationInfo info, StreamingContext context) : base(info, context)
+#pragma warning restore SYSLIB0051 // Le type ou le membre est obsolète
         {
-            // Custom serialization logic can be added here if needed
-        }
-
-        /// <summary>
-        /// Populates a SerializationInfo with the data needed to serialize the target object.
-        /// </summary>
-        /// <param name="info">The SerializationInfo to populate with data.</param>
-        /// <param name="context">The destination (see StreamingContext) for this serialization.</param>
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            base.GetObjectData(info, context);
-            // Add any additional custom properties here if needed
         }
 
         /// <summary>

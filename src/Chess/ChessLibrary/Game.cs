@@ -409,6 +409,13 @@ namespace ChessLibrary
             }
             return false;
         }
+        private void evolve(Case final)
+        {
+            if (final.Piece is Pawn pawn && (final.Line == 0 || final.Line == 7)) 
+            { 
+                OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = pawn, Case = final });
+            }
+        }
         /// <summary>
         /// Moves a piece forward, handling special moves like castling.
         /// </summary>
@@ -423,8 +430,6 @@ namespace ChessLibrary
             {
                 return;
             }
-
-
             else if( roque2(initial,final, board) )
             {
                 return;
@@ -469,9 +474,7 @@ namespace ChessLibrary
                     // Check if the move is legal and if it can resolve an existing check
                     // Perform the actual move
                     Board.ProcessPostMove(initial, final);
-
-                    if (final.Piece is Pawn pawn && (final.Line == 0 || final.Line == 7))
-                        OnEvolvePiece(new EvolveNotifiedEventArgs { Pawn = pawn, Case = final });
+                    evolve(final);
 
                     if (GameOver(CurrentPlayer))
                     {

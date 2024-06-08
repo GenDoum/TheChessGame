@@ -526,14 +526,22 @@ namespace ConsoleChess
         static void Main()
         {
 
-            IPersistanceManager persistanceManager = new Stub.Stub();
+            /*IPersistanceManager persistanceManager = new Stub.Stub();
             (ObservableCollection<Game> games, ObservableCollection<User> users, ObservableCollection<Chessboard> chessboards) = persistanceManager.LoadData();
 
             menuAccueil(users.ToList(), persistanceManager);
 
-            persistanceManager.SaveData(games, users, chessboards);
-
-
+            persistanceManager.SaveData(games, users, chessboards);*/
+            Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+            King whiteKing = new King(ChessLibrary.Color.White, 1);
+            Rook blackRook1 = new Rook(ChessLibrary.Color.Black, 2);
+            Queen blackQueen = new Queen(ChessLibrary.Color.Black, 3);
+            King blackKing = new King(ChessLibrary.Color.Black, 4);
+            chessboard.AddPiece(blackKing, 7, 7);
+            chessboard.AddPiece(whiteKing, 0, 0);
+            chessboard.AddPiece(blackRook1, 0, 1);
+            chessboard.AddPiece(blackQueen, 1, 1);
+            DisplayBoard(chessboard);
         }
 
 

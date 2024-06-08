@@ -200,8 +200,8 @@ public class UnitTestKing
 
         // Assert
         Assert.Throws<ArgumentException>(()=>king.PetitRoque(chessboard));
-        Assert.Null(chessboard.Board[6, 7].Piece);  // Le roi ne doit pas être déplacé
-        Assert.NotNull(chessboard.Board[5, 7].Piece);  // La case entre doit toujours avoir le pion
+        Assert.Null(chessboard.Board[6, 7]!.Piece);  // Le roi ne doit pas être déplacé
+        Assert.NotNull(chessboard.Board[5, 7]!.Piece);  // La case entre doit toujours avoir le pion
     }
     [Fact]
     public void GrandRoque_KingAlreadyMoved_ThrowsArgumentException()
@@ -292,9 +292,9 @@ public class UnitTestKing
         king.GrandRoque(chessboard);
 
         // Assert
-        Assert.NotNull(chessboard.Board[2, 7].Piece);
-        Assert.Equal(typeof(King), chessboard.Board[2, 7].Piece.GetType());
-        Assert.NotNull(chessboard.Board[3, 7].Piece);
-        Assert.Equal(typeof(Rook), chessboard.Board[3, 7].Piece.GetType());
+        Assert.NotNull(chessboard.Board[2, 7]!.Piece);
+        Assert.Equal(typeof(King), chessboard.Board[2, 7]!.Piece!.GetType());
+        Assert.NotNull(chessboard.Board[3, 7]!.Piece);
+        Assert.Equal(typeof(Rook), chessboard.Board[3, 7]!.Piece!.GetType());
     }
 }

@@ -971,20 +971,37 @@ public class UnitTestBoard
     }
 
     [Fact]
-    public void TestFindCase()
+    public void FindCase_ReturnsCorrectCase()
     {
         // Arrange
-        var chessboard = new Chessboard(new Case[8, 8], true);
-        var king = new King(Color.White, 1);
-        chessboard.Board[0, 0] = new Case(0, 0, king);
+        var chessboard = new Chessboard();
+        var piece = new Pawn(Color.White, 1);
+        chessboard.AddPiece(piece, 3, 3);
 
         // Act
-        var result = chessboard.FindCase(king);
+        var result = chessboard.FindCase(piece);
 
         // Assert
-        Assert.Equal(chessboard.Board[0, 0], result);
+        Assert.NotNull(result);
+        Assert.Equal(3, result.Column);
+        Assert.Equal(3, result.Line);
+        Assert.Equal(piece, result.Piece);
     }
-    
+
+    [Fact]
+    public void FindCase_ReturnsNullForNonexistentPiece()
+    {
+        // Arrange
+        var chessboard = new Chessboard();
+        var piece = new Pawn(Color.White, 1);
+
+        // Act
+        var result = chessboard.FindCase(piece);
+
+        // Assert
+        Assert.Null(result);
+    }
+
     [Fact]
     public void TestCanDefendKing()
     {

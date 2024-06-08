@@ -17,43 +17,32 @@ namespace Chess.Pages;
 
 public partial class chessBoard : ContentPage
 {
-    public Game Game { get; set; } = new Game(new User(ChessLibrary.Color.White), new User(ChessLibrary.Color.Black));
+    private Case? _selectedCase;
 
+    public Game Game { get; set; }
     public Manager MyManager => (App.Current as App).MyManager;
 
     public chessBoard()
     {
-        foreach (Game game in MyManager.Games)
-        {
-            if ((Equals(game.Player1, MyManager.Games.First().Player1) || Equals(game.Player1, MyManager.Games.First().Player2)) && (Equals(game.Player2, MyManager.Games.First().Player1) || Equals(game.Player2, MyManager.Games.First().Player2)))
-            {
-                this.Game = game;
-            }
-        }
-
-        this.Game = MyManager.Games.First();
-        this.Game.InvalidMove += OnInvalidMove;
-        this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
-        this.Game.EvolveNotified += OnEvolvePiece;
-        this.Game.GameOverNotified += OnGameOver;
-        Game = MyManager.Games.First();
-        BindingContext = this;
-        
+        InitializeGame();
         InitializeComponent();
-
     }
 
     public chessBoard(User u1, User u2)
     {
-        this.Game = new Game(u1, u2);
-        this.Game.InvalidMove += OnInvalidMove;
-        this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
-        this.Game.EvolveNotified += OnEvolvePiece;
-        this.Game.GameOverNotified += OnGameOver;
-
-
-        BindingContext = this;
+        Game = new Game(u1, u2);
+        InitializeGame();
         InitializeComponent();
+    }
+
+    private void InitializeGame()
+    {
+        Game = MyManager.Games.First();
+        Game.InvalidMove += OnInvalidMove;
+        Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
+        Game.EvolveNotified += OnEvolvePiece;
+        Game.GameOverNotified += OnGameOver;
+        BindingContext = this;
     }
 
 
@@ -108,9 +97,6 @@ public partial class chessBoard : ContentPage
         await Navigation.PopToRootAsync();
     }
 
-
-    private Case? _selectedCase;
-
     async void OnPieceClicked(object sender, EventArgs e)
     {
         try
@@ -123,30 +109,11 @@ public partial class chessBoard : ContentPage
                 {
                     if (_selectedCase == null)
                     {
-                        var piece = clickedCase.Piece;
-                        // Si aucune pièce n'est sélectionnée, sélectionne la pièce sur laquelle nous avons cliqué
-                        _selectedCase = clickedCase;
-                        // Récupérer les mouvements possibles de la pièce
-                        var possibleMoves = piece.PossibleMoves(_selectedCase, Game.Board);
-                        var possibleCoordinates = possibleMoves.Select(c => $"({c.Column}, {c.Line})");
-
-                        foreach (var move in possibleMoves)
-                        {
-                            move.IsPossibleMove = true;
-                        }
+                        SelectPiece(clickedCase);
                     }
                     else
                     {
-                        // Si une pièce est déjà sélectionnée, la déplacer vers la case sur laquelle nous avons cliqué
-                        var piece = _selectedCase.Piece;
-                        if (piece != null)
-                        {
-                            User actualPlayer = piece.Color == Color.White ? Game.Player1 : Game.Player2;
-                            Game.MovePiece(_selectedCase, clickedCase, Game.Board, actualPlayer);
-                            Game.Board.ResetPossibleMoves();
-                        }
-
-                        _selectedCase = null;
+                        MovePiece(clickedCase);
                     }
                 }
             }
@@ -156,6 +123,39 @@ public partial class chessBoard : ContentPage
             await DisplayAlert("Erreur", ex.Message, "OK");
         }
     }
+
+    private void SelectPiece(Case clickedCase)
+    {
+        var piece = clickedCase.Piece;
+        // Si aucune pièce n'est sélectionnée, sélectionne la pièce sur laquelle nous avons cliqué
+        if (piece != null)
+        {
+            _selectedCase = clickedCase;
+            // Récupérer les mouvements possibles de la pièce
+            var possibleMoves = piece.PossibleMoves(_selectedCase, Game.Board);
+            var possibleCoordinates = possibleMoves.Select(c => $"({c.Column}, {c.Line})");
+
+            foreach (var move in possibleMoves)
+            {
+                move.IsPossibleMove = true;
+            }
+        }
+    }
+
+    private void MovePiece(Case clickedCase)
+    {
+        // Si une pièce est déjà sélectionnée, la déplacer vers la case sur laquelle nous avons cliqué
+        var piece = _selectedCase.Piece;
+        if (piece != null)
+        {
+            var actualPlayer = piece.Color == Color.White ? Game.Player1 : Game.Player2;
+            Game.MovePiece(_selectedCase, clickedCase, Game.Board, actualPlayer);
+            Game.Board.ResetPossibleMoves();
+        }
+
+        _selectedCase = null;
+    }
+
 
     private void OnPauseButtonClicked(object sender, EventArgs e)
     {

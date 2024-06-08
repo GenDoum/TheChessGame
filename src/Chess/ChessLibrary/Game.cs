@@ -57,6 +57,7 @@ namespace ChessLibrary
         protected virtual void OnErrorPlayerTurn()
             => ErrorPlayerTurnNotified?.Invoke(this, EventArgs.Empty);
 
+
         private User _player1 = new User();
         /// <summary>
         /// Gets or sets Player1.
@@ -107,12 +108,23 @@ namespace ChessLibrary
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private User _currentPlayer;
         /// <summary>
         /// Gets the current player.
         /// </summary>
         [DataMember]
-        public User CurrentPlayer { get; private set; }
-
+        public User CurrentPlayer
+        {
+            get { return _currentPlayer; }
+            private set
+            {
+                if (_currentPlayer != value)
+                {
+                    _currentPlayer = value;
+                    OnPropertyChanged(nameof(CurrentPlayer));
+                }
+            }
+        }
         private Chessboard _board = new Chessboard();
         /// <summary>
         /// Gets or sets the chessboard.
@@ -395,6 +407,7 @@ namespace ChessLibrary
                 OnInvalidMove();
             }
         }
+
 
         private static void SimulateMove(Case initial, Case final)
         {

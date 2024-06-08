@@ -98,12 +98,12 @@ namespace ChessLibrary
 
                 foreach (var user in data.Item2)
                 {
-                    Users.Add(user);
+                    Users!.Add(user);
                 }
 
                 foreach (var chessboard in data.Item3)
                 {
-                    Chessboards.Add(chessboard);
+                    Chessboards!.Add(chessboard);
                 }
             }
         }
@@ -113,7 +113,7 @@ namespace ChessLibrary
         /// </summary>
         public void SaveData()
         {
-            persistanceManager?.SaveData(Games, Users, Chessboards);
+            persistanceManager?.SaveData(Games, Users!, Chessboards!);
         }
     }
 }

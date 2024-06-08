@@ -29,18 +29,24 @@ public class UnitTestBishop
     }
 
     [Fact]
-    public void PossibleMoves_EmptyBoard_ReturnsCorrectMoves()
+    public void PossibleMoves_BoardWithOtherPieces_ReturnsCorrectMoves()
     {
         // Arrange
         var bishop = new Bishop(Color.White, 1);
-        var chessboard = new Chessboard(new Case[8, 8],true);
+        var chessboard = new Chessboard(new Case[8, 8], true);
         var caseInitial = new Case(4, 4, bishop);
+        chessboard.Board[4, 4] = caseInitial;
+
+        chessboard.Board[5, 5] = new Case(5, 5, new Pawn(Color.Black, 2));
+
+        chessboard.Board[3, 3] = new Case(3, 3, new Pawn(Color.White, 3));
 
         // Act
         var result = bishop.PossibleMoves(caseInitial, chessboard);
 
         // Assert
-        Assert.Equal(13, result.Count);
+        Assert.Contains(result, c => c!.Column == 5 && c.Line == 5);
+        Assert.DoesNotContain(result, c => c!.Column == 2 && c.Line == 2);
     }
     
     [Fact]
@@ -51,7 +57,7 @@ public class UnitTestBishop
         var caseInitial = new Case(4, 4, bishop);
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => bishop.PossibleMoves(caseInitial, null));
+        Assert.Throws<ArgumentNullException>(() => bishop.PossibleMoves(caseInitial, null!));
     }
 
     [Fact]
@@ -62,7 +68,7 @@ public class UnitTestBishop
         var chessboard = new Chessboard(new Case[8, 8],true);
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => bishop.PossibleMoves(null, chessboard));
+        Assert.Throws<ArgumentNullException>(() => bishop.PossibleMoves(null!, chessboard));
     }
     
     [Fact]

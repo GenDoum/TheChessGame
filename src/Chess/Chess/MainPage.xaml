@@ -3,10 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="Chess.MainPage"
-             BackgroundImageSource="test.jpg"
-             
->
-
+             BackgroundImageSource="test.jpg">
 
     <ScrollView>
         <FlexLayout
@@ -21,26 +18,24 @@
             
             <Button Text="Connexion" 
                     Style="{StaticResource buttonSyle}"
+                    Clicked="OnConnexionClicked"/>
                     
-            />
 
             <Button Text="Inscription" 
                     Style="{StaticResource buttonSyle}" 
-                    
-            />
+                    Clicked="OnInscriptionClicked"/>
 
             <Button Text="Règles du jeu" 
                     Style="{StaticResource buttonSyle}"
-            />
+                    Clicked="OnRulesClicked"/>
 
             <Button Text="Scores des joueurs" 
                     Style="{StaticResource buttonSyle}"
-                    
-            />
+                    Clicked="OnLeaderBoardClicked"/>
 
-            <Label Text="Jouer en tant qu'invité" 
-                   Style="{StaticResource labelStyleBottom}"
-            />
+            <Button Text="Jouer en tant qu'invité"
+                    Style="{StaticResource animationStyleBottom}"
+                   Clicked="OnInvitedPlayersCLicked"/>
 
             <!-- <Label.GestureRecognizers> <TapGestureRecognizer Tapped="Fonction d'appel"/> </Label.GestureRecognizers> <Label/>  /!/ A faire après les vues /!/ --> 
         </FlexLayout>

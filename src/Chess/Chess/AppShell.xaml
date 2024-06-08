@@ -7,27 +7,30 @@
     xmlns:localpages="clr-namespace:Chess.Pages"
     xmlns:contentViews="clr-namespace:Chess.contentView"
     Shell.FlyoutBehavior="Disabled"
-    Title="Chess"
->
-    <TabBar>
-        
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False">
+    
+    <TabBar Route="page">
+
         <ShellContent
             ContentTemplate="{DataTemplate local:MainPage}"
-            Route="MainPage" />
-
+            Route="MainPage"/>
+                
         <ShellContent
-
+            ContentTemplate="{DataTemplate localpages:chessBoard}"
+            Route="chessBoard" />
+        
+        <ShellContent
             ContentTemplate="{DataTemplate localpages:Register}"
             Route="Register" />
         
-        <ShellContent
+        <!--<ShellContent
             ContentTemplate="{DataTemplate localpages:LogIn}"
-            Route="LogIn" />
+            Route="LogIn" />-->
         
         <ShellContent
             ContentTemplate="{DataTemplate localpages:pausePage}"
-            Route="LogIn" />
-        
+            Route="pausePage" />
 
         <ShellContent
             ContentTemplate="{DataTemplate localpages:LoginSecondPlayer}"
@@ -39,10 +42,13 @@
             Route="LeaderBoard" />
         
         <ShellContent
-
             ContentTemplate="{DataTemplate localpages:RulesPage}"
-            Route="Register" />
-        
+            Route="RulesPage" />
+
+        <ShellContent
+            ContentTemplate="{DataTemplate localpages:Login1}"
+            Route="Login1" />
+
     </TabBar>
 
 </Shell>

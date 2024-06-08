@@ -21,15 +21,21 @@
                        HeightRequest="200"
                        
                        Source="regletitle.png"
- />
-                           
-                     <Image Grid.Column="0"
-                            Style="{StaticResource imgAppli}"
-                            HorizontalOptions="StartAndExpand"
-                            Margin="100,-50,0,0"
-                         Source="returnarrow.png"
-                         HeightRequest="50" />
-                    
+                       
+                       />
+
+
+                    <Image Grid.Column="0"
+                        Style="{StaticResource imgAppli}"
+                        HorizontalOptions="StartAndExpand"
+                        Margin="100,-50,0,0"
+                        Source="returnarrow.png"
+                        HeightRequest="50">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBackButtonClicked"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+
                 </Grid>
 
                 <toolkit:DockLayout Grid.Row="1">
@@ -46,13 +52,14 @@
                                     />
 
 
-                        <!-- Première grille des règles -->
+                        <!-- Première grille des règles --> 
                         <Frame Style="{StaticResource FrameRules}"
                                Grid.Row="0"
                                MaximumHeightRequest="250">
                             <VerticalStackLayout BackgroundColor="#a58056">
                                 <Label Style="{StaticResource TitleRule}"
-                                       Text="Les règles du jeu - Le plateau :"/>
+                                       Text="Les règles du jeu - Le plateau :"
+                                       TextColor="White"/>
                                 <Label Text="L’échiquier comporte 64 cases (32 cases blanches et 32 cases noires) et est composé de colonnes, rangées et diagonales.&#x0a;Les colonnes sont repérées par les huit premières lettres de l’alphabet tandis que pour les rangées, on utilise les chiffres. Cela permet de donner les coordonnées des cases de l’échiquier.&#x0a;&#x0a;Par exemple, vous pouvez voir sur cette image que le rond rouge est sur la case C4 :"
                                        Margin="10,10,10,0" />
                             </VerticalStackLayout>
@@ -296,6 +303,7 @@ Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à
 
                                     <Label HorizontalOptions="CenterAndExpand"
                                            Text="Position initiale et finale"
+                                           TextColor="White"
                                            Style="{StaticResource TitleRule}" 
                                            Grid.Row="0"
                                            Margin="0,30,0,0"/>
@@ -312,6 +320,7 @@ Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à
 
                                     <Label Text="Coup Précédent :"
                                            Grid.Row="0"
+                                           TextColor="White"
                                            HorizontalOptions="CenterAndExpand"
                                            Style="{StaticResource TitleRule}" 
                                            Margin="0,30,0,0"/>
@@ -349,6 +358,7 @@ Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à
 
                                     <Label HorizontalOptions="CenterAndExpand"
                                            Text="Position initiale et finale"
+                                           TextColor="White"
                                            Style="{StaticResource TitleRule}" 
                                            Grid.Row="0"
                                            Margin="0,30,0,0"/>
@@ -365,6 +375,7 @@ Pour prendre une pièce adverse, le pion doit être placé en diagonale juste à
 
                                     <Label Text="Coup Précédent :"
                                            Grid.Row="0"
+                                           TextColor="White"
                                            HorizontalOptions="CenterAndExpand"
                                            Style="{StaticResource TitleRule}" 
                                            Margin="0,30,0,0"/>

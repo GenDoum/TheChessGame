@@ -964,7 +964,7 @@ public class UnitTestBoard
         var chessboard = new Chessboard(new Case[8, 8], true);
 
         // Act
-        var flatBoard = chessboard.FlatBoard;
+        var flatBoard = chessboard.FlatBoard.ToList();
 
         // Assert
         Assert.Equal(64, flatBoard.Count());
@@ -1024,9 +1024,23 @@ public class UnitTestBoard
         // Assert
         Assert.False(result); // The pawn should be able to capture the queen and defend the king
     }
-    
+
+    private static readonly int[] Indices = new int[]
+    {
+        0, 0, 0, 1, 0, 2, 0, 3,
+        1, 0, 1, 1, 1, 2, 1, 3,
+        2, 0, 2, 1, 2, 2, 2, 3,
+        3, 0, 3, 1, 3, 2, 3, 3
+    };
+
+    public static IEnumerable<object[]> IndicesData =>
+       new List<object[]>
+       {
+            new object[] { 4, 4, Indices }
+       };
+
     [Theory]
-    [InlineData(4, 4, new int[] { 0, 0, 0, 1, 0, 2, 0, 3, 1, 0, 1, 1, 1, 2, 1, 3, 2, 0, 2, 1, 2, 2, 2, 3, 3, 0, 3, 1, 3, 2, 3, 3 })]
+    [MemberData(nameof(IndicesData))]
     public void ConvertListToBoard_ValidList_CreatesCorrectBoard(int rows, int columns, int[] indices)
     {
         // Arrange
@@ -1046,7 +1060,8 @@ public class UnitTestBoard
         Assert.Equal(list[5], board[1, 1]);
     }
 
-    [Fact]
+
+[Fact]
     public void ConvertListToBoard_InvalidDimensions_ThrowsException()
     {
         // Arrange

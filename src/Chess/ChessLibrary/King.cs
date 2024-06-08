@@ -82,13 +82,9 @@ namespace ChessLibrary
                     Case? potentialCase = chessboard.Board[newColumn, newLine];
 
                     // Add the move if the square is empty or contains an opponent's piece.
-                    if (potentialCase!.IsCaseEmpty() || (potentialCase.Piece != null && potentialCase.Piece.Color != this.Color))
+                    if ((potentialCase!.IsCaseEmpty() || (potentialCase.Piece != null && potentialCase.Piece.Color != this.Color)) && !chessboard.Echec(this, new Case(newColumn, newLine, this)))
                     {
-                        // Ensure the move does not place the king in check.
-                        if (!chessboard.Echec(this, new Case(newColumn, newLine, this)))
-                        {
-                            result.Add(potentialCase);
-                        }
+                        result.Add(potentialCase);
                     }
                 }
             }

@@ -9,6 +9,9 @@ namespace ChessLibrary
 {
     [DataContract]
     [KnownType(typeof(CoPieces))]
+    /// <summary>
+    /// Represents the chessboard in chess.
+    /// </summary>
     public class Chessboard : IBoard, INotifyPropertyChanged
     {
 
@@ -19,6 +22,13 @@ namespace ChessLibrary
             set { Board = ConvertListToBoard(value, 8, 8); }
         }
 
+        /// <summary>
+        /// Converts a list of cases to a 2D array representing the board.
+        /// </summary>
+        /// <param name="list">The list of cases to convert.</param>
+        /// <param name="rows">The number of rows in the board.</param>
+        /// <param name="columns">The number of columns in the board.</param>
+        /// <returns>A 2D array representing the board.</returns>
         public Case?[,] ConvertListToBoard(List<Case?> list, int rows, int columns)
         {
             var array = new Case?[rows, columns];
@@ -32,12 +42,13 @@ namespace ChessLibrary
             }
 
             return array;
-
         }
-
 
         private Case?[,] _board;
 
+        /// <summary>
+        /// Gets or sets the 2D array representing the board.
+        /// </summary>
         public Case?[,] Board
         {
             get { return _board; }
@@ -51,32 +62,44 @@ namespace ChessLibrary
             }
         }
 
+        /// <summary>
+        /// Gets a read-only collection of white pieces.
+        /// </summary>
         public ReadOnlyCollection<CoPieces> WhitePieces => _whitePieces.AsReadOnly();
 
         [DataMember]
         private readonly List<CoPieces> _whitePieces = new List<CoPieces>();
 
-
+        /// <summary>
+        /// Gets a read-only collection of black pieces.
+        /// </summary>
         public ReadOnlyCollection<CoPieces> BlackPieces => _blackPieces.AsReadOnly();
 
         [DataMember]
         private readonly List<CoPieces> _blackPieces = new List<CoPieces>();
 
-
+        /// <summary>
+        /// Event triggered when a property value changes.
+        /// </summary>
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        /// <summary>
+        /// Raises the PropertyChanged event.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that changed.</param>
         protected virtual void OnPropertyChanged(string propertyName)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-
         private bool _isCheckingForCheck = false;
 
-        
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Chessboard"/> class.
+        /// </summary>
+        /// <param name="tcase">The initial state of the board.</param>
+        /// <param name="isEmpty">Indicates whether the board should be initialized as empty.</param>
         public Chessboard(Case?[,] tcase, bool isEmpty)
         {
             Board = tcase;
-
 
             if (!isEmpty)
             {
@@ -88,13 +111,20 @@ namespace ChessLibrary
             }
         }
 
-        //Same consctructor but without parameter
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Chessboard"/> class without parameters.
+        /// </summary>
         public Chessboard()
         {
             Board = new Case?[8, 8];
             InitializeChessboard();
         }
 
+
+        /// <summary>
+        /// Copies the list of white pieces.
+        /// </summary>
+        /// <returns>A list of copied white pieces.</returns>
         public List<CoPieces> CopyWhitePieces()
         {
             var result = new List<CoPieces>();
@@ -104,6 +134,11 @@ namespace ChessLibrary
             }
             return result;
         }
+
+        /// <summary>
+        /// Copies the list of black pieces.
+        /// </summary>
+        /// <returns>A list of copied black pieces.</returns>
         public List<CoPieces> CopyBlackPieces()
         {
             var result = new List<CoPieces>();
@@ -114,9 +149,19 @@ namespace ChessLibrary
             return result;
         }
 
+        /// <summary>
+        /// Gets the number of rows on the board.
+        /// </summary>
         public int NbRows => Board?.GetLength(0) ?? 0;
+
+        /// <summary>
+        /// Gets the number of columns on the board.
+        /// </summary>
         public int NbColumns => Board?.GetLength(1) ?? 0;
 
+        /// <summary>
+        /// Flattens the board into a list.
+        /// </summary>
         public IEnumerable<Case?> FlatBoard
         {
             get
@@ -135,6 +180,9 @@ namespace ChessLibrary
             }
         }
 
+        /// <summary>
+        /// Initializes an empty board.
+        /// </summary>
         public void InitializeEmptyBoard()
         {
             for (int column = 0; column < 8; column++)
@@ -146,6 +194,9 @@ namespace ChessLibrary
             }
         }
 
+        /// <summary>
+        /// Initializes the chessboard with pieces in their starting positions.
+        /// </summary>
         public void InitializeChessboard()
         {
             InitializeBlackPieces();
@@ -153,6 +204,9 @@ namespace ChessLibrary
             FillEmptyCases();
         }
 
+        /// <summary>
+        /// Initializes the black pieces on the board.
+        /// </summary>
         public void InitializeBlackPieces()
         {
             int identifiantBlanc = 1;
@@ -171,6 +225,9 @@ namespace ChessLibrary
             }
         }
 
+        /// <summary>
+        /// Initializes the white pieces on the board.
+        /// </summary>
         public void InitializeWhitePieces()
         {
             int identifiantNoir = 17;
@@ -189,6 +246,9 @@ namespace ChessLibrary
             }
         }
 
+        /// <summary>
+        /// Fills the board with empty cases for rows 2 to 5.
+        /// </summary>
         public void FillEmptyCases()
         {
             for (int row = 2; row <= 5; row++)
@@ -200,6 +260,12 @@ namespace ChessLibrary
             }
         }
 
+        /// <summary>
+        /// Adds a piece to the specified position on the board and updates the piece lists.
+        /// </summary>
+        /// <param name="piece">The piece to add.</param>
+        /// <param name="column">The column to place the piece.</param>
+        /// <param name="row">The row to place the piece.</param>
         public void AddPiece(Piece? piece, int column, int row)
         {
             Board[column, row] = new Case(column, row, piece);
@@ -207,17 +273,30 @@ namespace ChessLibrary
             {
                 _whitePieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
-            if(piece != null && piece.Color == Color.Black)
+            if (piece != null && piece.Color == Color.Black)
             {
                 _blackPieces.Add(new CoPieces { CaseLink = new Case(column, row, piece), piece = piece });
             }
         }
 
+        /// <summary>
+        /// Checks if the move to the final case is valid based on the list of possible moves.
+        /// </summary>
+        /// <param name="lcase">List of possible cases to move to.</param>
+        /// <param name="final">The final case to check.</param>
+        /// <returns>True if the move is valid, otherwise false.</returns>
         public bool IsMoveValid(List<Case?> lcase, Case? final)
         {
             return lcase.Exists(i => i!.Column == final!.Column && i.Line == final.Line);
         }
 
+        /// <summary>
+        /// Attempts to move a piece from the initial case to the final case.
+        /// </summary>
+        /// <param name="piece">The piece to move.</param>
+        /// <param name="initial">The initial case.</param>
+        /// <param name="final">The final case.</param>
+        /// <returns>True if the move is valid, otherwise false.</returns>
         public bool CanMovePiece(Piece? piece, Case? initial, Case? final)
         {
             List<Case?> possibleMoves = piece!.PossibleMoves(initial, this);
@@ -236,7 +315,12 @@ namespace ChessLibrary
             return false;
         }
 
-
+        /// <summary>
+        /// Modifies a pawn to another piece and updates the piece lists accordingly.
+        /// </summary>
+        /// <param name="p">The pawn to modify.</param>
+        /// <param name="pi">The new piece.</param>
+        /// <param name="c">The case where the modification takes place.</param>
         public void ModifPawn(Pawn? p, Piece pi, Case? c)
         {
             ArgumentNullException.ThrowIfNull(pi);
@@ -254,6 +338,12 @@ namespace ChessLibrary
             }
         }
 
+        /// <summary>
+        /// Checks if the specified king is in check.
+        /// </summary>
+        /// <param name="king">The king to check.</param>
+        /// <param name="kingCase">The case where the king is located.</param>
+        /// <returns>True if the king is in check, otherwise false.</returns>
         public bool Echec(King? king, Case? kingCase)
         {
             if (_isCheckingForCheck)
@@ -293,17 +383,32 @@ namespace ChessLibrary
             return false;
         }
 
+        /// <summary>
+        /// Checks if the specified color is in check.
+        /// </summary>
+        /// <param name="color">The color to check.</param>
+        /// <returns>True if the color is in check, otherwise false.</returns>
         public bool IsInCheck(Color color)
         {
             King king = FindKing(color);
             return Echec(king, FindCase(king));
         }
 
+        /// <summary>
+        /// Finds the king of the specified color on the board.
+        /// </summary>
+        /// <param name="color">The color of the king to find.</param>
+        /// <returns>The king of the specified color.</returns>
         public King FindKing(Color color)
         {
             return (color == Color.White ? (King)_whitePieces.Find(x => x.piece is King).piece! : (King)_blackPieces.Find(x => x.piece is King).piece!);
         }
 
+        /// <summary>
+        /// Finds the case where the specified piece is located.
+        /// </summary>
+        /// <param name="piece">The piece to locate.</param>
+        /// <returns>The case where the piece is located.</returns>
         public Case? FindCase(Piece piece)
         {
             for (int i = 0; i < 8; i++)
@@ -317,6 +422,12 @@ namespace ChessLibrary
             throw new ArgumentException("Piece not found on the board.");
         }
 
+        /// <summary>
+        /// Checks if the specified king is in checkmate.
+        /// </summary>
+        /// <param name="king">The king to check.</param>
+        /// <param name="kingCase">The case where the king is located.</param>
+        /// <returns>True if the king is in checkmate, otherwise false.</returns>
         public bool EchecMat(King? king, Case? kingCase)
         {
             var possibleKingMoves = king!.PossibleMoves(kingCase, this);
@@ -359,6 +470,12 @@ namespace ChessLibrary
             return true;
         }
 
+        /// <summary>
+        /// Attempts to move a piece from the initial case to the final case.
+        /// </summary>
+        /// <param name="initial">The initial case.</param>
+        /// <param name="final">The final case.</param>
+        /// <returns>True if the move is successful, otherwise false.</returns>
         private bool TryMovePiece(Case? initial, Case? final)
         {
             if (CanMovePiece(initial!.Piece, initial, final))
@@ -370,15 +487,25 @@ namespace ChessLibrary
             return false;
         }
 
+        /// <summary>
+        /// Undoes the move of a piece from the final case back to the initial case.
+        /// </summary>
+        /// <param name="initial">The initial case.</param>
+        /// <param name="final">The final case.</param>
         private static void UndoMovePiece(Case? initial, Case? final)
         {
             initial!.Piece = final!.Piece;
             final.Piece = null;
         }
 
+        /// <summary>
+        /// Checks if any piece in the team can defend the king by moving to a position that resolves a check.
+        /// </summary>
+        /// <param name="teamPieces">The list of team pieces.</param>
+        /// <param name="kingCase">The case where the king is located.</param>
+        /// <returns>True if any piece can defend the king, otherwise false.</returns>
         public bool CanDefendKing(List<CoPieces> teamPieces, Case? kingCase)
         {
-
             foreach (var piece in teamPieces)
             {
                 List<Case?> possibleMoves;
@@ -418,6 +545,11 @@ namespace ChessLibrary
             return false;
         }
 
+        /// <summary>
+        /// Modifies the list of pieces after a piece has moved.
+        /// </summary>
+        /// <param name="initial">The initial case of the piece.</param>
+        /// <param name="final">The final case of the piece.</param>
         public void ModifList(Case initial, Case final)
         {
             var list = final.Piece!.Color == Color.White ? _whitePieces : _blackPieces;
@@ -425,21 +557,24 @@ namespace ChessLibrary
             {
                 if (list[i].CaseLink!.Line == initial.Line && list[i].CaseLink!.Column == initial.Column)
                 {
-                    // Si CoPieces est une struct, vous devriez créer une nouvelle instance avec les modifications appropriées
                     var updatedCoPiece = new CoPieces
                     {
                         piece = final.Piece,
                         CaseLink = final
                     };
-                    list[i] = updatedCoPiece;  // Remplacement de l'instance dans la liste si CoPieces est une struct
+                    list[i] = updatedCoPiece;  // Replace the instance in the list if CoPieces is a struct
                     break;
                 }
             }
         }
+
+        /// <summary>
+        /// Removes a piece from the list after it has been captured.
+        /// </summary>
+        /// <param name="initial">The initial case of the piece.</param>
         public void RemovePieceFromList(Case initial)
         {
             var list = initial.Piece!.Color == Color.White ? _blackPieces : _whitePieces;
-            // Trouver l'index de la pièce à supprimer
             int indexToRemove = -1;
             for (int i = 0; i < list.Count; i++)
             {
@@ -450,28 +585,27 @@ namespace ChessLibrary
                 }
             }
 
-            // Si une pièce correspondante a été trouvée, la supprimer de la liste
             if (indexToRemove != -1)
             {
                 list.RemoveAt(indexToRemove);
             }
         }
+
         /// <summary>
-        /// Fonction pour traiter le déplacement d'une pièce
+        /// Processes the post-move operations after a piece has been moved.
         /// </summary>
-        /// <param name="initial"></param>
-        /// <param name="final"></param>
+        /// <param name="initial">The initial case of the piece.</param>
+        /// <param name="final">The final case of the piece.</param>
         public void ProcessPostMove(Case? initial, Case? final)
         {
-            if (final!.Piece! != null && final!.Piece!.Color != initial!.Piece!.Color)
+            if (final!.Piece != null && final.Piece.Color != initial!.Piece!.Color)
             {
                 RemovePieceFromList(initial);
             }
-            final!.Piece = initial!.Piece;
+            final.Piece = initial!.Piece;
             initial.Piece = null;
             ModifList(initial, final);
 
-            // Marquer les mouvements spéciaux comme le premier mouvement pour les rois, tours et pions
             if (final.Piece is IFirstMove firstMover)
             {
                 firstMover.FirstMove = false;
@@ -479,7 +613,7 @@ namespace ChessLibrary
         }
 
         /// <summary>
-        /// Fonction qui remet à false tout les mouvements possible
+        /// Resets all possible moves on the board to false.
         /// </summary>
         public void ResetPossibleMoves()
         {

@@ -389,7 +389,26 @@ namespace ChessLibrary
                 }
             }
         }
-
+        private bool roque1(Case initial, Case final, Chessboard board)
+        {
+            if (initial!.Piece is King king &&((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||(king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))
+            {
+                king.PetitRoque(board); // Call the PetitRoque method
+                return true;
+            }
+            return false;
+        }
+        private bool roque2(Case initial,Case final,Chessboard board)
+        {
+            if (initial!.Piece is King king1 &&
+                     ((king1.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 0 && final.Line == 7) ||
+                      (king1.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 0 && final.Line == 0)))
+            {
+                king1.GrandRoque(board); // Call the GrandRoque method
+                return true;
+            }
+            return false;
+        }
         /// <summary>
         /// Moves a piece forward, handling special moves like castling.
         /// </summary>
@@ -400,17 +419,15 @@ namespace ChessLibrary
         /// <exception cref="InvalidOperationException">Thrown when the move is invalid.</exception>
         public void MovePieceFront(Case? initial, Case? final, Chessboard board, User actualPlayer)
         {
-            if (initial!.Piece is King king &&
-                ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||
-                 (king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))
+            if (roque1(initial, final, board)) 
             {
-                king.PetitRoque(board); // Call the PetitRoque method
+                return;
             }
-            else if (initial!.Piece is King king1 &&
-                     ((king1.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 0 && final.Line == 7) ||
-                      (king1.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 0 && final.Line == 0)))
+
+
+            else if( roque2(initial,final, board) )
             {
-                king1.GrandRoque(board); // Call the GrandRoque method
+                return;
             }
             else
             {

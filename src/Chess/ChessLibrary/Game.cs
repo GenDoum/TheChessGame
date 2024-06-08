@@ -344,6 +344,7 @@ namespace ChessLibrary
 
             if (TryPerformCastling(initial, final, board))
             {
+                CurrentPlayer = (actualPlayer == Player1) ? Player2 : Player1;
                 return;
             }
 
@@ -352,7 +353,9 @@ namespace ChessLibrary
 
         private static bool roque1(Case initial, Case final, Chessboard board)
         {
-            if (initial!.Piece is King king &&((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) ||(king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))
+            if (initial!.Piece is King king &&
+                ((king.Color == Color.White && initial.Column == 4 && initial.Line == 7 && final!.Column == 7 && final.Line == 7) 
+                ||(king.Color == Color.Black && initial.Column == 4 && initial.Line == 0 && final!.Column == 7 && final.Line == 0)))
             {
                 king.PetitRoque(board); // Call the PetitRoque method
                 return true;

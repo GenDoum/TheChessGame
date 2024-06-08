@@ -173,8 +173,7 @@ public class UnitTestGame
         chessboard.AddPiece(whiteRook, 0, 0);
         chessboard.AddPiece(king, 0, 7);
         chessboard.AddPiece(king2 , 7, 7);       
-     /* chessboard.Board[0, 0] = initialCase;
-        chessboard.Board[0, 1] = finalCase;*/
+
 
         Game game = new Game();
         game.Board = chessboard;
@@ -188,4 +187,103 @@ public class UnitTestGame
         Assert.IsType<Rook>(finalCase.Piece);
         Assert.Equal(whiteRook, finalCase.Piece); // The moved piece should be the same rook
     }
+
+    [Fact]
+    public void MovePiece_ValidMove_MovesPieceSuccessfully2()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        Rook whiteRook = new Rook(Color.White, 1);
+        Case initialCase = new Case(0, 0, whiteRook);
+        Case finalCase = new Case(0, 1, null);
+        King king = new King(Color.White, 2);
+        King king2 = new King(Color.Black, 1);
+        chessboard.AddPiece(whiteRook, 0, 0);
+        chessboard.AddPiece(king, 0, 7);
+        chessboard.AddPiece(king2 , 7, 7);
+
+        Game game = new Game();
+        game.Board = chessboard;
+
+        // Act
+        game.MovePiece(initialCase, finalCase, chessboard, game.Player1);
+
+        // Assert
+        Assert.Null(initialCase.Piece); // The piece should have moved
+        Assert.NotNull(finalCase.Piece);
+        Assert.IsType<Rook>(finalCase.Piece);
+        Assert.Equal(whiteRook, finalCase.Piece); // The moved piece should be the same rook
+    }
+    [Fact]
+    public void MovePiece_PerformWhiteKingsideCastling_MovesKingAndRookSuccessfully()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King whiteKing = new King(Color.White, 1);
+        Rook whiteRook = new Rook(Color.White, 2);
+        chessboard.AddPiece(whiteKing, 4, 7);
+        chessboard.AddPiece(whiteRook, 7, 7);
+
+
+        Case initialKingCase = chessboard.Board[4, 7]!;
+        Case initialRookCase = chessboard.Board[7, 7]!;
+        Case finalKingCase = chessboard.Board[6, 7]!;
+        Case finalRookCase = chessboard.Board[5, 7]!;
+
+
+        Game game = new Game();
+        game.Board = chessboard;
+
+        // Act
+        game.MovePiece(initialKingCase, initialRookCase, chessboard, game.Player1);
+
+        // Assert
+        Assert.Null(initialKingCase!.Piece);
+        Assert.Null(initialRookCase!.Piece);
+        Assert.NotNull(finalKingCase!.Piece);
+        Assert.NotNull(finalRookCase!.Piece);
+        Assert.IsType<King>(finalKingCase.Piece);
+        Assert.IsType<Rook>(finalRookCase.Piece);
+        Assert.Equal(whiteKing, finalKingCase.Piece); // Ensure the king is moved correctly
+        Assert.Equal(whiteRook, finalRookCase.Piece); // Ensure the rook is moved correctly
+    }
+
+
+    [Fact]
+    public void MovePiece_PerformWhiteQueensideCastling_MovesKingAndRookSuccessfully()
+    {
+        // Arrange
+        Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+        King whiteKing = new King(Color.White, 1);
+        Rook whiteRook = new Rook(Color.White, 2);
+
+        chessboard.AddPiece(whiteKing, 4, 7);
+        chessboard.AddPiece(whiteRook, 0, 7);
+        Case initialKingCase = chessboard.Board[4, 7]!;
+        Case initialRookCase = chessboard.Board[0, 7]!;
+        Case finalKingCase = chessboard.Board[2, 7]!;
+        Case finalRookCase = chessboard.Board[3, 7]!;
+        chessboard.Board[4, 7] = initialKingCase;
+        chessboard.Board[0, 7] = initialRookCase;
+        chessboard.Board[2, 7] = finalKingCase;
+        chessboard.Board[3, 7] = finalRookCase;
+
+        Game game = new Game();
+        game.Board = chessboard;
+
+        // Act
+        game.MovePiece(initialKingCase, initialRookCase, chessboard, game.Player1);
+
+        // Assert
+        Assert.Null(initialKingCase!.Piece);
+        Assert.Null(initialRookCase!.Piece);
+        Assert.NotNull(finalKingCase!.Piece);
+        Assert.NotNull(finalRookCase!.Piece);
+        Assert.IsType<King>(finalKingCase.Piece);
+        Assert.IsType<Rook>(finalRookCase.Piece);
+        Assert.Equal(whiteKing, finalKingCase.Piece); // Ensure the king is moved correctly
+        Assert.Equal(whiteRook, finalRookCase.Piece); // Ensure the rook is moved correctly
+    }
+
+    
 }

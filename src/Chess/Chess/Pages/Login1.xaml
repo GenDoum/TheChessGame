@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Chess.Pages.Login1"
+             xmlns:contentView="clr-namespace:Chess.contentView"
+             BackgroundImageSource="test.jpg">
+
+    <ContentPage.Content>
+        <!-- Login Page -->
+
+        <VerticalStackLayout>
+
+
+
+            <FlexLayout JustifyContent="Start"
+                        AlignContent="Center"
+                        AlignItems="Center"
+                        Margin="0, 0, 0, 200">
+
+            </FlexLayout>
+
+            <FlexLayout JustifyContent="Center"
+                        AlignItems="Center"
+                        Direction="Column"
+                        >
+
+                <Image  Source="connexion.png"  
+                        Style="{StaticResource imgAppli}"/>
+
+                <VerticalStackLayout>
+                    <Entry Placeholder="Pseudo" x:Name="UsernameEntry" Style="{StaticResource entryStyleDefault}"/>
+                    <Entry Placeholder="Mot de passe" x:Name="PasswordEntry" IsPassword="True" Style="{StaticResource entryStyleDefault}" MaxLength="20"/>
+                </VerticalStackLayout> 
+                
+                <HorizontalStackLayout
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                    <CheckBox Color="{StaticResource GoldUsefullColor}"
+                              x:Name="checkInvitedPlayer"
+                              />
+                    
+                    <Label Text="Jouer avec un invité" 
+                           TextColor="FloralWhite"
+                           Margin="12"
+                           />
+                    
+                </HorizontalStackLayout>
+
+                <VerticalStackLayout>
+                    <Button Text="Connexion" Style="{StaticResource buttonSyle}"
+                        Clicked="OnLoginButtonClicked"
+                            />
+                    <Button Text="Annuler" Style="{StaticResource buttonSyle}"
+                        Clicked="OnCancelButtonClicked"
+                            />
+                </VerticalStackLayout>
+                
+            </FlexLayout>
+        </VerticalStackLayout>
+
+
+    </ContentPage.Content>
+</ContentPage>

@@ -284,6 +284,19 @@ public class UnitTestGame
         Assert.Equal(whiteKing, finalKingCase.Piece); // Ensure the king is moved correctly
         Assert.Equal(whiteRook, finalRookCase.Piece); // Ensure the rook is moved correctly
     }
+    [Fact]
+    public void Create_Game()
+    {
+        // Arrange
+        User player1 = new User(Color.White);
+        User player2 = new User(Color.Black);
+        Game game = new Game(player1, player2);
 
-    
+
+        // Assert
+        Assert.False(game.WhiteCheck);
+        Assert.False(game.BlackCheck);
+        Assert.Equal(game.Player1, game.CurrentPlayer); 
+    }
+
 }

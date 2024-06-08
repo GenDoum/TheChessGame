@@ -1,10 +1,22 @@
+using System.Runtime.Serialization;
+
 namespace ChessLibrary;
 
 /// <summary>
-/// Structure pour facilité la gestion des pièces
+/// Structure to facilitate the management of chess pieces.
 /// </summary>
+[DataContract(Name = "CoPieces")]
 public struct CoPieces
 {
-    public Case CaseLink { get; set; }
+    [DataMember]
+    /// <summary>
+    /// Gets or sets the case associated with the piece.
+    /// </summary>
+    public Case? CaseLink { get; set; }
+
+    [DataMember]
+    /// <summary>
+    /// Gets or sets the piece.
+    /// </summary>
     public Piece? piece { get; set; }
 }

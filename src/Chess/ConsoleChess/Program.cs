@@ -2,6 +2,9 @@ using System;
 using ChessLibrary;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
+using Persistance;
+using System.Collections.ObjectModel;
 
 namespace ConsoleChess
 {
@@ -32,8 +35,11 @@ namespace ConsoleChess
             Console.WriteLine();
             Console.WriteLine($"-==============- {title} -==============-");
             Console.WriteLine();
-            Console.ResetColor();   
+            Console.ResetColor();
+
         }
+        
+        
 
         /// <summary>
         /// Player's method to check the password
@@ -72,12 +78,14 @@ namespace ConsoleChess
 
             }
 
-            if (Equals(user.Password, null))
+            if (Equals(User.HashPassword(null), user.Password))
             {
                 Console.WriteLine("\nInvited player, no need to check password\n");
                 return true;
             }
-            if (user.Password.Equals(pass.ToString()))
+
+            string? userPassword = user.Password; // pour éviter un code smells
+            if (Equals(User.HashPassword(pass.ToString()), userPassword))
             {
                 Console.WriteLine($"\nGood password, have fun {user.Pseudo}");
                 return true;
@@ -233,18 +241,6 @@ namespace ConsoleChess
             return user;
         }
 
-        public static bool checkUserConnection(User user)
-        {
-
-            if (Equals(user, null))
-            {
-                Console.WriteLine("La connexion n'a pas marché, connecter vous à nouveau");
-                Thread.Sleep(1000);
-                return false;
-            }
-            return true;
-        }
-
 
         public static List<User> inscription(List<User> users)
         {
@@ -258,7 +254,7 @@ namespace ConsoleChess
                 if (!string.IsNullOrEmpty(pseudo))
                 {
                     psswd = enterStringCheck("Mot de passe");
-                    User user = new User(pseudo, psswd, Color.White, false, 0);
+                    User user = new User(pseudo, psswd, ChessLibrary.Color.White, false, 0);
                     users.Add(user);
                 }
 
@@ -291,6 +287,29 @@ namespace ConsoleChess
                 }
             }
         }   
+
+        public static void menuStartGame(User user1, User user2)
+        {
+            Console.Clear();
+            int choix = MultipleChoice("Voulez vous lancer la partie ?", true, "Oui", "Non");
+            if (choix == 0)
+            {
+                Console.Clear();
+                Thread.Sleep(1000);
+                Jeu(user1, user2);
+                Console.Clear();
+            }
+            else 
+            {
+                Console.Clear();
+                Console.WriteLine("Partie annulée");
+                Console.WriteLine("Les joueurs son déconnectés.");
+                Console.WriteLine("Retour au menu principal.");
+                Thread.Sleep(2000);
+                user1.IsConnected = false;
+                user2.IsConnected = false;
+            }
+        }
 
         /// <summary>
         /// Menu de connexion pour le deuxième joueur
@@ -334,29 +353,25 @@ namespace ConsoleChess
             return defaultUser;
         }
 
-//        public static void
 
         /// <summary>
         /// Fonction qui gère l'accueil de l'application et la gestion des joueurs
         /// </summary>
         /// <param name="playerOne"></param>
         /// <param name="playerTwo"></param>
-        public static void menuAccueil(User? playerOne, User? playerTwo)
+        public static void menuAccueil(List<User> users, IPersistanceManager persistanceManager)
         {
             int choix;
 
             string? pseudo = null;
 
-            Color noir = Color.Black;
-            Color blanc = Color.White;
+            ChessLibrary.Color noir = ChessLibrary.Color.Black;
+            ChessLibrary.Color blanc = ChessLibrary.Color.White;
 
-            User balko = new User("MatheoB", "chef", blanc, false, 25);
-            User hersan = new User("MatheoH", "proMac", noir, false, 10);
+            Thread.Sleep(2000);
 
-
-            List<User> users = new List<User>();
-            users.Add(hersan);
-            users.Add(balko);
+            User? playerOne = new User();
+            User? playerTwo = new User();
 
             Console.ResetColor();
             do
@@ -391,26 +406,24 @@ namespace ConsoleChess
 
                         break;
 
-                    case 2:  // Option pourl ancer une partie
+                    case 2:  // Option pour lancer une partie
                         Console.Clear();
-                        Console.WriteLine("Lancer un partie");
-                        Thread.Sleep(1000);
                         if (playerOne == null || playerTwo == null)
                         {
                             errorMessage("Vous devez être connecté pour lancer une partie");
                             choix = MultipleChoice("Welcome on The Chess", true, "Connection", "Inscription", "Start a game", "Learderboard", "Exit application");
                             continue;
                         }
-                        if (playerOne.Color == Color.White)
+                        if (playerOne.Color == blanc)
                         {
-                            playerTwo.Color = Color.Black;
+                            playerTwo.Color = noir;
                         }
-                        if(playerOne.Color == Color.Black)
+                        if(playerOne.Color == noir)
                         {
-                            playerOne.Color = Color.White;
-                            playerTwo.Color = Color.Black;
+                            playerOne.Color = blanc;
+                            playerTwo.Color = noir;
                         }
-                        Jeu(playerOne, playerTwo);
+                        menuStartGame(playerOne!, playerTwo!);
                         break;
 
                     case 3: // Option pour afficher le leaderboard
@@ -448,7 +461,8 @@ namespace ConsoleChess
             {
                 Console.WriteLine($"Game over! {args.Winner.Pseudo} wins!");
                 args.Winner.Score += 5;
-                Thread.Sleep(150000);
+                args.Loser.Score -= 5;
+                Thread.Sleep(500);
             };
 
             int player = 1;
@@ -468,8 +482,8 @@ namespace ConsoleChess
                         (int startColumn, int startRow) = GetMoveCoordinates("Enter the position of the piece you want to move (a1, f7 ...):");
                         (int endColumn, int endRow) = GetMoveCoordinates("Enter the destination position (a1, f7 ...):");
 
-                        Case startCase = game.Board.Board[startColumn, startRow];
-                        Case endCase = game.Board.Board[endColumn, endRow];
+                        Case? startCase = game.Board.Board[startColumn, startRow];
+                        Case? endCase = game.Board.Board[endColumn, endRow];
                         Piece? piece = startCase.Piece;
 
                         if (piece == null || piece.Color != actualPlayer.Color)
@@ -489,16 +503,10 @@ namespace ConsoleChess
                         game.MovePiece(startCase, endCase, game.Board, actualPlayer);
                         DisplayBoard(game.Board);
 
-                        if (game.Board.IsInCheck(actualPlayer.Color == Color.White ? Color.Black : Color.White))
+                        if (game.Board.IsInCheck(actualPlayer.Color == ChessLibrary.Color.White ? ChessLibrary.Color.Black : ChessLibrary.Color.White))
                         {
                             Console.WriteLine("You are in check");
-                            if (game.Board.EchecMat(game.Board.FindKing(actualPlayer.Color), game.Board.FindCase(game.Board.FindKing(actualPlayer.Color))))
-                            {
-                                isGameOver = true;
-                                Console.WriteLine($"Game over! {actualPlayer.Pseudo} loses!");
-                            }
                         }
-
                         validMove = true; // Move was successful, exit the inner loop
                     }
                     catch (Exception e)
@@ -506,11 +514,11 @@ namespace ConsoleChess
                         Console.WriteLine($"Error: {e.Message}");
                     }
                 }
-
+                isGameOver = game.GameOver(player % 2 == 0 ? player2 : player1);
                 player++;
             }
-
-            game.GameOver(player % 2 == 0 ? player1 : player2);
+            Console.WriteLine("Game over!");
+            Thread.Sleep(1000);
         }
 
 
@@ -518,13 +526,22 @@ namespace ConsoleChess
         static void Main()
         {
 
+            /*IPersistanceManager persistanceManager = new Stub.Stub();
+            (ObservableCollection<Game> games, ObservableCollection<User> users, ObservableCollection<Chessboard> chessboards) = persistanceManager.LoadData();
 
-            User player1 = new User(Color.White);
-            User player2 = new User(Color.Black);
+            menuAccueil(users.ToList(), persistanceManager);
 
-            menuAccueil(player1, player2);
-
-  
+            persistanceManager.SaveData(games, users, chessboards);*/
+            Chessboard chessboard = new Chessboard(new Case[8, 8], true);
+            King whiteKing = new King(ChessLibrary.Color.White, 1);
+            Rook blackRook1 = new Rook(ChessLibrary.Color.Black, 2);
+            Queen blackQueen = new Queen(ChessLibrary.Color.Black, 3);
+            King blackKing = new King(ChessLibrary.Color.Black, 4);
+            chessboard.AddPiece(blackKing, 7, 7);
+            chessboard.AddPiece(whiteKing, 0, 0);
+            chessboard.AddPiece(blackRook1, 0, 1);
+            chessboard.AddPiece(blackQueen, 1, 1);
+            DisplayBoard(chessboard);
         }
 
 
@@ -550,7 +567,7 @@ namespace ConsoleChess
         /// </summary>
         /// <param name="P"></param>
         /// <param name="C"></param>
-        static void Evolve(Game game, Pawn? P, Case C, ChoiceUser choiceUser)
+        static void Evolve(Game game, Pawn? P, Case? C, ChoiceUser choiceUser)
         {
             Queen newQueen;
             Rook newRook;
@@ -617,7 +634,7 @@ namespace ConsoleChess
                     var square = chessboard.Board[column, row];
                     string pieceSymbol = square?.Piece != null ? GetPieceSymbol(square.Piece) : " ";
                     ConsoleColor originalColor = Console.ForegroundColor;
-                    if (square?.Piece != null && square.Piece.Color != Color.White)
+                    if (square?.Piece != null && square.Piece.Color != ChessLibrary.Color.White)
                     {
                         Console.ForegroundColor = ConsoleColor.DarkMagenta;
                     }

@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
     /// <summary>
-    /// Interface pour le premier mouvement
+    /// Interface for tracking the first move.
     /// </summary>
     public interface IFirstMove
     {
         /// <summary>
-        /// Premier mouvement
+        /// Gets or sets a value indicating whether the piece has made its first move.
         /// </summary>
         bool FirstMove { get; set; }
     }

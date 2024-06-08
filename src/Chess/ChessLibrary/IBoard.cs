@@ -1,40 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChessLibrary
 {
     /// <summary>
-    /// Interface pour le plateau de jeu
+    /// Interface for the game board.
     /// </summary>
     internal interface IBoard
     {
         /// <summary>
-        /// Initialiser le plateau de jeu
+        /// Initializes the game board.
         /// </summary>
-        /// <param name="piece"></param>
-        /// <param name="initial"></param>
-        /// <param name="final"></param>
-        /// <returns></returns>
-        bool CanMovePiece(Piece? piece, Case initial,Case final);
+        /// <param name="piece">The piece to be moved.</param>
+        /// <param name="initial">The initial case of the piece.</param>
+        /// <param name="final">The final case of the piece.</param>
+        /// <returns>True if the piece can be moved; otherwise, false.</returns>
+        bool CanMovePiece(Piece? piece, Case? initial, Case? final);
 
         /// <summary>
-        /// Vérifier si le mouvement est valide
+        /// Checks if the move is valid.
         /// </summary>
-        /// <param name="lcase"></param>
-        /// <param name="final"></param>
-        /// <returns></returns>
-        bool IsMoveValid(List<Case> lcase, Case final);
-        
-        /// <summary>
-        /// Vérifier si le roi est en échec
-        /// </summary>
-        /// <param name="king"></param>
-        /// <param name="kingCase"></param>
-        /// <returns></returns>
-        bool Echec(King? king,Case kingCase);
+        /// <param name="lcase">The list of cases to be checked.</param>
+        /// <param name="final">The final case of the move.</param>
+        /// <returns>True if the move is valid; otherwise, false.</returns>
+        bool IsMoveValid(List<Case?> lcase, Case? final);
 
+        /// <summary>
+        /// Checks if the king is in check.
+        /// </summary>
+        /// <param name="king">The king piece to check.</param>
+        /// <param name="kingCase">The case of the king.</param>
+        /// <returns>True if the king is in check; otherwise, false.</returns>
+        bool Echec(King? king, Case? kingCase);
     }
 }

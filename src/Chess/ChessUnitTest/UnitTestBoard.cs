@@ -1026,18 +1026,18 @@ public class UnitTestBoard
     }
 
     private static readonly int[] Indices = new int[]
-    {
+{
         0, 0, 0, 1, 0, 2, 0, 3,
         1, 0, 1, 1, 1, 2, 1, 3,
         2, 0, 2, 1, 2, 2, 2, 3,
         3, 0, 3, 1, 3, 2, 3, 3
-    };
+};
 
-    public static IEnumerable<object[]> IndicesData =>
-       new List<object[]>
-       {
-            new object[] { 4, 4, Indices }
-       };
+    public static TheoryData<int, int, int[]> IndicesData =>
+        new TheoryData<int, int, int[]>
+        {
+            { 4, 4, Indices }
+        };
 
     [Theory]
     [MemberData(nameof(IndicesData))]
@@ -1061,7 +1061,7 @@ public class UnitTestBoard
     }
 
 
-[Fact]
+    [Fact]
     public void ConvertListToBoard_InvalidDimensions_ThrowsException()
     {
         // Arrange

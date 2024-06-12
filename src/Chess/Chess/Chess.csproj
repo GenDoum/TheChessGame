@@ -85,10 +85,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="contentView\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\ChessLibrary\ChessLibrary.csproj" />
 	  <ProjectReference Include="..\Stub\Stub.csproj" />
 	  <ProjectReference Include="..\testPersistance\Persistance.csproj" />
@@ -108,7 +104,7 @@
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="contentView\viewLeaderBoard.xaml">
-			<Generator>MSBuild:Compile</Generator>
+		  <Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Pages\LeaderBoard.xaml">
 			<Generator>MSBuild:Compile</Generator>

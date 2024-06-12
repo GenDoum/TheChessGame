@@ -14,193 +14,267 @@ using Color = ChessLibrary.Color;
 using Plugin.Maui.Audio;
 using System.Runtime.CompilerServices;
 
-namespace Chess.Pages;
-
-public partial class chessBoard : ContentPage
+namespace Chess.Pages
 {
-    private Case? _selectedCase;
-
-    public Game Game { get; set; }
-    public Manager MyManager => (App.Current as App).MyManager;
-
-    public chessBoard()
-    {
-
-        this.Game = MyManager.Games.First();
-
-        CheckGameIfExists(this.Game.Player1, this.Game.Player2);
-
-
-        this.Game.InvalidMove += OnInvalidMove;
-        this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
-        this.Game.EvolveNotified += OnEvolvePiece;
-        this.Game.GameOverNotified += OnGameOver;
-        
-        BindingContext = this;
-        
-        InitializeComponent();
-    }
-
-    public chessBoard(User u1, User u2)
-    {
-        CheckGameIfExists(u1, u2);
-
-        this.Game = new Game(u1, u2);
-        this.Game.InvalidMove += OnInvalidMove;
-        this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
-        this.Game.EvolveNotified += OnEvolvePiece;
-        this.Game.GameOverNotified += OnGameOver;
-
-
-        BindingContext = this;
-        InitializeComponent();
-    }
-
     /// <summary>
-    /// This function search in all the game is MyManager.Games if already have a game with the connected player.
-    /// If the game exist, they can continue it, it it doesn't a new game starting.
+    /// Represents the chess board page in the application.
     /// </summary>
-    /// <param name="playerOne"></param>
-    /// <param name="playerTwo"></param>
-    /// <returns></returns>
-    public async void CheckGameIfExists(User playerOne, User playerTwo)
+    public partial class chessBoard : ContentPage
     {
-        foreach (Game game in MyManager.Games)
-        {
-            if (game.Player1.Pseudo == playerOne.Pseudo && game.Player2.Pseudo == playerTwo.Pseudo || game.Player2.Pseudo == playerOne.Pseudo && game.Player1.Pseudo == playerTwo.Pseudo)
-            {
-                bool continueGameExisting = await DisplayAlert("Warning", "If a game already exist with you two. Did you want to continu this game ?", "Yes", "No");
+        private Case? _selectedCase;
 
-                if (continueGameExisting)
-                {
-                    this.Game = game;
-                }
-                else
-                {
-                    this.Game = new Game(playerOne, playerTwo);
-                }
-            }
-            this.Game = new Game(playerOne, playerTwo);
+        /// <summary>
+        /// Gets or sets the current game instance.
+        /// </summary>
+        public Game Game { get; set; }
+
+        /// <summary>
+        /// Gets the manager instance from the application.
+        /// </summary>
+        public Manager MyManager => (App.Current as App)!.MyManager;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="chessBoard"/> class.
+        /// </summary>
+        public chessBoard()
+        {
+            // Set the current game from the manager's games
+            this.Game = MyManager.Games.First();
+
+            // Check if there is an existing game with the connected players
+            CheckGameIfExists(this.Game.Player1, this.Game.Player2);
+
+            // Subscribe to game events
+            this.Game.InvalidMove += OnInvalidMove;
+            this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
+            this.Game.EvolveNotified += OnEvolvePiece;
+            this.Game.GameOverNotified += OnGameOver;
+
+            // Set the binding context
+            BindingContext = this;
+
+            // Initialize the component
+            InitializeComponent();
         }
-    }
 
-    public async void OnInvalidMove(object sender, EventArgs e)
-    {
-        await DisplayAlert("Erreur", "Mouvement invalide, vérifiez les règles.", "OK");
-    }
-
-    public async void OnErrorPlayerTurnNotified(object sender, EventArgs e)
-    {
-        await DisplayAlert("Erreur", "Ce n'est pas votre tour de jouer.", "OK");
-    }
-
-    private async void OnEvolvePiece(object sender, EvolveNotifiedEventArgs e)
-    {
-
-        string action = await DisplayActionSheet("Choose the piece to evolve to:", null, null, "Queen", "Rook", "Bishop", "Knight");
-        if (action != null)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="chessBoard"/> class with specified players.
+        /// </summary>
+        /// <param name="u1">The first player.</param>
+        /// <param name="u2">The second player.</param>
+        public chessBoard(User u1, User u2)
         {
-            ChoiceUser choice;
-            switch (action)
-            {
-                case "Queen":
-                    choice = ChoiceUser.Queen;
-                    break;
-                case "Rook":
-                    choice = ChoiceUser.Rook;
-                    break;
-                case "Bishop":
-                    choice = ChoiceUser.Bishop;
-                    break;
-                case "Knight":
-                    choice = ChoiceUser.Knight;
-                    break;
-                default:
-                    return;
-            }
-            Game.Evolve(e.Pawn, e.Case, choice);
+            // Check if there is an existing game with the specified players
+            CheckGameIfExists(u1, u2);
+
+            // Create a new game with the specified players
+            this.Game = new Game(u1, u2);
+
+            // Subscribe to game events
+            this.Game.InvalidMove += OnInvalidMove;
+            this.Game.ErrorPlayerTurnNotified += OnErrorPlayerTurnNotified;
+            this.Game.EvolveNotified += OnEvolvePiece;
+            this.Game.GameOverNotified += OnGameOver;
+
+            // Set the binding context
+            BindingContext = this;
+
+            // Initialize the component
+            InitializeComponent();
         }
-    }
 
-    private async void OnGameOver(object sender, GameOverNotifiedEventArgs e)
-    {
-        this.ShowPopup(new endGame(e.Winner.Pseudo));
-        e.Winner!.Score += 5;
-        if ((e.Loser!.Score -= 5) < 0)
-            e.Loser!.Score = 0;
-        else
-            e.Loser!.Score -= 5;
-        await Shell.Current.GoToAsync("//page/MainPage");
-    }
-
-    async void OnBackButtonClicked(object sender, EventArgs e)
-    {
-        await Navigation.PopToRootAsync();
-    }
-
-    async void OnPieceClicked(object sender, EventArgs e)
-    {
-        try
+        /// <summary>
+        /// Checks if there is an existing game with the connected players.
+        /// If a game exists, the user can continue it; otherwise, a new game is started.
+        /// </summary>
+        /// <param name="playerOne">The first player.</param>
+        /// <param name="playerTwo">The second player.</param>
+        public async void CheckGameIfExists(User playerOne, User playerTwo)
         {
-            var imageButton = sender as ImageButton;
-            if (imageButton != null)
+            foreach (Game game in MyManager.Games)
             {
-                var clickedCase = imageButton.BindingContext as Case;
-                if (clickedCase != null)
+                if (game.Player1.Pseudo == playerOne.Pseudo && game.Player2.Pseudo == playerTwo.Pseudo ||
+                    game.Player2.Pseudo == playerOne.Pseudo && game.Player1.Pseudo == playerTwo.Pseudo)
                 {
-                    if (_selectedCase == null)
+                    bool continueGameExisting = await DisplayAlert("Warning", "If a game already exist with you two. Did you want to continu this game ?", "Yes", "No");
+
+                    if (continueGameExisting)
                     {
-                        SelectPiece(clickedCase);
+                        this.Game = game;
                     }
                     else
                     {
-                        MovePiece(clickedCase);
+                        this.Game = new Game(playerOne, playerTwo);
+                    }
+                }
+                this.Game = new Game(playerOne, playerTwo);
+            }
+        }
+
+        /// <summary>
+        /// Handles the invalid move event.
+        /// Displays an alert message indicating the invalid move.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        public async void OnInvalidMove(object sender, EventArgs e)
+        {
+            await DisplayAlert("Erreur", "Mouvement invalide, vérifiez les règles.", "OK");
+        }
+
+        /// <summary>
+        /// Handles the error player turn event.
+        /// Displays an alert message indicating it is not the player's turn.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        public async void OnErrorPlayerTurnNotified(object sender, EventArgs e)
+        {
+            await DisplayAlert("Erreur", "Ce n'est pas votre tour de jouer.", "OK");
+        }
+
+        /// <summary>
+        /// Handles the evolve piece event.
+        /// Displays a dialog for the user to choose the piece to evolve the pawn into.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        private async void OnEvolvePiece(object sender, EvolveNotifiedEventArgs e)
+        {
+            string action = await DisplayActionSheet("Choose the piece to evolve to:", null, null, "Queen", "Rook", "Bishop", "Knight");
+            if (action != null)
+            {
+                ChoiceUser choice;
+                switch (action)
+                {
+                    case "Queen":
+                        choice = ChoiceUser.Queen;
+                        break;
+                    case "Rook":
+                        choice = ChoiceUser.Rook;
+                        break;
+                    case "Bishop":
+                        choice = ChoiceUser.Bishop;
+                        break;
+                    case "Knight":
+                        choice = ChoiceUser.Knight;
+                        break;
+                    default:
+                        return;
+                }
+                Game.Evolve(e.Pawn, e.Case, choice);
+            }
+        }
+
+        /// <summary>
+        /// Handles the game over event.
+        /// Displays an alert message indicating the winner and updates the scores.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        private async void OnGameOver(object sender, GameOverNotifiedEventArgs e)
+        {
+            this.ShowPopup(new endGame(e.Winner.Pseudo));
+            e.Winner!.Score += 5;
+            if ((e.Loser!.Score -= 5) < 0)
+                e.Loser!.Score = 0;
+            else
+                e.Loser!.Score -= 5;
+            await Shell.Current.GoToAsync("//page/MainPage");
+        }
+
+        /// <summary>
+        /// Handles the back button click event.
+        /// Navigates back to the root page.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        async void OnBackButtonClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopToRootAsync();
+        }
+
+        /// <summary>
+        /// Handles the piece click event.
+        /// Selects or moves a piece based on the current selection.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        async void OnPieceClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                var imageButton = sender as ImageButton;
+                if (imageButton != null)
+                {
+                    var clickedCase = imageButton.BindingContext as Case;
+                    if (clickedCase != null)
+                    {
+                        if (_selectedCase == null)
+                        {
+                            SelectPiece(clickedCase);
+                        }
+                        else
+                        {
+                            MovePiece(clickedCase);
+                        }
                     }
                 }
             }
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Erreur", ex.Message, "OK");
-        }
-    }
-
-    private void SelectPiece(Case clickedCase)
-    {
-        var piece = clickedCase.Piece;
-        // Si aucune pièce n'est sélectionnée, sélectionne la pièce sur laquelle nous avons cliqué
-        if (piece != null)
-        {
-            _selectedCase = clickedCase;
-            // Récupérer les mouvements possibles de la pièce
-            var possibleMoves = piece.PossibleMoves(_selectedCase, Game.Board);
-            var possibleCoordinates = possibleMoves.Select(c => $"({c.Column}, {c.Line})");
-
-            foreach (var move in possibleMoves)
+            catch (Exception ex)
             {
-                move.IsPossibleMove = true;
+                await DisplayAlert("Erreur", ex.Message, "OK");
             }
         }
-    }
 
-    private void MovePiece(Case clickedCase)
-    {
-        // Si une pièce est déjà sélectionnée, la déplacer vers la case sur laquelle nous avons cliqué
-        var piece = _selectedCase.Piece;
-        if (piece != null)
+        /// <summary>
+        /// Selects the piece on the clicked case.
+        /// </summary>
+        /// <param name="clickedCase">The case that was clicked.</param>
+        private void SelectPiece(Case clickedCase)
         {
-            var actualPlayer = piece.Color == Color.White ? Game.Player1 : Game.Player2;
-            Game.MovePiece(_selectedCase, clickedCase, Game.Board, actualPlayer);
-            Game.Board.ResetPossibleMoves();
+            var piece = clickedCase.Piece;
+            // If no piece is selected, select the clicked piece
+            if (piece != null)
+            {
+                _selectedCase = clickedCase;
+                // Get the possible moves for the piece
+                var possibleMoves = piece.PossibleMoves(_selectedCase, Game.Board);
+                var possibleCoordinates = possibleMoves.Select(c => $"({c.Column}, {c.Line})");
+
+                foreach (var move in possibleMoves)
+                {
+                    move.IsPossibleMove = true;
+                }
+            }
         }
 
-        _selectedCase = null;
+        /// <summary>
+        /// Moves the selected piece to the clicked case.
+        /// </summary>
+        /// <param name="clickedCase">The case that was clicked.</param>
+        private void MovePiece(Case clickedCase)
+        {
+            var piece = _selectedCase.Piece;
+            if (piece != null)
+            {
+                var actualPlayer = piece.Color == Color.White ? Game.Player1 : Game.Player2;
+                Game.MovePiece(_selectedCase, clickedCase, Game.Board, actualPlayer);
+                Game.Board.ResetPossibleMoves();
+            }
+
+            _selectedCase = null;
+        }
+
+        /// <summary>
+        /// Handles the pause button click event.
+        /// Displays the pause popup.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        private void OnPauseButtonClicked(object sender, EventArgs e)
+        {
+            this.ShowPopup(new pausePage());
+        }
     }
-
-
-    private void OnPauseButtonClicked(object sender, EventArgs e)
-    {
-        this.ShowPopup(new pausePage());
-    }
-
 }

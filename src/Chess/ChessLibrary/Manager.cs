@@ -82,8 +82,6 @@ namespace ChessLibrary
             Chessboards = new ObservableCollection<Chessboard>();
         }
         
-        List<Game> gamesToRemove = new List<Game>();
-
         /// <summary>
         /// Loads data from the persistence manager.
         /// </summary>

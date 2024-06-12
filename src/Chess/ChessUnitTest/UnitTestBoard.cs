@@ -967,7 +967,7 @@ public class UnitTestBoard
         var flatBoard = chessboard.FlatBoard.ToList();
 
         // Assert
-        Assert.Equal(64, flatBoard.Count());
+        Assert.Equal(64, flatBoard.Count);
     }
 
     [Fact]

@@ -53,13 +53,14 @@ namespace Chess.Pages
                             UsernameEntry.Text = string.Empty;
                             PasswordEntry.Text = string.Empty;
 
-                            await Navigation.PushAsync(new chessBoard(existingUser, new User(ChessLibrary.Color.Black))); // On utilise Navigation pour ne pas crée une game qui sera supprimé après
+                            await Navigation.PushAsync(new chessBoard(existingUser, new User(ChessLibrary.Color.Black))); 
                         }
                         else
                         {
                             UsernameEntry.Text = string.Empty;
                             PasswordEntry.Text = string.Empty;
-                            MyManager.Games.Insert(0, new Game(existingUser, new User(ChessLibrary.Color.Black))); // Ajoute la nouvelle game en début de la collection pour la retrouver dans la page suivante
+                            // Ajoute la nouvelle game en dÃ©but de la collection pour la retrouver dans la page suivante
+                            MyManager.Games.Insert(0, new Game(existingUser, new User(ChessLibrary.Color.Black))); 
                             await Shell.Current.GoToAsync("//page/LoginSecondPlayer");
                         }
                     }

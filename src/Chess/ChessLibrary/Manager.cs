@@ -81,6 +81,8 @@ namespace ChessLibrary
             Games = new ObservableCollection<Game>();
             Chessboards = new ObservableCollection<Chessboard>();
         }
+        
+        List<Game> gamesToRemove = new List<Game>();
 
         /// <summary>
         /// Loads data from the persistence manager.
@@ -91,13 +93,19 @@ namespace ChessLibrary
             {
                 var data = PersistanceManager.LoadData();
 
+                List<Game> gamesToRemove = new List<Game>();
+
                 foreach (var game in data.Item1)
                 {
                     if (game.Player2.Pseudo != "Black player")
                     {
-                        Games.Add(game);
-                        data.Item1.Remove(game);
+                        gamesToRemove.Add(game);
                     }
+                }
+        
+                foreach (var game in gamesToRemove)
+                {
+                    Games.Remove(game);
                 }
 
                 foreach (var user in data.Item2)
@@ -111,7 +119,7 @@ namespace ChessLibrary
                 }
             }
         }
-
+        
         /// <summary>
         /// Saves data to the persistence manager.
         /// </summary>

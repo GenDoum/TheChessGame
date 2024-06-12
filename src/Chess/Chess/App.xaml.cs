@@ -57,14 +57,14 @@ namespace Chess
             MyManager.SaveData();
         }
 
-        /// <summary>
-        /// Overrides the CloseWindow method to save data when a window is closed.
-        /// </summary>
-        /// <param name="window">The window to be closed.</param>
-        public override void CloseWindow(Window window)
-        {
-            base.CloseWindow(window);
-            MyManager.SaveData();
-        }
+        // /// <summary>
+        // /// Overrides the CloseWindow method to save data when a window is closed.
+        // /// </summary>
+        // /// <param name="window">The window to be closed.</param>
+        // public override void CloseWindow(Window window)
+        // {
+        //     base.CloseWindow(window);
+        //     MyManager.SaveData();
+        // }
     }
 }

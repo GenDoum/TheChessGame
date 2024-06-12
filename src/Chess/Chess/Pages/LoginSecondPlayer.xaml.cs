@@ -42,8 +42,18 @@ namespace Chess.Pages
                 {
                     if (User.HashPassword(entryPassword) == existingUser.Password)
                     {
-
-                        MyManager.Games.First().Player2 = existingUser; // Ajoute le player 2 à la nouvelle game crée dans Login1
+                        // Check if the users are already in a game
+                        var existingGame = MyManager.Games.FirstOrDefault(g => g.Player1.Pseudo == entryPseudo || g.Player2.Pseudo == entryPseudo);
+                        if (existingGame != null)
+                        {
+                            // If they are, create a new game
+                            MyManager.Games.Insert(0, new Game(existingUser, new User(ChessLibrary.Color.Black)));
+                        }
+                        else
+                        {
+                            // If they are not, add the second player to the existing game
+                            MyManager.Games.First().Player2 = existingUser;
+                        }
 
                         UsernameEntry.Text = string.Empty;
                         PasswordEntry.Text = string.Empty;

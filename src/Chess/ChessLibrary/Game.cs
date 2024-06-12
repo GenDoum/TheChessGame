@@ -335,7 +335,7 @@ namespace ChessLibrary
                 throw new InvalidOperationException("Invalid move.");
             }
 
-            if (actualPlayer.Color != CurrentPlayer.Color)
+            if (actualPlayer.Pseudo != CurrentPlayer.Pseudo)
             {
                 Board.ResetPossibleMoves();
                 OnErrorPlayerTurn();
@@ -439,43 +439,5 @@ namespace ChessLibrary
             CurrentPlayer = (actualPlayer == Player1) ? Player2 : Player1;
             board.ResetPossibleMoves();
         }
-
-        /// <summary>
-        /// Restores the piece lists to their original state after a move has been undone.
-        /// </summary>
-        public static void RestorePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board, Piece movedPiece, Piece capturedPiece)
-        {
-            // Restore the moved piece to its original position
-            var listToUpdate = movedPiece.Color == Color.White ? whitePieces : blackPieces;
-            listToUpdate.RemoveAll(p => p.piece == movedPiece && p.CaseLink == final);
-            listToUpdate.Add(new CoPieces { CaseLink = initial, piece = movedPiece });
-
-            // Restore the captured piece to its list if it was captured
-            if (capturedPiece != null)
-            {
-                var listToRestore = capturedPiece.Color == Color.White ? whitePieces : blackPieces;
-                listToRestore.Add(new CoPieces { CaseLink = final, piece = capturedPiece });
-            }
-        }
-
-        /// <summary>
-        /// Updates the piece lists after a move has been made.
-        /// </summary>
-        public static void UpdatePieceLists(List<CoPieces> blackPieces, List<CoPieces> whitePieces, Case? initial, Case? final, Chessboard board)
-        {
-            var movedPiece = initial!.Piece;
-            var capturedPiece = final!.Piece;
-            var listToUpdate = movedPiece!.Color == Color.White ? whitePieces : blackPieces;
-
-            listToUpdate.RemoveAll(p => p.piece == movedPiece);
-            listToUpdate.Add(new CoPieces { CaseLink = final, piece = movedPiece });
-
-            if (capturedPiece != null && capturedPiece.Color != movedPiece.Color)
-            {
-                var listToRemoveFrom = capturedPiece.Color == Color.White ? whitePieces : blackPieces;
-                listToRemoveFrom.RemoveAll(p => p.piece == capturedPiece);
-            }
-        }
-
     }
 }

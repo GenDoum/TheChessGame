@@ -14,7 +14,7 @@
   </p>
 
   <h3 align="center">Promotionnal video</h3>
-  <a src="https://opencast.dsi.uca.fr/paella/ui/watch.html?id=cdb94fa1-d62b-4b23-83eb-f84f0fecf61d">Link</a>
+  <a src="https://opencast.dsi.uca.fr/paella/ui/watch.html?id=cdb94fa1-d62b-4b23-83eb-f84f0fecf61d" align="center">Link to the video</a>
 </p>
 
 ![Static Badge](https://img.shields.io/badge/development-in%20progress-green)

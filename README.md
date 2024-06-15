@@ -13,7 +13,7 @@
     <a href="https://codefirst.iut.uca.fr/git/Chess/Chess/wiki"><strong>Link to documentation</strong></a>
   </p>
 
-  <h3 align="center">Promotionnal video</h3>
+  <h2 align="center">Promotionnal video</h3>
   <p align="center">
   <a href="https://opencast.dsi.uca.fr/paella/ui/watch.html?id=cdb94fa1-d62b-4b23-83eb-f84f0fecf61d" align="center">Link to the video</a> </p>
 </p>

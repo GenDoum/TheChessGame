@@ -18,7 +18,7 @@
   <a href="https://opencast.dsi.uca.fr/paella/ui/watch.html?id=cdb94fa1-d62b-4b23-83eb-f84f0fecf61d" align="center">Link to the video</a> </p>
 </p>
 
-![Static Badge](https://img.shields.io/badge/development-in%20progress-green)
+![Static Badge](https://img.shields.io/badge/development-finished-green)
 [![Quality Gate Status](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Chess&metric=alert_status&token=c2dc7d57b98c8ce69ae71f96129688cc7992b423)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Chess)
 [![Maintainability Rating](https://codefirst.iut.uca.fr/sonar/api/project_badges/measure?project=Chess&metric=sqale_rating&token=c2dc7d57b98c8ce69ae71f96129688cc7992b423)](https://codefirst.iut.uca.fr/sonar/dashboard?id=Chess)
 
